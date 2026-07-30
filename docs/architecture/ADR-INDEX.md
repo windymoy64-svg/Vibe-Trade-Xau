@@ -1,8 +1,8 @@
 # Architecture Decision Record Index
 
-**Baseline:** Level 11.8, Foundation Baseline Finalization  
-**Status:** Finalized repository baseline; no runtime change  
-**Audit disposition:** **CONDITIONAL GO — 90/100**
+**Baseline:** Level 22 Operational Readiness Review — approved input to Level 23
+**Status:** Level 23 governance closure pending architecture and release review
+**Operational disposition:** **NOT READY — release and environment evidence incomplete**
 
 This index records decisions already represented in the repository. It is not a
 target architecture and does not authorize migration, enforcement, or runtime
@@ -25,6 +25,10 @@ cutover.
 | [ADR-012](ADR-012.md) | Immutable observation archive and deterministic audit chain | Phase 11 | Pending architecture review |
 | [ADR-013](ADR-013.md) | Evidence analytics and policy insights | Phase 12 | Pending architecture review |
 | [ADR-014](ADR-014.md) | Deterministic evidence-layer integration and validation | Phase 13 | Pending architecture review |
+| [ADR-015](ADR-015.md) | Read-only runtime event adaptation and event identity | Level 18 | Pending architecture review |
+| [ADR-016](ADR-016.md) | Evidence-only runtime integration harness and sequence scope | Level 19 | Pending architecture review |
+| [ADR-017](ADR-017.md) | Controlled shadow assessment vocabulary | Level 20 | Pending architecture review |
+| [ADR-018](ADR-018.md) | Coverage, distribution, and trend semantics | Level 21 | Pending architecture review |
 
 ## Reading rules
 
@@ -33,3 +37,5 @@ cutover.
 - The source of truth for behavior remains the implementation and tests.
 - Any future enforcement, orchestration authority, migration, or cutover needs a
   separate decision and approval.
+- ADR-015 through ADR-018 document currently uncommitted Level 18–21 material. They
+  remain pending and do not make that material certified or release-addressable.

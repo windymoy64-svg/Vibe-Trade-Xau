@@ -96,3 +96,14 @@ AGENTS.md
 wiki/alpha-library/manifest.json
 wiki/alpha-library/content/
 bench_report.json
+
+# Trading memory exports and local research output
+journal.json
+Trading_Memory.xlsx
+reports/
+
+# Temporary local patch/probe scripts
+scripts/_*.py
+
+# Accidental terminal artifacts
+tatus --short --branch

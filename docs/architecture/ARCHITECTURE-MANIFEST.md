@@ -1,6 +1,6 @@
 # Architecture Manifest
 
-**Manifest status:** Finalized foundation baseline  
+**Manifest status:** Foundation finalized; Levels 18–21 pending architecture review
 **Repository:** Vibe-Trading-XAUUSD  
 **Architecture audit:** **CONDITIONAL GO — 90/100**  
 **Runtime impact of this manifest:** None
@@ -111,3 +111,20 @@ does not promote the foundation into an authoritative runtime.
    migration or authority cutover.
 6. Trust policy and verification manifest behavior is governed by ADR-010 and
    ADR-011.
+7. Runtime-event identity is `(source_id, sequence_id, event_id)`; sequence scope is
+   one source stream, as documented by ADR-015.
+8. Shadow assessments use the closed `approve`, `deny`, `hold`, `unknown` vocabulary
+   and never replace the existing-runtime decision, as documented by ADR-017.
+9. Coverage and trends describe supplied evidence only and cannot establish capture
+   completeness, population representativeness, or operational health.
+10. Public Levels 18–21 contracts remain at their baseline semantics until an
+    explicitly versioned, architecture-approved successor exists.
+
+## Pending Levels 18–21 records
+
+- ADR-015 documents Level 18 read-only runtime adaptation.
+- ADR-016 documents Level 19 batch ingestion and deterministic replay.
+- ADR-017 documents Level 20 controlled shadow comparison.
+- ADR-018 documents Level 21 evidence-only aggregate metrics.
+- These records describe pending, currently uncommitted material. They add no runtime
+  authority and do not authorize release, deployment, migration, or Level 24.
