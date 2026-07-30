@@ -280,6 +280,10 @@ register_alpha_routes(app)
 from src.api.auth_routes import register_auth_routes  # noqa: E402
 register_auth_routes(app)
 
+# --- Trade diagnostics ---
+from src.api.diagnostics_routes import register_diagnostics_routes  # noqa: E402
+register_diagnostics_routes(app)
+
 
 # ============================================================================
 # Scheduled Research Routes - defined in src/api/scheduled_routes.py

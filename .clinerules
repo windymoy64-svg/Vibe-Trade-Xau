@@ -1,0 +1,11 @@
+# Cline Rules
+
+- Selalu baca `TASKS.md` dan `PROJECT_CONTEXT.md` sebelum memulai pekerjaan baru untuk memahami status terkini dan konvensi arsitektur.
+- Gunakan **Bahasa Indonesia** dalam berkomunikasi dan mendokumentasikan rencana kerja.
+- Jangan mengubah file konfigurasi sistem, database produksi, atau file penting lainnya sebelum mengonfirmasi rencana tersebut ke pengguna.
+- Untuk setiap command VPS atau command backend yang akan dijalankan, jelaskan efek samping, port yang digunakan, dan beban resourcenya terlebih dahulu.
+- Selalu usahakan untuk melanjutkan tugas hingga selesai secara bertahap (step-by-step) tanpa meninggalkan placeholder kosong.
+- Jika pekerjaan terhenti atau mengalami timeout, segera baca kembali log terakhir dan lanjutkan dari titik terakhir yang berhasil.
+- Utamakan efisiensi resource; hindari penggunaan RAM berlebihan (seperti menjalankan beberapa instance build secara paralel).
+- Jangan menjalankan langkah-langkah berat (seperti benchmark intensif atau install package besar) tanpa alasan yang jelas atau tanpa persetujuan eksplisit.
+- Jika ada risiko lag pada system, beban CPU/RAM tinggi, atau perubahan besar pada struktur database, beri tahu pengguna terlebih dahulu sebelum melanjutkan.
