@@ -1,6 +1,6 @@
 import { Suspense, lazy, type ComponentType } from "react";
 import { createBrowserRouter } from "react-router";
-import { Layout } from "@/components/layout/Layout";
+import { ProtectedLayout } from "@/components/layout/ProtectedLayout";
 
 const Home = lazy(() => import("@/pages/Home").then((m) => ({ default: m.Home })));
 const Agent = lazy(() => import("@/pages/Agent").then((m) => ({ default: m.Agent })));
@@ -29,7 +29,33 @@ const DiagnosticsDashboard = lazy(() => import("@/pages/DiagnosticsDashboard").t
 const DiagnosticTrades = lazy(() => import("@/pages/DiagnosticTrades").then((m) => ({ default: m.DiagnosticTrades })));
 const DiagnosticTradeDetail = lazy(() => import("@/pages/DiagnosticTradeDetail").then((m) => ({ default: m.DiagnosticTradeDetail })));
 const DiagnosticFilters = lazy(() => import("@/pages/DiagnosticFilters").then((m) => ({ default: m.DiagnosticFilters })));
-const LossPatternAnalysis = lazy(() => import("@/pages/LossPatternAnalysis").then((m) => ({ default: m.LossPatternAnalysis })));
+const LossPatternAnalysis = lazy(() =>
+  import("@/pages/LossPatternAnalysis").then((m) => ({ default: m.LossPatternAnalysis })),
+);
+const LossPatternsCompare = lazy(() =>
+  import("@/pages/LossPatternsCompare").then((m) => ({ default: m.LossPatternsCompare })),
+);
+const DiagnosticRecommendations = lazy(() =>
+  import("@/pages/DiagnosticRecommendations").then((m) => ({ default: m.DiagnosticRecommendations })),
+);
+const DiagnosticRecommendationDetail = lazy(() =>
+  import("@/pages/DiagnosticRecommendationDetail").then((m) => ({ default: m.DiagnosticRecommendationDetail })),
+);
+const DiagnosticImprovementProgress = lazy(() =>
+  import("@/pages/DiagnosticImprovementProgress").then((m) => ({ default: m.DiagnosticImprovementProgress })),
+);
+const DiagnosticAuth = lazy(() =>
+  import("@/pages/DiagnosticAuth").then((m) => ({ default: m.DiagnosticAuth })),
+);
+const DiagnosticProfileSettings = lazy(() =>
+  import("@/pages/DiagnosticProfileSettings").then((m) => ({ default: m.DiagnosticProfileSettings })),
+);
+const DiagnosticDataSources = lazy(() =>
+  import("@/pages/DiagnosticDataSources").then((m) => ({ default: m.DiagnosticDataSources })),
+);
+const DiagnosticNotificationSettings = lazy(() =>
+  import("@/pages/DiagnosticNotificationSettings").then((m) => ({ default: m.DiagnosticNotificationSettings })),
+);
 
 function PageLoader() {
   return (
@@ -48,8 +74,10 @@ function wrap(Component: ComponentType) {
 }
 
 export const router = createBrowserRouter([
+  { path: "/login", element: wrap(DiagnosticAuth) },
+  { path: "/register", element: wrap(DiagnosticAuth) },
   {
-    element: <Layout />,
+    element: <ProtectedLayout />,
     children: [
       { path: "/", element: wrap(Home) },
       { path: "/diagnostics", element: wrap(DiagnosticsDashboard) },
@@ -57,6 +85,13 @@ export const router = createBrowserRouter([
       { path: "/diagnostics/trades/:tradeId", element: wrap(DiagnosticTradeDetail) },
       { path: "/diagnostics/filters", element: wrap(DiagnosticFilters) },
       { path: "/diagnostics/patterns", element: wrap(LossPatternAnalysis) },
+      { path: "/diagnostics/patterns/compare", element: wrap(LossPatternsCompare) },
+      { path: "/diagnostics/recommendations", element: wrap(DiagnosticRecommendations) },
+      { path: "/diagnostics/recommendations/:recommendationId", element: wrap(DiagnosticRecommendationDetail) },
+      { path: "/diagnostics/improvements", element: wrap(DiagnosticImprovementProgress) },
+      { path: "/diagnostics/settings/profile", element: wrap(DiagnosticProfileSettings) },
+      { path: "/diagnostics/settings/data-sources", element: wrap(DiagnosticDataSources) },
+      { path: "/diagnostics/settings/notifications", element: wrap(DiagnosticNotificationSettings) },
       { path: "/agent", element: wrap(Agent) },
       { path: "/runtime", element: wrap(Runtime) },
       { path: "/reports", element: wrap(Reports) },

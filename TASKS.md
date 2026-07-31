@@ -15,15 +15,76 @@
   - API endpoints backend: `GET /diagnostics/trades` (daftar terfilter), `GET /diagnostics/trades/{trade_id}` (detail snapshot), `POST /diagnostics/trades/export` (WeasyPrint PDF/CSV), `POST /diagnostics/filters` (save preset), `GET /diagnostics/filters` (list presets), dan `DELETE /diagnostics/filters/{preset_id}` (delete preset) telah siap dan diuji.
 
 ## TODO / Next Steps
-- **Fase 3: Analisis Pola Kekalahan (Fase Berikutnya)**:
-  - Halaman Utama Analisis Pola Kekalahan di frontend (`/diagnostics/patterns`) untuk visualisasi statistik agregat pola kegagalan dominan.
-  - Endpoint backend untuk kalkulasi clustering/agregasi pola kegagalan secara periodik.
+- **Fase 3 Frontend SELESAI — checkpoint sebelum Backend**:
+  - ✅ Halaman Utama Analisis Pola Kekalahan di frontend (`/diagnostics/patterns`, `LossPatternAnalysis.tsx`) — data-driven dengan fetch async `api.getLossPatterns()` + fallback otomatis ke preview data (badge dinamis), metrik agregat terhitung dari data (detected patterns, losses classified, high severity), kartu pola dengan badge kategori/severity, link evidence ke detail trade, dan empty state.
+  - ✅ UI perbandingan antar periode (`/diagnostics/patterns/compare`, `LossPatternsCompare.tsx`) — pemilih baseline pembanding, ringkasan pola membaik/memburuk/stabil, delta persentase per pola, fallback preview data, serta navigasi dua arah dari halaman utama.
+  - ✅ Tombol ekspor PDF laporan pola — membuka laporan print-friendly berisi metrik ringkasan, insight, dan tabel pola untuk disimpan sebagai PDF melalui dialog browser.
+  - ✅ Halaman utama Rekomendasi Perbaikan di frontend (`/diagnostics/recommendations`, `DiagnosticRecommendations.tsx`) — daftar aksi terprioritas berbasis evidence, metrik kesiapan/dampak, tautan ke pola dan trade terkait, serta preview data terpisah.
+  - ✅ Komponen detail langkah perbaikan (`RecommendationSteps.tsx`) — panel expand/collapse dengan langkah implementasi bernomor, target validasi, dan guardrail untuk setiap rekomendasi.
+  - ✅ Komponen prioritas rekomendasi terurut (`PrioritizedRecommendations.tsx`) — mengurutkan daftar secara deterministik berdasarkan level prioritas, proyeksi dampak, confidence, lalu judul.
+  - ✅ Fitur mock “tandai sudah diperbaiki” — status kartu dapat diubah menjadi `APPLIED`/dibuka kembali, dengan indikator jumlah perbaikan yang reaktif selama sesi halaman.
+  - ✅ Komponen ringkasan pola kekalahan (`LossPatternSummary.tsx`) — menampilkan tiga pola diagnostik dominan, severity, loss share, delta periode, insight, dan tautan ke analisis penuh.
+  - ✅ Halaman detail rekomendasi tunggal (`/diagnostics/recommendations/:recommendationId`, `DiagnosticRecommendationDetail.tsx`) — metrik evidence, langkah implementasi, target/guardrail, aksi mock status, tautan supporting trades, dan not-found state.
+  - ✅ Seluruh task frontend halaman **Analisis Pola Kekalahan** dan **Rekomendasi Perbaikan** telah ditandai `done` melalui CLI NgodingPakeAI.
+  - ✅ **Backend Analisis Pola Kekalahan SELESAI**: migrasi schema v4 dan tabel `pola_kekalahan`, endpoint ringkasan `GET /diagnostics/patterns`, service deteksi otomatis, endpoint perbandingan `GET /diagnostics/patterns/compare`, serta background job refresh klasifikasi pola telah diimplementasikan dan diuji.
+  - ✅ **Backend Rekomendasi Perbaikan SELESAI**: endpoint `GET /diagnostics/recommendations` menghasilkan daftar rekomendasi deterministik dan user-scoped dari snapshot pola terbaru.
+   - ✅ Backend rekomendasi: endpoint detail `GET /diagnostics/recommendations/{recommendation_id}` dengan user scope dan 404.
+   - ✅ Backend rekomendasi: endpoint status `PATCH /diagnostics/recommendations/{recommendation_id}/status` dengan persistence `APPLIED` dan reopen.
+   - ✅ Backend rekomendasi: filter prioritas pada `GET /diagnostics/recommendations?priority=...` untuk `CRITICAL`, `HIGH`, dan `MEDIUM`.
+   - ✅ Schema SQLite v5 untuk status rekomendasi dan v6 untuk tabel `diagnostic_recommendations`, termasuk constraint, index, migrasi idempotent, serta upgrade v5→v6.
+   - ✅ Pembangkitan rekomendasi otomatis dari snapshot pola diagnostik, persistence atomik/idempotent, preservasi status `APPLIED`, dan penghapusan rekomendasi stale.
+   - ✅ Service perhitungan prioritas rekomendasi: klasifikasi urgency berbasis severity/loss share, estimasi expected impact berbobot confidence, validasi evidence, serta pengurutan deterministik.
 - **Fase 4: Pelacakan Perbaikan**:
-  - Implementasi tabel `improvement_logs` untuk melacak track record modifikasi strategi (rekomendasi).
+  - ✅ **Frontend dan Backend Progres Perbaikan SELESAI**.
+  - ✅ Layout halaman Progres Perbaikan (`/diagnostics/improvements`, `DiagnosticImprovementProgress.tsx`) dengan header, ringkasan preview, workspace tracking responsif, serta panel evidence loop.
+  - ✅ Komponen Linimasa Perbaikan (`ImprovementTimeline.tsx`) dengan status planned/applied/monitoring/validated, evidence note, metadata, tautan rekomendasi, sorting non-mutating, dan empty state.
+  - ✅ Komponen Grafik Penurunan Loss (`LossReductionChart.tsx`) berbasis SVG responsif dengan skala dinamis, area trend, delta baseline, tooltip titik, total measured trades, dan empty state.
+  - ✅ Komponen Metrik Keberhasilan (`SuccessMetrics.tsx`) dengan target/current value, progress ter-clamp, status achieved/on-track/at-risk, detail evidence, dan empty state.
+  - ✅ Komponen Log Aktivitas Perbaikan (`ImprovementActivityLog.tsx`) dengan tipe note/status/evidence, sorting non-mutating, actor/timestamp, tautan rekomendasi, dan empty state.
+  - ✅ Tombol dan dialog Ekspor Laporan (`ImprovementReportExport.tsx`) dengan pilihan section, validasi, close Escape/backdrop, sanitasi HTML, dan laporan print-friendly untuk PDF.
+  - ✅ Mock data terpusat untuk seluruh komponen melalui `DiagnosticImprovementProgressData`: summary, timeline, loss reduction, success metrics, activity log, dan generated timestamp.
+  - ✅ Backend tabel `improvement_logs` dan migrasi schema v7 dengan constraint lifecycle/validation, user-scoped indexes, idempotensi, dan upgrade v6→v7.
+  - ✅ API linimasa perbaikan `GET /diagnostics/improvements/timeline` dengan user isolation, limit 1–200, ordering terbaru, fallback timestamp, evidence note, dan response model typed.
+  - ✅ API grafik penurunan loss `GET /diagnostics/improvements/loss-reduction` dengan baseline, titik perubahan terurut, perhitungan trade count per validation window, user isolation, dan response model typed.
+  - ✅ API metrik keberhasilan `GET /diagnostics/improvements/success-metrics` dengan progress baseline→target, status achieved/on-track/at-risk, current/target labels, detail deterministik, dan user isolation.
+  - ✅ API log aktivitas `GET /diagnostics/improvements/activity` dengan event evidence/note/status-change, actor/timestamp, recommendation link, limit, ordering terbaru, dan user isolation.
+  - ✅ API PDF laporan `POST /diagnostics/improvements/export/pdf` dengan section selection, user validation/isolation, HTML escaping, empty states, WeasyPrint, dan attachment response.
+- **Fase 5: Autentikasi & Pengaturan**:
+  - ✅ **Frontend Autentikasi & Pengaturan SELESAI — checkpoint sebelum Backend**.
+  - ✅ Halaman Login & Register mock (`/login`, `/register`, `DiagnosticAuth.tsx`) dengan layout standalone responsif, validasi client-side, show/hide password, remember device mock, success state, dan warning tidak menyimpan credential.
+  - ✅ Halaman Pengaturan Profil mock (`/diagnostics/settings/profile`, `DiagnosticProfileSettings.tsx`) dengan avatar initials, account metadata, form profil/timezone/trading focus, bio counter, save session state, dan reset.
+  - ✅ Halaman Integrasi Sumber Data mock (`/diagnostics/settings/data-sources`, `DiagnosticDataSources.tsx`) untuk MT5/CSV/webhook dengan coverage, sync metadata, summary, dan connect/test/disconnect session state tanpa credential/network.
+  - ✅ Komponen notifikasi (`DiagnosticNotifications.tsx`) pada global top bar dengan unread badge, panel typed, item/mark-all read, link tujuan, serta close via Escape/outside/button.
+  - ✅ Halaman Pengaturan Notifikasi mock (`/diagnostics/settings/notifications`, `DiagnosticNotificationSettings.tsx`) dengan channel/event toggles aksesibel, quiet hours, save/reset session state, dan tanpa persistence.
+  - ✅ Guard route mock (`ProtectedLayout.tsx`) dengan sessionStorage tab-scoped, redirect+safe returnTo ke login, public login/register, dan logout mock; tidak menyimpan email/password/API key.
+  - ✅ Layout dashboard setelah login: global sidebar existing diperkaya subnav Diagnostics, top-bar account/settings menu, notification panel, dan logout, dengan active nested state serta collapse compatibility.
 - **Integrasi Bot Live**:
   - Membuat parser log entry bot XAUUSD untuk dikirim ke API diagnostik secara real-time atau via upload CSV.
 
 ## Masalah Saat Ini & Keterbatasan
 - Dependensi local frontend (`node_modules`) menggunakan Node `v22.21.1` sedangkan declare project meminta `>=22.22.0`. Meskipun demikian, build dan linting tetap sukses berjalan tanpa kendala.
 - Eksekusi vitest penuh dari CLI di local machine sering kali melebihi limit tool timeout (30s) karena banyaknya unit test suite bawaan di repositori. Namun, pengujian fungsional terarah khusus modul diagnostics berhasil dengan cepat.
+- Beberapa percobaan awal `npm run build --prefix frontend` dan `npx tsc -b frontend --pretty false` sempat terkena timeout tool 30 detik tanpa output error. Build-build berikutnya berhasil penuh; build terakhir memproses 3046 modul dalam 14,93 detik.
+- Vite memberi warning existing bahwa beberapa chunk lebih besar dari 500 kB setelah minification; warning ini tidak menggagalkan build.
+- `npm run dev --prefix frontend` terkena timeout tool 15 detik karena dev server adalah proses long-running, bukan karena kompilasi gagal. Jalankan command tersebut langsung di terminal pengguna untuk verifikasi browser.
+- Working tree masih memiliki perubahan belum di-commit dari rangkaian diagnostics. File untracked `patch.py` tidak disentuh pada sesi ini karena asal/kegunaannya belum terkonfirmasi.
+
+## Handoff ke Chat Baru
+1. Baca `.clinerules`, `TASKS.md`, `PROJECT_CONTEXT.md`, dan `SESSION_LOG.md` terlebih dahulu.
+2. Baca PRD jika perlu: `npx ngodingpakeai plan get 208ae16e-639e-4d5f-9a60-f713ec99e8a7`.
+3. Jalankan `npx ngodingpakeai task next --plan 208ae16e-639e-4d5f-9a60-f713ec99e8a7 --json`.
+4. Task terakhir Fase 3 backend, `vibe-trade-diagnostics/rekomendasi-perbaikan/buat-service-perhitungan-prioritas-rekomendasi`, sudah selesai dan tervalidasi.
+5. Checkpoint aktif setelah Fase 5 frontend selesai. Next task backend belum dimulai: `vibe-trade-diagnostics/autentikasi-pengaturan/buat-endpoint-daftar-post-auth-register` — “Buat endpoint daftar (POST /auth/register)”.
+6. Tunggu pengguna berkata “lanjut”, lalu kerjakan satu task saja; setelah complete panggil `task next` dan berhenti jika layer/fase kembali berubah.
+
+## Pembaruan Sesi Terakhir
+- Sesi ini menyelesaikan task backend Fase 3 berikut melalui CLI NgodingPakeAI:
+  - Endpoint detail rekomendasi.
+  - Endpoint tandai rekomendasi sudah diperbaiki/reopen.
+  - Endpoint daftar rekomendasi berdasarkan prioritas.
+  - Schema tabel rekomendasi database.
+  - Tabel rekomendasi beserta migrasi v5→v6.
+  - Logika pembangkitan rekomendasi otomatis dari pola diagnostik.
+- Task service prioritas sudah ditandai `done`; next task server berpindah ke Fase 4 frontend dan belum dimulai karena checkpoint.
+- Service prioritas rekomendasi kini memiliki kalkulator priority/expected impact eksplisit; 9 test service dan 49 test diagnostics terarah lulus.
 

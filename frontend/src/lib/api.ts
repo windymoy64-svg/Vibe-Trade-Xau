@@ -1,5 +1,6 @@
 import { authHeaders, withAuthTicket } from "@/lib/apiAuth";
 import type { DiagnosticsDashboardData } from "@/data/diagnostics-dashboard";
+import type { LossPatternAnalysisData } from "@/data/loss-patterns";
 
 const BASE = "";
 
@@ -113,6 +114,7 @@ function appendQueryParam(url: string, key: string, value: string): string {
 export const api = {
   uploadFile,
   getDiagnosticsDashboard: () => request<DiagnosticsDashboardData>("/diagnostics/dashboard"),
+  getLossPatterns: () => request<LossPatternAnalysisData>("/diagnostics/patterns"),
   getCorrelation: (codes: string, days: number, method: "pearson" | "spearman") =>
     request<CorrelationResponse>(
       `/correlation?codes=${encodeURIComponent(codes)}&days=${encodeURIComponent(String(days))}&method=${encodeURIComponent(method)}`,

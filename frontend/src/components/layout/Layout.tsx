@@ -1,12 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useSearchParams } from "react-router";
-import { Activity, BarChart3, Bot, Check, ChevronDown, FileText, Languages, Moon, Sun, Plus, Trash2, Pencil, MessageSquare, ChevronsLeft, ChevronsRight, Settings, Layers, Loader2, Stethoscope } from "lucide-react";
+import { Activity, BarChart3, Bell, Bot, Check, ChevronDown, Database, FileText, Languages, LogOut, Moon, Sun, Plus, Trash2, Pencil, MessageSquare, ChevronsLeft, ChevronsRight, Settings, Layers, Loader2, Stethoscope, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { api, type SessionItem } from "@/lib/api";
 import { useAgentStore } from "@/stores/agent";
 import { ConnectionBanner } from "@/components/layout/ConnectionBanner";
+import { DiagnosticNotifications } from "@/components/diagnostics/DiagnosticNotifications";
+import { clearDiagnosticMockSession } from "@/lib/diagnosticAuth";
 import { SUPPORTED_LANGUAGES } from "@/i18n";
 
 // APP_VERSION is sourced from i18n locale files (app.version key) to keep a
@@ -24,6 +26,13 @@ export function Layout() {
     { to: "/alpha-zoo", icon: Layers, label: t('layout.alphaZoo') },
     { to: "/settings", icon: Settings, label: t('layout.settings') },
     { to: "/correlation", icon: BarChart3, label: t('layout.correlation') },
+  ];
+  const DIAGNOSTIC_NAV = [
+    { to: "/diagnostics", label: "Overview" },
+    { to: "/diagnostics/trades", label: "Trades" },
+    { to: "/diagnostics/patterns", label: "Loss patterns" },
+    { to: "/diagnostics/recommendations", label: "Recommendations" },
+    { to: "/diagnostics/improvements", label: "Improvement progress" },
   ];
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
@@ -111,6 +120,11 @@ export function Layout() {
               </Link>
             );
           })}
+          {!collapsed && pathname.startsWith("/diagnostics") && (
+            <div className="ms-4 mt-1 space-y-0.5 border-s ps-3">
+              {DIAGNOSTIC_NAV.map(({ to, label }) => <Link key={to} to={to} className={cn("block rounded-md px-2 py-1.5 text-xs transition-colors", pathname === to || (to !== "/diagnostics" && pathname.startsWith(to)) ? "bg-primary/10 font-medium text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground")}>{label}</Link>)}
+            </div>
+          )}
         </nav>
 
         {/* Sessions — hidden when collapsed */}
@@ -255,6 +269,7 @@ export function Layout() {
       {/* Main */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <ConnectionBanner status={sseStatus} retryAttempt={sseRetryAttempt} />
+        <div className="flex h-12 shrink-0 items-center justify-end gap-2 border-b bg-background/95 px-4"><div className="relative group"><button type="button" className="inline-flex items-center gap-1.5 rounded-lg border bg-card px-2.5 py-2 text-xs text-muted-foreground hover:bg-muted hover:text-foreground"><span className="flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 text-[8px] font-semibold text-primary">AM</span><span className="hidden sm:inline">Alex Morgan</span><ChevronDown className="h-3 w-3" /></button><div className="invisible absolute right-0 top-10 z-50 w-44 rounded-lg border bg-card p-1 opacity-0 shadow-xl transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100"><Link to="/diagnostics/settings/profile" className="flex items-center gap-2 rounded-md px-3 py-2 text-xs hover:bg-muted"><UserRound className="h-3.5 w-3.5" /> Profile</Link><Link to="/diagnostics/settings/data-sources" className="flex items-center gap-2 rounded-md px-3 py-2 text-xs hover:bg-muted"><Database className="h-3.5 w-3.5" /> Data sources</Link><Link to="/diagnostics/settings/notifications" className="flex items-center gap-2 rounded-md px-3 py-2 text-xs hover:bg-muted"><Bell className="h-3.5 w-3.5" /> Notifications</Link></div></div><DiagnosticNotifications /><button type="button" onClick={() => { clearDiagnosticMockSession(); window.location.assign("/login"); }} className="inline-flex items-center gap-1.5 rounded-lg border bg-card px-2.5 py-2 text-xs text-muted-foreground hover:bg-muted hover:text-foreground" title="End mock session"><LogOut className="h-4 w-4" /><span className="hidden sm:inline">Logout</span></button></div>
         <main className="flex-1 overflow-auto">
           <Outlet />
         </main>

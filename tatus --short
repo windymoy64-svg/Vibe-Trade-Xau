@@ -1,0 +1,16 @@
+warning: in the working copy of 'PROJECT_CONTEXT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'SESSION_LOG.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'TASKS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/components/diagnostics/DominantPatternChart.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/data/loss-patterns.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/lib/api.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/pages/LossPatternAnalysis.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/router.tsx', LF will be replaced by CRLF the next time Git touches it
+PROJECT_CONTEXT.md
+SESSION_LOG.md
+TASKS.md
+frontend/src/components/diagnostics/DominantPatternChart.tsx
+frontend/src/data/loss-patterns.ts
+frontend/src/lib/api.ts
+frontend/src/pages/LossPatternAnalysis.tsx
+frontend/src/router.tsx

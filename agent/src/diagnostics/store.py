@@ -12,7 +12,7 @@ from pathlib import Path
 from src.config.accessor import get_env_or
 
 _DEFAULT_DB_PATH = Path.home() / ".vibe-trading" / "diagnostics.db"
-_SCHEMA_VERSION = 3
+_SCHEMA_VERSION = 7
 
 
 def _default_db_path() -> Path:
@@ -119,6 +119,145 @@ class DiagnosticsStore:
                         """
                     )
                     self._conn.execute("PRAGMA user_version=3")
+                    version = 3
+            if version < 4:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE pola_kekalahan (
+                            id TEXT PRIMARY KEY,
+                            user_id TEXT NOT NULL,
+                            name TEXT NOT NULL,
+                            category TEXT NOT NULL
+                                CHECK(category IN ('TREND', 'REGIME', 'SESSION', 'MOMENTUM')),
+                            description TEXT NOT NULL,
+                            loss_count INTEGER NOT NULL CHECK(loss_count >= 0),
+                            loss_percentage REAL NOT NULL
+                                CHECK(loss_percentage >= 0 AND loss_percentage <= 100),
+                            confidence REAL NOT NULL
+                                CHECK(confidence >= 0 AND confidence <= 100),
+                            severity TEXT NOT NULL CHECK(severity IN ('HIGH', 'MEDIUM', 'LOW')),
+                            evidence_trade_ids_json TEXT NOT NULL DEFAULT '[]'
+                                CHECK(json_valid(evidence_trade_ids_json)
+                                    AND json_type(evidence_trade_ids_json) = 'array'),
+                            trend_delta REAL NOT NULL DEFAULT 0,
+                            period_start TEXT NOT NULL,
+                            period_end TEXT NOT NULL,
+                            generated_at TEXT NOT NULL,
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            CHECK(period_start <= period_end),
+                            UNIQUE(user_id, name, period_start, period_end)
+                        );
+
+                        CREATE INDEX idx_pola_kekalahan_user_period
+                            ON pola_kekalahan(user_id, period_end DESC, period_start DESC);
+                        CREATE INDEX idx_pola_kekalahan_user_severity
+                            ON pola_kekalahan(user_id, severity, loss_percentage DESC);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=4")
+                    version = 4
+            if version < 5:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE diagnostic_recommendation_statuses (
+                            user_id TEXT NOT NULL,
+                            recommendation_id TEXT NOT NULL,
+                            status TEXT NOT NULL CHECK(status = 'APPLIED'),
+                            applied_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            PRIMARY KEY(user_id, recommendation_id)
+                        );
+
+                        CREATE INDEX idx_recommendation_statuses_user_updated
+                            ON diagnostic_recommendation_statuses(user_id, updated_at DESC);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=5")
+                    version = 5
+            if version < 6:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE diagnostic_recommendations (
+                            id TEXT PRIMARY KEY,
+                            user_id TEXT NOT NULL,
+                            title TEXT NOT NULL,
+                            summary TEXT NOT NULL,
+                            action TEXT NOT NULL,
+                            pattern_id TEXT NOT NULL,
+                            pattern_name TEXT NOT NULL,
+                            priority TEXT NOT NULL
+                                CHECK(priority IN ('CRITICAL', 'HIGH', 'MEDIUM')),
+                            status TEXT NOT NULL
+                                CHECK(status IN ('READY', 'REVIEW', 'APPLIED')),
+                            expected_impact REAL NOT NULL
+                                CHECK(expected_impact >= 0 AND expected_impact <= 50),
+                            evidence_losses INTEGER NOT NULL CHECK(evidence_losses >= 0),
+                            confidence REAL NOT NULL CHECK(confidence >= 0 AND confidence <= 100),
+                            effort TEXT NOT NULL CHECK(effort IN ('LOW', 'MEDIUM', 'HIGH')),
+                            steps_json TEXT NOT NULL DEFAULT '[]'
+                                CHECK(json_valid(steps_json) AND json_type(steps_json) = 'array'),
+                            validation_target TEXT NOT NULL,
+                            guardrail TEXT NOT NULL,
+                            generated_at TEXT NOT NULL,
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            UNIQUE(user_id, id)
+                        );
+
+                        CREATE INDEX idx_recommendations_user_priority
+                            ON diagnostic_recommendations(user_id, priority, expected_impact DESC);
+                        CREATE INDEX idx_recommendations_user_status
+                            ON diagnostic_recommendations(user_id, status, updated_at DESC);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=6")
+                    version = 6
+            if version < 7:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE improvement_logs (
+                            id TEXT PRIMARY KEY,
+                            user_id TEXT NOT NULL,
+                            recommendation_id TEXT NOT NULL,
+                            title TEXT NOT NULL,
+                            change_description TEXT NOT NULL,
+                            status TEXT NOT NULL CHECK(status IN (
+                                'PLANNED', 'APPLIED', 'MONITORING', 'VALIDATED'
+                            )),
+                            baseline_loss_rate REAL NOT NULL
+                                CHECK(baseline_loss_rate >= 0 AND baseline_loss_rate <= 100),
+                            target_loss_rate REAL NOT NULL
+                                CHECK(target_loss_rate >= 0 AND target_loss_rate <= 100),
+                            current_loss_rate REAL
+                                CHECK(current_loss_rate IS NULL OR (
+                                    current_loss_rate >= 0 AND current_loss_rate <= 100
+                                )),
+                            validation_start TEXT,
+                            validation_end TEXT,
+                            applied_at TEXT,
+                            owner TEXT NOT NULL,
+                            notes TEXT,
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            CHECK(validation_start IS NULL OR validation_end IS NULL
+                                OR validation_start <= validation_end),
+                            UNIQUE(user_id, id)
+                        );
+
+                        CREATE INDEX idx_improvement_logs_user_status
+                            ON improvement_logs(user_id, status, updated_at DESC);
+                        CREATE INDEX idx_improvement_logs_user_applied
+                            ON improvement_logs(user_id, applied_at DESC, created_at DESC);
+                        CREATE INDEX idx_improvement_logs_user_recommendation
+                            ON improvement_logs(user_id, recommendation_id, updated_at DESC);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=7")
 
     @property
     def schema_version(self) -> int:
@@ -334,6 +473,450 @@ class DiagnosticsStore:
                 (preset_id, user_id),
             )
         return cursor.rowcount == 1
+
+    def recommendation_statuses(self, user_id: str) -> dict[str, str]:
+        """Return persisted status overrides for one user's recommendations."""
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT recommendation_id, status
+                FROM diagnostic_recommendation_statuses WHERE user_id = ?""",
+                (user_id,),
+            ).fetchall()
+        return {str(row["recommendation_id"]): str(row["status"]) for row in rows}
+
+    def improvement_timeline(
+        self, user_id: str, *, limit: int = 50,
+    ) -> list[dict[str, object]]:
+        """Return one user's improvement lifecycle, newest evidence first."""
+        safe_limit = max(1, min(limit, 200))
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT id, recommendation_id, title, change_description, status,
+                    COALESCE(applied_at, updated_at) AS occurred_at, owner, notes
+                FROM improvement_logs
+                WHERE user_id = ?
+                ORDER BY occurred_at DESC, updated_at DESC, id DESC
+                LIMIT ?""",
+                (user_id, safe_limit),
+            ).fetchall()
+        return [
+            {
+                "id": str(row["id"]),
+                "recommendationId": str(row["recommendation_id"]),
+                "title": str(row["title"]),
+                "description": str(row["change_description"]),
+                "status": str(row["status"]),
+                "occurredAt": str(row["occurred_at"]),
+                "owner": str(row["owner"]),
+                "evidenceNote": str(row["notes"]) if row["notes"] is not None else None,
+            }
+            for row in rows
+        ]
+
+    def improvement_loss_reduction(self, user_id: str) -> list[dict[str, object]]:
+        """Return baseline and measured loss-rate points for one user."""
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT id, baseline_loss_rate, current_loss_rate,
+                    validation_start, validation_end, applied_at, updated_at
+                FROM improvement_logs
+                WHERE user_id = ?
+                ORDER BY COALESCE(applied_at, updated_at) ASC, id ASC""",
+                (user_id,),
+            ).fetchall()
+            if not rows:
+                return []
+            points: list[dict[str, object]] = [{
+                "label": "Baseline",
+                "lossRate": float(rows[0]["baseline_loss_rate"]),
+                "tradeCount": 0,
+            }]
+            measured_index = 0
+            for row in rows:
+                if row["current_loss_rate"] is None:
+                    continue
+                measured_index += 1
+                start = row["validation_start"]
+                end = row["validation_end"]
+                trade_count = 0
+                if start is not None and end is not None:
+                    trade_count = int(self._conn.execute(
+                        """SELECT COUNT(*) FROM diagnostic_trades
+                        WHERE user_id = ? AND entry_time >= ? AND entry_time <= ?""",
+                        (user_id, start, end),
+                    ).fetchone()[0])
+                points.append({
+                    "label": f"Change {measured_index}",
+                    "lossRate": float(row["current_loss_rate"]),
+                    "tradeCount": trade_count,
+                })
+        return points
+
+    def improvement_success_metrics(self, user_id: str) -> list[dict[str, object]]:
+        """Return deterministic target metrics for one user's improvements."""
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT id, title, baseline_loss_rate, target_loss_rate,
+                    current_loss_rate, status, validation_end
+                FROM improvement_logs
+                WHERE user_id = ?
+                ORDER BY COALESCE(validation_end, updated_at) DESC, id ASC""",
+                (user_id,),
+            ).fetchall()
+        metrics: list[dict[str, object]] = []
+        for row in rows:
+            baseline = float(row["baseline_loss_rate"])
+            target = float(row["target_loss_rate"])
+            current_value = row["current_loss_rate"]
+            current = float(current_value) if current_value is not None else None
+            if current is None:
+                progress = 0.0
+                metric_status = "AT_RISK"
+                detail = "No measured result is available for the validation window."
+                current_label = "Not measured"
+            else:
+                denominator = baseline - target
+                progress = round(max(0.0, min(100.0, (baseline - current) / denominator * 100)), 2) if denominator > 0 else 100.0 if current <= target else 0.0
+                metric_status = "ACHIEVED" if current <= target else "ON_TRACK" if current < baseline else "AT_RISK"
+                detail = "Target reached in the latest validation measurement." if metric_status == "ACHIEVED" else "Loss rate is improving toward the target." if metric_status == "ON_TRACK" else "Loss rate has not improved against the baseline."
+                current_label = f"{current:g}%"
+            metrics.append({
+                "id": f"metric_{row['id']}",
+                "label": str(row["title"]),
+                "current": current_label,
+                "target": f"< {target:g}%",
+                "progress": progress,
+                "status": metric_status,
+                "detail": detail,
+            })
+        return metrics
+
+    def improvement_activity_log(
+        self, user_id: str, *, limit: int = 50,
+    ) -> list[dict[str, object]]:
+        """Return latest user-scoped improvement audit activity."""
+        safe_limit = max(1, min(limit, 200))
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT id, recommendation_id, title, status, current_loss_rate,
+                    notes, owner, updated_at
+                FROM improvement_logs
+                WHERE user_id = ?
+                ORDER BY updated_at DESC, id DESC
+                LIMIT ?""",
+                (user_id, safe_limit),
+            ).fetchall()
+        activities: list[dict[str, object]] = []
+        for row in rows:
+            if row["current_loss_rate"] is not None:
+                activity_type = "EVIDENCE"
+                message = (
+                    f"Recorded {float(row['current_loss_rate']):g}% current loss rate "
+                    f"for {row['title']}."
+                )
+            elif row["notes"] is not None:
+                activity_type = "NOTE"
+                message = str(row["notes"])
+            else:
+                activity_type = "STATUS_CHANGE"
+                message = f"Updated {row['title']} status to {row['status']}."
+            activities.append({
+                "id": f"activity_{row['id']}",
+                "type": activity_type,
+                "message": message,
+                "actor": str(row["owner"]),
+                "occurredAt": str(row["updated_at"]),
+                "recommendationId": str(row["recommendation_id"]),
+            })
+        return activities
+
+    def set_recommendation_applied(
+        self, user_id: str, recommendation_id: str, applied: bool,
+    ) -> None:
+        """Persist or clear one user-scoped APPLIED recommendation override."""
+        with self._lock, self._conn:
+            if not applied:
+                self._conn.execute(
+                    """DELETE FROM diagnostic_recommendation_statuses
+                    WHERE user_id = ? AND recommendation_id = ?""",
+                    (user_id, recommendation_id),
+                )
+                return
+            now = datetime.now(timezone.utc).isoformat()
+            self._conn.execute(
+                """INSERT INTO diagnostic_recommendation_statuses
+                    (user_id, recommendation_id, status, applied_at, updated_at)
+                VALUES (?, ?, 'APPLIED', ?, ?)
+                ON CONFLICT(user_id, recommendation_id) DO UPDATE SET
+                    status='APPLIED', updated_at=excluded.updated_at""",
+                (user_id, recommendation_id, now, now),
+            )
+
+    def replace_recommendations(
+        self,
+        user_id: str,
+        generated_at: str,
+        recommendations: list[dict[str, object]],
+    ) -> None:
+        """Atomically replace one user's generated recommendation snapshot."""
+        with self._lock, self._conn:
+            existing_created = {
+                str(row["id"]): str(row["created_at"])
+                for row in self._conn.execute(
+                    "SELECT id, created_at FROM diagnostic_recommendations WHERE user_id = ?",
+                    (user_id,),
+                ).fetchall()
+            }
+            self._conn.execute(
+                "DELETE FROM diagnostic_recommendations WHERE user_id = ?",
+                (user_id,),
+            )
+            self._conn.executemany(
+                """INSERT INTO diagnostic_recommendations (
+                    id, user_id, title, summary, action, pattern_id, pattern_name,
+                    priority, status, expected_impact, evidence_losses, confidence,
+                    effort, steps_json, validation_target, guardrail, generated_at,
+                    created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                [
+                    (
+                        recommendation["id"], user_id, recommendation["title"],
+                        recommendation["summary"], recommendation["action"],
+                        recommendation["patternId"], recommendation["patternName"],
+                        recommendation["priority"], recommendation["status"],
+                        recommendation["expectedImpact"], recommendation["evidenceLosses"],
+                        recommendation["confidence"], recommendation["effort"],
+                        json.dumps(recommendation["steps"], ensure_ascii=False),
+                        recommendation["validationTarget"], recommendation["guardrail"],
+                        generated_at,
+                        existing_created.get(str(recommendation["id"]), generated_at),
+                        generated_at,
+                    )
+                    for recommendation in recommendations
+                ],
+            )
+
+    def persisted_recommendations(self, user_id: str) -> list[dict[str, object]]:
+        """Return persisted recommendations in deterministic priority order."""
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT * FROM diagnostic_recommendations
+                WHERE user_id = ?
+                ORDER BY CASE priority
+                    WHEN 'CRITICAL' THEN 0 WHEN 'HIGH' THEN 1 ELSE 2 END,
+                    expected_impact DESC, confidence DESC, title ASC""",
+                (user_id,),
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    def loss_pattern_analysis(self, user_id: str) -> dict[str, object]:
+        """Return the latest persisted loss-pattern snapshot for one user."""
+        with self._lock:
+            latest_period = self._conn.execute(
+                """SELECT period_start, period_end, MAX(generated_at) AS generated_at
+                FROM pola_kekalahan
+                WHERE user_id = ?
+                GROUP BY period_start, period_end
+                ORDER BY period_end DESC, period_start DESC, generated_at DESC
+                LIMIT 1""",
+                (user_id,),
+            ).fetchone()
+            if latest_period is None:
+                return {
+                    "summary": {
+                        "totalLosses": 0,
+                        "classifiedLosses": 0,
+                        "lossesClassifiedPct": 0.0,
+                    },
+                    "patterns": [],
+                    "insight": {
+                        "title": "No patterns detected",
+                        "detail": "No persisted loss-pattern analysis is available for this period.",
+                    },
+                    "generatedAt": datetime.now(timezone.utc).isoformat(),
+                }
+
+            period_start = str(latest_period["period_start"])
+            period_end = str(latest_period["period_end"])
+            rows = self._conn.execute(
+                """SELECT id, name, category, description, loss_count,
+                    loss_percentage, confidence, severity, evidence_trade_ids_json,
+                    trend_delta, generated_at
+                FROM pola_kekalahan
+                WHERE user_id = ? AND period_start = ? AND period_end = ?
+                ORDER BY loss_percentage DESC, confidence DESC, name ASC""",
+                (user_id, period_start, period_end),
+            ).fetchall()
+            total_row = self._conn.execute(
+                """SELECT COUNT(*) AS total
+                FROM diagnostic_trades
+                WHERE user_id = ? AND result = 'SL'
+                    AND entry_time >= ? AND entry_time <= ?""",
+                (user_id, period_start, period_end),
+            ).fetchone()
+
+        total_losses = int(total_row["total"] or 0)
+        classified_losses = min(sum(int(row["loss_count"]) for row in rows), total_losses)
+        patterns = [
+            {
+                "id": str(row["id"]),
+                "name": str(row["name"]),
+                "category": str(row["category"]),
+                "description": str(row["description"]),
+                "lossCount": int(row["loss_count"]),
+                "lossPercentage": float(row["loss_percentage"]),
+                "confidence": float(row["confidence"]),
+                "severity": str(row["severity"]),
+                "evidenceTradeIds": json.loads(str(row["evidence_trade_ids_json"])),
+                "trendDelta": float(row["trend_delta"]),
+            }
+            for row in rows
+        ]
+        dominant = patterns[0]
+        return {
+            "summary": {
+                "totalLosses": total_losses,
+                "classifiedLosses": classified_losses,
+                "lossesClassifiedPct": round(classified_losses / total_losses * 100, 2)
+                if total_losses else 0.0,
+            },
+            "patterns": patterns,
+            "insight": {
+                "title": "Primary evidence",
+                "detail": (
+                    f"{dominant['name']} is the dominant persisted pattern, accounting for "
+                    f"{dominant['lossPercentage']:g}% of losses in the latest analysis period."
+                ),
+            },
+            "generatedAt": max(str(row["generated_at"]) for row in rows),
+        }
+
+    def loss_snapshots(
+        self, user_id: str, period_start: str, period_end: str,
+    ) -> list[dict[str, object]]:
+        """Return loss snapshots used as evidence for one analysis period."""
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT id, direction, trend_status, ema_alignment, rsi_value,
+                    volume_status, market_regime, trading_session
+                FROM diagnostic_trades
+                WHERE user_id = ? AND result = 'SL'
+                    AND entry_time >= ? AND entry_time <= ?
+                ORDER BY entry_time ASC, id ASC""",
+                (user_id, period_start, period_end),
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    def loss_user_ids(self, period_start: str, period_end: str) -> list[str]:
+        """Return users with losses in a period, ordered for deterministic jobs."""
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT DISTINCT user_id
+                FROM diagnostic_trades
+                WHERE result = 'SL' AND entry_time >= ? AND entry_time <= ?
+                ORDER BY user_id ASC""",
+                (period_start, period_end),
+            ).fetchall()
+        return [str(row["user_id"]) for row in rows]
+
+    def replace_loss_patterns(
+        self,
+        user_id: str,
+        period_start: str,
+        period_end: str,
+        generated_at: str,
+        patterns: list[dict[str, object]],
+    ) -> None:
+        """Atomically replace one user's persisted pattern snapshot for a period."""
+        with self._lock, self._conn:
+            self._conn.execute(
+                """DELETE FROM pola_kekalahan
+                WHERE user_id = ? AND period_start = ? AND period_end = ?""",
+                (user_id, period_start, period_end),
+            )
+            self._conn.executemany(
+                """INSERT INTO pola_kekalahan (
+                    id, user_id, name, category, description, loss_count,
+                    loss_percentage, confidence, severity, evidence_trade_ids_json,
+                    trend_delta, period_start, period_end, generated_at, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                [
+                    (
+                        pattern["id"], user_id, pattern["name"], pattern["category"],
+                        pattern["description"], pattern["loss_count"],
+                        pattern["loss_percentage"], pattern["confidence"],
+                        pattern["severity"], json.dumps(pattern["evidence_trade_ids"]),
+                        pattern["trend_delta"], period_start, period_end, generated_at,
+                        generated_at, generated_at,
+                    )
+                    for pattern in patterns
+                ],
+            )
+
+    def compare_loss_pattern_periods(
+        self,
+        user_id: str,
+        current_start: str,
+        current_end: str,
+        baseline_start: str,
+        baseline_end: str,
+    ) -> dict[str, object]:
+        """Compare persisted pattern shares across two explicit user-scoped periods."""
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT id, name, category, description, loss_count, loss_percentage,
+                    confidence, severity, evidence_trade_ids_json, period_start, period_end
+                FROM pola_kekalahan
+                WHERE user_id = ? AND (
+                    (period_start = ? AND period_end = ?)
+                    OR (period_start = ? AND period_end = ?)
+                )""",
+                (user_id, current_start, current_end, baseline_start, baseline_end),
+            ).fetchall()
+
+        current = {
+            str(row["name"]): row
+            for row in rows
+            if row["period_start"] == current_start and row["period_end"] == current_end
+        }
+        baseline = {
+            str(row["name"]): row
+            for row in rows
+            if row["period_start"] == baseline_start and row["period_end"] == baseline_end
+        }
+        patterns: list[dict[str, object]] = []
+        counts = {"improving": 0, "worsening": 0, "stable": 0}
+        for name in sorted(set(current) | set(baseline)):
+            current_row = current.get(name)
+            baseline_row = baseline.get(name)
+            source = current_row or baseline_row
+            current_share = float(current_row["loss_percentage"]) if current_row else 0.0
+            baseline_share = float(baseline_row["loss_percentage"]) if baseline_row else 0.0
+            delta = round(current_share - baseline_share, 2)
+            status = "worsening" if delta > 0 else "improving" if delta < 0 else "stable"
+            counts[status] += 1
+            patterns.append({
+                "id": str(source["id"]),
+                "name": name,
+                "category": str(source["category"]),
+                "description": str(source["description"]),
+                "currentLossCount": int(current_row["loss_count"]) if current_row else 0,
+                "currentShare": current_share,
+                "baselineLossCount": int(baseline_row["loss_count"]) if baseline_row else 0,
+                "baselineShare": baseline_share,
+                "deltaPercentagePoints": delta,
+                "status": status,
+                "confidence": float(source["confidence"]),
+                "severity": str(source["severity"]),
+                "evidenceTradeIds": json.loads(str(source["evidence_trade_ids_json"])),
+            })
+        patterns.sort(key=lambda item: (-abs(float(item["deltaPercentagePoints"])), str(item["name"])))
+        return {
+            "currentPeriod": {"start": current_start, "end": current_end},
+            "baselinePeriod": {"start": baseline_start, "end": baseline_end},
+            "summary": counts,
+            "patterns": patterns,
+        }
 
     def quick_insight(self, user_id: str) -> dict[str, str | int | float] | None:
         """Return a deterministic insight from the dominant diagnosed loss."""

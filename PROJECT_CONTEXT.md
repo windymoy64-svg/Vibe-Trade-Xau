@@ -12,9 +12,9 @@ Membangun aplikasi **Production Strategy Diagnostics** terintegrasi di dalam eko
 
 ## Struktur Folder
 - `/frontend`: Aplikasi client-side React.
-  - `/src/pages`: Halaman utama (`DiagnosticsDashboard`, `DiagnosticTrades`, `DiagnosticTradeDetail`, `DiagnosticFilters`).
-  - `/src/components/diagnostics`: Komponen reusable (`CommonCauseStats`, `SuspectedCauseChart`, `RecentTrades`, `QuickInsight`, `MarketRegimeFilter`, `TradingSessionFilter`, `TechnicalIndicatorFilter`).
-  - `/src/data`: Modul fallback data tiruan (`diagnostics-dashboard`, `diagnostic-trades`).
+  - `/src/pages`: Halaman utama (`DiagnosticsDashboard`, `DiagnosticTrades`, `DiagnosticTradeDetail`, `DiagnosticFilters`, `LossPatternAnalysis`, `LossPatternsCompare`, `DiagnosticRecommendations`, `DiagnosticRecommendationDetail`, `DiagnosticImprovementProgress`, `DiagnosticAuth`, `DiagnosticProfileSettings`, `DiagnosticDataSources`, `DiagnosticNotificationSettings`).
+  - `/src/components/diagnostics`: Komponen reusable (`CommonCauseStats`, `SuspectedCauseChart`, `RecentTrades`, `QuickInsight`, `MarketRegimeFilter`, `TradingSessionFilter`, `TechnicalIndicatorFilter`, `RecommendationCard`, `RecommendationSteps`, `PrioritizedRecommendations`, `LossPatternSummary`, `ImprovementTimeline`, `LossReductionChart`, `SuccessMetrics`, `ImprovementActivityLog`, `ImprovementReportExport`, `DiagnosticNotifications`).
+  - `/src/data`: Modul fallback data tiruan (`diagnostics-dashboard`, `diagnostic-trades`, `loss-patterns`, `diagnostic-recommendations`, `diagnostic-improvements`, `diagnostic-profile`, `diagnostic-data-sources`).
 - `/agent`: Service backend Python.
   - `/src/diagnostics`: Modul engine & SQLite store (`store.py`).
   - `/src/api`: Route API FastAPI (`diagnostics_routes.py`).
@@ -24,4 +24,4 @@ Membangun aplikasi **Production Strategy Diagnostics** terintegrasi di dalam eko
 1. **Pemisahan Layer (Frontend-First)**: UI dibangun lengkap terlebih dahulu dengan modular stub data tiruan yang memiliki visualisasi responsif, disusul dengan implementasi API backend yang mengikat data riil tersebut.
 2. **Konektivitas Fleksibel**: Frontend menggunakan callback fetch async yang otomatis mendeteksi ketersediaan API backend. Jika offline/error, UI akan secara halus menggunakan Preview Data dan menandainya dengan badge agar testing frontend tidak terhambat.
 3. **Penyimpanan SQLite Sederhana**: Database diagnostics menggunakan file SQLite terpisah (`diagnostics.db`) yang dialokasikan di folder home user `.vibe-trading` agar portabel dan aman.
-4. **Idempotensi Migrasi**: Migrasi database ditulis dalam script SQL terisolasi yang naik bertahap berdasarkan cek versi `user_version` saat inisialisasi class `DiagnosticsStore`.
+4. **Idempotensi Migrasi**: Migrasi database ditulis dalam script SQL terisolasi yang naik bertahap berdasarkan cek versi `user_version` saat inisialisasi class `DiagnosticsStore`; schema diagnostics kini v7 dengan tabel `improvement_logs`.

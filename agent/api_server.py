@@ -151,6 +151,10 @@ from src.api.scheduled_routes import (  # noqa: E402
     _start_scheduled_research_executor,
     _stop_scheduled_research_executor,
 )
+from src.diagnostics.pattern_job import (  # noqa: E402
+    start_pattern_refresh_job,
+    stop_pattern_refresh_job,
+)
 
 
 @app.on_event("startup")
@@ -160,6 +164,7 @@ async def _run_startup_preflight() -> None:
 
     run_preflight(console)
     _start_scheduled_research_executor()
+    start_pattern_refresh_job()
     from src.config.accessor import get_env_config
 
     if get_env_config().agent_tuning.vibe_trading_channels_auto_start:
@@ -170,6 +175,7 @@ async def _run_startup_preflight() -> None:
 async def _stop_scheduled_research_on_shutdown() -> None:
     """Stop the scheduled research executor on server shutdown."""
     await _stop_channel_runtime()
+    await stop_pattern_refresh_job()
     await _stop_scheduled_research_executor()
 
 
