@@ -6,13 +6,64 @@ import sqlite3
 import threading
 import json
 import uuid
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
 from src.config.accessor import get_env_or
 
 _DEFAULT_DB_PATH = Path.home() / ".vibe-trading" / "diagnostics.db"
-_SCHEMA_VERSION = 7
+_SCHEMA_VERSION = 11
+
+
+@dataclass(frozen=True, slots=True)
+class DiagnosticUser:
+    """Typed representation of one persisted diagnostics account."""
+
+    id: str
+    email: str
+    name: str
+    password_hash: str
+    role: str
+    timezone: str
+    trading_focus: str
+    bio: str
+    created_at: str
+    updated_at: str
+    last_active_at: str
+
+
+@dataclass(frozen=True, slots=True)
+class DiagnosticDataSource:
+    """Typed metadata for one user's diagnostic evidence source."""
+
+    id: str
+    user_id: str
+    name: str
+    source_type: str
+    description: str
+    status: str
+    last_sync_at: str | None
+    imported_trades: int
+    coverage_json: str
+    created_at: str
+    updated_at: str
+
+
+@dataclass(frozen=True, slots=True)
+class DiagnosticNotification:
+    """Typed in-app diagnostic notification for one user."""
+
+    id: str
+    user_id: str
+    notification_type: str
+    title: str
+    detail: str
+    href: str
+    is_read: bool
+    read_at: str | None
+    created_at: str
+    updated_at: str
 
 
 def _default_db_path() -> Path:
@@ -258,6 +309,131 @@ class DiagnosticsStore:
                         """
                     )
                     self._conn.execute("PRAGMA user_version=7")
+                    version = 7
+            if version < 8:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE users (
+                            id TEXT PRIMARY KEY CHECK(length(trim(id)) BETWEEN 1 AND 128),
+                            email TEXT NOT NULL COLLATE NOCASE UNIQUE
+                                CHECK(length(trim(email)) BETWEEN 3 AND 254
+                                    AND instr(email, '@') > 1),
+                            name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 2 AND 120),
+                            password_hash TEXT NOT NULL CHECK(length(password_hash) BETWEEN 32 AND 512),
+                            role TEXT NOT NULL DEFAULT '' CHECK(length(role) <= 120),
+                            timezone TEXT NOT NULL DEFAULT 'UTC'
+                                CHECK(length(trim(timezone)) BETWEEN 1 AND 64),
+                            trading_focus TEXT NOT NULL DEFAULT '' CHECK(length(trading_focus) <= 120),
+                            bio TEXT NOT NULL DEFAULT '' CHECK(length(bio) <= 240),
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            last_active_at TEXT NOT NULL
+                        );
+
+                        CREATE INDEX idx_users_updated_at
+                            ON users(updated_at DESC, id);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=8")
+                    version = 8
+            if version < 9:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE data_sources (
+                            id TEXT NOT NULL CHECK(length(trim(id)) BETWEEN 1 AND 128),
+                            user_id TEXT NOT NULL,
+                            name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 120),
+                            source_type TEXT NOT NULL
+                                CHECK(length(trim(source_type)) BETWEEN 1 AND 80),
+                            description TEXT NOT NULL DEFAULT '' CHECK(length(description) <= 500),
+                            status TEXT NOT NULL CHECK(status IN (
+                                'CONNECTED', 'AVAILABLE', 'ATTENTION'
+                            )),
+                            last_sync_at TEXT,
+                            imported_trades INTEGER NOT NULL DEFAULT 0
+                                CHECK(imported_trades >= 0),
+                            coverage_json TEXT NOT NULL DEFAULT '[]'
+                                CHECK(json_valid(coverage_json)
+                                    AND json_type(coverage_json) = 'array'),
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            PRIMARY KEY(user_id, id),
+                            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+                        );
+
+                        CREATE INDEX idx_data_sources_user_status
+                            ON data_sources(user_id, status, updated_at DESC);
+                        CREATE INDEX idx_data_sources_user_sync
+                            ON data_sources(user_id, last_sync_at DESC);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=9")
+                    version = 9
+            if version < 10:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE notifications (
+                            id TEXT NOT NULL CHECK(length(trim(id)) BETWEEN 1 AND 128),
+                            user_id TEXT NOT NULL,
+                            notification_type TEXT NOT NULL CHECK(notification_type IN (
+                                'PATTERN', 'RECOMMENDATION', 'VALIDATION'
+                            )),
+                            title TEXT NOT NULL CHECK(length(trim(title)) BETWEEN 1 AND 160),
+                            detail TEXT NOT NULL CHECK(length(trim(detail)) BETWEEN 1 AND 1000),
+                            href TEXT NOT NULL CHECK(
+                                length(href) BETWEEN 1 AND 500
+                                AND substr(href, 1, 1) = '/'
+                                AND substr(href, 1, 2) <> '//'
+                            ),
+                            is_read INTEGER NOT NULL DEFAULT 0 CHECK(is_read IN (0, 1)),
+                            read_at TEXT,
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            PRIMARY KEY(user_id, id),
+                            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+                            CHECK((is_read = 0 AND read_at IS NULL)
+                                OR (is_read = 1 AND read_at IS NOT NULL))
+                        );
+
+                        CREATE INDEX idx_notifications_user_created
+                            ON notifications(user_id, created_at DESC, id);
+                        CREATE INDEX idx_notifications_user_unread
+                            ON notifications(user_id, is_read, created_at DESC);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=10")
+                    version = 10
+            if version < 11:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE notification_preferences (
+                            user_id TEXT PRIMARY KEY,
+                            in_app INTEGER NOT NULL DEFAULT 1 CHECK(in_app IN (0, 1)),
+                            email INTEGER NOT NULL DEFAULT 1 CHECK(email IN (0, 1)),
+                            mobile INTEGER NOT NULL DEFAULT 0 CHECK(mobile IN (0, 1)),
+                            critical_patterns INTEGER NOT NULL DEFAULT 1 CHECK(critical_patterns IN (0, 1)),
+                            recommendations INTEGER NOT NULL DEFAULT 1 CHECK(recommendations IN (0, 1)),
+                            validation_results INTEGER NOT NULL DEFAULT 1 CHECK(validation_results IN (0, 1)),
+                            source_health INTEGER NOT NULL DEFAULT 1 CHECK(source_health IN (0, 1)),
+                            weekly_digest INTEGER NOT NULL DEFAULT 0 CHECK(weekly_digest IN (0, 1)),
+                            quiet_hours INTEGER NOT NULL DEFAULT 1 CHECK(quiet_hours IN (0, 1)),
+                            quiet_start TEXT NOT NULL DEFAULT '22:00'
+                                CHECK(quiet_start GLOB '[0-2][0-9]:[0-5][0-9]'
+                                    AND CAST(substr(quiet_start, 1, 2) AS INTEGER) <= 23),
+                            quiet_end TEXT NOT NULL DEFAULT '07:00'
+                                CHECK(quiet_end GLOB '[0-2][0-9]:[0-5][0-9]'
+                                    AND CAST(substr(quiet_end, 1, 2) AS INTEGER) <= 23),
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+                        );
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=11")
 
     @property
     def schema_version(self) -> int:
@@ -267,6 +443,170 @@ class DiagnosticsStore:
     def close(self) -> None:
         with self._lock:
             self._conn.close()
+
+    def notification_preferences(self, user_id: str) -> dict[str, object] | None:
+        """Return persisted preferences or frontend-compatible defaults for an existing user."""
+        defaults: dict[str, object] = {
+            "inApp": True, "email": True, "mobile": False,
+            "criticalPatterns": True, "recommendations": True,
+            "validationResults": True, "sourceHealth": True,
+            "weeklyDigest": False, "quietHours": True,
+            "quietStart": "22:00", "quietEnd": "07:00",
+        }
+        with self._lock:
+            if self._conn.execute("SELECT 1 FROM users WHERE id = ?", (user_id,)).fetchone() is None:
+                return None
+            row = self._conn.execute(
+                "SELECT * FROM notification_preferences WHERE user_id = ?", (user_id,)
+            ).fetchone()
+        if row is None:
+            return defaults
+        return {
+            "inApp": bool(row["in_app"]), "email": bool(row["email"]),
+            "mobile": bool(row["mobile"]), "criticalPatterns": bool(row["critical_patterns"]),
+            "recommendations": bool(row["recommendations"]),
+            "validationResults": bool(row["validation_results"]),
+            "sourceHealth": bool(row["source_health"]),
+            "weeklyDigest": bool(row["weekly_digest"]), "quietHours": bool(row["quiet_hours"]),
+            "quietStart": str(row["quiet_start"]), "quietEnd": str(row["quiet_end"]),
+        }
+
+    def save_notification_preferences(self, user_id: str, values: dict[str, object]) -> dict[str, object] | None:
+        """Upsert one user's complete notification preference document."""
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with self._lock, self._conn:
+            if self._conn.execute("SELECT 1 FROM users WHERE id = ?", (user_id,)).fetchone() is None:
+                return None
+            self._conn.execute(
+                """INSERT INTO notification_preferences (
+                    user_id, in_app, email, mobile, critical_patterns, recommendations,
+                    validation_results, source_health, weekly_digest, quiet_hours,
+                    quiet_start, quiet_end, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(user_id) DO UPDATE SET
+                    in_app=excluded.in_app, email=excluded.email, mobile=excluded.mobile,
+                    critical_patterns=excluded.critical_patterns,
+                    recommendations=excluded.recommendations,
+                    validation_results=excluded.validation_results,
+                    source_health=excluded.source_health, weekly_digest=excluded.weekly_digest,
+                    quiet_hours=excluded.quiet_hours, quiet_start=excluded.quiet_start,
+                    quiet_end=excluded.quiet_end, updated_at=excluded.updated_at""",
+                (
+                    user_id, int(bool(values["inApp"])), int(bool(values["email"])),
+                    int(bool(values["mobile"])), int(bool(values["criticalPatterns"])),
+                    int(bool(values["recommendations"])), int(bool(values["validationResults"])),
+                    int(bool(values["sourceHealth"])), int(bool(values["weeklyDigest"])),
+                    int(bool(values["quietHours"])), values["quietStart"], values["quietEnd"], now, now,
+                ),
+            )
+        return self.notification_preferences(user_id)
+
+    def connect_data_source(
+        self,
+        *,
+        user_id: str,
+        source_id: str,
+        name: str,
+        source_type: str,
+        description: str,
+        coverage: list[str],
+    ) -> dict[str, object] | None:
+        """Create or reconnect source metadata without storing connector credentials."""
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        coverage_json = json.dumps(coverage, separators=(",", ":"))
+        with self._lock, self._conn:
+            user_exists = self._conn.execute(
+                "SELECT 1 FROM users WHERE id = ?",
+                (user_id,),
+            ).fetchone()
+            if user_exists is None:
+                return None
+            self._conn.execute(
+                """INSERT INTO data_sources (
+                    id, user_id, name, source_type, description, status,
+                    last_sync_at, imported_trades, coverage_json, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, 'CONNECTED', NULL, 0, ?, ?, ?)
+                ON CONFLICT(user_id, id) DO UPDATE SET
+                    name = excluded.name,
+                    source_type = excluded.source_type,
+                    description = excluded.description,
+                    status = 'CONNECTED',
+                    coverage_json = excluded.coverage_json,
+                    updated_at = excluded.updated_at""",
+                (
+                    source_id, user_id, name, source_type, description,
+                    coverage_json, now, now,
+                ),
+            )
+            row = self._conn.execute(
+                """SELECT id, user_id, name, source_type, description, status,
+                    last_sync_at, imported_trades, coverage_json, created_at, updated_at
+                FROM data_sources WHERE user_id = ? AND id = ?""",
+                (user_id, source_id),
+            ).fetchone()
+        if row is None:  # pragma: no cover - INSERT/SELECT are atomic under the lock
+            return None
+        return {
+            "id": str(row["id"]),
+            "userId": str(row["user_id"]),
+            "name": str(row["name"]),
+            "type": str(row["source_type"]),
+            "description": str(row["description"]),
+            "status": str(row["status"]),
+            "lastSyncAt": row["last_sync_at"],
+            "importedTrades": int(row["imported_trades"]),
+            "coverage": json.loads(str(row["coverage_json"])),
+            "createdAt": str(row["created_at"]),
+            "updatedAt": str(row["updated_at"]),
+        }
+
+    def import_csv_trades(
+        self,
+        user_id: str,
+        trades: list[dict[str, object]],
+    ) -> dict[str, int] | None:
+        """Atomically import validated CSV trades and update CSV-source metrics."""
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        imported = 0
+        with self._lock, self._conn:
+            if self._conn.execute("SELECT 1 FROM users WHERE id = ?", (user_id,)).fetchone() is None:
+                return None
+            for trade in trades:
+                cursor = self._conn.execute(
+                    """INSERT OR IGNORE INTO diagnostic_trades (
+                        id, user_id, ticket_id, pair, direction, trend_status,
+                        ema_alignment, rsi_value, atr_value, volume_status,
+                        market_regime, trading_session, result, suspected_reason,
+                        profit_loss, entry_time, entry_price, exit_price, exit_time,
+                        created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (
+                        str(uuid.uuid4()), user_id, trade["ticket_id"], trade["pair"],
+                        trade["direction"], trade["trend_status"], trade["ema_alignment"],
+                        trade["rsi_value"], trade["atr_value"], trade["volume_status"],
+                        trade["market_regime"], trade["trading_session"], trade["result"],
+                        trade["suspected_reason"], trade["profit_loss"], trade["entry_time"],
+                        trade["entry_price"], trade["exit_price"], trade["exit_time"], now, now,
+                    ),
+                )
+                imported += max(0, cursor.rowcount)
+            self._conn.execute(
+                """INSERT INTO data_sources (
+                    id, user_id, name, source_type, description, status, last_sync_at,
+                    imported_trades, coverage_json, created_at, updated_at
+                ) VALUES (
+                    'csv', ?, 'CSV trade import', 'File upload',
+                    'Imported diagnostic trade history', 'CONNECTED', ?, ?,
+                    '["Historical trades","Entry snapshots","Suspected reason"]', ?, ?
+                )
+                ON CONFLICT(user_id, id) DO UPDATE SET
+                    status = 'CONNECTED',
+                    last_sync_at = excluded.last_sync_at,
+                    imported_trades = data_sources.imported_trades + excluded.imported_trades,
+                    updated_at = excluded.updated_at""",
+                (user_id, now, imported, now, now),
+            )
+        return {"imported": imported, "skipped": len(trades) - imported}
 
     def performance_summary(self, user_id: str) -> dict[str, int | float]:
         """Return the basic win/loss aggregate for one user."""

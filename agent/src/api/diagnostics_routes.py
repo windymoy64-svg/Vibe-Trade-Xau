@@ -5,10 +5,11 @@ from __future__ import annotations
 import csv
 import html
 import io
+from datetime import datetime
 from typing import Any, Literal
 
-from fastapi import Depends, HTTPException, Query, Response
-from pydantic import BaseModel
+from fastapi import Depends, File, Form, HTTPException, Query, Response, UploadFile
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from src.api.security import require_local_or_auth
 from src.diagnostics.store import DiagnosticsStore
@@ -198,6 +199,134 @@ class SaveDiagnosticFilterRequest(BaseModel):
     user_id: str = "default"
     name: str
     criteria: dict[str, object]
+
+
+class ConnectDataSourceRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    user_id: str = Field(min_length=1, max_length=128)
+    id: str = Field(min_length=1, max_length=128, pattern=r"^[a-z0-9][a-z0-9_-]*$")
+    name: str = Field(min_length=1, max_length=120)
+    type: str = Field(min_length=1, max_length=80)
+    description: str = Field(default="", max_length=500)
+    coverage: list[str] = Field(default_factory=list, max_length=32)
+
+    @field_validator("name", "type", "description")
+    @classmethod
+    def strip_text(cls, value: str) -> str:
+        return value.strip()
+
+    @field_validator("coverage")
+    @classmethod
+    def validate_coverage(cls, values: list[str]) -> list[str]:
+        normalized: list[str] = []
+        for value in values:
+            item = value.strip()
+            if not item or len(item) > 80:
+                raise ValueError("coverage items must be 1-80 characters")
+            if item not in normalized:
+                normalized.append(item)
+        return normalized
+
+
+class DataSourceResponse(BaseModel):
+    id: str
+    userId: str
+    name: str
+    type: str
+    description: str
+    status: Literal["CONNECTED", "AVAILABLE", "ATTENTION"]
+    lastSyncAt: str | None
+    importedTrades: int
+    coverage: list[str]
+    createdAt: str
+    updatedAt: str
+
+
+class CsvTradeImportResponse(BaseModel):
+    imported: int
+    skipped: int
+    totalRows: int
+    sourceId: str
+
+
+_CSV_MAX_BYTES = 5 * 1024 * 1024
+_CSV_MAX_ROWS = 10_000
+_CSV_REQUIRED_COLUMNS = {
+    "ticket_id", "pair", "entry_time", "direction", "result", "market_regime",
+    "trading_session", "trend_status", "ema_alignment", "rsi_value", "atr_value",
+    "volume_status",
+}
+
+
+def _csv_optional_float(row: dict[str, str], key: str, row_number: int) -> float | None:
+    raw = (row.get(key) or "").strip()
+    if not raw:
+        return None
+    try:
+        return float(raw)
+    except ValueError as exc:
+        raise ValueError(f"row {row_number}: {key} must be numeric") from exc
+
+
+def _parse_diagnostic_csv(content: bytes) -> list[dict[str, object]]:
+    try:
+        text = content.decode("utf-8-sig")
+    except UnicodeDecodeError as exc:
+        raise ValueError("CSV must use UTF-8 encoding") from exc
+    reader = csv.DictReader(io.StringIO(text, newline=""))
+    headers = {header.strip() for header in (reader.fieldnames or []) if header}
+    missing = sorted(_CSV_REQUIRED_COLUMNS - headers)
+    if missing:
+        raise ValueError(f"missing required columns: {', '.join(missing)}")
+    trades: list[dict[str, object]] = []
+    enum_fields = {
+        "direction": {"BUY", "SELL"}, "result": {"TP", "SL"},
+        "market_regime": {"TRENDING", "RANGING", "BREAKOUT"},
+        "trading_session": {"ASIA", "LONDON", "NEW_YORK"},
+        "trend_status": {"BULLISH", "BEARISH", "FLAT"},
+        "ema_alignment": {"BULLISH", "BEARISH", "MIXED"},
+        "volume_status": {"NORMAL", "HIGH", "LOW"},
+    }
+    for row_number, raw_row in enumerate(reader, start=2):
+        if len(trades) >= _CSV_MAX_ROWS:
+            raise ValueError(f"CSV exceeds {_CSV_MAX_ROWS} data rows")
+        row = {(key or "").strip(): (value or "").strip() for key, value in raw_row.items()}
+        if not any(row.values()):
+            continue
+        for key in _CSV_REQUIRED_COLUMNS:
+            if not row.get(key):
+                raise ValueError(f"row {row_number}: {key} is required")
+        for key, allowed in enum_fields.items():
+            row[key] = row[key].upper()
+            if row[key] not in allowed:
+                raise ValueError(f"row {row_number}: invalid {key}")
+        try:
+            datetime.fromisoformat(row["entry_time"].replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise ValueError(f"row {row_number}: entry_time must be ISO-8601") from exc
+        rsi = _csv_optional_float(row, "rsi_value", row_number)
+        atr = _csv_optional_float(row, "atr_value", row_number)
+        if rsi is None or not 0 <= rsi <= 100:
+            raise ValueError(f"row {row_number}: rsi_value must be between 0 and 100")
+        if atr is None or atr < 0:
+            raise ValueError(f"row {row_number}: atr_value must be non-negative")
+        trades.append({
+            "ticket_id": row["ticket_id"], "pair": row["pair"].upper(),
+            "entry_time": row["entry_time"], "direction": row["direction"],
+            "result": row["result"], "market_regime": row["market_regime"],
+            "trading_session": row["trading_session"], "trend_status": row["trend_status"],
+            "ema_alignment": row["ema_alignment"], "rsi_value": rsi, "atr_value": atr,
+            "volume_status": row["volume_status"],
+            "suspected_reason": row.get("suspected_reason") or None,
+            "profit_loss": _csv_optional_float(row, "profit_loss", row_number),
+            "entry_price": _csv_optional_float(row, "entry_price", row_number),
+            "exit_price": _csv_optional_float(row, "exit_price", row_number),
+            "exit_time": row.get("exit_time") or None,
+        })
+    if not trades:
+        raise ValueError("CSV contains no trade rows")
+    return trades
 
 
 def register_diagnostics_routes(app: Any) -> None:
@@ -559,3 +688,57 @@ def register_diagnostics_routes(app: Any) -> None:
         if not deleted:
             raise HTTPException(status_code=404, detail="Diagnostic filter not found")
         return {"deleted": True}
+
+    @app.post(
+        "/data-sources/connect",
+        response_model=DataSourceResponse,
+        dependencies=[Depends(require_local_or_auth)],
+    )
+    async def connect_data_source(payload: ConnectDataSourceRequest) -> DataSourceResponse:
+        """Register connected trading-platform metadata without accepting secrets."""
+        with DiagnosticsStore() as store:
+            source = store.connect_data_source(
+                user_id=payload.user_id,
+                source_id=payload.id,
+                name=payload.name,
+                source_type=payload.type,
+                description=payload.description,
+                coverage=payload.coverage,
+            )
+        if source is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        return DataSourceResponse(**source)
+
+    @app.post(
+        "/data-sources/csv",
+        response_model=CsvTradeImportResponse,
+        dependencies=[Depends(require_local_or_auth)],
+    )
+    async def import_diagnostic_csv(
+        user_id: str = Form(..., min_length=1, max_length=128),
+        file: UploadFile = File(...),
+    ) -> CsvTradeImportResponse:
+        """Validate and atomically import a bounded UTF-8 diagnostics CSV."""
+        filename = file.filename or ""
+        if not filename or not filename.lower().endswith(".csv"):
+            await file.close()
+            raise HTTPException(status_code=400, detail="A .csv file is required")
+        content = bytearray()
+        try:
+            while chunk := await file.read(64 * 1024):
+                content.extend(chunk)
+                if len(content) > _CSV_MAX_BYTES:
+                    raise HTTPException(status_code=413, detail="CSV exceeds the 5 MiB limit")
+        finally:
+            await file.close()
+        try:
+            trades = _parse_diagnostic_csv(bytes(content))
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        with DiagnosticsStore() as store:
+            result = store.import_csv_trades(user_id, trades)
+        if result is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        return CsvTradeImportResponse(
+            **result, totalRows=len(trades), sourceId="csv",
+        )
