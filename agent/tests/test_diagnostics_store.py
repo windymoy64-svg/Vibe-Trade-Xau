@@ -550,7 +550,7 @@ def test_v8_database_upgrades_with_data_sources_schema(tmp_path):
         store._conn.commit()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 10
+        assert store.schema_version == 11
         assert store._conn.execute(
             "SELECT name FROM data_sources WHERE id='csv' AND user_id='user_1'"
         ).fetchone()["name"] == "CSV"
@@ -683,7 +683,7 @@ def test_v9_database_upgrades_with_notifications_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 10
+        assert store.schema_version == 11
         assert store._conn.execute(
             "SELECT name FROM data_sources WHERE user_id='alice' AND id='csv'"
         ).fetchone()["name"] == "CSV"
@@ -692,7 +692,7 @@ def test_v9_database_upgrades_with_notifications_schema(tmp_path):
         ).fetchone()["name"] == "notifications"
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 10
+        assert store.schema_version == 11
         assert store._conn.execute(
             "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_notifications_user_unread'"
         ).fetchone()["name"] == "idx_notifications_user_unread"

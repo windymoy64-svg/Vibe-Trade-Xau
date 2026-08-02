@@ -56,6 +56,9 @@ const DiagnosticDataSources = lazy(() =>
 const DiagnosticNotificationSettings = lazy(() =>
   import("@/pages/DiagnosticNotificationSettings").then((m) => ({ default: m.DiagnosticNotificationSettings })),
 );
+const AutoTrade = lazy(() => import("@/pages/AutoTrade").then((m) => ({ default: m.AutoTrade })));
+const StrategyAutoSelection = lazy(() => import("@/pages/StrategyAutoSelection").then((m) => ({ default: m.StrategyAutoSelection })));
+const PrecisionExecution = lazy(() => import("@/pages/PrecisionExecution").then((m) => ({ default: m.PrecisionExecution })));
 
 function PageLoader() {
   return (
@@ -92,6 +95,9 @@ export const router = createBrowserRouter([
       { path: "/diagnostics/settings/profile", element: wrap(DiagnosticProfileSettings) },
       { path: "/diagnostics/settings/data-sources", element: wrap(DiagnosticDataSources) },
       { path: "/diagnostics/settings/notifications", element: wrap(DiagnosticNotificationSettings) },
+      { path: "/auto-trade", element: wrap(AutoTrade) },
+      { path: "/auto-trade/strategy-selection", element: wrap(StrategyAutoSelection) },
+      { path: "/precision-execution", element: wrap(PrecisionExecution) },
       { path: "/agent", element: wrap(Agent) },
       { path: "/runtime", element: wrap(Runtime) },
       { path: "/reports", element: wrap(Reports) },

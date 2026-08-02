@@ -69,13 +69,17 @@
 - `npm run dev --prefix frontend` terkena timeout tool 15 detik karena dev server adalah proses long-running, bukan karena kompilasi gagal. Jalankan command tersebut langsung di terminal pengguna untuk verifikasi browser.
 - Working tree masih memiliki perubahan belum di-commit dari rangkaian diagnostics. File untracked `patch.py` tidak disentuh pada sesi ini karena asal/kegunaannya belum terkonfirmasi.
 
-## Handoff ke Chat Baru
-1. Baca `.clinerules`, `TASKS.md`, `PROJECT_CONTEXT.md`, dan `SESSION_LOG.md` terlebih dahulu.
+## Handoff ke Chat Baru (Sesi Terakhir — Fase 5 Backend Auth & Awal Auto Trade)
+1. Baca `.clinerules`, `TASKS.md`, `PROJECT_CONTEXT.md`, dan bagian akhir `SESSION_LOG.md` terlebih dahulu.
 2. Baca PRD jika perlu: `npx ngodingpakeai plan get 208ae16e-639e-4d5f-9a60-f713ec99e8a7`.
 3. Jalankan `npx ngodingpakeai task next --plan 208ae16e-639e-4d5f-9a60-f713ec99e8a7 --json`.
-4. Task terakhir Fase 3 backend, `vibe-trade-diagnostics/rekomendasi-perbaikan/buat-service-perhitungan-prioritas-rekomendasi`, sudah selesai dan tervalidasi.
-5. Checkpoint aktif setelah Fase 5 frontend selesai. Next task backend belum dimulai: `vibe-trade-diagnostics/autentikasi-pengaturan/buat-endpoint-daftar-post-auth-register` — “Buat endpoint daftar (POST /auth/register)”.
-6. Tunggu pengguna berkata “lanjut”, lalu kerjakan satu task saja; setelah complete panggil `task next` dan berhenti jika layer/fase kembali berubah.
+4. Sesi terakhir menyelesaikan seluruh **Fase 5 backend Autentikasi & Pengaturan** dan satu task **frontend Auto Trade** (halaman utama) melalui CLI NgodingPakeAI; semua task yang dikerjakan sudah `done`.
+5. Terjadi commit/sinkronisasi eksternal (HEAD berpindah ke `77fe7ca`) sehingga sebagian besar implementasi backend sudah ter-commit; sisa perubahan lokal hanya pada `agent/tests/test_diagnostics_store.py`.
+6. NgodingPakeAI berpindah ke **Fase 5 / frontend / Auto Trade**, lalu `task next` terakhir mengembalikan task **Mode Auto-Selection Strategi**:
+   - Ref: `vibe-trade-diagnostics/mode-auto-selection-strategi/buat-halaman-utama-mode-auto-selection-dengan-data`
+   - Judul: “Buat halaman utama mode auto-selection dengan data tiruan”
+   - Status saat handoff: `todo` / **belum di-`task start`** (agent berhenti karena page target berubah dari Auto Trade).
+7. Di chat baru: konfirmasi ulang dengan `task next --json`. Jika masih Mode Auto-Selection, jalankan `task start`, pelajari pola `frontend/src/pages/AutoTrade.tsx` + `frontend/src/data/auto-trade.ts`, implementasikan frontend stub, test Vitest terarah, typecheck/build, lalu `task complete`. Patuhi checkpoint layer/fase berikutnya.
 
 ## Pembaruan Sesi Terakhir
 - Sesi ini menyelesaikan task backend Fase 3 berikut melalui CLI NgodingPakeAI:
@@ -114,4 +118,36 @@
    - Progress: `phase.current=5`, `layer=backend`, `remainingInLayer=11`.
 4. Sebelum implementasi, baca pola auth existing di `agent/src/api/security.py`, registrasi route di `agent/api_server.py`, dependency password hashing yang sudah tersedia, dan test security/auth existing. Jangan menebak stack auth atau menambah dependency sebelum memeriksa project.
 5. Kerjakan satu task saja, tandai `start`, validasi dengan test terarah, tandai `complete`, lalu panggil `task next` lagi.
+
+## Handoff 2 Agustus 2026 — Frontend Auto-Selection, Auto Trade, dan Awal ACR/SMC
+
+### Yang Diselesaikan
+- ✅ **Mode Auto-Selection Strategi** (3 task): halaman `/auto-trade/strategy-selection`, ranking kandidat/evidence/guardrail, simulasi rotasi 10 detik dengan cleanup/history, dan fixed risk management (0,5% per trade, daily loss 2%, maksimal 1 posisi, SL wajib).
+- ✅ **Auto Trade** (4 task lanjutan): panel robot toggle/lot/SL/TP, form API key mask + status koneksi tiruan, execution log scroll/filter/update 5 detik/cap 50, dan indikator current trade execution.
+- ✅ **Eksekusi Trading Presisi ACR & SMC** (3 task awal): halaman `/precision-execution`, upload CSV/JSON maksimal 5 MiB tanpa persistensi, serta chart candlestick H4 ECharts dengan marker BOS/CHOCH.
+- Semua task tersebut sudah melalui `task start` → implementasi/validasi → `task complete` via NgodingPakeAI.
+
+### File Utama yang Dibuat/Diubah
+- Dibuat: `frontend/src/data/{auto-trade,strategy-auto-selection,precision-execution}.ts`.
+- Dibuat: `frontend/src/pages/{AutoTrade,StrategyAutoSelection,PrecisionExecution}.tsx` dan ketiga test di `frontend/src/pages/__tests__/`.
+- Dibuat: `frontend/src/components/auto-trade/{AutoTradeExecutionLog,CurrentTradeExecution}.tsx`.
+- Dibuat: `frontend/src/components/precision-execution/{OhlcFileUpload,HtfStructureChart}.tsx`.
+- Diubah: `frontend/src/router.tsx` dan `frontend/src/components/layout/Layout.tsx` untuk route/menu baru.
+- Perubahan lama `agent/tests/test_diagnostics_store.py` dipertahankan. File eksternal `graph_context.txt` dan `graphify-out/` tidak disentuh.
+
+### Validasi dan Masalah
+- TypeScript lulus; Vite build terakhir lulus (**3.073 modul, 17,21 detik**); `git diff --check` lulus selain warning LF→CRLF.
+- Node lokal `v22.21.1` berada di bawah requirement `>=22.22.0`; Vitest 4.1.10 gagal di internal runner sebelum test registration (`Cannot read properties of undefined (reading 'config')`), termasuk test existing.
+- Build/showcase kadang timeout pada batas tool 15–30 detik; build terpisah normal selesai sekitar 15–20 detik.
+- Warning chunk Vite >500 kB adalah warning existing/non-blocking.
+
+### Next Step Chat Baru
+1. Baca `.clinerules`, `TASKS.md`, `PROJECT_CONTEXT.md`, dan handoff terbaru `SESSION_LOG.md`.
+2. Konfirmasi ulang `npx ngodingpakeai task next --plan 208ae16e-639e-4d5f-9a60-f713ec99e8a7 --json`.
+3. Task terakhir terkonfirmasi masih `todo` dan **belum di-task start**:
+   - Ref: `vibe-trade-diagnostics/eksekusi-trading-presisi-acr-smc/buat-chart-ltf-dengan-zona-supply-demand`
+   - Judul: **Buat chart LTF dengan zona Supply Demand**
+   - Fase 5/5, layer frontend, page Eksekusi Trading Presisi ACR & SMC, `remainingInPage=14`, `remainingInLayer=14`.
+4. Ini bukan checkpoint karena task terakhir juga Fase 5/frontend. Jika server tetap memberi ref tersebut, `task start`, gunakan ECharts existing dan `HtfStructureChart.tsx` sebagai pola, validasi, `task complete`, lalu `task next`.
+5. Berhenti hanya saat layer berubah atau phase naik; jangan sentuh file eksternal/unrelated tanpa permintaan pengguna.
 
