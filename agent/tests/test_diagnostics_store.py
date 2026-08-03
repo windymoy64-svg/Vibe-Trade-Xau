@@ -17,7 +17,7 @@ from src.diagnostics.store import (
 def test_creates_versioned_trade_schema_and_indexes(tmp_path):
     db_path = tmp_path / "diagnostics.db"
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         columns = {
             row["name"] for row in store._conn.execute("PRAGMA table_info(diagnostic_trades)")
         }
@@ -140,7 +140,7 @@ def test_migration_is_idempotent(tmp_path):
     db_path = tmp_path / "diagnostics.db"
     DiagnosticsStore(db_path).close()
     with DiagnosticsStore(db_path) as reopened:
-        assert reopened.schema_version == 11
+        assert reopened.schema_version == 14
 
 
 def test_v5_database_upgrades_recommendations_without_losing_status(tmp_path):
@@ -164,7 +164,7 @@ def test_v5_database_upgrades_recommendations_without_losing_status(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store.recommendation_statuses("alice") == {
             "rec_existing": "APPLIED",
         }
@@ -199,7 +199,7 @@ def test_v1_database_upgrades_without_losing_trade(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         row = store._conn.execute(
             "SELECT ticket_id, updated_at FROM diagnostic_trades WHERE id='trade_1'"
         ).fetchone()
@@ -234,7 +234,7 @@ def test_v3_database_upgrades_with_loss_pattern_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT id FROM diagnostic_trades WHERE id='trade_existing'"
         ).fetchone()["id"] == "trade_existing"
@@ -318,7 +318,7 @@ def test_v6_database_upgrades_with_improvement_log_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT id FROM diagnostic_recommendations WHERE id='rec_existing'"
         ).fetchone()["id"] == "rec_existing"
@@ -426,7 +426,7 @@ def test_v7_database_upgrades_with_users_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT id FROM diagnostic_trades WHERE id='trade_existing'"
         ).fetchone()["id"] == "trade_existing"
@@ -436,7 +436,7 @@ def test_v7_database_upgrades_with_users_schema(tmp_path):
 
         # Re-opening must not recreate or damage the user table/index.
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_users_updated_at'"
         ).fetchone()["name"] == "idx_users_updated_at"
@@ -536,7 +536,7 @@ def test_v8_database_upgrades_with_data_sources_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT email FROM users WHERE id='user_1'"
         ).fetchone()["email"] == "trader@example.com"
@@ -550,7 +550,7 @@ def test_v8_database_upgrades_with_data_sources_schema(tmp_path):
         store._conn.commit()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT name FROM data_sources WHERE id='csv' AND user_id='user_1'"
         ).fetchone()["name"] == "CSV"
@@ -683,7 +683,7 @@ def test_v9_database_upgrades_with_notifications_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT name FROM data_sources WHERE user_id='alice' AND id='csv'"
         ).fetchone()["name"] == "CSV"
@@ -692,7 +692,7 @@ def test_v9_database_upgrades_with_notifications_schema(tmp_path):
         ).fetchone()["name"] == "notifications"
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_notifications_user_unread'"
         ).fetchone()["name"] == "idx_notifications_user_unread"
@@ -773,7 +773,7 @@ def test_v10_database_upgrades_with_notification_preferences_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
         assert store._conn.execute(
             "SELECT title FROM notifications WHERE user_id='alice'"
         ).fetchone()["title"] == "Pattern"
@@ -782,4 +782,200 @@ def test_v10_database_upgrades_with_notification_preferences_schema(tmp_path):
         ).fetchone()["name"] == "notification_preferences"
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 11
+        assert store.schema_version == 14
+
+
+def test_encrypted_api_credentials_schema_constraints_and_cascade(tmp_path):
+    with DiagnosticsStore(tmp_path / "credentials.db") as store:
+        store._conn.execute(
+            "INSERT INTO users (id, email, name, password_hash, created_at, updated_at, last_active_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            ("alice", "alice@example.com", "Alice", "x" * 32, "now", "now", "now"),
+        )
+        store._conn.execute(
+            """INSERT INTO encrypted_api_credentials (
+                user_id, provider, ciphertext, nonce, key_version, last_four, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+            ("alice", "MT5", b"encrypted-api-key", b"unique-nonce", 1, "A1B2", "now", "now"),
+        )
+        columns = {
+            row["name"] for row in store._conn.execute(
+                "PRAGMA table_info(encrypted_api_credentials)"
+            )
+        }
+        assert "api_key" not in columns
+        assert {"ciphertext", "nonce", "key_version", "last_four"} <= columns
+        with pytest.raises(sqlite3.IntegrityError):
+            store._conn.execute(
+                """INSERT INTO encrypted_api_credentials (
+                    user_id, provider, ciphertext, nonce, key_version, last_four,
+                    created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                ("alice", "CSV", b"short", b"unique-nonce", 1, "A1B2", "now", "now"),
+            )
+        store._conn.execute("DELETE FROM users WHERE id='alice'")
+        assert store._conn.execute(
+            "SELECT COUNT(*) FROM encrypted_api_credentials"
+        ).fetchone()[0] == 0
+
+
+def test_v11_database_upgrades_with_encrypted_credentials_schema(tmp_path):
+    db_path = tmp_path / "v11.db"
+    connection = sqlite3.connect(db_path)
+    connection.executescript(
+        """
+        CREATE TABLE users (
+            id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE, name TEXT NOT NULL,
+            password_hash TEXT NOT NULL, created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL, last_active_at TEXT NOT NULL
+        );
+        INSERT INTO users VALUES (
+            'alice', 'alice@example.com', 'Alice',
+            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'now', 'now', 'now'
+        );
+        PRAGMA user_version=11;
+        """
+    )
+    connection.close()
+
+    with DiagnosticsStore(db_path) as store:
+        assert store.schema_version == 14
+
+
+def test_auto_trade_execution_log_schema_constraints_and_cascade(tmp_path):
+    with DiagnosticsStore(tmp_path / "execution-logs.db") as store:
+        store._conn.execute(
+            "INSERT INTO users (id, email, name, password_hash, created_at, updated_at, last_active_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            ("alice", "alice@example.com", "Alice", "x" * 32, "now", "now", "now"),
+        )
+        store._conn.execute(
+            """INSERT INTO auto_trade_execution_logs (
+                id, user_id, level, status, message, symbol, direction, lot_size,
+                entry_price, metadata_json, occurred_at, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            ("log-1", "alice", "SIGNAL", "EXECUTED", "BUY routed", "XAUUSD",
+             "BUY", 0.05, 2389.8, '{"paper":true}', "2026-08-01T09:00:00Z", "now"),
+        )
+        with pytest.raises(sqlite3.IntegrityError):
+            store._conn.execute(
+                """INSERT INTO auto_trade_execution_logs (
+                    id, user_id, level, status, message, metadata_json,
+                    occurred_at, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                ("bad", "alice", "DEBUG", "EXECUTED", "bad", "[]", "now", "now"),
+            )
+        store._conn.execute("DELETE FROM users WHERE id='alice'")
+        assert store._conn.execute(
+            "SELECT COUNT(*) FROM auto_trade_execution_logs"
+        ).fetchone()[0] == 0
+
+
+def test_v12_database_upgrades_with_execution_log_schema(tmp_path):
+    db_path = tmp_path / "v12.db"
+    connection = sqlite3.connect(db_path)
+    connection.executescript(
+        """
+        CREATE TABLE users (
+            id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE, name TEXT NOT NULL,
+            password_hash TEXT NOT NULL, created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL, last_active_at TEXT NOT NULL
+        );
+        CREATE TABLE encrypted_api_credentials (
+            user_id TEXT NOT NULL, provider TEXT NOT NULL, ciphertext BLOB NOT NULL,
+            nonce BLOB NOT NULL, key_version INTEGER NOT NULL, last_four TEXT NOT NULL,
+            created_at TEXT NOT NULL, updated_at TEXT NOT NULL,
+            PRIMARY KEY(user_id, provider)
+        );
+        INSERT INTO users VALUES (
+            'alice', 'alice@example.com', 'Alice',
+            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'now', 'now', 'now'
+        );
+        INSERT INTO encrypted_api_credentials VALUES (
+            'alice', 'MT5', X'31323334353637383930313233343536',
+            X'313233343536373839303132', 1, 'A1B2', 'now', 'now'
+        );
+        PRAGMA user_version=12;
+        """
+    )
+    connection.close()
+
+    with DiagnosticsStore(db_path) as store:
+        assert store.schema_version == 14
+        assert store._conn.execute(
+            "SELECT provider FROM encrypted_api_credentials WHERE user_id='alice'"
+        ).fetchone()["provider"] == "MT5"
+        assert store._conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='auto_trade_execution_logs'"
+        ).fetchone()["name"] == "auto_trade_execution_logs"
+        assert store._conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='encrypted_api_credentials'"
+        ).fetchone()["name"] == "encrypted_api_credentials"
+        assert store._conn.execute(
+            "SELECT email FROM users WHERE id='alice'"
+        ).fetchone()["email"] == "alice@example.com"
+
+
+def test_v13_database_upgrades_with_auto_trade_configuration_schema(tmp_path):
+    db_path = tmp_path / "v13.db"
+    connection = sqlite3.connect(db_path)
+    connection.executescript(
+        """
+        CREATE TABLE users (
+            id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE, name TEXT NOT NULL,
+            password_hash TEXT NOT NULL, created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL, last_active_at TEXT NOT NULL
+        );
+        INSERT INTO users VALUES (
+            'alice', 'alice@example.com', 'Alice',
+            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'now', 'now', 'now'
+        );
+        PRAGMA user_version=13;
+        """
+    )
+    connection.close()
+
+    with DiagnosticsStore(db_path) as store:
+        assert store.schema_version == 14
+        assert store._conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='auto_trade_configurations'"
+        ).fetchone()["name"] == "auto_trade_configurations"
+        assert store._conn.execute(
+            "SELECT email FROM users WHERE id='alice'"
+        ).fetchone()["email"] == "alice@example.com"
+
+
+def test_auto_trade_configuration_store_crud_constraints_and_cascade(tmp_path):
+    values = {
+        "symbol": "XAUUSD", "timeframe": "M15", "strategy": "Trend guard",
+        "riskPerTrade": 0.5, "dailyLossLimit": 2.0, "paperMode": True,
+        "robotControls": {
+            "enabled": False, "lotSize": 0.05,
+            "stopLossPips": 30.0, "takeProfitPips": 60.0,
+        },
+    }
+    with DiagnosticsStore(tmp_path / "auto-trade-config.db") as store:
+        store._conn.execute(
+            "INSERT INTO users (id, email, name, password_hash, created_at, updated_at, last_active_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            ("alice", "alice@example.com", "Alice", "x" * 32, "now", "now", "now"),
+        )
+        created = store.create_auto_trade_configuration("alice", values)
+        assert created is not None
+        assert created["robotControls"] == values["robotControls"]
+        assert store.get_auto_trade_configuration("bob", str(created["id"])) is None
+        assert len(store.list_auto_trade_configurations("alice")) == 1
+
+        updated_values = {**values, "paperMode": False, "riskPerTrade": 1.0}
+        updated = store.update_auto_trade_configuration(
+            "alice", str(created["id"]), updated_values,
+        )
+        assert updated is not None
+        assert updated["paperMode"] is False
+        assert updated["riskPerTrade"] == 1.0
+
+        with pytest.raises(sqlite3.IntegrityError):
+            store._conn.execute(
+                """UPDATE auto_trade_configurations SET lot_size = 1.01
+                    WHERE user_id = 'alice' AND id = ?""",
+                (created["id"],),
+            )
+        store._conn.execute("DELETE FROM users WHERE id = 'alice'")
+        assert store.list_auto_trade_configurations("alice") == []

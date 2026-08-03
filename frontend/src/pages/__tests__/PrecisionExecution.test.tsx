@@ -59,6 +59,8 @@ describe("PrecisionExecution", () => {
     expect(screen.getByLabelText("Dynamic trailing stop visualization")).toBeInTheDocument();
     expect(screen.getByText("ACR trailing-stop path")).toBeInTheDocument();
     expect(screen.getByText("One-way protection:")).toBeInTheDocument();
+    expect(screen.getByLabelText("Interactive lot calculator")).toBeInTheDocument();
+    expect(screen.getByText("0.42")).toBeInTheDocument();
     expect(screen.getByText("Current setup preview")).toBeInTheDocument();
     expect(screen.getByText("No live order routing")).toBeInTheDocument();
     expect(screen.getByLabelText("Actionable dark mode signal card")).toBeInTheDocument();
@@ -85,5 +87,15 @@ describe("PrecisionExecution", () => {
     await user.upload(input, new File(["time,open,high,low,close"], "xauusd.csv", { type: "text/csv" }));
     expect(screen.getByText("xauusd.csv")).toBeInTheDocument();
     expect(screen.getByText("Ready")).toBeInTheDocument();
+  });
+
+  it("recalculates lot size from balance and risk", async () => {
+    const user = userEvent.setup();
+    render(<MemoryRouter><PrecisionExecution /></MemoryRouter>);
+    await user.clear(screen.getByLabelText("Account balance (USD)"));
+    await user.type(screen.getByLabelText("Account balance (USD)"), "20000");
+    await user.selectOptions(screen.getByLabelText("Risk per trade"), "2");
+    expect(screen.getByText("1.70")).toBeInTheDocument();
+    expect(screen.getByText("$400.00")).toBeInTheDocument();
   });
 });

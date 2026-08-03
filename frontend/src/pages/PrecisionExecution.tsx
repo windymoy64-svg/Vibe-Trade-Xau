@@ -12,6 +12,7 @@ import { PrecisionEntryPrice } from "@/components/precision-execution/PrecisionE
 import { StopLossTakeProfitPanel } from "@/components/precision-execution/StopLossTakeProfitPanel";
 import { TrailingStopVisualization } from "@/components/precision-execution/TrailingStopVisualization";
 import { ActionableSignalCard } from "@/components/precision-execution/ActionableSignalCard";
+import { InteractiveLotCalculator } from "@/components/precision-execution/InteractiveLotCalculator";
 
 const workflowTone: Record<PrecisionWorkflowStatus, string> = {
   COMPLETE: "bg-emerald-500/10 text-emerald-500",
@@ -65,6 +66,8 @@ export function PrecisionExecution() {
     <StopLossTakeProfitPanel levels={tradeLevelsPreview} />
 
     <TrailingStopVisualization trailing={trailingStopPreview} />
+
+    <InteractiveLotCalculator defaultEntry={precisionEntryPreview.price} defaultStopLoss={tradeLevelsPreview.stopLoss} />
   </div>;
 }
 

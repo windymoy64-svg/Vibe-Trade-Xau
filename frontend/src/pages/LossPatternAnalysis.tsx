@@ -34,10 +34,11 @@ function PatternCard({ pattern, rank }: { pattern: LossPattern; rank: number }) 
           <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${severityBadgeClass(pattern.severity)}`}>{pattern.severity}</span>
         </div>
         <p className="mt-1 text-sm text-muted-foreground">{pattern.description}</p>
-        <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="mt-4 grid grid-cols-4 gap-3">
           <div><p className="text-[10px] uppercase text-muted-foreground">Losses</p><p className="mt-1 font-mono text-sm font-semibold">{pattern.lossCount.toLocaleString()}</p></div>
           <div><p className="text-[10px] uppercase text-muted-foreground">Share</p><p className="mt-1 font-mono text-sm font-semibold">{pattern.lossPercentage}%</p></div>
           <div><p className="text-[10px] uppercase text-muted-foreground">Confidence</p><p className="mt-1 font-mono text-sm font-semibold">{pattern.confidence}%</p></div>
+          <div><p className="text-[10px] uppercase text-muted-foreground">Trend</p><p className={`mt-1 flex items-center gap-0.5 font-mono text-sm font-semibold ${pattern.trendDelta > 0 ? "text-rose-500" : pattern.trendDelta < 0 ? "text-emerald-500" : "text-muted-foreground"}`}>{pattern.trendDelta > 0 ? <ArrowUp className="h-3 w-3" /> : pattern.trendDelta < 0 ? <ArrowDown className="h-3 w-3" /> : null}{Math.abs(pattern.trendDelta)}%</p></div>
         </div>
         <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-primary" style={{ width: `${pattern.lossPercentage}%` }} /></div>
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
@@ -54,6 +55,7 @@ export function LossPatternAnalysis() {
   const [analysis, setAnalysis] = useState<LossPatternAnalysisData>(lossPatternAnalysisStub);
   const [usingPreviewData, setUsingPreviewData] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [comparePeriod, setComparePeriod] = useState("previous_month");
 
   useEffect(() => {
     let active = true;
@@ -83,14 +85,21 @@ export function LossPatternAnalysis() {
         <div>
           <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-primary"><BrainCircuit className="h-4 w-4" /> Evidence pattern engine {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : usingPreviewData ? <span className="rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] text-amber-600 dark:text-amber-400">Preview data</span> : null}</div>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Loss pattern analysis</h1>
-          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">Rank recurring failure conditions before changing strategy parameters.</p>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">Rank recurring failure conditions before changing strategy parameters. Compare against historical baseline.</p>
         </div>
         <div className="flex flex-col items-start gap-2 sm:items-end">
           <div className="flex flex-wrap gap-2">
             <Link to="/diagnostics/patterns/compare" className="inline-flex items-center gap-2 rounded-lg border bg-card px-3 py-2 text-xs font-medium hover:bg-muted"><ArrowRightLeft className="h-4 w-4" /> Compare periods</Link>
             <button type="button" onClick={() => printPatternReport(analysis)} className="inline-flex items-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90"><Download className="h-4 w-4" /> Export PDF</button>
           </div>
-          <p className="w-fit text-xs text-muted-foreground">Generated {new Date(generatedAt).toLocaleString()}</p>
+          <div className="flex flex-col items-end gap-2">
+          <select value={comparePeriod} onChange={(e) => setComparePeriod(e.target.value)} className="w-fit rounded-lg border bg-card px-3 py-1.5 text-xs font-medium text-foreground outline-none hover:bg-muted">
+            <option value="previous_month">vs Previous Month</option>
+            <option value="previous_quarter">vs Previous Quarter</option>
+            <option value="baseline">vs Baseline strategy</option>
+          </select>
+          <p className="text-xs text-muted-foreground">Generated {new Date(generatedAt).toLocaleString()}</p>
+        </div>
         </div>
       </div>
     </header>

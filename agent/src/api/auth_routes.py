@@ -18,7 +18,7 @@ import secrets
 import threading
 import uuid
 from datetime import datetime, timezone
-from typing import Any, Awaitable, Callable
+from typing import Any, Awaitable, Callable, Literal
 
 from fastapi import Depends, FastAPI, HTTPException, Query, status
 from pydantic import BaseModel, Field, field_validator, model_validator
@@ -153,6 +153,16 @@ class NotificationPreferences(BaseModel):
     quietHours: bool = True
     quietStart: str = Field(default="22:00", pattern=r"^(?:[01]\d|2[0-3]):[0-5]\d$")
     quietEnd: str = Field(default="07:00", pattern=r"^(?:[01]\d|2[0-3]):[0-5]\d$")
+
+
+class DiagnosticNotificationResponse(BaseModel):
+    id: str
+    type: Literal["PATTERN", "RECOMMENDATION", "VALIDATION"]
+    title: str
+    detail: str
+    createdAt: str
+    href: str
+    read: bool
 
 
 def _hash_password(password: str) -> str:
@@ -398,6 +408,24 @@ def register_auth_routes(
         if preferences is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         return NotificationPreferences(**preferences)
+
+    @app.get(
+        "/notifications",
+        response_model=list[DiagnosticNotificationResponse],
+        dependencies=[Depends(require_auth)],
+    )
+    async def list_notifications(
+        user_id: str = Query(..., min_length=1, max_length=128),
+        unread_only: bool = Query(False),
+        limit: int = Query(50, ge=1, le=200),
+    ) -> list[DiagnosticNotificationResponse]:
+        with DiagnosticsStore() as store:
+            notifications = store.notifications(
+                user_id, unread_only=unread_only, limit=limit,
+            )
+        if notifications is None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        return [DiagnosticNotificationResponse(**item) for item in notifications]
 
     from src.api.security import _mint_sse_ticket
 

@@ -290,6 +290,16 @@ register_auth_routes(app)
 from src.api.diagnostics_routes import register_diagnostics_routes  # noqa: E402
 register_diagnostics_routes(app)
 
+# --- Strategy auto-selection ---
+from src.api.auto_selection_routes import register_auto_selection_routes  # noqa: E402
+register_auto_selection_routes(app)
+
+from src.api.auto_trade_routes import register_auto_trade_routes  # noqa: E402
+register_auto_trade_routes(app)
+
+from src.api.precision_execution_routes import register_precision_execution_routes  # noqa: E402
+register_precision_execution_routes(app)
+
 
 # ============================================================================
 # Scheduled Research Routes - defined in src/api/scheduled_routes.py

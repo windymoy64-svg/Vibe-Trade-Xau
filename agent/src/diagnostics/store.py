@@ -13,7 +13,7 @@ from pathlib import Path
 from src.config.accessor import get_env_or
 
 _DEFAULT_DB_PATH = Path.home() / ".vibe-trading" / "diagnostics.db"
-_SCHEMA_VERSION = 11
+_SCHEMA_VERSION = 14
 
 
 @dataclass(frozen=True, slots=True)
@@ -64,6 +64,10 @@ class DiagnosticNotification:
     read_at: str | None
     created_at: str
     updated_at: str
+
+
+class EncryptedApiCredentialExistsError(RuntimeError):
+    """Raised when creating a credential that already exists."""
 
 
 def _default_db_path() -> Path:
@@ -434,6 +438,104 @@ class DiagnosticsStore:
                         """
                     )
                     self._conn.execute("PRAGMA user_version=11")
+                    version = 11
+            if version < 12:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE encrypted_api_credentials (
+                            user_id TEXT NOT NULL,
+                            provider TEXT NOT NULL
+                                CHECK(length(trim(provider)) BETWEEN 1 AND 64),
+                            ciphertext BLOB NOT NULL CHECK(length(ciphertext) >= 16),
+                            nonce BLOB NOT NULL CHECK(length(nonce) >= 12),
+                            key_version INTEGER NOT NULL DEFAULT 1 CHECK(key_version > 0),
+                            last_four TEXT NOT NULL
+                                CHECK(length(last_four) = 4 AND last_four NOT GLOB '*[^A-Za-z0-9]*'),
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            PRIMARY KEY(user_id, provider),
+                            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+                        );
+
+                        CREATE INDEX idx_encrypted_api_credentials_user_updated
+                            ON encrypted_api_credentials(user_id, updated_at DESC);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=12")
+                    version = 12
+            if version < 13:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE auto_trade_execution_logs (
+                            id TEXT NOT NULL CHECK(length(trim(id)) BETWEEN 1 AND 128),
+                            user_id TEXT NOT NULL,
+                            level TEXT NOT NULL CHECK(level IN ('INFO', 'SIGNAL', 'RISK', 'ERROR')),
+                            status TEXT NOT NULL CHECK(status IN (
+                                'MONITORING', 'PENDING', 'EXECUTED', 'REJECTED', 'CLOSED', 'FAILED'
+                            )),
+                            message TEXT NOT NULL CHECK(length(trim(message)) BETWEEN 1 AND 1000),
+                            symbol TEXT CHECK(symbol IS NULL OR length(trim(symbol)) BETWEEN 1 AND 32),
+                            direction TEXT CHECK(direction IS NULL OR direction IN ('BUY', 'SELL')),
+                            strategy_id TEXT,
+                            lot_size REAL CHECK(lot_size IS NULL OR lot_size > 0),
+                            entry_price REAL CHECK(entry_price IS NULL OR entry_price > 0),
+                            stop_loss REAL CHECK(stop_loss IS NULL OR stop_loss > 0),
+                            take_profit REAL CHECK(take_profit IS NULL OR take_profit > 0),
+                            broker_order_id TEXT,
+                            error_code TEXT,
+                            metadata_json TEXT NOT NULL DEFAULT '{}'
+                                CHECK(json_valid(metadata_json) AND json_type(metadata_json) = 'object'),
+                            occurred_at TEXT NOT NULL,
+                            created_at TEXT NOT NULL,
+                            PRIMARY KEY(user_id, id),
+                            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+                        );
+
+                        CREATE INDEX idx_auto_trade_execution_logs_user_time
+                            ON auto_trade_execution_logs(user_id, occurred_at DESC, id);
+                        CREATE INDEX idx_auto_trade_execution_logs_user_status
+                            ON auto_trade_execution_logs(user_id, status, occurred_at DESC);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=13")
+                    version = 13
+            if version < 14:
+                with self._conn:
+                    self._conn.executescript(
+                        """
+                        CREATE TABLE auto_trade_configurations (
+                            id TEXT NOT NULL CHECK(length(trim(id)) BETWEEN 1 AND 128),
+                            user_id TEXT NOT NULL,
+                            symbol TEXT NOT NULL
+                                CHECK(length(trim(symbol)) BETWEEN 1 AND 32),
+                            timeframe TEXT NOT NULL
+                                CHECK(length(trim(timeframe)) BETWEEN 1 AND 16),
+                            strategy TEXT NOT NULL
+                                CHECK(length(trim(strategy)) BETWEEN 1 AND 160),
+                            risk_per_trade REAL NOT NULL
+                                CHECK(risk_per_trade >= 0.01 AND risk_per_trade <= 5),
+                            daily_loss_limit REAL NOT NULL
+                                CHECK(daily_loss_limit >= 0.1 AND daily_loss_limit <= 20),
+                            paper_mode INTEGER NOT NULL CHECK(paper_mode IN (0, 1)),
+                            robot_enabled INTEGER NOT NULL CHECK(robot_enabled IN (0, 1)),
+                            lot_size REAL NOT NULL CHECK(lot_size >= 0.01 AND lot_size <= 1),
+                            stop_loss_pips REAL NOT NULL
+                                CHECK(stop_loss_pips >= 5 AND stop_loss_pips <= 250),
+                            take_profit_pips REAL NOT NULL
+                                CHECK(take_profit_pips >= 10 AND take_profit_pips <= 500),
+                            created_at TEXT NOT NULL,
+                            updated_at TEXT NOT NULL,
+                            PRIMARY KEY(user_id, id),
+                            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+                        );
+
+                        CREATE INDEX idx_auto_trade_configurations_user_updated
+                            ON auto_trade_configurations(user_id, updated_at DESC, id);
+                        """
+                    )
+                    self._conn.execute("PRAGMA user_version=14")
 
     @property
     def schema_version(self) -> int:
@@ -443,6 +545,312 @@ class DiagnosticsStore:
     def close(self) -> None:
         with self._lock:
             self._conn.close()
+
+    @staticmethod
+    def _auto_trade_configuration(row: sqlite3.Row) -> dict[str, object]:
+        return {
+            "id": str(row["id"]),
+            "userId": str(row["user_id"]),
+            "symbol": str(row["symbol"]),
+            "timeframe": str(row["timeframe"]),
+            "strategy": str(row["strategy"]),
+            "riskPerTrade": float(row["risk_per_trade"]),
+            "dailyLossLimit": float(row["daily_loss_limit"]),
+            "paperMode": bool(row["paper_mode"]),
+            "robotControls": {
+                "enabled": bool(row["robot_enabled"]),
+                "lotSize": float(row["lot_size"]),
+                "stopLossPips": float(row["stop_loss_pips"]),
+                "takeProfitPips": float(row["take_profit_pips"]),
+            },
+            "createdAt": str(row["created_at"]),
+            "updatedAt": str(row["updated_at"]),
+        }
+
+    def create_auto_trade_configuration(
+        self, user_id: str, values: dict[str, object],
+    ) -> dict[str, object] | None:
+        """Create a durable auto-trade configuration for an existing user."""
+        config_id = str(uuid.uuid4())
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        controls = values["robotControls"]
+        assert isinstance(controls, dict)
+        with self._lock, self._conn:
+            if self._conn.execute("SELECT 1 FROM users WHERE id = ?", (user_id,)).fetchone() is None:
+                return None
+            self._conn.execute(
+                """INSERT INTO auto_trade_configurations (
+                    id, user_id, symbol, timeframe, strategy, risk_per_trade,
+                    daily_loss_limit, paper_mode, robot_enabled, lot_size,
+                    stop_loss_pips, take_profit_pips, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    config_id, user_id, values["symbol"], values["timeframe"],
+                    values["strategy"], values["riskPerTrade"], values["dailyLossLimit"],
+                    int(bool(values["paperMode"])), int(bool(controls["enabled"])),
+                    controls["lotSize"], controls["stopLossPips"],
+                    controls["takeProfitPips"], now, now,
+                ),
+            )
+            row = self._conn.execute(
+                "SELECT * FROM auto_trade_configurations WHERE user_id = ? AND id = ?",
+                (user_id, config_id),
+            ).fetchone()
+        return self._auto_trade_configuration(row)
+
+    def list_auto_trade_configurations(self, user_id: str) -> list[dict[str, object]]:
+        """List configurations owned by one user, newest first."""
+        with self._lock:
+            rows = self._conn.execute(
+                """SELECT * FROM auto_trade_configurations WHERE user_id = ?
+                    ORDER BY updated_at DESC, id ASC""",
+                (user_id,),
+            ).fetchall()
+        return [self._auto_trade_configuration(row) for row in rows]
+
+    def get_auto_trade_configuration(
+        self, user_id: str, config_id: str,
+    ) -> dict[str, object] | None:
+        """Return a configuration only when it belongs to the user."""
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT * FROM auto_trade_configurations WHERE user_id = ? AND id = ?",
+                (user_id, config_id),
+            ).fetchone()
+        return self._auto_trade_configuration(row) if row else None
+
+    def update_auto_trade_configuration(
+        self, user_id: str, config_id: str, values: dict[str, object],
+    ) -> dict[str, object] | None:
+        """Replace a user-owned configuration, preserving its creation timestamp."""
+        controls = values["robotControls"]
+        assert isinstance(controls, dict)
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with self._lock, self._conn:
+            cursor = self._conn.execute(
+                """UPDATE auto_trade_configurations SET
+                    symbol = ?, timeframe = ?, strategy = ?, risk_per_trade = ?,
+                    daily_loss_limit = ?, paper_mode = ?, robot_enabled = ?, lot_size = ?,
+                    stop_loss_pips = ?, take_profit_pips = ?, updated_at = ?
+                    WHERE user_id = ? AND id = ?""",
+                (
+                    values["symbol"], values["timeframe"], values["strategy"],
+                    values["riskPerTrade"], values["dailyLossLimit"],
+                    int(bool(values["paperMode"])), int(bool(controls["enabled"])),
+                    controls["lotSize"], controls["stopLossPips"],
+                    controls["takeProfitPips"], now, user_id, config_id,
+                ),
+            )
+            if cursor.rowcount == 0:
+                return None
+            row = self._conn.execute(
+                "SELECT * FROM auto_trade_configurations WHERE user_id = ? AND id = ?",
+                (user_id, config_id),
+            ).fetchone()
+        return self._auto_trade_configuration(row)
+
+    def delete_auto_trade_configuration(self, user_id: str, config_id: str) -> bool:
+        """Delete a configuration only when it belongs to the user."""
+        with self._lock, self._conn:
+            cursor = self._conn.execute(
+                "DELETE FROM auto_trade_configurations WHERE user_id = ? AND id = ?",
+                (user_id, config_id),
+            )
+        return cursor.rowcount > 0
+
+    @staticmethod
+    def _encrypted_api_credential_metadata(row: sqlite3.Row) -> dict[str, object]:
+        return {
+            "provider": str(row["provider"]),
+            "lastFour": str(row["last_four"]),
+            "keyVersion": int(row["key_version"]),
+            "createdAt": str(row["created_at"]),
+            "updatedAt": str(row["updated_at"]),
+        }
+
+    def create_encrypted_api_credential(
+        self,
+        user_id: str,
+        provider: str,
+        ciphertext: bytes,
+        nonce: bytes,
+        last_four: str,
+    ) -> dict[str, object] | None:
+        """Create encrypted credential metadata for an existing user."""
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with self._lock, self._conn:
+            if self._conn.execute(
+                "SELECT 1 FROM users WHERE id = ?", (user_id,)
+            ).fetchone() is None:
+                return None
+            try:
+                self._conn.execute(
+                    """INSERT INTO encrypted_api_credentials (
+                        user_id, provider, ciphertext, nonce, key_version, last_four,
+                        created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, 1, ?, ?, ?)""",
+                    (user_id, provider, ciphertext, nonce, last_four, now, now),
+                )
+            except sqlite3.IntegrityError as exc:
+                if self._conn.execute(
+                    """SELECT 1 FROM encrypted_api_credentials
+                        WHERE user_id = ? AND provider = ?""",
+                    (user_id, provider),
+                ).fetchone() is not None:
+                    raise EncryptedApiCredentialExistsError(provider) from exc
+                raise
+            row = self._conn.execute(
+                """SELECT provider, last_four, key_version, created_at, updated_at
+                    FROM encrypted_api_credentials WHERE user_id = ? AND provider = ?""",
+                (user_id, provider),
+            ).fetchone()
+        return self._encrypted_api_credential_metadata(row)
+
+    def update_encrypted_api_credential(
+        self,
+        user_id: str,
+        provider: str,
+        ciphertext: bytes,
+        nonce: bytes,
+        last_four: str,
+    ) -> dict[str, object] | None:
+        """Replace encrypted material while preserving its key version."""
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with self._lock, self._conn:
+            cursor = self._conn.execute(
+                """UPDATE encrypted_api_credentials
+                    SET ciphertext = ?, nonce = ?, last_four = ?, updated_at = ?
+                    WHERE user_id = ? AND provider = ?""",
+                (ciphertext, nonce, last_four, now, user_id, provider),
+            )
+            if cursor.rowcount == 0:
+                return None
+            row = self._conn.execute(
+                """SELECT provider, last_four, key_version, created_at, updated_at
+                    FROM encrypted_api_credentials WHERE user_id = ? AND provider = ?""",
+                (user_id, provider),
+            ).fetchone()
+        return self._encrypted_api_credential_metadata(row)
+
+    def rotate_encrypted_api_credential(
+        self,
+        user_id: str,
+        provider: str,
+        ciphertext: bytes,
+        nonce: bytes,
+        last_four: str,
+    ) -> dict[str, object] | None:
+        """Atomically replace encrypted material and increment its key version."""
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with self._lock, self._conn:
+            cursor = self._conn.execute(
+                """UPDATE encrypted_api_credentials
+                    SET ciphertext = ?, nonce = ?, last_four = ?,
+                        key_version = key_version + 1, updated_at = ?
+                    WHERE user_id = ? AND provider = ?""",
+                (ciphertext, nonce, last_four, now, user_id, provider),
+            )
+            if cursor.rowcount == 0:
+                return None
+            row = self._conn.execute(
+                """SELECT provider, last_four, key_version, created_at, updated_at
+                    FROM encrypted_api_credentials WHERE user_id = ? AND provider = ?""",
+                (user_id, provider),
+            ).fetchone()
+        return self._encrypted_api_credential_metadata(row)
+
+    def get_encrypted_api_credential(
+        self, user_id: str, provider: str,
+    ) -> dict[str, object] | None:
+        """Return encrypted credential material for internal broker services only."""
+        with self._lock:
+            row = self._conn.execute(
+                """SELECT provider, ciphertext, nonce, key_version, last_four
+                    FROM encrypted_api_credentials WHERE user_id = ? AND provider = ?""",
+                (user_id, provider),
+            ).fetchone()
+        if row is None:
+            return None
+        return {
+            "provider": str(row["provider"]),
+            "ciphertext": bytes(row["ciphertext"]),
+            "nonce": bytes(row["nonce"]),
+            "keyVersion": int(row["key_version"]),
+            "lastFour": str(row["last_four"]),
+        }
+
+    def append_auto_trade_execution_log(
+        self, user_id: str, values: dict[str, object],
+    ) -> dict[str, object] | None:
+        """Append one immutable execution event for an existing user."""
+        created_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with self._lock, self._conn:
+            if self._conn.execute("SELECT 1 FROM users WHERE id = ?", (user_id,)).fetchone() is None:
+                return None
+            self._conn.execute(
+                """INSERT INTO auto_trade_execution_logs (
+                    id, user_id, level, status, message, symbol, direction,
+                    strategy_id, lot_size, entry_price, stop_loss, take_profit,
+                    broker_order_id, error_code, occurred_at, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    values["id"], user_id, values["level"], values["status"],
+                    values["message"], values.get("symbol"), values.get("direction"),
+                    values.get("strategyId"), values.get("lotSize"), values.get("price"),
+                    values.get("stopLoss"), values.get("takeProfit"),
+                    values.get("brokerOrderId"), values.get("errorCode"),
+                    values["timestamp"], created_at,
+                ),
+            )
+        return {**values, "userId": user_id, "createdAt": created_at}
+
+    def auto_trade_execution_logs(
+        self,
+        user_id: str,
+        *,
+        status: str | None = None,
+        level: str | None = None,
+        symbol: str | None = None,
+        direction: str | None = None,
+        start: str | None = None,
+        end: str | None = None,
+        limit: int = 50,
+    ) -> list[dict[str, object]]:
+        """Return filtered execution audit events for one user."""
+        clauses = ["user_id = ?"]
+        parameters: list[object] = [user_id]
+        for column, value in (
+            ("status", status), ("level", level), ("symbol", symbol), ("direction", direction),
+        ):
+            if value is not None:
+                clauses.append(f"{column} = ?")
+                parameters.append(value)
+        if start is not None:
+            clauses.append("occurred_at >= ?")
+            parameters.append(start)
+        if end is not None:
+            clauses.append("occurred_at <= ?")
+            parameters.append(end)
+        parameters.append(limit)
+        with self._lock:
+            rows = self._conn.execute(
+                f"""SELECT * FROM auto_trade_execution_logs
+                    WHERE {' AND '.join(clauses)}
+                    ORDER BY occurred_at DESC, id ASC LIMIT ?""",
+                parameters,
+            ).fetchall()
+        return [
+            {
+                "id": str(row["id"]), "level": str(row["level"]),
+                "status": str(row["status"]), "message": str(row["message"]),
+                "symbol": row["symbol"], "direction": row["direction"],
+                "strategyId": row["strategy_id"], "lotSize": row["lot_size"],
+                "price": row["entry_price"], "stopLoss": row["stop_loss"],
+                "takeProfit": row["take_profit"], "brokerOrderId": row["broker_order_id"],
+                "errorCode": row["error_code"], "timestamp": str(row["occurred_at"]),
+            }
+            for row in rows
+        ]
 
     def notification_preferences(self, user_id: str) -> dict[str, object] | None:
         """Return persisted preferences or frontend-compatible defaults for an existing user."""
@@ -500,6 +908,37 @@ class DiagnosticsStore:
                 ),
             )
         return self.notification_preferences(user_id)
+
+    def notifications(
+        self,
+        user_id: str,
+        *,
+        unread_only: bool = False,
+        limit: int = 50,
+    ) -> list[dict[str, object]] | None:
+        """Return newest notifications for one existing user."""
+        with self._lock:
+            if self._conn.execute("SELECT 1 FROM users WHERE id = ?", (user_id,)).fetchone() is None:
+                return None
+            where = "user_id = ?" + (" AND is_read = 0" if unread_only else "")
+            rows = self._conn.execute(
+                f"""SELECT id, notification_type, title, detail, href, is_read, created_at
+                    FROM notifications WHERE {where}
+                    ORDER BY created_at DESC, id ASC LIMIT ?""",
+                (user_id, limit),
+            ).fetchall()
+        return [
+            {
+                "id": str(row["id"]),
+                "type": str(row["notification_type"]),
+                "title": str(row["title"]),
+                "detail": str(row["detail"]),
+                "createdAt": str(row["created_at"]),
+                "href": str(row["href"]),
+                "read": bool(row["is_read"]),
+            }
+            for row in rows
+        ]
 
     def connect_data_source(
         self,
