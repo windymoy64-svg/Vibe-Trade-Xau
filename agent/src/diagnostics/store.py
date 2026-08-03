@@ -13,7 +13,7 @@ from pathlib import Path
 from src.config.accessor import get_env_or
 
 _DEFAULT_DB_PATH = Path.home() / ".vibe-trading" / "diagnostics.db"
-_SCHEMA_VERSION = 14
+_SCHEMA_VERSION = 15
 
 
 @dataclass(frozen=True, slots=True)
@@ -536,6 +536,55 @@ class DiagnosticsStore:
                         """
                     )
                     self._conn.execute("PRAGMA user_version=14")
+                    version = 14
+            if version < 15:
+                with self._conn:
+                    self._conn.executescript("""
+                        CREATE TABLE mt5_execution_logs (
+                            id TEXT NOT NULL CHECK(length(trim(id)) BETWEEN 1 AND 128),
+                            user_id TEXT NOT NULL,
+                            execution_source TEXT NOT NULL CHECK(execution_source IN ('MANUAL', 'AUTO_BY_AI')),
+                            order_type TEXT NOT NULL CHECK(length(order_type) BETWEEN 1 AND 32),
+                            symbol TEXT NOT NULL CHECK(length(symbol) BETWEEN 1 AND 32),
+                            volume REAL NOT NULL CHECK(volume > 0 AND volume <= 100),
+                            entry_price REAL CHECK(entry_price IS NULL OR entry_price > 0),
+                            stop_loss REAL CHECK(stop_loss IS NULL OR stop_loss > 0),
+                            take_profit REAL CHECK(take_profit IS NULL OR take_profit > 0),
+                            broker_order_id TEXT CHECK(broker_order_id IS NULL OR length(broker_order_id) <= 64),
+                            broker_position_id TEXT CHECK(broker_position_id IS NULL OR length(broker_position_id) <= 64),
+                            status TEXT NOT NULL CHECK(status IN ('PENDING', 'EXECUTED', 'CANCELLED', 'FAILED')),
+                            error_code INTEGER CHECK(error_code IS NULL OR error_code >= -10000),
+                            error_message TEXT CHECK(error_message IS NULL OR length(error_message) <= 500),
+                            metadata_json TEXT NOT NULL DEFAULT '{}'
+                                CHECK(json_valid(metadata_json) AND json_type(metadata_json) = 'object'),
+                            occurred_at TEXT NOT NULL,
+                            created_at TEXT NOT NULL,
+                            PRIMARY KEY(user_id, id),
+                            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+                        );
+
+                        CREATE INDEX idx_mt5_execution_logs_user_source_time
+                            ON mt5_execution_logs(user_id, execution_source, occurred_at DESC, id);
+
+                        CREATE INDEX idx_mt5_execution_logs_user_status
+                            ON mt5_execution_logs(user_id, status, created_at DESC);
+
+                        CREATE TABLE mcp_tokens (
+                            token_id TEXT PRIMARY KEY CHECK(length(token_id) = 36),
+                            user_id TEXT NOT NULL,
+                            provider TEXT NOT NULL DEFAULT 'EA_MT5'
+                                CHECK(length(provider) BETWEEN 1 AND 64),
+                            expires_at TEXT NOT NULL,
+                            created_at TEXT NOT NULL,
+                            is_valid INTEGER NOT NULL DEFAULT 1 CHECK(is_valid IN (0, 1)),
+                            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+                        );
+
+                        CREATE INDEX idx_mcp_tokens_user_expiry
+                            ON mcp_tokens(user_id, expires_at ASC);
+                    """)
+                    self._conn.execute("PRAGMA user_version=15")
+                    version = 15
 
     @property
     def schema_version(self) -> int:
@@ -1710,6 +1759,122 @@ class DiagnosticsStore:
                 "Review the matching market-context filter before changing indicator parameters."
             ),
         }
+
+    def append_mt5_execution_log(
+        self, user_id: str, values: dict[str, object],
+    ) -> dict[str, object] | None:
+        """Append one MT5 execution audit event for an existing user."""
+        import uuid as _uuid
+        created_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with self._lock, self._conn:
+            if self._conn.execute("SELECT 1 FROM users WHERE id = ?", (user_id,)).fetchone() is None:
+                return None
+            log_id = str(_uuid.uuid4())
+            self._conn.execute(
+                """INSERT INTO mt5_execution_logs (
+                    id, user_id, execution_source, order_type, symbol, volume,
+                    entry_price, stop_loss, take_profit, broker_order_id,
+                    broker_position_id, status, error_code, error_message,
+                    metadata_json, occurred_at, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    log_id, user_id, values["executionSource"], values["orderType"],
+                    values["symbol"], values["volume"], values.get("price"),
+                    values.get("stopLoss"), values.get("takeProfit"),
+                    values.get("brokerOrderId"), values.get("brokerPositionId"),
+                    values["status"], values.get("errorCode"), values.get("errorMessage"),
+                    "{}", values["timestamp"], created_at,
+                ),
+            )
+        return {
+            **values,
+            "id": log_id,
+            "userId": user_id,
+            "createdAt": created_at,
+            "metadata": {},
+        }
+
+    def get_mt5_execution_logs(
+        self, user_id: str, *, source: str | None = None, status: str | None = None,
+        symbol: str | None = None, limit: int = 100,
+    ) -> list[dict[str, object]]:
+        """Return filtered MT5 execution logs for one user."""
+        clauses = ["user_id = ?"]
+        params: list[object] = [user_id]
+        for column, value in (("execution_source", source), ("status", status), ("symbol", symbol)):
+            if value:
+                clauses.append(f"{column} = ?")
+                params.append(value)
+        safe_limit = max(1, min(limit, 200))
+        with self._lock:
+            rows = self._conn.execute(
+                f"""SELECT * FROM mt5_execution_logs
+                    WHERE {' AND '.join(clauses)}
+                    ORDER BY created_at DESC, id ASC LIMIT ?""",
+                [*params, safe_limit],
+            ).fetchall()
+        return [
+            {
+                "id": str(row["id"]),
+                "userId": str(row["user_id"]),
+                "executionSource": str(row["execution_source"]),
+                "orderType": str(row["order_type"]),
+                "symbol": str(row["symbol"]),
+                "volume": float(row["volume"]),
+                "price": row["entry_price"],
+                "stopLoss": row["stop_loss"],
+                "takeProfit": row["take_profit"],
+                "brokerOrderId": row["broker_order_id"],
+                "brokerPositionId": row["broker_position_id"],
+                "status": str(row["status"]),
+                "errorCode": row["error_code"],
+                "errorMessage": row["error_message"],
+                "timestamp": str(row["occurred_at"]),
+                "createdAt": str(row["created_at"]),
+                "metadata": {},
+            }
+            for row in rows
+        ]
+
+    def create_mcp_token(
+        self, user_id: str, token_id: str, provider: str, expires_at: str, created_at: str,
+    ) -> bool:
+        """Create new MCP token record."""
+        with self._lock, self._conn:
+            try:
+                self._conn.execute(
+                    """INSERT INTO mcp_tokens (token_id, user_id, provider, expires_at, created_at, is_valid)
+                        VALUES (?, ?, ?, ?, ?, 1)""",
+                    (token_id, user_id, provider, expires_at, created_at),
+                )
+                return True
+            except sqlite3.IntegrityError:
+                return False
+
+    def get_mcp_token(self, token_id: str) -> dict[str, object] | None:
+        """Return token details by ID."""
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT * FROM mcp_tokens WHERE token_id = ?", (token_id,)
+            ).fetchone()
+        if row is None:
+            return None
+        return {
+            "tokenId": str(row["token_id"]),
+            "userId": str(row["user_id"]),
+            "provider": str(row["provider"]),
+            "expiresAt": str(row["expires_at"]),
+            "createdAt": str(row["created_at"]),
+            "isValid": bool(row["is_valid"]),
+        }
+
+    def invalidate_mcp_token(self, token_id: str) -> bool:
+        """Set token invalid flag."""
+        with self._lock, self._conn:
+            cursor = self._conn.execute(
+                "UPDATE mcp_tokens SET is_valid = 0 WHERE token_id = ?", (token_id,)
+            )
+        return cursor.rowcount > 0
 
     def __enter__(self) -> "DiagnosticsStore":
         return self

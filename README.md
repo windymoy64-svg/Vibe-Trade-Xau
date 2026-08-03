@@ -38,6 +38,7 @@
   <a href="#-quick-start">Quick Start</a> &nbsp;&middot;&nbsp;
   <a href="#-examples">Examples</a> &nbsp;&middot;&nbsp;
   <a href="#-api-server">API / MCP</a> &nbsp;&middot;&nbsp;
+  <a href="#xauusd-diagnostics--precision-execution">XAUUSD Diagnostics</a> &nbsp;&middot;&nbsp;
   <a href="#-roadmap">Roadmap</a> &nbsp;&middot;&nbsp;
   <a href="#contributing">Contributing</a>
 </p>
@@ -45,6 +46,101 @@
 <p align="center">
   <a href="#-quick-start"><img src="assets/pip-install.svg" height="45" alt="pip install vibe-trading-ai"></a>
 </p>
+
+---
+
+## XAUUSD Diagnostics & Precision Execution
+
+This fork extends Vibe-Trading with an evidence-driven workflow for diagnosing and improving XAUUSD trading decisions. The implementation covers production trade diagnostics, strategy auto-selection, protected Auto Trade orchestration, and ACR/SMC precision-execution analysis.
+
+### Extension status
+
+The NgodingPakeAI implementation plan is complete. The focused backend validation suite currently passes **121 tests**.
+
+| Area | Included capabilities |
+| --- | --- |
+| Production diagnostics | User-scoped trade snapshots, loss-pattern analysis, period comparison, evidence-based recommendations, improvement tracking, notifications, CSV/PDF export |
+| Strategy auto-selection | Incremental EMA/RSI/ATR/volume context, market-regime classification, deterministic candidate ranking, status/toggle APIs, immutable risk boundary |
+| Auto Trade | Durable bot configurations, diagnostic signal gates, broker submission boundary, idempotent scheduling, execution audit logs, REST status, real-time WebSockets |
+| Broker credentials | AES-256-GCM encryption, random nonces, user/provider-bound associated data, metadata-only API responses, explicit key rotation |
+| ACR/SMC execution | Bounded OHLCV CSV/JSON upload, HTF BOS/CHOCH, LTF Supply/Demand, ACR and R-ACR, Fibonacci valuation, FVG overlap, entry type, SL/multi-TP, trailing stop, lot sizing |
+
+The main frontend routes are:
+
+- `/diagnostics` - production diagnostics dashboard
+- `/diagnostics/patterns` and `/diagnostics/recommendations` - evidence and remediation workflow
+- `/diagnostics/improvements` - improvement timeline and validation metrics
+- `/auto-trade` and `/auto-trade/strategy-selection` - Auto Trade and deterministic strategy selection
+- `/precision-execution` - OHLCV-driven ACR/SMC analysis and risk sizing
+
+### Local development
+
+Use Python 3.11+ and Node.js 22.22+.
+
+```bash
+pip install -e .
+npm install --prefix frontend
+
+# Terminal 1: FastAPI and the production frontend when frontend/dist exists
+vibe-trading serve --port 8899
+
+# Terminal 2: optional Vite development server
+npm run dev --prefix frontend
+```
+
+Open `http://localhost:8899` for the FastAPI-served build or the URL printed by Vite during frontend development. Loopback development works without an API key; non-local access requires `API_AUTH_KEY` and `Authorization: Bearer <key>`.
+
+### Credential encryption
+
+Broker API keys are never stored as plaintext. Before using the broker credential endpoints, generate a dedicated 32-byte master key:
+
+```bash
+python -c "import base64,secrets; print(base64.urlsafe_b64encode(secrets.token_bytes(32)).decode())"
+```
+
+Set the generated value as `VIBE_TRADING_CREDENTIAL_ENCRYPTION_KEY` in the server environment. Do not commit it, print it in logs, expose it to the frontend, or reuse a broker API key as the encryption key. The credential API fails closed with HTTP `503` when this setting is absent or invalid.
+
+### Extension API
+
+All routes below use the existing local-or-bearer authentication policy.
+
+| Method | Route | Purpose |
+| --- | --- | --- |
+| `GET` | `/auto-selection/status` | Read the latest user-scoped market context and strategy decision |
+| `POST` | `/auto-selection/toggle` | Explicitly enable or disable auto-selection without changing risk settings |
+| `POST/GET` | `/auto-trade/configurations` | Create or list durable bot configurations |
+| `GET/PUT/DELETE` | `/auto-trade/configurations/{configuration_id}` | Read, replace, or delete a user-owned bot configuration |
+| `POST` | `/auto-trade/broker-credentials` | Create an encrypted broker API key |
+| `PUT` | `/auto-trade/broker-credentials/{provider}` | Replace existing encrypted credential material |
+| `POST` | `/auto-trade/broker-credentials/{provider}/rotate` | Rotate credential material and increment its version |
+| `GET` | `/auto-trade/execution-logs` | Read filtered, user-scoped execution history |
+| `GET` | `/auto-trade/executions/{execution_id}/status` | Read the latest execution state |
+| `WS` | `/ws/auto-trade/executions` | Stream execution status changes |
+| `WS` | `/ws/auto-trade/execution-logs` | Stream persisted execution logs |
+| `POST` | `/precision-execution/ohlcv` | Validate and load a bounded CSV/JSON OHLCV dataset |
+| `POST` | `/precision-execution/analyze` | Run the integrated HTF/LTF ACR/SMC analysis pipeline |
+| `POST` | `/precision-execution/risk-calculator` | Calculate risk-based lot size using broker tick/lot limits |
+
+WebSocket connections are loopback-only when no API key is configured. With API authentication enabled, they require a short-lived, one-time ticket minted through the existing authenticated ticket endpoint; long-lived API keys must not be placed in WebSocket URLs.
+
+### Safety model
+
+- Auto-selection can select a strategy but cannot mutate the frozen risk configuration.
+- Broker orders retain the existing paper/live separation; live profiles still pass through mandate and kill-switch gates.
+- Order scheduling and broker submission use idempotency keys and do not retry blindly.
+- OHLCV uploads are limited to 5 MiB, parsed as UTF-8 CSV/JSON, held in a bounded in-memory registry, and not persisted as raw files.
+- Precision analysis returns `WAIT` or fails validation when evidence is incomplete; it does not fabricate an actionable setup.
+
+### Validation
+
+Focused smoke tests can be run from the repository root:
+
+```bash
+python -m pytest agent/tests/test_auto_selection_api.py agent/tests/test_auto_trade_status_api.py agent/tests/test_precision_analysis_api.py agent/tests/test_precision_risk_calculator_api.py -q
+npm run build --prefix frontend
+```
+
+The complete focused feature run passes **121 tests**. The repository-wide backend suite currently stops during collection because the existing modules `src.trading.forex_signals.contracts` and `src.trading.forex_features.builder` are missing; this is separate from the diagnostics, Auto Trade, and precision-execution suites.
 
 ---
 

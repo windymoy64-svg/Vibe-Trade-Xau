@@ -59,6 +59,13 @@ const DiagnosticNotificationSettings = lazy(() =>
 const AutoTrade = lazy(() => import("@/pages/AutoTrade").then((m) => ({ default: m.AutoTrade })));
 const StrategyAutoSelection = lazy(() => import("@/pages/StrategyAutoSelection").then((m) => ({ default: m.StrategyAutoSelection })));
 const PrecisionExecution = lazy(() => import("@/pages/PrecisionExecution").then((m) => ({ default: m.PrecisionExecution })));
+const EaBridgeDashboard = lazy(() => import("@/pages/EaBridgeDashboard").then((m) => ({ default: m.EaBridgeDashboard })));
+const EaBridgeAuditTrail = lazy(() => import("@/pages/EaBridgeAuditTrail").then((m) => ({ default: m.EaBridgeAuditTrail })));
+const EaBridgeReconciliation = lazy(() => import("@/pages/EaBridgeReconciliation").then((m) => ({ default: m.EaBridgeReconciliation })));
+const EaBridgeTradeDiagnostics = lazy(() => import("@/pages/EaBridgeTradeDiagnostics").then((m) => ({ default: m.EaBridgeTradeDiagnostics })));
+const Mt5ProductionDiagnostics = lazy(() => import("@/pages/Mt5ProductionDiagnostics").then((m) => ({ default: m.Mt5ProductionDiagnostics })));
+const PreciseStopLoss = lazy(() => import("@/pages/PreciseStopLoss").then((m) => ({ default: m.PreciseStopLoss })));
+const DataFeedPusher = lazy(() => import("@/pages/DataFeedPusher").then((m) => ({ default: m.DataFeedPusher })));
 
 function PageLoader() {
   return (
@@ -98,6 +105,13 @@ export const router = createBrowserRouter([
       { path: "/auto-trade", element: wrap(AutoTrade) },
       { path: "/auto-trade/strategy-selection", element: wrap(StrategyAutoSelection) },
       { path: "/precision-execution", element: wrap(PrecisionExecution) },
+      { path: "/ea-bridge", element: wrap(EaBridgeDashboard) },
+      { path: "/ea-bridge/audit", element: wrap(EaBridgeAuditTrail) },
+      { path: "/ea-bridge/reconciliation", element: wrap(EaBridgeReconciliation) },
+      { path: "/ea-bridge/trades/:tradeId", element: wrap(EaBridgeTradeDiagnostics) },
+      { path: "/mt5-integration", element: wrap(Mt5ProductionDiagnostics) },
+      { path: "/precise-stop-loss", element: wrap(PreciseStopLoss) },
+      { path: "/data-feed", element: wrap(DataFeedPusher) },
       { path: "/agent", element: wrap(Agent) },
       { path: "/runtime", element: wrap(Runtime) },
       { path: "/reports", element: wrap(Reports) },

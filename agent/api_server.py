@@ -290,6 +290,10 @@ register_auth_routes(app)
 from src.api.diagnostics_routes import register_diagnostics_routes  # noqa: E402
 register_diagnostics_routes(app)
 
+# MT5 Integration Routes
+from src.mt5_integration.routes import register_mt5_routes  # noqa: E402
+register_mt5_routes(app, store)
+
 # --- Strategy auto-selection ---
 from src.api.auto_selection_routes import register_auto_selection_routes  # noqa: E402
 register_auto_selection_routes(app)

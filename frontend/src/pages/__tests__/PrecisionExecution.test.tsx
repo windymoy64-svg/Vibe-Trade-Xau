@@ -62,6 +62,9 @@ describe("PrecisionExecution", () => {
     expect(screen.getByLabelText("Interactive lot calculator")).toBeInTheDocument();
     expect(screen.getByText("0.42")).toBeInTheDocument();
     expect(screen.getByText("Current setup preview")).toBeInTheDocument();
+    expect(screen.getByLabelText("H4 H1 convergence panel")).toBeInTheDocument();
+    expect(screen.getByText("CONVERGED BULLISH")).toBeInTheDocument();
+    expect(screen.getByText("CHOCH -> BOS")).toBeInTheDocument();
     expect(screen.getByText("No live order routing")).toBeInTheDocument();
     expect(screen.getByLabelText("Actionable dark mode signal card")).toBeInTheDocument();
     expect(screen.getByText("STRONG BUY")).toBeInTheDocument();

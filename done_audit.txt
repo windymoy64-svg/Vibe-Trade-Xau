@@ -1,0 +1,310 @@
+
+=== ACR Trailing Stop (3 done) ===
+ [frontend] Buat halaman utama trailing stop mock
+ [frontend] Buat komponen kartu posisi trailing stop
+ [frontend] Buat panel riwayat pergeseran SL
+
+=== Action Button (4 done) ===
+ [frontend] Buat halaman utama dengan tombol Mulai Ekstrak
+ [frontend] Buat komponen Signal Card dari data tiruan
+ [frontend] Tambah status loading tombol saat proses
+ [frontend] Tampilkan peringatan error koneksi di UI
+
+=== Actionable Signal Card (6 done) ===
+ [frontend] Buat layout utama kartu sinyal dark mode
+ [frontend] Tampilkan pair dan bias dengan badge warna
+ [frontend] Tambahkan metode eksekusi dan harga presisi MT5
+ [frontend] Tampilkan SL, TP1, TP2, TP3, dan RRR
+ [frontend] Buat badge status MT5 tiga kondisi
+ [frontend] Tambahkan tombol eksekusi manual dan batalkan
+
+=== Analisis Pola Kekalahan (10 done) ===
+ [frontend] Buat halaman utama Analisis Pola Kekalahan
+ [frontend] Tampilkan ringkasan pola dominan dengan grafik
+ [frontend] Tampilkan daftar pola terdeteksi dan jumlahnya
+ [frontend] Implementasi UI perbandingan antar periode
+ [frontend] Implementasi tombol ekspor PDF laporan pola
+ [backend] Buat tabel pola_kekalahan dan migrasi database
+ [backend] Buat endpoint GET analisis/pola untuk ringkasan
+ [backend] Buat service deteksi otomatis pola kekalahan
+ [backend] Buat endpoint perbandingan periode pola
+ [backend] Implementasi job otomatis perbarui klasifikasi pola
+
+=== Autentikasi & Pengaturan (18 done) ===
+ [frontend] Buat halaman Login & Register dengan mock
+ [frontend] Buat halaman Pengaturan Profil dengan data tiruan
+ [frontend] Buat halaman Integrasi Sumber Data dengan mock
+ [frontend] Buat komponen notifikasi lonceng dan panel
+ [frontend] Buat halaman Pengaturan Notifikasi dengan toggle tiruan
+ [frontend] Pasang guard rute: redirect ke Login bila belum login
+ [frontend] Buat layout dashboard setelah login dengan navigasi
+ [backend] Buat endpoint daftar (POST /auth/register)
+ [backend] Buat endpoint login (POST /auth/login)
+ [backend] Buat endpoint profil (GET & PUT /user/profile)
+ [backend] Buat endpoint ganti password (PUT /user/password)
+ [backend] Buat model & migrasi tabel pengguna (users)
+ [backend] Buat model & migrasi tabel sumber data (data_sources)
+ [backend] Buat endpoint integrasi trading platform (POST /data-sources/connect)
+ [backend] Buat endpoint upload CSV & impor trade (POST /data-sources/csv)
+ [backend] Buat model & migrasi tabel notifikasi (notifications)
+ [backend] Buat endpoint preferensi notifikasi (GET & PUT /user/notifications)
+ [backend] Buat endpoint daftar notifikasi (GET /notifications)
+
+=== Auto Trade (19 done) ===
+ [frontend] Buat halaman utama Auto Trade dengan layout panel kontrol, API key, dan log meng
+ [frontend] Buat panel kontrol robot (toggle aktivasi, input lot, SL/TP) dengan data tiruan
+ [frontend] Buat form manajemen API Key (input, mask, status koneksi) dengan data tiruan
+ [frontend] Buat komponen log eksekusi real-time dengan scroll, filter, dan data tiruan yang
+ [frontend] Buat indikator status eksekusi trade terkini pada panel kontrol menggunakan data
+ [backend] Buat skema database untuk penyimpanan API Key terenkripsi
+ [backend] Buat skema database untuk log eksekusi trade
+ [backend] Buat service validasi sinyal berdasarkan hasil diagnostik strategi
+ [backend] Buat service pengiriman order ke broker melalui integrasi API
+ [backend] Buat antrean dan penjadwalan eksekusi trade untuk mencegah duplikasi
+ [backend] Buat endpoint dan WebSocket untuk notifikasi status eksekusi trade
+ [backend] Buat API endpoint CRUD untuk menyimpan dan mengambil konfigurasi bot
+ [backend] Buat service validasi dan sanitasi input parameter trading
+ [backend] Buat service penyedia konfigurasi bot saat eksekusi trade
+ [backend] Buat endpoint untuk menyimpan, memperbarui, dan merotasi API Key broker
+ [backend] Buat service enkripsi/dekripsi API Key dan verifikasi koneksi broker
+ [backend] Buat service pencatatan log setiap eksekusi trade dengan status, harga, timestam
+ [backend] Buat endpoint REST untuk mengambil riwayat log eksekusi dengan filter
+ [backend] Buat WebSocket server untuk push log eksekusi secara real-time ke frontend
+
+=== Dashboard Diagnostik (13 done) ===
+ [frontend] Bangun Halaman Dashboard Diagnostik
+ [frontend] Buat Komponen Statistik Penyebab Umum
+ [frontend] Buat Komponen Grafik Sebaran Dugaan
+ [frontend] Buat Komponen Daftar Trade Terbaru
+ [frontend] Buat Komponen Wawasan Singkat
+ [frontend] Integrasi Data Tiruan di Halaman Dashboard
+ [frontend] Kubungkan Frontend ke API Endpoint
+ [frontend] Terapkan Styling & Responsivitas Dashboard
+ [backend] Setup Tabel Diagnostik Trade & Migrasi
+ [backend] Buat API Endpoint Ringkasan Kinerja
+ [backend] Buat API Endpoint Statistik Penyebab Umum
+ [backend] Buat API Endpoint Daftar Trade Terbaru
+ [backend] Buat API Endpoint Wawasan Singkat
+
+=== Data Feed Pusher (4 done) ===
+ [frontend] Buat halaman utama data feed dengan data tiruan
+ [frontend] Tampilkan daftar bar OHLC terbaru dari data tiruan
+ [frontend] Tampilkan harga tick terkini dan waktu pembaruan dari data tiruan
+ [frontend] Simulasikan status offline saat koneksi terputus pada data tiruan
+
+=== Diagnostik Per Trade (8 done) ===
+ [frontend] Buat halaman daftar trade dengan data tiruan
+ [frontend] Buat halaman detail diagnostik trade dengan data tiruan
+ [frontend] Tambahkan filter pencarian pada daftar trade dengan data tiruan
+ [frontend] Implementasikan ekspor CSV/PDF untuk trade terpilih dengan data tiruan
+ [backend] Buat skema database dan migrasi untuk data trade dan diagnostik
+ [backend] Buat API endpoint daftar trade dengan dukungan filter pencarian
+ [backend] Buat API endpoint detail diagnostik satu trade
+ [backend] Buat API endpoint ekspor CSV/PDF untuk trade terpilih
+
+=== EA Bridge (MQL5) (5 done) ===
+ [frontend] Buat halaman dashboard EA Bridge mock
+ [frontend] Buat panel status koneksi EA mock
+ [frontend] Buat panel posisi dan OHLC mock
+ [frontend] Buat form instruksi trading mock
+ [frontend] Buat panel log audit trail mock
+
+=== Equilibrium & Fibonacci (5 done) ===
+ [frontend] Buat layout halaman Equilibrium dan Fibonacci
+ [frontend] Buat komponen chart Premium/Discount dengan mock
+ [frontend] Buat panel status validasi Zona ACR
+ [frontend] Buat Signal Card dengan warna dan jarak
+ [frontend] Terapkan simulasi update status saat swing baru
+
+=== FVG Confluence (3 done) ===
+ [frontend] Buat halaman sinyal dengan data tiruan
+ [frontend] Tampilkan label FVG Confluence pada kartu
+ [frontend] Buat visualisasi area tumpang tindih di grafik
+
+=== Fail-safe Mechanism di Sisi EA (5 done) ===
+ [frontend] Buat halaman dashboard status fail-safe
+ [frontend] Tampilkan status koneksi dan ambang waktu
+ [frontend] Tampilkan daftar posisi dan pending order
+ [frontend] Tampilkan log kejadian putus koneksi
+ [frontend] Tampilkan notifikasi status darurat
+
+=== HTF Convergence (H4/H1) (4 done) ===
+ [frontend] Buat halaman HTF Convergence dengan mock data
+ [frontend] Buat panel tren H4 dan H1
+ [frontend] Buat ringkasan bias gabungan H4/H1
+ [frontend] Buat chart H4/H1 dengan BOS/CHOCH & struktur
+
+=== LTF Execution (M15/M5) (5 done) ===
+ [frontend] Buat halaman utama LTF Execution dengan data tiruan
+ [frontend] Gambar zona ACR terbaru pada grafik dari mock
+ [frontend] Tandai candle pemicu ACR sesuai arah sinyal
+ [frontend] Buat panel detail eksekusi SL target dan status
+ [frontend] Simulasikan pembaruan harga dan invalidasi zona otomatis
+
+=== MCP Deployment & Secure Connectivity (1 done) ===
+ [frontend] Buat halaman deployment EA dengan data tiruan
+
+=== MCP Server Bridge – Eksekusi & Sinkronisasi (10 done) ===
+ [frontend] Buat layout dashboard trading utama
+ [frontend] Buat panel kontrol order (Buy/Sell/Close/SL/TP/Partial Close)
+ [frontend] Buat tampilan real-time harga XAUUSD
+ [frontend] Buat daftar posisi terbuka dengan status live
+ [frontend] Buat daftar pending order dengan status live
+ [frontend] Buat indikator status koneksi EA-terminal
+ [frontend] Buat halaman log audit trail
+ [frontend] Buat halaman rekonsiliasi posisi dashboard vs akun MT5
+ [frontend] Buat halaman hasil trade diagnostics per trade
+ [frontend] Buat tabel ringkasan pola kegagalan trade
+
+=== MT5 Direct Integration (5 done) ===
+ [frontend] Buat halaman Production Diagnostics 
+ [frontend] Bangun komponen indikator status koneksi MT5
+ [frontend] Susun komponen grafik OHLC XAUUSD real-time
+ [frontend] Rancang tampilan daftar trade diagnostic 
+ [frontend] Buat ringkasan pola kegagalan 
+
+=== Mekanisme Eksekusi Native (4 done) ===
+ [frontend] Buat halaman Signal Card dengan data tiruan
+ [frontend] Implementasi state eksekusi dan badge status tiruan
+ [frontend] Buat panel aksi order Buy/Sell dengan mock
+ [frontend] Buat panel ubah SL/TP dan tutup posisi
+
+=== Mode Auto-Selection Strategi (8 done) ===
+ [frontend] Buat halaman utama mode auto-selection dengan data tiruan
+ [frontend] Simulasikan perubahan strategi dinamis dengan interval data tiruan
+ [frontend] Integrasikan tampilan manajemen risiko tetap di panel auto-selection
+ [backend] Buat service penghitung indikator pasar real-time
+ [backend] Buat service pemilih strategi berdasarkan kondisi pasar
+ [backend] Buat endpoint GET status auto-selection terkini
+ [backend] Buat endpoint POST untuk toggle mode auto-selection
+ [backend] Pastikan pengaturan manajemen risiko tidak berubah oleh auto-selection
+
+=== Money Management (3 done) ===
+ [frontend] Buat halaman dashboard Money Management dengan data tiruan
+ [frontend] Tampilkan riwayat aksi pengelolaan posisi pada dashboard
+ [frontend] Tampilkan detail posisi dengan target TP dan SL
+
+=== Order Type Decision (4 done) ===
+ [frontend] Buat halaman Signal Card dengan data tiruan
+ [frontend] Implementasikan logika Order Type Decision
+ [frontend] Tampilkan label order type dengan visual berbeda
+ [frontend] Hubungkan Signal Card dengan mock kondisi pasar
+
+=== Penyaring Diagnostik (12 done) ===
+ [frontend] Buat halaman utama diagnostic filter dengan data tiruan
+ [frontend] Implement filter market regime di halaman diagnostic filter
+ [frontend] Implement filter sesi trading di halaman diagnostic filter
+ [frontend] Implement filter indikator teknis di halaman diagnostic filter
+ [frontend] Implement UI simpan dan muat filter kustom
+ [frontend] Tampilkan ringkasan pola loss dari data tiruan
+ [backend] Buat skema database untuk custom filter
+ [backend] Buat API endpoint daftar trade dengan filter diagnostik
+ [backend] Integrasikan data diagnostik trade ke endpoint filter
+ [backend] Buat API endpoint simpan custom filter
+ [backend] Buat API endpoint muat daftar custom filter
+ [backend] Buat API endpoint hapus custom filter
+
+=== Precise Stop Loss (5 done) ===
+ [frontend] Buat halaman utama sinyal dengan mock
+ [frontend] Buat kartu sinyal menampilkan SL final
+ [frontend] Buat utilitas konversi pips ke poin XAUUSD
+ [frontend] Hitung SL presisi dari zona ACR mock
+ [frontend] Perbarui SL saat zona berubah atau invalid
+
+=== Precision Trade Execution & Management Engine (ACR & SMC) (33 done) ===
+ [frontend] Bangun halaman utama eksekusi trading
+ [frontend] Buat komponen upload file CSV JSON
+ [frontend] Buat chart HTF dengan marker BOS CHOCH
+ [frontend] Buat chart LTF dengan zona Supply Demand
+ [frontend] Buat panel zona ACR Bullish Bearish
+ [frontend] Buat indikator status zona fresh invalid
+ [frontend] Buat marker sinyal R-ACR reversal
+ [frontend] Buat panel Fibonacci Premium Discount
+ [frontend] Buat overlay visual FVG di chart
+ [frontend] Buat penanda confluence overlap FVG ACR
+ [frontend] Buat komponen rekomendasi tipe order
+ [frontend] Buat tampilan harga entry presisi
+ [frontend] Buat panel SL dan multi TP
+ [frontend] Buat visualisasi trailing stop dinamis
+ [frontend] Buat tombol Mulai Ekstrak Analisis
+ [frontend] Buat kartu sinyal dark mode
+ [frontend] Buat kalkulator lot interaktif
+ [backend] Buat validasi dan parsing file OHLCV
+ [backend] Buat endpoint unggah data OHLCV
+ [backend] Buat service pemetaan struktur pasar HTF
+ [backend] Buat service deteksi zona Supply Demand LTF
+ [backend] Buat service deteksi zona ACR Bullish Bearish
+ [backend] Buat service validasi status zona fresh invalid
+ [backend] Buat service deteksi sinyal R-ACR reversal
+ [backend] Buat service kalkulasi Fibonacci Premium Discount
+ [backend] Buat service deteksi Fair Value Gap
+ [backend] Buat service deteksi confluence overlap FVG ACR
+ [backend] Buat service penentuan tipe order entry
+ [backend] Buat service kalkulasi SL dan multi TP
+ [backend] Buat service kalkulasi trailing stop ACR
+ [backend] Buat endpoint analisis strategi terpadu
+ [backend] Buat service kalkulasi ukuran lot
+ [backend] Buat endpoint kalkulator risiko
+
+=== Progres Perbaikan (13 done) ===
+ [frontend] Buat layout halaman Progres Perbaikan
+ [frontend] Buat komponen Linimasa Perbaikan
+ [frontend] Buat komponen Grafik Penurunan Loss
+ [frontend] Buat komponen Metrik Keberhasilan
+ [frontend] Buat komponen Log Aktivitas Perbaikan
+ [frontend] Buat tombol dan dialog Ekspor Laporan
+ [frontend] Buat mock data untuk seluruh Komponen
+ [backend] Buat tabel perbaikan dan migrasi
+ [backend] Buat API linimasa perbaikan
+ [backend] Buat API data grafik penurunan loss
+ [backend] Buat API metrik keberhasilan
+ [backend] Buat API log aktivitas perbaikan
+ [backend] Buat API generate PDF laporan
+
+=== Rekomendasi Perbaikan (15 done) ===
+ [frontend] Buat halaman utama Rekomendasi Perbaikan
+ [frontend] Buat komponen kartu rekomendasi dengan mock data
+ [frontend] Buat komponen detail langkah perbaikan
+ [frontend] Buat komponen prioritas rekomendasi terurut
+ [frontend] Buat fitur tandai sudah diperbaiki dengan mock data
+ [frontend] Buat komponen ringkasan pola kekalahan dari diagnostik
+ [frontend] Buat halaman detail rekomendasi tunggal
+ [backend] Buat API endpoint daftar rekomendasi otomatis
+ [backend] Buat API endpoint detail rekomendasi
+ [backend] Buat API endpoint tandai rekomendasi sudah diperbaiki
+ [backend] Buat API endpoint daftar rekomendasi berdasarkan prioritas
+ [backend] Buat skema tabel rekomendasi di database
+ [backend] Buat tabel rekomendasi beserta migrasi
+ [backend] Buat logika pembangkitan rekomendasi otomatis dari pola diagnostik
+ [backend] Buat service perhitungan prioritas rekomendasi
+
+=== Reversal ACR (R-ACR / Liquidity Sweep) (5 done) ===
+ [frontend] Buat halaman utama R-ACR dengan data tiruan
+ [frontend] Hitung pola R-ACR dari OHLC candle tertutup
+ [frontend] Tampilkan label pola dan level sweep
+ [frontend] Perbarui sinyal saat candle baru tertutup
+ [frontend] Ubah status eksekusi menjadi Market Execution
+
+=== Standard ACR Rules (3 done) ===
+ [frontend] Buat halaman utama chart dengan data tiruan
+ [frontend] Implementasikan deteksi dan penanda sinyal ACR
+ [frontend] Tampilkan zona ACR sebagai area berlabel
+
+=== Synchronized Execution & Audit Trail (5 done) ===
+ [frontend] Buat halaman audit trail dengan data tiruan
+ [frontend] Tambahkan filter jenis aksi dan rentang tanggal
+ [frontend] Buat modal detail catatan audit
+ [frontend] Buat panel status sinkronisasi posisi
+ [frontend] Tampilkan peringatan Tidak Sinkron dan posisi berbeda
+
+=== XAUUSD Precision (4 done) ===
+ [frontend] Buat halaman Signal Card dengan data tiruan
+ [frontend] Buat komponen harga XAUUSD format dinamis
+ [frontend] Terapkan format harga di dashboard dan log
+ [frontend] Buat input SL/TP dengan konversi pips tiruan
+
+=== Zone Priority & Invalidation (4 done) ===
+ [frontend] Bangun layout utama dashboard zona
+ [frontend] Buat komponen SignalCard dengan status zona
+ [frontend] Tambahkan filter untuk zona fresh/invalid
+ [frontend] Simulasikan invalidasi zona lewat UI

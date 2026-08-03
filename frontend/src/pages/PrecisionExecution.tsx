@@ -13,6 +13,7 @@ import { StopLossTakeProfitPanel } from "@/components/precision-execution/StopLo
 import { TrailingStopVisualization } from "@/components/precision-execution/TrailingStopVisualization";
 import { ActionableSignalCard } from "@/components/precision-execution/ActionableSignalCard";
 import { InteractiveLotCalculator } from "@/components/precision-execution/InteractiveLotCalculator";
+import { HtfConvergencePanel } from "@/components/precision-execution/HtfConvergencePanel";
 
 const workflowTone: Record<PrecisionWorkflowStatus, string> = {
   COMPLETE: "bg-emerald-500/10 text-emerald-500",
@@ -39,6 +40,8 @@ export function PrecisionExecution() {
     <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{precisionExecutionPreview.workflow.map((step, index) => <article key={step.id} className="rounded-xl border bg-card p-4"><div className="flex items-start justify-between gap-3"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted font-mono text-xs font-semibold">{index + 1}</span><span className={`rounded-full px-2 py-0.5 text-[9px] font-semibold ${workflowTone[analysisStarted && step.status === "WAITING" && index === 2 ? "ACTIVE" : step.status]}`}>{analysisStarted && step.status === "WAITING" && index === 2 ? "ACTIVE" : step.status}</span></div><h2 className="mt-4 text-sm font-semibold">{step.label}</h2><p className="mt-1 text-xs text-muted-foreground">{step.detail}</p></article>)}</section>
 
     <ActionableSignalCard signal={actionableSignalPreview} />
+
+    <HtfConvergencePanel />
 
     <section className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)]">
       <article className="rounded-xl border bg-card shadow-sm"><PanelTitle icon={BarChart3} title="HTF structure chart" detail={`${symbol} ${precisionExecutionPreview.htfTimeframe} candles with confirmed structure events.`} /><div className="flex flex-wrap gap-2 px-5 pt-4 text-[10px]"><span className="rounded-full bg-emerald-500/10 px-2 py-1 text-emerald-500">BOS · continuation break</span><span className="rounded-full bg-amber-500/10 px-2 py-1 text-amber-500">CHOCH · structure shift</span><span className="ml-auto text-muted-foreground">{htfStructurePreview.markers.length} markers</span></div><div className="p-3"><HtfStructureChart candles={htfStructurePreview.candles} markers={htfStructurePreview.markers} /></div></article>

@@ -1,0 +1,14 @@
+import { CheckCircle2, GitMerge, ShieldCheck, TrendingUp } from "lucide-react";
+
+const frames = [
+  { timeframe: "H4", bias: "BULLISH", structure: "BOS confirmed", swing: "2368.40 - 2404.80", strength: 92, eventAt: "2026-08-03 04:00" },
+  { timeframe: "H1", bias: "BULLISH", structure: "CHOCH -> BOS", swing: "2378.20 - 2397.40", strength: 86, eventAt: "2026-08-03 08:00" },
+] as const;
+
+export function HtfConvergencePanel() {
+  const converged = frames.every((frame) => frame.bias === frames[0].bias);
+  return <section aria-label="H4 H1 convergence panel" className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 shadow-sm"><header className="flex flex-col justify-between gap-3 border-b border-emerald-500/20 p-5 sm:flex-row sm:items-center"><div className="flex items-start gap-3"><span className="rounded-lg bg-emerald-500/10 p-2 text-emerald-500"><GitMerge className="h-4 w-4" /></span><div><h2 className="font-semibold">HTF convergence · H4 / H1</h2><p className="mt-0.5 text-xs text-muted-foreground">Both higher timeframes must agree before LTF execution is eligible.</p></div></div><span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${converged ? "bg-emerald-500/10 text-emerald-500" : "bg-rose-500/10 text-rose-500"}`}><ShieldCheck className="h-4 w-4" /> {converged ? "CONVERGED BULLISH" : "DIVERGED"}</span></header><div className="grid gap-4 p-5 lg:grid-cols-2">{frames.map((frame) => <article key={frame.timeframe} className="rounded-xl border bg-background/80 p-4"><div className="flex items-center justify-between"><div className="flex items-center gap-2"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 font-mono text-xs font-semibold text-primary">{frame.timeframe}</span><div><p className="font-mono text-sm font-semibold text-emerald-500">{frame.bias}</p><p className="text-[9px] text-muted-foreground">{frame.eventAt}</p></div></div><TrendingUp className="h-5 w-5 text-emerald-500" /></div><div className="mt-4 grid grid-cols-3 gap-2"><Meta label="Structure" value={frame.structure} /><Meta label="Swing" value={frame.swing} /><Meta label="Strength" value={`${frame.strength}%`} /></div></article>)}</div><div className="grid gap-2 border-t border-emerald-500/20 p-5 sm:grid-cols-3"><Gate label="Directional bias" /><Gate label="Structure continuation" /><Gate label="LTF execution allowed" /></div></section>;
+}
+
+function Meta({ label, value }: { label: string; value: string }) { return <div className="rounded-lg bg-muted/30 p-2"><p className="text-[8px] uppercase tracking-wider text-muted-foreground">{label}</p><p className="mt-1 font-mono text-[10px] font-semibold">{value}</p></div>; }
+function Gate({ label }: { label: string }) { return <span className="inline-flex items-center gap-2 rounded-lg bg-background/70 p-3 text-xs"><CheckCircle2 className="h-4 w-4 text-emerald-500" /> {label}</span>; }
