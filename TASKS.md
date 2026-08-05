@@ -1,5 +1,109 @@
 # Tasks
 
+## Handoff Sesi 5 Agustus 2026 — Debug Halaman `/auto-trade` (Settings, Blank Refresh, NEXT CYCLE, Start)
+
+### 📊 Ringkasan Sesi
+Sesi fokus bugfix page `/auto-trade` (`frontend/src/pages/AutoTrade.tsx` + `frontend/vite.config.ts`). 4 bug frontend diselesaikan & sudah ter-commit (working tree bersih saat handoff, HEAD `388cacd` "Deskripsi perubahan"). Investigasi tombol **START AUTO TRADE** berjalan panjang; backend terbukti 100% sehat dan root cause diidentifikasi di sisi frontend (race polling), namun **fix-nya BELUM diterapkan**.
+
+### ✅ Pekerjaan Selesai (4 bug)
+
+1. **Bug #1 — Input settings tidak pernah tersimpan (nilai balik ke semula)**
+   - `AutoTrade.tsx:194` `SettingsModal` menerima props `values`/`setters` tapi tidak pernah di-destructure; body memakai identifier bebas (`lotSize`, `setLotSize`, …). Akibatnya **14 error TS** (`TS2304 Cannot find name ...`) dan `ReferenceError` saat runtime → tombol ± / input tidak pernah mem-set state.
+   - Fix: tambah destructure `const { lotSize, stopLoss, ... } = values;` dan `const { setLotSize, ... } = setters;` (baris 233–234).
+
+2. **Bug #2 — Polling 1 detik menimpa input yang sedang diedit**
+   - `AutoTrade.tsx:82` `setInterval(refresh, 1_000)` berjalan bahkan saat modal terbuka; tiap tick `applyConfig(configResult.value[0])` memanggil `setLotSize/setStopLoss/...` → angka balik ke nilai tersimpan.
+   - Fix: `settingsOpenRef` + `configHydratedRef` (`:73–75`, `:93`). `config` tetap di-`setConfig` tiap tick (dipakai START/PUT saat simpan), tapi nilai form hanya di-hydrate **sekali** (load pertama / setelah simpan) dan **tidak pernah saat modal terbuka**.
+
+3. **Bug #3 — Refresh `/auto-trade` → halaman blank putih**
+   - `vite.config.ts` (`PROXY_PATHS`) memprox **tanpa syarat** `/mt5` dan `/auto-trade` ke backend `:8899`. Kedua prefix itu juga route SPA (`/auto-trade`, `/auto-trade/strategy-selection`, `/mt5-integration`). F5 → server kembalikan `dist/index.html` build lama yang menunjuk asset tak ada di dev server → JS gagal parse → layar putih.
+   - Fix: pindahkan keduanya ke `apiProxyWithHtmlFallback` (pola `/runs` & `/correlation`), dengan guard `^/mt5(?:/|$)` & `^/auto-trade(?:/|$)` supaya `/mt5` tidak menelan `/mt5-integration`. Navigasi browser (`Accept: text/html`) → dev-SPA `index.html`; `fetch`/XHR → backend JSON.
+
+4. **Bug #4 — NEXT CYCLE tidak muncul**
+   - Regex `timeframeToSeconds` salah format: `(/(\d+)([MHD])?$/)` membaca `<angka><unit>` padahal MT5 pakai `<unit><angka>` → `H1` dihitung 60 detik (bukan 3600), `D1` 60 detik (bukan 86400). Fix: `/^([SMHDW])(\d+)$/` + unit W + fallback `0` (tampil `--:--`) alih-alih `1800`.
+   - Nilai di-gate `botStatus === "RUNNING"` → selalu `"--:--"` saat STOPPED. Gate dihapus (countdown = fakta pasar, tak bergantung status bot) + tambah sub-label `Candle close · <timeframe>`.
+   - Tidak ada ticker render ulang: tambah `useState` + `setInterval` 1 detik khusus countdown dipicu `timeframe`.
+
+### 🔍 Investigasi Tombol START AUTO TRADE (BELUM SELESAI)
+
+**Backend terbukti sehat (validasi ekstensif):**
+- `POST /mt5/auto-trade/start` (`agent/src/api/simple_autotrade.py:240`, runner `DemoAutoTradeRunner`) → `200 running:true` untuk semua kasus uji:
+  - Semua timeframe M5/M15/M30/H1; symbol GOLD; payload default UI (M30, lot 0.01, SL 30, TP 60, paperMode true).
+  - `paperMode:false` → `409` (sesuai aturan: runner hanya demo/paper).
+  - Monitor 20 detik → tetap `RUNNING`, `lastError` kosong.
+- MT5 profile = `paper` (verified via `/mt5/configuration`), password tersimpan.
+- `GET /mt5/live/snapshot` → `connected=true` konsisten di 8 kombinasi symbol×timeframe (mengontrol `disabled` tombol).
+- Dua proses python (`PID 23048` parent, `28112` child = uvicorn reloader+worker) terbukti **bukan split-brain**: hammer `/status` 40× → `running=true` konsisten.
+- Latensi: `start` 40–200 ms; `liveSnapshot` 120–280 ms (batch poll digate endpoint ini).
+- Race/konkurensi sintetis: `race-sweep.mjs` 12 jendela timing → 0 gagal; `concurrent-start.mjs` 8 klik + 11 batch poll 1 detik → **8/8 sukses**.
+
+**Root cause (identifikasi, fix BELUM diterapkan):** race condition di frontend. `refresh()` (poll 1 s) menangkap `runnerStatus` **sebelum** klik START (`running:false`, polling batch tertahan ~130–280 ms oleh `liveSnapshot`). Jika batch stale itu resolve **setelah** respons POST /start, `setBotStatus("STOPPED")` di `refresh:97` menimpa `RUNNING` yang baru saja di-set oleh `startBot`. UI tampak balik STOPPED padahal backend RUNNING → tombol "tidak berfungsi". Gejala intermiten tergantung timing latensi.
+
+**Fix yang direncanakan (next step):** guard agar poll tidak men-downgrade `RUNNING→STOPPED` saat start baru sukses, misal ref `startPendingUntil = Date.now()+1500ms` di-set di `startBot` setelah sukses, lalu di `refresh` skip `setBotStatus("STOPPED")` bila `Date.now() < startPendingUntil`. Alternatif: token/epoch guard untuk order resolusi pengeset status.
+
+### 📁 File Dibuat / Diubah / Dihapus
+- **Diubah:** `frontend/src/pages/AutoTrade.tsx` (Bug 1, 2, 4; destructure, refs, NumField draft+clamp, countdown ticker, regex timeframe).
+- **Diubah:** `frontend/vite.config.ts` (Bug 3; proxy fallback `/mt5` & `/auto-trade`).
+- **Dibuat (throwaway, di luar repo, `%TEMP%\opencode`):** `race-repro.mjs`, `race-sweep.mjs`, `concurrent-start.mjs`, `tf_test.js`, `tf_test2.js`.
+- **Tidak ada file dihapus.** Commit sesi: `388cacd "Deskripsi perubahan"` (oleh user).
+
+### 🔧 Command Penting
+```bash
+# Typecheck + build frontend (dari folder frontend)
+& "node_modules\.bin\tsc.cmd" --noEmit -p tsconfig.json        # 0 error (sebelumnya 14)
+& "node_modules\.bin\vite.cmd" build                          # sukses ~17s
+
+# Restart dev server (perubahan vite.config butuh restart — HMR tidak menangkap config)
+Stop-Process -Id 7576 -Force
+cmd /c "node_modules\.bin\vite.cmd > vite-restart.log 2>&1"   # VITE v6.4.3 ready :5899
+
+# Probes backend/proxy (Invoke-WebRequest)
+POST http://127.0.0.1:8899/mt5/auto-trade/start  (body JSON, 200 running:true)
+GET  http://127.0.0.1:8899/mt5/auto-trade/status
+GET  http://localhost:5899/auto-trade  (Accept:text/html → 1159B dev-SPA)
+GET  http://localhost:5899/mt5/auto-trade/status (Accept:application/json → 200)
+```
+
+### ✅ Hasil Validasi
+
+| Check | Hasil | Catatan |
+|-------|-------|---------|
+| `tsc --noEmit` (frontend) | ✅ 0 error | Sebelumnya 14 error TS2304/TS6133 |
+| `vite build` | ✅ sukses | ~17 s, hanya warning chunk >500 kB (existing) |
+| SPA navigation `/auto-trade`, `/auto-trade/strategy-selection`, `/mt5-integration` (Accept:text/html) | ✅ dev-SPA | 1159 B, mengandung `/@vite/client` |
+| API proxy `/mt5/auto-trade/status`, `/auto-trade/configurations` (Accept:application/json) | ✅ 200 JSON | Tidak lagi balik HTML |
+| Unit timeframe (M1..W1 + input bogus) | ✅ ALL OK | `tf_test2.js` |
+| Backend live: start/stop/status semua kombinasi | ✅ running:true konsisten | termasuk monitor 20s + hammer 40× |
+| Konkurensi poll+start | ✅ 8/8 | `concurrent-start.mjs` |
+
+### ⚠️ Error / Kendala Tersisa
+1. **Fix tombol START belum diterapkan** — root cause teridentifikasi (race ol-out-of-order poll), fix direncanakan (lihat Next Steps).
+2. **`frontend/src/pages/__tests__/AutoTrade.test.tsx` stale** — meng-assert UI lama ("Execution control center", "API key") yang tak ada lagi; tidak menangkap bug sesi ini. Perlu di-update.
+3. Ada `mojibake` (mis. `âš ï¸`) pada string teks di `AutoTrade.tsx` (encoding latin1) — kosmetik, opsional dibersihkan.
+4. Dua proses python backend (parent-child uvicorn) — benign, bukan split-brain.
+
+### 💡 Keputusan Teknis
+1. **Polling config dipisah dari hydrate form:** `setConfig` tetap tiap tick (dipakai START + PUT id saat simpan); nilai input hanya di-hydrate sekali (`configHydratedRef`) & tidak saat modal (`settingsOpenRef`).
+2. **Ref, bukan dependency:** guard memakai `useRef` agar interval 1 detik `refresh` tidak restart setiap kali `settingsOpen` berubah.
+3. **NumField bisa diketik manual:** `draft` string + clamp min/max saat blur/Enter. Sebelumnya `onChange` menolak nilai di luar range sehingga mengetik manual mustahil (mis. hapus isi → `Number("")`=0 ditolak).
+4. **Proxy split Accept-based:** memakai `apiProxyWithHtmlFallback` (pola `/runs`, `/correlation`) + guard `(?:/|$)` — navigasi SPA vs API request terpisah bersih.
+5. **NEXT CYCLE = fakta pasar:** tidak digate status bot; ticker 1 detik terpisah; format tak dikenal → `--:--` (tidak memakai fallback diam-diam).
+6. **Rencana fix START:** guard `startPendingUntil` (jeda ~1.5 s) menahan downgrade STOPPED sampai poll berikutnya mengonfirmasi `running:true`.
+
+### 📊 Status Graphify
+- ❌ **`graphify update .` TIDAK dijalankan sesi ini.**
+- ❌ `graph.html`, `graph.json`, `GRAPH_REPORT.md` **tidak diperbarui** — LastWrite masih 2026-08-04 11:42 (sebelum perubahan sesi ini).
+- `graphify-out/` memiliki banyak cache dari update 4 Agustus; sebaiknya di-refresh di awal sesi berikut.
+
+### 🔄 Next Step untuk Chat Berikutnya
+1. **Terapkan fix tombol START** di `AutoTrade.tsx` per analisis race (guard `startPendingUntil` di `startBot` + skip downgrade di `refresh`). Verifikasi e2e browser: klik START → tombol berubah STOP & status panel RUNNING; stop; ganti setting → Simpan → buka lagi → nilai persist.
+2. **Update test stale** `frontend/src/pages/__tests__/AutoTrade.test.tsx` ke UI sekarang (NumField, SettingsModal, NEXT CYCLE).
+3. **Jalankan `graphify update .`** untuk sinkronkan `graph.html/graph.json/GRAPH_REPORT.md` dengan perubahan sesi.
+4. (Opsional) Kurangi beban polling: naikkan interval atau pisahkan poll config dari poll market/logs.
+5. `git status` aman untuk cek sisa perubahan; commit bila ada yang masih open.
+
+---
+
 ## Handoff Sesi 4 Agustus 2026 — Project Complete: All Phases Finished ✅🎉
 
 ### 📊 **RINGKASAN SESSION INI (Akhir - Sesi Lengkap)**

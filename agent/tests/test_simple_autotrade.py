@@ -17,13 +17,14 @@ def test_cycle_hold_and_duplicate_never_send(monkeypatch):
     class Fake:
         ACCOUNT_TRADE_MODE_DEMO = 0
         TIMEFRAME_M5 = 5
-        def account_info(self): return SimpleNamespace(login=1, trade_mode=0)
-        def symbol_info(self, name): return SimpleNamespace(name=name, trade_allowed=True, point=.01, spread=20, filling_mode=2)
+        def account_info(self): return SimpleNamespace(login=1, trade_mode=0, balance=10_000)
+        def symbol_info(self, name): return SimpleNamespace(name=name, trade_allowed=True, point=.01, spread=20, filling_mode=2, trade_tick_size=.01, trade_tick_value=1, volume_min=.01, volume_max=1, volume_step=.01)
         def symbol_info_tick(self, name): return SimpleNamespace(bid=100, ask=100.2, time=1_700_000_000)
         def symbols_get(self): return (self.symbol_info("XAUUSD"),)
         def symbol_select(self, name, enabled=True): return name == "XAUUSD"
         def positions_get(self, **kwargs): return ()
-        def copy_rates_from_pos(self, *args): return [{"time": 1_700_000_000 + i * 300, "close": 100.0} for i in range(30)]
+        def orders_get(self, **kwargs): return ()
+        def copy_rates_from_pos(self, *args): return [{"time": 1_700_000_000 + i * 300, "open": 100.0, "high": 100.0, "low": 100.0, "close": 100.0, "tick_volume": 1} for i in range(30)]
         def order_check(self, payload): raise AssertionError("HOLD must not check")
         def order_send(self, payload): raise AssertionError("HOLD must not send")
         def initialize(self, *args, **kwargs): return True

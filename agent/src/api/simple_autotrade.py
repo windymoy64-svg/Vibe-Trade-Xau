@@ -1,4 +1,4 @@
-"""Demo-only MT5 auto-trade runner with closed-candle idempotency."""
+"""Demo-only adaptive MT5 auto-trade runner with closed-candle idempotency."""
 
 from __future__ import annotations
 
@@ -12,7 +12,18 @@ from typing import Any
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from src.api.auto_selection_routes import publish_auto_selection_status
+from src.diagnostics.store import DiagnosticsStore
+from src.trading.auto_selection import OHLCVBar
+from src.trading.auto_trade.parameter_validator import (
+    TradingParameterLimits,
+    TradingParameterValidationService,
+    TradingParameters,
+)
+from src.trading.auto_trade.signal_validator import DiagnosticSignalValidationService
+from src.trading.auto_trade.strategy_runner import AdaptiveStrategyRunner, ExecutionMarketData, StrategyDecision
 from src.trading.connectors.mt5 import _client
+from src.trading.precision_execution import ACRTrailingStopService
 
 router = APIRouter(prefix="/mt5/auto-trade", tags=["MT5 Auto Trade"])
 
@@ -85,7 +96,7 @@ class DemoAutoTradeRunner:
             if self._state.running:
                 raise RuntimeError("Runner is already active")
             self._state = _State(
-                running=True, state="RUNNING", message="Waiting for a closed-candle EMA crossover",
+                running=True, state="RUNNING", message="Waiting for an adaptive closed-candle setup",
                 symbol=request.symbol.strip().upper(), timeframe=request.timeframe,
                 last_candle_epoch=baseline_epoch,
             )
@@ -143,7 +154,7 @@ class DemoAutoTradeRunner:
         with _client._session(cfg) as mt5:
             name = _client._resolve_symbol(mt5, cfg, request.symbol)
             timeframe = getattr(mt5, _TIMEFRAMES[request.timeframe])
-            rates = mt5.copy_rates_from_pos(name, timeframe, 1, 64)
+            rates = mt5.copy_rates_from_pos(name, timeframe, 1, 128)
             if rates is None or len(rates) < 22:
                 raise RuntimeError("At least 22 closed candles are required")
             latest_epoch = int(_value(rates[-1], "time"))
@@ -153,45 +164,112 @@ class DemoAutoTradeRunner:
                 self._state.last_candle_epoch = latest_epoch
                 self._state.last_candle_at = datetime.fromtimestamp(latest_epoch, timezone.utc).isoformat()
 
-            closes = [float(_value(row, "close")) for row in rates]
-            previous_fast, latest_fast = _ema(closes[:-1], 9), _ema(closes, 9)
-            previous_slow, latest_slow = _ema(closes[:-1], 21), _ema(closes, 21)
-            decision = (
-                "BUY" if previous_fast <= previous_slow and latest_fast > latest_slow else
-                "SELL" if previous_fast >= previous_slow and latest_fast < latest_slow else "HOLD"
+            info, tick, account = mt5.symbol_info(name), mt5.symbol_info_tick(name), mt5.account_info()
+            if info is None or tick is None or account is None:
+                raise RuntimeError("Symbol metadata, tick, or account data unavailable")
+            point = float(getattr(info, "point", 0.01) or 0.01)
+            spread_points = float(getattr(info, "spread", 0) or 0)
+            if spread_points <= 0:
+                raise RuntimeError("Spread data unavailable")
+            bars = tuple(
+                OHLCVBar(
+                    timestamp=datetime.fromtimestamp(int(_value(row, "time")), timezone.utc),
+                    open=float(_value(row, "open")),
+                    high=float(_value(row, "high")),
+                    low=float(_value(row, "low")),
+                    close=float(_value(row, "close")),
+                    volume=float(_value(row, "tick_volume")),
+                )
+                for row in rates
+            )
+            market = _market_data(info, account, point)
+            session = _market_session(bars[-1].timestamp)
+            with DiagnosticsStore() as diagnostics:
+                decision = AdaptiveStrategyRunner(
+                    name,
+                    request.timeframe,
+                    signal_validator=DiagnosticSignalValidationService(diagnostics),
+                ).evaluate(
+                    bars,
+                    spread_pips=(spread_points * point) / market.pip_size,
+                    session=session,
+                    market=market,
+                )
+            publish_auto_selection_status(
+                "default",
+                decision.snapshot,
+                decision.selection,
+                session=session,
+                spread_pips=(spread_points * point) / market.pip_size,
             )
             with self._lock:
-                self._state.last_decision = decision
+                self._state.last_decision = decision.order_type or "HOLD"
                 self._state.state = "RUNNING"
                 self._state.last_error = None
-                self._state.message = f"Closed candle evaluated: {decision}"
-            if decision == "HOLD":
-                return
-            if tuple(mt5.positions_get(symbol=name) or ()):
+                self._state.message = f"{decision.strategy_id or 'No strategy'}: {decision.reason}"
+            positions = tuple(mt5.positions_get(symbol=name) or ())
+            pending_orders = tuple(getattr(mt5, "orders_get", lambda **_kwargs: ())(symbol=name) or ())
+            if positions or pending_orders:
+                updates = self._trail_positions(mt5, name, positions, decision, market)
                 with self._lock:
-                    self._state.message = "Signal blocked: a position is already open"
+                    self._state.message = (
+                        "Existing position/pending order monitored; "
+                        f"{updates} ACR trailing stop update(s) applied"
+                    )
                 return
-            self._submit(mt5, name, decision, request)
+            if not decision.executable:
+                return
+            self._submit(mt5, name, decision, request, info, tick, market)
 
-    def _submit(self, mt5: Any, name: str, decision: str, request: StartRequest) -> None:
-        info, tick = mt5.symbol_info(name), mt5.symbol_info_tick(name)
-        if info is None or tick is None:
-            raise RuntimeError("Symbol metadata or tick unavailable")
-        point = float(getattr(info, "point", 0.01) or 0.01)
+    def _submit(
+        self,
+        mt5: Any,
+        name: str,
+        decision: StrategyDecision,
+        request: StartRequest,
+        info: Any,
+        tick: Any,
+        market: ExecutionMarketData,
+    ) -> None:
+        if not all((decision.direction, decision.entry_price, decision.stop_loss, decision.take_profit, decision.lot_size)):
+            raise RuntimeError("Adaptive decision is incomplete")
         spread_points = float(getattr(info, "spread", 0) or 0)
         if spread_points <= 0 or spread_points > 100:
             raise RuntimeError(f"Spread guard rejected {spread_points} points")
-        is_buy = decision == "BUY"
-        price = float(getattr(tick, "ask" if is_buy else "bid", 0) or 0)
+        is_buy = decision.direction == "BUY"
+        market_order = decision.order_type in {"MARKET BUY", "MARKET SELL"}
+        price = (
+            float(getattr(tick, "ask" if is_buy else "bid", 0) or 0)
+            if market_order else decision.entry_price
+        )
         if price <= 0:
             raise RuntimeError("Invalid execution price")
-        sl_distance, tp_distance = request.stopLossPips * point, request.takeProfitPips * point
+        parameters = TradingParameterValidationService().validate(
+            TradingParameters(
+                symbol=name,
+                timeframe=request.timeframe,
+                side=decision.direction,
+                lot_size=decision.lot_size,
+                entry_price=price,
+                stop_loss=decision.stop_loss,
+                take_profit=decision.take_profit,
+            ),
+            TradingParameterLimits(
+                minimum_lot=market.minimum_lot,
+                maximum_lot=market.maximum_lot,
+                lot_step=market.lot_step,
+            ),
+        )
         payload = {
-            "action": getattr(mt5, "TRADE_ACTION_DEAL", 1), "symbol": name,
-            "volume": request.lotSize,
-            "type": getattr(mt5, "ORDER_TYPE_BUY", 0) if is_buy else getattr(mt5, "ORDER_TYPE_SELL", 1),
-            "price": price, "sl": price - sl_distance if is_buy else price + sl_distance,
-            "tp": price + tp_distance if is_buy else price - tp_distance,
+            "action": getattr(mt5, "TRADE_ACTION_DEAL", 1) if market_order else getattr(mt5, "TRADE_ACTION_PENDING", 5),
+            "symbol": name,
+            "volume": parameters.lot_size,
+            "type": (
+                getattr(mt5, "ORDER_TYPE_BUY", 0) if is_buy else getattr(mt5, "ORDER_TYPE_SELL", 1)
+            ) if market_order else (
+                getattr(mt5, "ORDER_TYPE_BUY_LIMIT", 2) if is_buy else getattr(mt5, "ORDER_TYPE_SELL_LIMIT", 3)
+            ),
+            "price": price, "sl": parameters.stop_loss, "tp": parameters.take_profit,
             "deviation": 20, "magic": 862001, "comment": "vibe-trading-auto",
             "type_time": getattr(mt5, "ORDER_TIME_GTC", 0),
             "type_filling": _filling_mode(mt5, info),
@@ -206,7 +284,46 @@ class DemoAutoTradeRunner:
             raise RuntimeError(f"order_send rejected: {getattr(result, 'retcode', None)} {getattr(result, 'comment', '')}")
         with self._lock:
             self._state.last_order_id = str(getattr(result, "order", "") or getattr(result, "deal", ""))
-            self._state.message = f"{decision} filled; order {self._state.last_order_id}"
+            self._state.message = f"{decision.order_type} submitted; order {self._state.last_order_id}"
+
+    def _trail_positions(
+        self,
+        mt5: Any,
+        name: str,
+        positions: tuple[Any, ...],
+        decision: StrategyDecision,
+        market: ExecutionMarketData,
+    ) -> int:
+        if not decision.acr_zones:
+            return 0
+        updates = 0
+        for position in positions:
+            is_buy = getattr(position, "type", None) == getattr(mt5, "POSITION_TYPE_BUY", 0)
+            current_price = float(getattr(mt5.symbol_info_tick(name), "bid" if is_buy else "ask", 0) or 0)
+            initial_stop = float(getattr(position, "sl", 0) or 0)
+            opened_at = datetime.fromtimestamp(int(getattr(position, "time", 0) or 0), timezone.utc)
+            if initial_stop <= 0 or current_price <= 0 or not int(getattr(position, "time", 0) or 0):
+                continue
+            plan = ACRTrailingStopService().calculate(
+                direction="BUY" if is_buy else "SELL",
+                initial_stop=initial_stop,
+                current_price=current_price,
+                opened_at=opened_at,
+                zones=decision.acr_zones,
+                pip_size=market.pip_size,
+            )
+            if plan.current_stop == initial_stop:
+                continue
+            result = mt5.order_send({
+                "action": getattr(mt5, "TRADE_ACTION_SLTP", 6),
+                "position": int(getattr(position, "ticket")),
+                "symbol": name,
+                "sl": plan.current_stop,
+                "tp": float(getattr(position, "tp", 0) or 0),
+            })
+            if result is not None and getattr(result, "retcode", None) == getattr(mt5, "TRADE_RETCODE_DONE", 10009):
+                updates += 1
+        return updates
 
 
 def _value(row: Any, key: str) -> Any:
@@ -217,12 +334,40 @@ def _value(row: Any, key: str) -> Any:
 
 
 def _ema(values: list[float], period: int) -> float:
+    """Kept as a deterministic utility for callers that used the former runner."""
     if len(values) < period or any(not math.isfinite(value) for value in values):
         raise ValueError("Invalid EMA input")
     result, alpha = sum(values[:period]) / period, 2.0 / (period + 1.0)
     for value in values[period:]:
         result = value * alpha + result * (1.0 - alpha)
     return result
+
+
+def _market_data(info: Any, account: Any, point: float) -> ExecutionMarketData:
+    tick_size = float(getattr(info, "trade_tick_size", 0) or point)
+    tick_value = float(getattr(info, "trade_tick_value", 0) or 0)
+    if tick_size <= 0 or tick_value <= 0:
+        raise RuntimeError("Broker tick-size or tick-value metadata is unavailable")
+    return ExecutionMarketData(
+        balance=float(getattr(account, "balance", 0) or 0),
+        tick_size=tick_size,
+        tick_value_per_lot=tick_value,
+        minimum_lot=float(getattr(info, "volume_min", 0.01) or 0.01),
+        maximum_lot=float(getattr(info, "volume_max", 1.0) or 1.0),
+        lot_step=float(getattr(info, "volume_step", 0.01) or 0.01),
+        pip_size=point,
+    )
+
+
+def _market_session(timestamp: datetime) -> str:
+    hour = timestamp.astimezone(timezone.utc).hour
+    if 0 <= hour < 7:
+        return "ASIA"
+    if hour < 13:
+        return "LONDON"
+    if hour < 21:
+        return "NEW_YORK"
+    return "OFF_HOURS"
 
 
 def _filling_mode(mt5: Any, info: Any) -> int:

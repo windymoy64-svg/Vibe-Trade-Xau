@@ -22,6 +22,10 @@ from src.ui_services import build_run_analysis, load_run_context  # noqa: F401
 
 # UTF-8 on Windows
 import sys as _sys
+# Route modules resolve their shared host through this canonical module name.
+# Keep it available when this file is executed directly or through ``-m``,
+# where Python otherwise registers it only as ``__main__``.
+_sys.modules.setdefault("api_server", _sys.modules[__name__])
 for _s in ("stdout", "stderr"):
     _r = getattr(getattr(_sys, _s, None), "reconfigure", None)
     if callable(_r):
