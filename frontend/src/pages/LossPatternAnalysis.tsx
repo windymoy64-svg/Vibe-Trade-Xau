@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AlertTriangle, ArrowLeft, ArrowRightLeft, ArrowUpRight, BrainCircuit, Download, Loader2, ShieldAlert, Target } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRightLeft, ArrowUp, ArrowDown, ArrowUpRight, BrainCircuit, Download, Loader2, ShieldAlert, Target } from "lucide-react";
 import { Link } from "react-router";
 import { lossPatternAnalysisStub, type LossPattern, type LossPatternAnalysisData } from "@/data/loss-patterns";
 import { DominantPatternChart } from "@/components/diagnostics/DominantPatternChart";

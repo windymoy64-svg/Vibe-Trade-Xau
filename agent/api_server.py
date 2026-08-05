@@ -112,6 +112,59 @@ from src.api.state import (  # noqa: F401, E402
 console = Console()
 logger = logging.getLogger(__name__)
 
+
+# ============================================================================
+# FastAPI Application Factory - for testing support  
+# ============================================================================
+
+from src.diagnostics.store import DiagnosticsStore  # noqa: E402
+from src.mt5_integration.routes import register_mt5_routes  # noqa: E402
+
+
+def create_app(db_path: str | Path | None = None) -> FastAPI:
+    """Create FastAPI app with optional custom DB path for tests."""
+    if db_path is not None:
+        from pathlib import Path as _Path
+        _db_path = _Path(db_path) if isinstance(db_path, str) else db_path
+
+        # Create minimal app instance for this DB (only MT5 routes + diagnostics)
+        _app = FastAPI(
+            title="Vibe-Trading API",
+            version=APP_VERSION,
+            docs_url="/api/docs",
+            redoc_url=None,
+        )
+
+        # Register middleware
+        _app.add_middleware(CORSMiddleware, allow_origins=_CORS_ORIGINS, allow_methods=_SAFE_BROWSER_METHODS)
+
+        # Import and register routes first
+        from src.api.diagnostics_routes import register_diagnostics_routes
+        register_diagnostics_routes(_app)
+
+        # Create store for MT5 routes
+        from src.mt5_integration.routes import register_mt5_routes
+        mt5_store = DiagnosticsStore(_db_path)
+
+        # Ensure user exists for FK constraints
+        from datetime import datetime, timezone
+        now_utc = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        try:
+            mt5_store._conn.execute(
+                "INSERT OR IGNORE INTO users (id, email, name, password_hash, created_at, updated_at, last_active_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                ("user-123", "test@vibe-trading.com", "Test User", "x" * 32, now_utc, now_utc, now_utc),
+            )
+            mt5_store._conn.commit()
+        except Exception:
+            pass
+
+        # Register MT5 routes with the store
+        register_mt5_routes(_app, mt5_store)
+
+        return _app
+
+    return app
+
 # ============================================================================
 # FastAPI Application
 # ============================================================================
@@ -290,9 +343,10 @@ register_auth_routes(app)
 from src.api.diagnostics_routes import register_diagnostics_routes  # noqa: E402
 register_diagnostics_routes(app)
 
-# MT5 Integration Routes
+# MT5 Integration Routes. The production app uses the configured diagnostics
+# store; create_app(db_path) keeps its isolated store for contract tests.
 from src.mt5_integration.routes import register_mt5_routes  # noqa: E402
-register_mt5_routes(app, store)
+register_mt5_routes(app, DiagnosticsStore())
 
 # --- Strategy auto-selection ---
 from src.api.auto_selection_routes import register_auto_selection_routes  # noqa: E402
@@ -300,6 +354,10 @@ register_auto_selection_routes(app)
 
 from src.api.auto_trade_routes import register_auto_trade_routes  # noqa: E402
 register_auto_trade_routes(app)
+
+# MT5 Simple Auto Trade Orchestrator
+from src.api.simple_autotrade import router as simple_autotrade_router
+app.include_router(simple_autotrade_router, tags=["MT5 Simple Auto Trade"])
 
 from src.api.precision_execution_routes import register_precision_execution_routes  # noqa: E402
 register_precision_execution_routes(app)

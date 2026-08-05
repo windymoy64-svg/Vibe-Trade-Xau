@@ -5,9 +5,10 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, Query, Depends
-from pydantic import BaseModel, Field
+from fastapi import APIRouter, Depends, HTTPException, Query
+from pydantic import BaseModel, Field, field_validator
 
+from src.api.security import require_local_or_auth
 from src.diagnostics.store import DiagnosticsStore
 from .service import MTPyBridgeService, MCPTokenService
 
@@ -17,10 +18,10 @@ router = APIRouter(prefix="/mt5", tags=["MT5 Integration"])
 
 class CreateExecutionLogRequest(BaseModel):
     """Payload for manual/auto execution log entry."""
-    executionSource: str = Field(min_length=1)  # MANUAL or AUTO_BY_AI
-    orderType: str = Field(min_length=1, max_length=32)  # BUY, SELL, etc.
-    symbol: str = Field(min_length=1, max_length=32)  # XAUUSD, EURUSD, etc.
-    volume: float = Field(gt=0, le=100)  # Lot size
+    executionSource: str = Field(..., min_length=1)  # MANUAL or AUTO_BY_AI
+    orderType: str = Field(..., min_length=1, max_length=32)  # BUY, SELL, etc.
+    symbol: str = Field(..., min_length=1, max_length=32)  # XAUUSD, EURUSD, etc.
+    volume: float = Field(..., gt=0, le=100)  # Lot size
     price: float | None = Field(default=None, gt=0)
     stopLoss: float | None = Field(default=None, gt=0)
     takeProfit: float | None = Field(default=None, gt=0)
@@ -55,15 +56,91 @@ class ConnectionStatusResponse(BaseModel):
     errorCode: int | None
 
 
+class MT5ConfigurationRequest(BaseModel):
+    login: int = Field(gt=0)
+    password: str = Field(default="", max_length=256)
+    server: str = Field(min_length=1, max_length=128)
+    terminalPath: str = Field(default="", max_length=1024)
+    profile: str = Field(pattern=r"^(paper|live-readonly|live)$")
+    symbolSuffix: str = Field(default="", max_length=16)
+    timeout: float = Field(default=15, ge=1, le=60)
+    maxOrderVolume: float = Field(default=1, gt=0, le=100)
+    maxOrderNotionalUsd: float = Field(default=10_000, gt=0, le=100_000_000)
+
+    @field_validator("password")
+    @classmethod
+    def reject_control_characters(cls, value: str) -> str:
+        if any(not character.isprintable() for character in value):
+            raise ValueError("password contains control characters")
+        return value
+
+
+class MT5ConfigurationResponse(BaseModel):
+    loginMasked: str
+    login: int
+    passwordConfigured: bool
+    server: str
+    terminalPath: str
+    profile: str
+    symbolSuffix: str
+    timeout: float
+    maxOrderVolume: float
+    maxOrderNotionalUsd: float
+    configPath: str
+
+
 def register_mt5_routes(app: Any, store: DiagnosticsStore) -> None:
     """Register all MT5/MCP routes with FastAPI app."""
     bridge_service = MTPyBridgeService(store)
     token_service = MCPTokenService(store)
 
-    @app.post("/execution-log", response_model=dict[str, Any])
+    def ensure_local_user() -> None:
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with store._conn:
+            store._conn.execute(
+                """INSERT OR IGNORE INTO users (
+                    id, email, name, password_hash, created_at, updated_at, last_active_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                ("user-123", "local-terminal@localhost", "Local MT5 Terminal", "x" * 32, now, now, now),
+            )
+
+    def configuration_response(config: Any) -> MT5ConfigurationResponse:
+        from src.trading.connectors.mt5.sdk import config_path
+        login_text = str(config.login) if config.login else ""
+        return MT5ConfigurationResponse(
+            loginMasked=(login_text[:2] + "***" + login_text[-2:]) if len(login_text) > 4 else ("***" if login_text else ""),
+            login=config.login, passwordConfigured=bool(config.password), server=config.server,
+            terminalPath=config.terminal_path, profile=config.profile, symbolSuffix=config.symbol_suffix,
+            timeout=config.timeout, maxOrderVolume=config.max_order_volume,
+            maxOrderNotionalUsd=config.max_order_notional_usd, configPath=str(config_path()),
+        )
+
+    @app.get("/mt5/configuration", response_model=MT5ConfigurationResponse, dependencies=[Depends(require_local_or_auth)])
+    async def get_mt5_configuration() -> MT5ConfigurationResponse:
+        from src.trading.connectors.mt5.sdk import load_config
+        return configuration_response(load_config())
+
+    @app.put("/mt5/configuration", response_model=MT5ConfigurationResponse, dependencies=[Depends(require_local_or_auth)])
+    async def save_mt5_configuration(payload: MT5ConfigurationRequest) -> MT5ConfigurationResponse:
+        from src.trading.connectors.mt5.sdk import MT5Config, load_config, save_config
+        current = load_config()
+        config = MT5Config.from_mapping({
+            "login": payload.login, "password": payload.password or current.password,
+            "server": payload.server, "terminal_path": payload.terminalPath,
+            "profile": payload.profile, "symbol_suffix": payload.symbolSuffix,
+            "timeout": payload.timeout, "max_order_volume": payload.maxOrderVolume,
+            "max_order_notional_usd": payload.maxOrderNotionalUsd,
+            "deviation_points": current.deviation_points, "readonly": payload.profile != "live",
+        })
+        save_config(config)
+        ensure_local_user()
+        return configuration_response(config)
+
+    @app.post("/mt5/execution-log", include_in_schema=False)
+    @app.post("/execution-log")
     async def log_execution(
         request: CreateExecutionLogRequest,
-        user_id: str = Depends(lambda: "user-123"),  # Placeholder - use auth in prod
+        user_id: str = "user-123",  # Placeholder - use auth in prod
     ) -> dict[str, Any]:
         """Append one execution audit event with source tracking."""
         result = bridge_service.create_execution_log(user_id, {
@@ -86,9 +163,10 @@ def register_mt5_routes(app: Any, store: DiagnosticsStore) -> None:
             raise HTTPException(status_code=404, detail="User not found")
         return result
 
-    @app.get("/execution-log", response_model=list[dict[str, Any]])
+    @app.get("/mt5/execution-log", include_in_schema=False)
+    @app.get("/execution-log")
     async def get_execution_logs(
-        user_id: str = Depends(lambda: "user-123"),  # Placeholder - use auth in prod
+        user_id: str = "user-123",  # Placeholder - use auth in prod
         source: str | None = None,
         status: str | None = None,
         symbol: str | None = None,
@@ -97,20 +175,31 @@ def register_mt5_routes(app: Any, store: DiagnosticsStore) -> None:
         """Query filtered execution logs by source/status/symbol."""
         return bridge_service.get_user_logs(user_id, source=source, status=status, symbol=symbol, limit=limit)
 
-    @app.post("/token/generate", response_model=TokenGenerateResponse)
+    @app.post("/mt5/token/generate")
+    @app.post("/token/generate", include_in_schema=False)
     async def generate_mcp_token(
-        user_id: str = Depends(lambda: "user-123"),  # Placeholder - use auth in prod
+        user_id: str = "user-123",  # Placeholder - use auth in prod
         expires_hours: int = Query(24, ge=1, le=720),
     ) -> TokenGenerateResponse:
         """Generate new MCP token for EA/client authentication."""
+        if user_id == "user-123":
+            ensure_local_user()
         token_id, metadata = token_service.generate_token(user_id, expires_hours=expires_hours)
         if not token_id:
             raise HTTPException(status_code=500, detail="Failed to generate token")
-        return TokenGenerateResponse(**metadata)
+        return TokenGenerateResponse(
+            tokenId=metadata["token_id"],
+            userId=metadata["userId"],
+            provider=metadata["provider"],
+            expiresAt=metadata["expiresAt"],
+            createdAt=metadata["createdAt"],
+            isValid=metadata["isValid"],
+        )
 
-    @app.get("/connection/status", response_model=ConnectionStatusResponse)
+    @app.get("/mt5/connection/status")
+    @app.get("/connection/status", include_in_schema=False)
     async def get_connection_status(
-        user_id: str = Depends(lambda: "user-123"),  # Placeholder - use auth in prod
+        user_id: str = "user-123",  # Placeholder - use auth in prod
     ) -> ConnectionStatusResponse:
         """Return current MT5 connection health snapshot."""
         info = bridge_service.get_connection_info(user_id)
@@ -121,17 +210,18 @@ def register_mt5_routes(app: Any, store: DiagnosticsStore) -> None:
             ticker=info.ticker,
             positionsCount=info.positions_count,
             pendingOrdersCount=info.pending_orders_count,
-            latency_ms=info.latency_ms,
-            error_code=info.error_code,
+            latencyMs=info.latency_ms,
+            errorCode=info.error_code,
         )
 
-    @app.get("/live/ohlc/mock", response_model=dict[str, Any])
+    @app.get("/mt5/live/ohlc/mock")
+    @app.get("/live/ohlc/mock", include_in_schema=False)
     async def get_mock_ohlc(
-        user_id: str = Depends(lambda: "user-123"),  # Placeholder - use auth in prod
+        user_id: str = "user-123",  # Placeholder - use auth in prod
         symbol: str = "XAUUSD",
     ) -> dict[str, Any]:
         """Return mock OHLC tick data for development/testing."""
-        bar = await bridge_service.simulate_live_tick(user_id, symbol)
+        bar = bridge_service.simulate_live_tick(user_id, symbol)
         return {
             "timestamp": bar.timestamp,
             "open": bar.open,
@@ -144,3 +234,24 @@ def register_mt5_routes(app: Any, store: DiagnosticsStore) -> None:
             "symbol": bar.symbol,
             "timeframe": bar.timeframe,
         }
+
+    @app.get("/mt5/live/snapshot")
+    async def get_live_snapshot(
+        user_id: str = "user-123",
+        symbol: str = Query("XAUUSD", min_length=1, max_length=32),
+        timeframe: str = Query("M30", pattern=r"^(M1|M5|M15|M30|H1|H4|D1)$"),
+        limit: int = Query(80, ge=20, le=500),
+    ) -> dict[str, Any]:
+        """Return real read-only market/account data from the local MT5 terminal."""
+        snapshot = bridge_service.live_snapshot(user_id, symbol.strip().upper(), timeframe, limit)
+        if snapshot.get("status") != "ok":
+            raise HTTPException(status_code=503, detail=snapshot)
+        return snapshot
+
+    @app.delete("/mt5/token/{token_id}", status_code=204)
+    async def revoke_mcp_token(token_id: str) -> None:
+        """Revoke one EA/MCP bridge token."""
+        if not token_service.revoke_token(token_id):
+            raise HTTPException(status_code=404, detail="MCP token not found")
+
+

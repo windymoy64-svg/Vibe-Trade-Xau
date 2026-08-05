@@ -47,6 +47,15 @@ export default defineConfig(({ mode }) => {
         "/runs": apiProxy,
         "/correlation": apiProxyWithHtmlFallback,
         "^/alpha(?:/|$)": apiProxy,
+        // ``/mt5`` and ``/auto-trade`` are BOTH API prefixes and SPA routes
+        // (``/auto-trade``, ``/auto-trade/strategy-selection``,
+        // ``/mt5-integration``). Proxying them unconditionally made a browser
+        // refresh return the backend's stale ``dist/index.html`` -> white page.
+        // The html fallback keeps XHR/fetch on the backend while browser
+        // navigation falls through to the dev-server SPA. The ``(?:/|$)``
+        // guard stops ``/mt5`` from swallowing ``/mt5-integration``.
+        "^/mt5(?:/|$)": apiProxyWithHtmlFallback,
+        "^/auto-trade(?:/|$)": apiProxyWithHtmlFallback,
       },
     },
     build: {

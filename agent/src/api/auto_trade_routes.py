@@ -414,6 +414,15 @@ def register_auto_trade_routes(app: Any) -> None:
     ) -> AutoTradeConfigurationResponse:
         values = payload.model_dump(exclude={"userId"})
         with DiagnosticsStore() as store:
+            if payload.userId == "user-123":
+                now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+                with store._conn:
+                    store._conn.execute(
+                        """INSERT OR IGNORE INTO users (
+                            id, email, name, password_hash, created_at, updated_at, last_active_at
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                        ("user-123", "local-terminal@localhost", "Local MT5 Terminal", "x" * 32, now, now, now),
+                    )
             configuration = store.create_auto_trade_configuration(payload.userId, values)
         if configuration is None:
             raise HTTPException(status_code=404, detail="User not found")

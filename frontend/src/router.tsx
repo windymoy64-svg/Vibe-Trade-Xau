@@ -66,6 +66,10 @@ const EaBridgeTradeDiagnostics = lazy(() => import("@/pages/EaBridgeTradeDiagnos
 const Mt5ProductionDiagnostics = lazy(() => import("@/pages/Mt5ProductionDiagnostics").then((m) => ({ default: m.Mt5ProductionDiagnostics })));
 const PreciseStopLoss = lazy(() => import("@/pages/PreciseStopLoss").then((m) => ({ default: m.PreciseStopLoss })));
 const DataFeedPusher = lazy(() => import("@/pages/DataFeedPusher").then((m) => ({ default: m.DataFeedPusher })));
+const FailSafeDashboard = lazy(() => import("@/pages/FailSafeDashboard").then((m) => ({ default: m.FailSafeDashboard })));
+const EaDeployment = lazy(() => import("@/pages/EaDeployment").then((m) => ({ default: m.default })));
+const OwnershipDashboard = lazy(() => import("@/pages/OwnershipDashboard").then((m) => ({ default: m.OwnershipDashboard })));
+const BacktestEngine = lazy(() => import("@/pages/BacktestEngine").then((m) => ({ default: m.default })));
 
 function PageLoader() {
   return (
@@ -112,6 +116,10 @@ export const router = createBrowserRouter([
       { path: "/mt5-integration", element: wrap(Mt5ProductionDiagnostics) },
       { path: "/precise-stop-loss", element: wrap(PreciseStopLoss) },
       { path: "/data-feed", element: wrap(DataFeedPusher) },
+      { path: "/fail-safe", element: wrap(FailSafeDashboard) },
+      { path: "/deployment", element: wrap(EaDeployment) },
+      { path: "/ownership", element: wrap(OwnershipDashboard) },
+      { path: "/backtest", element: wrap(BacktestEngine) },
       { path: "/agent", element: wrap(Agent) },
       { path: "/runtime", element: wrap(Runtime) },
       { path: "/reports", element: wrap(Reports) },
@@ -126,3 +134,13 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
+
+
+
+
+
+
+
+
+
+

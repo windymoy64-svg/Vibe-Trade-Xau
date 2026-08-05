@@ -5,9 +5,9 @@
     "semantic_hash": "c5de3052e33b6600d9fcefba4fc4716a"
   },
   "agent/api_server.py": {
-    "mtime": 1785455732.3972194,
-    "ast_hash": "d419ce02d127cbb83ba8cf1ce403cf9f",
-    "semantic_hash": "d419ce02d127cbb83ba8cf1ce403cf9f"
+    "mtime": 1785816272.587315,
+    "ast_hash": "949d5600bf6fbdede0a7252fc0345384",
+    "semantic_hash": ""
   },
   "agent/backtest/__init__.py": {
     "mtime": 1785264526.786163,
@@ -910,9 +910,9 @@
     "semantic_hash": "263a7f138f2624fe039197e926258d01"
   },
   "agent/src/api/auth_routes.py": {
-    "mtime": 1785467172.6695182,
-    "ast_hash": "12907a5014a267e910fe300490604591",
-    "semantic_hash": "12907a5014a267e910fe300490604591"
+    "mtime": 1785737034.572889,
+    "ast_hash": "221775b2701ab15f1bec5fdc29d308dc",
+    "semantic_hash": ""
   },
   "agent/src/api/channels_routes.py": {
     "mtime": 1785264526.8802485,
@@ -1235,9 +1235,9 @@
     "semantic_hash": "20841a6cac8566e17a869cac93fb539f"
   },
   "agent/src/diagnostics/store.py": {
-    "mtime": 1785467172.6685162,
-    "ast_hash": "e78af5c4cc2fd8bc294eaea68a7b52d2",
-    "semantic_hash": "e78af5c4cc2fd8bc294eaea68a7b52d2"
+    "mtime": 1785771067.6068766,
+    "ast_hash": "7e857815c3ed1c87c9d0465df27820b9",
+    "semantic_hash": ""
   },
   "agent/src/factors/__init__.py": {
     "mtime": 1785264526.929294,
@@ -6200,9 +6200,9 @@
     "semantic_hash": "01e8d8a16ceb94f02036d64639e3ad10"
   },
   "agent/tests/test_diagnostics_store.py": {
-    "mtime": 1785478162.6652892,
-    "ast_hash": "99ab2f55515a4ea0363b286c967fcf31",
-    "semantic_hash": "99ab2f55515a4ea0363b286c967fcf31"
+    "mtime": 1785738227.5071628,
+    "ast_hash": "3e537363c00cb2d86fbaba6b2032016c",
+    "semantic_hash": ""
   },
   "agent/tests/test_distribution_skill_manifest.py": {
     "mtime": 1785264527.9865916,
@@ -7710,9 +7710,9 @@
     "semantic_hash": "48b05ce93905a6c753247a9296be4ab2"
   },
   "frontend/package.json": {
-    "mtime": 1785264528.3889601,
-    "ast_hash": "de7be353ac32a958d8228fcd0dba1465",
-    "semantic_hash": "de7be353ac32a958d8228fcd0dba1465"
+    "mtime": 1785812538.1102197,
+    "ast_hash": "bd575b8dc8636d454ad331314305c52a",
+    "semantic_hash": ""
   },
   "frontend/postcss.config.js": {
     "mtime": 1785264528.389961,
@@ -8000,14 +8000,14 @@
     "semantic_hash": "859083c13355aff12027e759622ff161"
   },
   "frontend/src/components/layout/Layout.tsx": {
-    "mtime": 1785478826.897029,
-    "ast_hash": "bcab66db41616bd9f58538483a3164b4",
-    "semantic_hash": "bcab66db41616bd9f58538483a3164b4"
+    "mtime": 1785790580.717573,
+    "ast_hash": "81481375a8da666e9405dbd28bd2c4f7",
+    "semantic_hash": ""
   },
   "frontend/src/components/layout/ProtectedLayout.tsx": {
-    "mtime": 1785462643.8868678,
-    "ast_hash": "0cec953a0e29ac5d266acc00091824fe",
-    "semantic_hash": "0cec953a0e29ac5d266acc00091824fe"
+    "mtime": 1785816247.356385,
+    "ast_hash": "2052d5ba89367f897e8a579b41e08e6d",
+    "semantic_hash": ""
   },
   "frontend/src/components/layout/__tests__/ConnectionBanner.test.tsx": {
     "mtime": 1785264528.421991,
@@ -8020,9 +8020,9 @@
     "semantic_hash": "a745c047d4208f85d535d5f74040ba41"
   },
   "frontend/src/data/auto-trade.ts": {
-    "mtime": 1785561968.2258022,
-    "ast_hash": "96f09dff396b8828e3a9023778ec320a",
-    "semantic_hash": "96f09dff396b8828e3a9023778ec320a"
+    "mtime": 1785684673.609589,
+    "ast_hash": "ffed6b6922902c37ca32a0cb190ee741",
+    "semantic_hash": ""
   },
   "frontend/src/data/diagnostic-data-sources.ts": {
     "mtime": 1785462256.4580083,
@@ -8250,9 +8250,9 @@
     "semantic_hash": "494ca9b98b5b95872a2b6a1789ff3aca"
   },
   "frontend/src/pages/AutoTrade.tsx": {
-    "mtime": 1785562098.4048262,
-    "ast_hash": "0bf355f9f3284b56b366fc68e511757f",
-    "semantic_hash": "0bf355f9f3284b56b366fc68e511757f"
+    "mtime": 1785818286.3711038,
+    "ast_hash": "1ff2b20cdeb8e417f922807606d6460b",
+    "semantic_hash": ""
   },
   "frontend/src/pages/Compare.tsx": {
     "mtime": 1785264528.4559045,
@@ -8325,9 +8325,9 @@
     "semantic_hash": "2210ab29174b3f1d826141eb9b344d92"
   },
   "frontend/src/pages/LossPatternAnalysis.tsx": {
-    "mtime": 1785437627.0782545,
-    "ast_hash": "d730fa37183c2d7b8d622c5e9a45c821",
-    "semantic_hash": "d730fa37183c2d7b8d622c5e9a45c821"
+    "mtime": 1785689653.46043,
+    "ast_hash": "7fbaec948e68e88071ba8069a90a2e43",
+    "semantic_hash": ""
   },
   "frontend/src/pages/LossPatternsCompare.tsx": {
     "mtime": 1785437508.7234244,
@@ -8360,9 +8360,9 @@
     "semantic_hash": "e3d6a59219bbf8898232bf35f81c56c2"
   },
   "frontend/src/pages/__tests__/AutoTrade.test.tsx": {
-    "mtime": 1785562098.4058268,
-    "ast_hash": "41083e1cb58bc4b44cc481355ed037b5",
-    "semantic_hash": "41083e1cb58bc4b44cc481355ed037b5"
+    "mtime": 1785684729.6273463,
+    "ast_hash": "38f71e1da3072de837baa687513cbf49",
+    "semantic_hash": ""
   },
   "frontend/src/pages/__tests__/Compare.test.tsx": {
     "mtime": 1785264528.4629104,
@@ -8405,9 +8405,9 @@
     "semantic_hash": "46ba9ec818075d330ad5fe7047689c83"
   },
   "frontend/src/router.tsx": {
-    "mtime": 1785559256.4376478,
-    "ast_hash": "d879f64d0afde91b65b1f507ea77d7a2",
-    "semantic_hash": "d879f64d0afde91b65b1f507ea77d7a2"
+    "mtime": 1785816373.8731036,
+    "ast_hash": "10e769253e9a4fc4440193555d2bfea1",
+    "semantic_hash": ""
   },
   "frontend/src/stores/__tests__/agent.test.ts": {
     "mtime": 1785264528.4699173,
@@ -8590,7 +8590,7 @@
     "semantic_hash": "0c9d8aa349ddd3a56d8e51e047def390"
   },
   ".codex/skills/ngodingpakeai/SKILL.md": {
-    "mtime": 1785459489.5018535,
+    "mtime": 1785687215.5994968,
     "ast_hash": "bb1b03d31e57a81773a63d81160f6249",
     "semantic_hash": ""
   },
@@ -8660,8 +8660,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1785321473.4790545,
-    "ast_hash": "8fa1d8bcf285533ff0505524c03763b8",
+    "mtime": 1785748918.0440874,
+    "ast_hash": "21724dc7635bcf1e4677257d328b22b0",
     "semantic_hash": ""
   },
   "README_ar.md": {
@@ -8690,13 +8690,13 @@
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785553362.1192825,
-    "ast_hash": "7ef22751b1ef44a4da11feada502451c",
+    "mtime": 1785809268.8907337,
+    "ast_hash": "d33150e021ec7b1fb723d1b0c40db3d7",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785553037.3911061,
-    "ast_hash": "6770390c712d1aa233f82d23f2e52859",
+    "mtime": 1785809171.8513594,
+    "ast_hash": "569b903ccef839fdbbe088a8a0e54806",
     "semantic_hash": ""
   },
   "VPS_CONTEXT.md": {
@@ -11007,6 +11007,676 @@
   "wiki/assets/icon.png": {
     "mtime": 1785264528.5179613,
     "ast_hash": "ba1eb95ea28b9f826ef55dcba577f52c",
+    "semantic_hash": ""
+  },
+  "agent/src/api/auto_selection_routes.py": {
+    "mtime": 1785736695.0106723,
+    "ast_hash": "67750abccc820d575cc5d5a705521b72",
+    "semantic_hash": ""
+  },
+  "agent/src/api/auto_trade_routes.py": {
+    "mtime": 1785739519.2240431,
+    "ast_hash": "3ea5b89c639830639b2b9ac41098fdf7",
+    "semantic_hash": ""
+  },
+  "agent/src/api/precision_execution_routes.py": {
+    "mtime": 1785741415.1719882,
+    "ast_hash": "abe33268fa60a96297c400149b04b1b4",
+    "semantic_hash": ""
+  },
+  "agent/src/mt5_integration/__init__.py": {
+    "mtime": 1785770849.379533,
+    "ast_hash": "2563f927fb15acccd4df9ca035c1e10f",
+    "semantic_hash": ""
+  },
+  "agent/src/mt5_integration/models.py": {
+    "mtime": 1785770892.77132,
+    "ast_hash": "a4154f97017516a79adb0b2cef1a9a12",
+    "semantic_hash": ""
+  },
+  "agent/src/mt5_integration/routes.py": {
+    "mtime": 1785818210.6048214,
+    "ast_hash": "a786ef04e795f8b5313faf91cc01bc51",
+    "semantic_hash": ""
+  },
+  "agent/src/mt5_integration/service.py": {
+    "mtime": 1785817074.5732133,
+    "ast_hash": "bd9fa2b09e02d7b524cf6eb096684777",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_selection/__init__.py": {
+    "mtime": 1785736810.452955,
+    "ast_hash": "5e6a8befb3079e030024f3608ece8eeb",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_selection/market_indicators.py": {
+    "mtime": 1785735405.1480422,
+    "ast_hash": "c1e9c45c3dc62f0f9b509c56a18d25cd",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_selection/strategy_selector.py": {
+    "mtime": 1785736850.8864303,
+    "ast_hash": "15e51d8db7bd3747f9fccd8820f6dd95",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/__init__.py": {
+    "mtime": 1785739294.5763526,
+    "ast_hash": "b4b6edfa10a49dd7378514856496686d",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/broker_connection.py": {
+    "mtime": 1785739191.857244,
+    "ast_hash": "7c7a4c17f189172f22a330f84dd48686",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/broker_order_service.py": {
+    "mtime": 1785737697.358735,
+    "ast_hash": "c55d56df89bee700c83fe03249d1a719",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/configuration_provider.py": {
+    "mtime": 1785738578.228261,
+    "ast_hash": "f8d7f1232353cd76c353836cae897b37",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/credential_encryption.py": {
+    "mtime": 1785738960.2415109,
+    "ast_hash": "283c199cdbdf0f84f58d6a50a175e479",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/execution_logger.py": {
+    "mtime": 1785739519.2220502,
+    "ast_hash": "c04e36432ba08a3784e72114fe76d7df",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/execution_queue.py": {
+    "mtime": 1785737800.676125,
+    "ast_hash": "49b5a5de070794efb4562b5fc2bd2121",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/parameter_validator.py": {
+    "mtime": 1785738447.8423722,
+    "ast_hash": "e662857019410ecc20fa66e555be5e39",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/auto_trade/signal_validator.py": {
+    "mtime": 1785737376.2400923,
+    "ast_hash": "e5d7ecfcacc489699436f7cd72d93de3",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/__init__.py": {
+    "mtime": 1785741310.8424983,
+    "ast_hash": "5983f607f18fb464608404348b0838d7",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/acr_zones.py": {
+    "mtime": 1785740139.4842296,
+    "ast_hash": "1ca061c640de79c09cd30f05b867eed6",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/confluence.py": {
+    "mtime": 1785740528.2795167,
+    "ast_hash": "bf4f92d87c5722500ab7b164a4e430fb",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/fibonacci.py": {
+    "mtime": 1785740322.1056416,
+    "ast_hash": "72fa32179c91f4efcae4ea906e458114",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/fvg.py": {
+    "mtime": 1785740429.2504663,
+    "ast_hash": "be094d1203af9e74bd0718c975b1c3f7",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/lot_size.py": {
+    "mtime": 1785741310.8404949,
+    "ast_hash": "65ab8efdd7e0492ee43339d5225f73d8",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/market_structure.py": {
+    "mtime": 1785739826.8456378,
+    "ast_hash": "4f28c65887b2af7bf1001300d42f8b2b",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/ohlcv_parser.py": {
+    "mtime": 1785739630.9105737,
+    "ast_hash": "7158c473362a9787b49cb2d5cb2b40b4",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/order_type.py": {
+    "mtime": 1785740620.4877906,
+    "ast_hash": "6f255c966aa3ced147bf4bd91978e21d",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/racr.py": {
+    "mtime": 1785740225.1365545,
+    "ast_hash": "963b2e813123db1017660fd414350cec",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/supply_demand.py": {
+    "mtime": 1785739947.2152321,
+    "ast_hash": "d75c64aab4bd7ab36974f9bcdc61dd17",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/trade_levels.py": {
+    "mtime": 1785740704.02936,
+    "ast_hash": "237877b016bd96eddee6d98409bc6cc8",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/trailing_stop.py": {
+    "mtime": 1785740791.9740398,
+    "ast_hash": "dbf46936800aa5e6bcee95f386657772",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_selection_api.py": {
+    "mtime": 1785736682.8949974,
+    "ast_hash": "cce9e78151a1a52a06009cb8c2657a90",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_selection_market_indicators.py": {
+    "mtime": 1785735405.157052,
+    "ast_hash": "ab644e7b733d7168400d8195dc1e5484",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_selection_strategy_selector.py": {
+    "mtime": 1785736850.8954394,
+    "ast_hash": "10b168c2d8f0e91f588652163cb876b1",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_broker_connection.py": {
+    "mtime": 1785739191.8582437,
+    "ast_hash": "7bc283f5f9917d8c98441d08b9397ff3",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_broker_credentials_api.py": {
+    "mtime": 1785738960.2505183,
+    "ast_hash": "27d22837b09ef75ea8d170acde83a35a",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_broker_order_service.py": {
+    "mtime": 1785737697.3617399,
+    "ast_hash": "afc73d047f5026c31c376368de197069",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_config_api.py": {
+    "mtime": 1785738286.9679728,
+    "ast_hash": "ee0a9bcafb3c8ff752cbfa2fe23dbfb6",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_configuration_provider.py": {
+    "mtime": 1785738578.2292614,
+    "ast_hash": "57dca9673d52ef1017e8bd7236087cc5",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_execution_logger.py": {
+    "mtime": 1785739519.2430696,
+    "ast_hash": "1c9a2a3abe65a16c21ee975e3315f8e7",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_execution_logs_api.py": {
+    "mtime": 1785739404.3878143,
+    "ast_hash": "9f24dcdb3136d4352b9f8fedca203e68",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_execution_queue.py": {
+    "mtime": 1785737790.8564522,
+    "ast_hash": "9c05567eec45e5272669d896056f46ca",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_parameter_validator.py": {
+    "mtime": 1785738447.8553834,
+    "ast_hash": "d80072a0905eb7aecf54f01f8eb1e451",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_signal_validator.py": {
+    "mtime": 1785737376.2410934,
+    "ast_hash": "d763dc97781347bba38c4f25d447d424",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_auto_trade_status_api.py": {
+    "mtime": 1785739519.258074,
+    "ast_hash": "fb0028bd4dd7b6340ffe9b2db3ed5f78",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_notifications_api.py": {
+    "mtime": 1785737034.5748909,
+    "ast_hash": "157a2947dded857c7f69e411e04ba4d9",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_acr_zones.py": {
+    "mtime": 1785740139.4872234,
+    "ast_hash": "61bb9200a4b22f92b1a94857ea94594e",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_analysis_api.py": {
+    "mtime": 1785741078.2495048,
+    "ast_hash": "7e2814368352508805c697668ed813e4",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_confluence.py": {
+    "mtime": 1785740528.31354,
+    "ast_hash": "a2dcbec319a0e24dbe2593fc0a2ec916",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_fibonacci.py": {
+    "mtime": 1785740322.120656,
+    "ast_hash": "bacddfa8578d1346ab78af67fb646a77",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_fvg.py": {
+    "mtime": 1785740429.2544737,
+    "ast_hash": "fc104189adf39c7bc7013fba23725b84",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_lot_size.py": {
+    "mtime": 1785741310.8434985,
+    "ast_hash": "536f88ffed40fe2bf9b172c0c3601941",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_market_structure.py": {
+    "mtime": 1785739858.8870838,
+    "ast_hash": "57e4b78b9ad6a8d8f9e0bff8fc7d4e48",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_ohlcv_api.py": {
+    "mtime": 1785739726.3220563,
+    "ast_hash": "1ac5b0a8d229b4cf3967b99d4293d9c9",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_ohlcv_parser.py": {
+    "mtime": 1785739630.9125776,
+    "ast_hash": "0d3e7f901768da153cf909cf436fcdbb",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_order_type.py": {
+    "mtime": 1785740620.510821,
+    "ast_hash": "4aade3c3522e5442f4db2b5bc926e8c3",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_racr.py": {
+    "mtime": 1785740225.1475654,
+    "ast_hash": "66007674144f73785a9c12efd2435e29",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_risk_calculator_api.py": {
+    "mtime": 1785741415.1819952,
+    "ast_hash": "792cc934f8ce73377ebbe80a966c7523",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_supply_demand.py": {
+    "mtime": 1785739947.2282443,
+    "ast_hash": "58bdb49d2fdc6a451dcc007e39ae0d35",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_trade_levels.py": {
+    "mtime": 1785740704.032338,
+    "ast_hash": "76f559085628d6a587d5415e444f72fd",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_trailing_stop.py": {
+    "mtime": 1785740791.9965687,
+    "ast_hash": "50fb710ad341166e28f4d730c3f2c66f",
+    "semantic_hash": ""
+  },
+  "all_tasks.json": {
+    "mtime": 1785768510.0228815,
+    "ast_hash": "d80441aefae70b0b2970fcaa4bba89e7",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/auto-trade/CurrentTradeExecution.tsx": {
+    "mtime": 1785684673.6236007,
+    "ast_hash": "1e6a7e945983a6a7ad1c1c9379c4f0a3",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ea-bridge/ConnectionDashboard.tsx": {
+    "mtime": 1785753587.6459546,
+    "ast_hash": "dff4125d943b342e24986e4831c49794",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ea-bridge/EaTerminalStatusIndicator.tsx": {
+    "mtime": 1785754236.8549519,
+    "ast_hash": "7cfdb29981740b7b333022b17baa5f9a",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ea-bridge/FailurePatternSummary.tsx": {
+    "mtime": 1785754704.9805834,
+    "ast_hash": "6b9f84dbfead6051d0512ebdd2ebe3dd",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ea-bridge/LivePendingOrders.tsx": {
+    "mtime": 1785754126.3089502,
+    "ast_hash": "de4c532357d1ebd650a77fa70fcd503b",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ea-bridge/LivePositions.tsx": {
+    "mtime": 1785753979.9879653,
+    "ast_hash": "7eedf2150ab1a222686af62cfa12b1f7",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ea-bridge/LiveXauusdPrice.tsx": {
+    "mtime": 1785753845.4906754,
+    "ast_hash": "e4e5436ea9b85f65a3d41b03bf714961",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ea-bridge/OrderControlPanel.tsx": {
+    "mtime": 1785753715.8072872,
+    "ast_hash": "b18a1876eb0398412577d3769be69256",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/mt5-direct/LiveOhlcChart.tsx": {
+    "mtime": 1785755161.50433,
+    "ast_hash": "d340dbf9bc008dd2f652024639c21b0e",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/mt5-direct/Mt5ConnectionIndicator.tsx": {
+    "mtime": 1785755014.4083817,
+    "ast_hash": "9f0953c651927d433431b9ed3c4dafdb",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/mt5-direct/Mt5DiagnosticTradeList.tsx": {
+    "mtime": 1785755296.0976758,
+    "ast_hash": "2e95309f6521e10db773a71f1a7f53ce",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/mt5-direct/Mt5FailurePatternSummary.tsx": {
+    "mtime": 1785755389.4572823,
+    "ast_hash": "0794a76b1c93a846fb19122f3833dd4f",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/AcrZonesPanel.tsx": {
+    "mtime": 1785687664.6494246,
+    "ast_hash": "2bc96677cc1f46a55466459642c161ad",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/ActionableSignalCard.tsx": {
+    "mtime": 1785689076.5377753,
+    "ast_hash": "1d421db787897086b744f5fd0010182d",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/FibonacciValuationPanel.tsx": {
+    "mtime": 1785687934.5568657,
+    "ast_hash": "1be6fbdf15252c340498888b920709b9",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/HtfConvergencePanel.tsx": {
+    "mtime": 1785755977.6339748,
+    "ast_hash": "7263925a73d1f7264677d08d098ca6b1",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/HtfStructureChart.tsx": {
+    "mtime": 1785685354.577663,
+    "ast_hash": "8ad13aa5bb73f32e20929ff320498f2b",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/InteractiveLotCalculator.tsx": {
+    "mtime": 1785734188.083989,
+    "ast_hash": "312a4ef662f445dcd59b5c6e7ef87088",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/LtfSupplyDemandChart.tsx": {
+    "mtime": 1785688208.3139184,
+    "ast_hash": "a31ac4de5d6e2949395eba3440908d62",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/OhlcFileUpload.tsx": {
+    "mtime": 1785685135.6578462,
+    "ast_hash": "562e80f25c7e17718f2683735ffe44d3",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/OrderTypeRecommendation.tsx": {
+    "mtime": 1785688336.9819403,
+    "ast_hash": "d7cff5c1cc6c7624b8dcc3d7032a65d7",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/PrecisionEntryPrice.tsx": {
+    "mtime": 1785688466.3160062,
+    "ast_hash": "f80634ea9138f00057eaa1f18427a20e",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/StopLossTakeProfitPanel.tsx": {
+    "mtime": 1785688599.792225,
+    "ast_hash": "9d304814961b5c091a43e1d229667cf4",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/TrailingStopVisualization.tsx": {
+    "mtime": 1785688778.7217212,
+    "ast_hash": "7cb105786aefefd53a52d9e7ba4d540f",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/precision-execution/ZoneStatusIndicator.tsx": {
+    "mtime": 1785687664.6474319,
+    "ast_hash": "7fac247f37d8afb3f3ab87b95e82f579",
+    "semantic_hash": ""
+  },
+  "frontend/src/data/data-feed.ts": {
+    "mtime": 1785769153.9287448,
+    "ast_hash": "d7b6f6647d449bbf3d720072146f8d7a",
+    "semantic_hash": ""
+  },
+  "frontend/src/data/ea-bridge.ts": {
+    "mtime": 1785754126.3059437,
+    "ast_hash": "141358a2557037041028c43cb99d8232",
+    "semantic_hash": ""
+  },
+  "frontend/src/data/mt5-direct.ts": {
+    "mtime": 1785755161.4873154,
+    "ast_hash": "a7fa536ff1f2e5d151e42228ab3de892",
+    "semantic_hash": ""
+  },
+  "frontend/src/data/precise-stop-loss.ts": {
+    "mtime": 1785765120.586524,
+    "ast_hash": "7a2083c6cb500e26e7b830416c23f1a2",
+    "semantic_hash": ""
+  },
+  "frontend/src/data/precision-execution.ts": {
+    "mtime": 1785689076.5357728,
+    "ast_hash": "07369bc2abd36f0f221a7ebb9e2e8513",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/DataFeedPusher.tsx": {
+    "mtime": 1785769357.027315,
+    "ast_hash": "66aa4fa676916256e1a363f9787f2dc2",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/EaBridgeAuditTrail.tsx": {
+    "mtime": 1785754353.2064147,
+    "ast_hash": "6d00056a43244977dd7e533331e40d7e",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/EaBridgeDashboard.tsx": {
+    "mtime": 1785754610.5563576,
+    "ast_hash": "6dd711e50f0031ac0e8673c36a83b9e6",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/EaBridgeReconciliation.tsx": {
+    "mtime": 1785754506.07645,
+    "ast_hash": "3c11b80a7da093c56d7dc34b80d159ff",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/EaBridgeTradeDiagnostics.tsx": {
+    "mtime": 1785754704.9965985,
+    "ast_hash": "977b07e5d73d9ce8e23f3d096ffa38c2",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/Mt5ProductionDiagnostics.tsx": {
+    "mtime": 1785755389.4692917,
+    "ast_hash": "8b38825f7a6dddec4ba86ed6355b463b",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/PreciseStopLoss.tsx": {
+    "mtime": 1785755555.991581,
+    "ast_hash": "3d3fa4f0c1387bcb301e4a8bb24aaec6",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/PrecisionExecution.tsx": {
+    "mtime": 1785755977.6369777,
+    "ast_hash": "bcb5bb1884aeb4cc10175b9ef87e013a",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/__tests__/DataFeedPusher.test.tsx": {
+    "mtime": 1785769839.347297,
+    "ast_hash": "1a94b1c6e4fcceeca8f704bb97e61cd8",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/__tests__/EaBridgeAuditTrail.test.tsx": {
+    "mtime": 1785754353.228428,
+    "ast_hash": "88ac82ea0f71782c8597bace05a8526b",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/__tests__/EaBridgeDashboard.test.tsx": {
+    "mtime": 1785754236.8729684,
+    "ast_hash": "071cd0b4d1d01616a06132bb04d25495",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/__tests__/EaBridgeReconciliation.test.tsx": {
+    "mtime": 1785754475.6136916,
+    "ast_hash": "42b183c3661cf33881a3aa35ea8e3ed5",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/__tests__/EaBridgeTradeDiagnostics.test.tsx": {
+    "mtime": 1785754738.337755,
+    "ast_hash": "1c2f063e5305ad245def58f41aaf0d32",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/__tests__/Mt5ProductionDiagnostics.test.tsx": {
+    "mtime": 1785755414.6208048,
+    "ast_hash": "d5600c801cacbf7f5929734f8eb3dc61",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/__tests__/PreciseStopLoss.test.tsx": {
+    "mtime": 1785765151.8320067,
+    "ast_hash": "7e1cb669fc74c042dbbd8ced014d2c13",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/__tests__/PrecisionExecution.test.tsx": {
+    "mtime": 1785755977.6399803,
+    "ast_hash": "6c396b1dff540e1d2069c8b1764ffaed",
+    "semantic_hash": ""
+  },
+  "done_audit.txt": {
+    "mtime": 1785768701.578988,
+    "ast_hash": "70698518928c95ad2701f96efae8d89f",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_mt5_integration_models.py": {
+    "mtime": 1785772464.660107,
+    "ast_hash": "8b22f5c3a384da5bfbe08c2c2ee9fe77",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_mt5_integration_routes.py": {
+    "mtime": 1785818361.8944306,
+    "ast_hash": "55859e9e2167a7335defdcc2c1592a29",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_mt5_integration_service.py": {
+    "mtime": 1785774335.292344,
+    "ast_hash": "e7001c4294378b8965790fdcc49f1690",
+    "semantic_hash": ""
+  },
+  "session_log_append.txt": {
+    "mtime": 1785787042.7778625,
+    "ast_hash": "314f4b78672d9b85ab7e33d206066108",
+    "semantic_hash": ""
+  },
+  "task_handoff_4_august_2026.md": {
+    "mtime": 1785786714.8800335,
+    "ast_hash": "55869357036816d8815d774bee74b735",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ActivityLogPanel.tsx": {
+    "mtime": 1785792042.9179442,
+    "ast_hash": "6b3a28b37d8d2e6edc4bd2948a2957de",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/EaConnectionStatus.tsx": {
+    "mtime": 1785791649.4010398,
+    "ast_hash": "ae504faa35120ead4e176d59232679dd",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/EaDeployment.tsx": {
+    "mtime": 1785791569.872399,
+    "ast_hash": "2c721a9767a6e41dfa5106fbc51dee5f",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/EaDownloadGuide.tsx": {
+    "mtime": 1785791608.4591196,
+    "ast_hash": "0690469c8c9d0bae7ab5c0ee1f740e43",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/EmergencyCloseButton.tsx": {
+    "mtime": 1785791980.1897058,
+    "ast_hash": "8e7849307faa3f500d0e17a3aed0bd1c",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ExecutionModeToggle.tsx": {
+    "mtime": 1785791817.1836877,
+    "ast_hash": "6403813ac4ed5ed36e32961870f09140",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/SignalCard.tsx": {
+    "mtime": 1785791864.3070085,
+    "ast_hash": "ebb70c2a09ef558bab287894656375b9",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/TradeHistoryTable.tsx": {
+    "mtime": 1785791927.787952,
+    "ast_hash": "4803371bda5dc32d7e175298d43a7d9c",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/fail-safe/ConnectionStatusIndicator.tsx": {
+    "mtime": 1785790422.8606565,
+    "ast_hash": "60f4395bfcf5bca33440ce251caaf0b8",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/fail-safe/ConnectionTimeoutConfig.tsx": {
+    "mtime": 1785791156.4568212,
+    "ast_hash": "20bc3b1dce14bad6b91c0704fbdc5af0",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/BacktestEngine.tsx": {
+    "mtime": 1785809567.0528853,
+    "ast_hash": "6f8fe12960031d860420b99336634703",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/EaDeployment.tsx": {
+    "mtime": 1785809621.5196111,
+    "ast_hash": "ab18ff6f63ac1e307284b02dc8a61419",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/EaLatencySimulation.tsx": {
+    "mtime": 1785791707.5388613,
+    "ast_hash": "903f81925b1ef9db180ad7799866f461",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/FailSafeDashboard.tsx": {
+    "mtime": 1785791229.118595,
+    "ast_hash": "4620779406c2e33f81e7ac0b626e2018",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/LiveOHLC.tsx": {
+    "mtime": 1785792140.1681411,
+    "ast_hash": "c79e7eb5e08a0626a28ca35f0e9d0ea8",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/OwnershipDashboard.tsx": {
+    "mtime": 1785803834.4840655,
+    "ast_hash": "451c5c97b4b14adce6b4d90ba4fab7a4",
+    "semantic_hash": ""
+  },
+  "task_list.json": {
+    "mtime": 1785789901.3357644,
+    "ast_hash": "4f78f6d6e664c034ca43fadfe6bb926e",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/auto-trade/TerminalChart.tsx": {
+    "mtime": 1785815991.0760417,
+    "ast_hash": "26f2b463286525c2364d6a3b75ea48f6",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/trading-terminal-api.ts": {
+    "mtime": 1785818224.4547076,
+    "ast_hash": "35a71e90a97f0eda95ab0920fbdc4477",
     "semantic_hash": ""
   }
 }

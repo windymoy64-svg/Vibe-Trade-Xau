@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useSearchParams } from "react-router";
-import { Activity, BarChart3, Bell, Bot, Check, ChevronDown, Crosshair, Database, FileText, Languages, LogOut, Moon, Sun, Plus, Trash2, Pencil, MessageSquare, ChevronsLeft, ChevronsRight, Settings, Layers, Loader2, Stethoscope, UserRound, Zap, Radio, Terminal, Target } from "lucide-react";
+import { Activity, BarChart3, Bell, Bot, Check, ChevronDown, Crosshair, Database, FileText, Languages, LogOut, Moon, Sun, Plus, Trash2, Pencil, MessageSquare, ChevronsLeft, ChevronsRight, Settings, Layers, Loader2, Stethoscope, UserRound, Zap, Radio, Terminal, Target, Wifi, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { api, type SessionItem } from "@/lib/api";
@@ -26,6 +26,7 @@ export function Layout() {
     { to: "/mt5-integration", icon: Terminal, label: "MT5 Direct" },
     { to: "/precise-stop-loss", icon: Target, label: "Precise SL" },
     { to: "/data-feed", icon: Wifi, label: "Data Feed" },
+    { to: "/fail-safe", icon: ShieldAlert, label: "Fail-Safe" },
     { to: "/agent", icon: Bot, label: t('layout.agent') },
     { to: "/runtime", icon: Activity, label: t('layout.runtime') },
     { to: "/reports", icon: FileText, label: t('layout.reports') },

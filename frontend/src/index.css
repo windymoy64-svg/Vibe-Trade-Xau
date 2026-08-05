@@ -1,3 +1,11 @@
+/* Compact MT5 auto-trade terminal */
+.terminal-panel { border: 1px solid #1f2937; border-radius: .45rem; background: linear-gradient(145deg, #0d111b, #0a0d15); box-shadow: inset 0 1px 0 #ffffff08, 0 8px 22px #00000038; }
+.terminal-inset { border: 1px solid #1b2533; border-radius: .35rem; background: #070a10; box-shadow: inset 0 1px 8px #0008; }
+.terminal-title { font-size: .625rem; font-weight: 700; letter-spacing: .14em; color: #64748b; }
+.terminal-button { display: inline-flex; min-height: 2.25rem; align-items: center; justify-content: center; gap: .4rem; border-radius: .35rem; padding: .5rem .75rem; font-size: .675rem; font-weight: 800; transition: filter .15s ease; }
+.terminal-button:hover { filter: brightness(1.08); }
+.terminal-select select, .terminal-input { width: 100%; border: 1px solid #263244; border-radius: .3rem; background: #080c13; padding: .5rem .6rem; color: #cbd5e1; font-size: .7rem; outline: none; }
+.terminal-select select:focus, .terminal-input:focus { border-color: #4f78a8; }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
