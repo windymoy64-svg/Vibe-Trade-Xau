@@ -25,14 +25,18 @@ from src.trading.precision_execution import (
     ACRZone,
     ACRZoneDetectionService,
     ACRZoneStatusValidationService,
+    DynamicEntryAreaSelector,
+    EntryAreaCandidate,
     EntryOrderTypeService,
     FairValueGapDetectionService,
     FibonacciPremiumDiscountService,
-    FVGACRConfluenceService,
     HTFMarketStructureService,
     LTFSupplyDemandService,
     LotSizeCalculationService,
+    OrderBlock,
+    OrderBlockDetectionService,
     RACRReversalDetectionService,
+    SupportResistanceDetectionService,
     TradeLevelCalculationService,
     evaluate_setup,
 )
@@ -68,6 +72,9 @@ class StrategyDecision:
     take_profit: float | None
     lot_size: float | None
     acr_zones: tuple[ACRZone, ...]
+    order_blocks: tuple[OrderBlock, ...]
+    selected_entry_area: EntryAreaCandidate | None
+    entry_area_candidates: tuple[EntryAreaCandidate, ...]
     reason: str
 
 
@@ -91,9 +98,11 @@ class AdaptiveStrategyRunner:
         self._supply_demand = LTFSupplyDemandService()
         self._acr = ACRZoneDetectionService()
         self._acr_status = ACRZoneStatusValidationService()
+        self._order_blocks = OrderBlockDetectionService()
+        self._support_resistance = SupportResistanceDetectionService()
+        self._entry_area_selector = DynamicEntryAreaSelector()
         self._racr = RACRReversalDetectionService()
         self._fvg = FairValueGapDetectionService()
-        self._confluence = FVGACRConfluenceService()
         self._fibonacci = FibonacciPremiumDiscountService()
         self._order_type = EntryOrderTypeService()
         self._levels = TradeLevelCalculationService()
@@ -121,47 +130,58 @@ class AdaptiveStrategyRunner:
         snapshot = indicators.extend(ordered)
         selection = self._selector.select(snapshot, session=session, spread_pips=spread_pips)
         if selection.selected_strategy_id is None:
-            return self._blocked(snapshot, selection, (), selection.reason)
+            return self._blocked(snapshot, selection, (), (), None, (), selection.reason)
 
         structure = self._structure.map(ordered)
+        order_blocks = tuple(
+            self._order_blocks.validate(block, ordered)
+            for block in self._order_blocks.detect(ordered, structure)
+        )
         supply_demand = self._supply_demand.detect(ordered)
         acr_zones = tuple(self._acr_status.validate(zone, ordered) for zone in self._acr.detect(ordered))
         gaps = self._fvg.detect(ordered)
-        confluences = self._confluence.detect(gaps, acr_zones)
+        support_resistance = self._support_resistance.detect(ordered, structure)
         reversals = self._racr.detect(ordered)
         direction = self._direction(selection.selected_strategy_id, snapshot.rsi, snapshot.trend)
         expected_bias = "BULLISH" if direction == "BUY" else "BEARISH"
 
         if selection.selected_strategy_id != "range-mean-reversion" and structure.bias != expected_bias:
-            return self._blocked(snapshot, selection, acr_zones, "HTF market structure does not confirm the selected direction.")
+            return self._blocked(snapshot, selection, acr_zones, order_blocks, None, (), "HTF market structure does not confirm the selected direction.")
         if (
             selection.selected_strategy_id == "range-mean-reversion"
             and _has_fresh_structure_break(structure, len(ordered))
         ):
-            return self._blocked(snapshot, selection, acr_zones, "Range strategy requires neutral HTF market structure.")
+            return self._blocked(snapshot, selection, acr_zones, order_blocks, None, (), "Range strategy requires neutral HTF market structure.")
 
-        matching_zones = [zone for zone in acr_zones if zone.status == "FRESH" and zone.direction == expected_bias]
-        if not matching_zones:
-            return self._blocked(snapshot, selection, acr_zones, "No fresh ACR zone supports the selected strategy.")
-        zone = min(matching_zones, key=lambda item: abs(snapshot.close - ((item.low + item.high) / 2)))
-        setup = evaluate_setup(
-            zone, ordered,
-            max_retest_candles=self._max_retest_candles,
-            max_zone_touches=self._max_zone_touches,
+        candidates = self._entry_area_selector.select(
+            current_price=snapshot.close,
+            direction=expected_bias,
+            order_blocks=order_blocks,
+            acr_zones=acr_zones,
+            gaps=gaps,
+            supply_demand=supply_demand,
+            support_resistance=support_resistance,
+            bars=ordered,
         )
-        if setup.state in {"INVALIDATED", "EXPIRED", "TOO_MANY_TOUCHES"}:
-            return self._blocked(snapshot, selection, acr_zones, setup.reason)
-
-        expected_supply_demand = "DEMAND" if direction == "BUY" else "SUPPLY"
-        if not any(zone_item.type == expected_supply_demand and zone_item.status != "INVALID" for zone_item in supply_demand):
-            return self._blocked(snapshot, selection, acr_zones, "No active supply/demand zone confirms the selected direction.")
-        confluence = next((item for item in confluences if item.acr_zone_id == zone.id), None)
-        if confluence is None:
-            return self._blocked(snapshot, selection, acr_zones, "No active FVG and ACR confluence supports the selected zone.")
+        if not candidates:
+            return self._blocked(snapshot, selection, acr_zones, order_blocks, None, (), "No valid entry area supports the selected direction.")
+        selected_area = candidates[0]
+        selected_acr = next((zone for zone in acr_zones if zone.id == selected_area.id), None)
+        if selected_acr is not None:
+            setup = evaluate_setup(
+                selected_acr, ordered,
+                max_retest_candles=self._max_retest_candles,
+                max_zone_touches=self._max_zone_touches,
+            )
+            if setup.state in {"INVALIDATED", "EXPIRED", "TOO_MANY_TOUCHES"}:
+                return self._blocked(snapshot, selection, acr_zones, order_blocks, selected_area, candidates, setup.reason)
+            rebound_confirmed = setup.state == "REBOUND_CONFIRMED"
+        else:
+            rebound_confirmed = False
 
         swing_low = min(bar.low for bar in ordered)
         swing_high = max(bar.high for bar in ordered)
-        entry_price = round((confluence.overlap_low + confluence.overlap_high) / 2, 8)
+        entry_price = round((selected_area.low + selected_area.high) / 2, 8)
         valuation = self._fibonacci.calculate(
             swing_low=swing_low,
             swing_high=swing_high,
@@ -173,20 +193,18 @@ class AdaptiveStrategyRunner:
             reversal.direction == expected_bias and reversal.timestamp == ordered[-1].timestamp.isoformat()
             for reversal in reversals
         )
-        rebound_confirmed = setup.state == "REBOUND_CONFIRMED" and (
-            reversal_confirmed or setup.rejection_confirmed
-        )
+        rebound_confirmed = rebound_confirmed and (reversal_confirmed or selected_acr is not None)
         order = EntryOrderTypeService(market_tolerance_points=market.pip_size * 0.5).recommend(
             direction=direction,
             current_price=snapshot.close,
             entry_price=entry_price,
             zone_fresh=True,
             valuation_eligible=valuation.eligible,
-            has_confluence=True,
+            has_confluence=selected_area.confluence_count > 0 or selected_area.type in {"ORDER_BLOCK", "ACR", "FVG", "DEMAND", "SUPPLY", "SUPPORT", "RESISTANCE"},
             reversal_confirmed=rebound_confirmed,
         )
         if order.recommendation.startswith("WAIT"):
-            return self._blocked(snapshot, selection, acr_zones, " ".join(order.reasons))
+            return self._blocked(snapshot, selection, acr_zones, order_blocks, selected_area, candidates, " ".join(order.reasons))
 
         if self._signal_validator is not None:
             validation = self._signal_validator.validate(SignalValidationContext(
@@ -198,7 +216,7 @@ class AdaptiveStrategyRunner:
                 rsi=snapshot.rsi,
             ))
             if not validation.accepted:
-                return self._blocked(snapshot, selection, acr_zones, " ".join(validation.reasons))
+                return self._blocked(snapshot, selection, acr_zones, order_blocks, selected_area, candidates, " ".join(validation.reasons))
 
         liquidity_candidates = [
             swing.price for swing in structure.swings
@@ -209,8 +227,8 @@ class AdaptiveStrategyRunner:
         levels = self._levels.calculate(
             direction=direction,
             entry_price=entry_price,
-            zone_low=zone.low,
-            zone_high=zone.high,
+            zone_low=selected_area.low,
+            zone_high=selected_area.high,
             pip_size=market.pip_size,
             liquidity_target=liquidity_target,
         )
@@ -237,6 +255,9 @@ class AdaptiveStrategyRunner:
             take_profit=levels.targets[-1].price,
             lot_size=sizing.lot_size,
             acr_zones=acr_zones,
+            order_blocks=order_blocks,
+            selected_entry_area=selected_area,
+            entry_area_candidates=candidates,
             reason=" ".join(order.reasons),
         )
 
@@ -252,6 +273,9 @@ class AdaptiveStrategyRunner:
         snapshot: MarketIndicatorSnapshot,
         selection: StrategySelectionResult,
         acr_zones: tuple[ACRZone, ...],
+        order_blocks: tuple[OrderBlock, ...],
+        selected_entry_area: EntryAreaCandidate | None,
+        entry_area_candidates: tuple[EntryAreaCandidate, ...],
         reason: str,
     ) -> StrategyDecision:
         return StrategyDecision(
@@ -266,6 +290,9 @@ class AdaptiveStrategyRunner:
             take_profit=None,
             lot_size=None,
             acr_zones=acr_zones,
+            order_blocks=order_blocks,
+            selected_entry_area=selected_entry_area,
+            entry_area_candidates=entry_area_candidates,
             reason=reason,
         )
 

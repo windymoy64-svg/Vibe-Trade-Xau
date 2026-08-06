@@ -23,6 +23,10 @@ from .trade_levels import TakeProfitLevel, TradeLevelCalculationService, TradeLe
 from .trailing_stop import ACRTrailingStopPlan, ACRTrailingStopService, TrailingStopUpdate
 from .lot_size import LotSizeCalculation, LotSizeCalculationService
 from .setup_confirmation import SetupConfirmation, evaluate_setup, is_engulfing_candle, is_rejection_candle
+from .order_blocks import OrderBlock, OrderBlockDetectionService
+from .support_resistance import SupportResistanceDetectionService, SupportResistanceZone
+from .entry_area import DynamicEntryAreaSelector, EntryAreaCandidate
+from .entry_area_confirmation import ReactionStatus, confirm_area_reaction
 
 __all__ = [
     "HTFMarketStructureService", "MarketStructureMap", "OHLCVFileParser",
@@ -39,4 +43,8 @@ __all__ = [
     "ACRTrailingStopPlan", "ACRTrailingStopService", "TrailingStopUpdate",
     "LotSizeCalculation", "LotSizeCalculationService",
     "SetupConfirmation", "evaluate_setup", "is_engulfing_candle", "is_rejection_candle",
+    "OrderBlock", "OrderBlockDetectionService",
+    "SupportResistanceDetectionService", "SupportResistanceZone",
+    "DynamicEntryAreaSelector", "EntryAreaCandidate",
+    "ReactionStatus", "confirm_area_reaction",
 ]

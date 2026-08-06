@@ -1,73 +1,73 @@
 # Graph Report - Vibe-Trading-XAUUSD  (2026-08-06)
 
 ## Corpus Check
-- 2278 files · ~2,067,382 words
+- 2280 files · ~2,071,640 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 28960 nodes · 63084 edges · 1123 communities (814 shown, 309 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 2806 edges (avg confidence: 0.54)
+- 29044 nodes · 63208 edges · 1152 communities (840 shown, 312 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 2808 edges (avg confidence: 0.54)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e9f12ee9`
+- Built from commit: `a0c6a200`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - safe_div
 - _legacy.py
-- DiagnosticRecommendationService
+- Position
 - ts_std
 - Mandate
-- test_mcp_stdio_integration.py
+- trading/service.py
 - mcp_server.py
 - RegistryRecord
 - FrozenContract
 - PersistentMemory
 - ts_min
-- test_telegram_split_fence_hang.py
+- RailRunDashboard
 - SemanticLinker
 - ts_argmax
 - backtest/runner.py
 - WebSocketChannel
 - live_routes.py
 - Trigger
-- ts_cov
+- signed_power
 - DataLoader
 - broker_dir
-- unit
+- test_shadow_account.py
 - ToolCallRequest
 - FakeMT5
 - RealtimeMarketIndicatorService
-- IndiaEquityEngine
+- test_runtime_runner.py
 - DiagnosticsStore
-- test_channels_runtime.py
-- ._process_message_update
+- Scheduler
+- test_factor_gate_fund_prefix.py
 - loaders/base.py
 - FeishuChannel
 - ts_corr
 - delta
 - Path
 - reporter.py
-- alpha101/alpha_091.py
+- MessageBubble.tsx
 - LiveActionEvent
 - replay_engine.py
-- render_tool_event
-- MCPServerConfig
+- input.py
+- flatten_and_cancel
 - validate_ohlc
-- register
+- resolve_loader
 - test_trade_journal.py
-- ToolClass
-- ForexEngine
+- Any
+- test_sdk_order_gate.py
 - calc_metrics
-- types.py
+- local.py
 - test_api_infrastructure.py
 - test_tier2_benchmark.py
-- Position
-- OrchestrationEvent
+- ForexEngine
+- types.py
 - validate_identifier_segment
-- TraceWriter
+- _is_china_futures
 - futu/sdk.py
 - DataLoader
 - halt_flag_set
@@ -84,41 +84,41 @@
 - test_bench_strict.py
 - test_runtime_forex_position_manager_acceptance.py
 - DiscordChannel
-- resolve_min_interval
+- onboard.py
 - openai_codex.py
 - tiger/sdk.py
 - FundFlowTool
-- MessageBubble.tsx
+- LLMResponse
 - RuntimeEvent
 - scale
-- Any
+- test_settings_api.py
 - binance/sdk.py
-- shadow_account_tool.py
+- _FixtureLoader
 - okx/sdk.py
 - TradingMemory
-- AgentConfig
+- test_agent_config.py
 - reconcile
 - RuntimeConfig
 - api.ts
-- ChatLLM
+- ProviderStreamError
 - SignalChannel
-- SwarmRun
-- DataLoader
+- test_swarm_runs_root_and_shell_tools.py
+- register
 - ts_mean
 - trade_journal_parsers.py
-- test_runtime_runner.py
+- test_cli_connector_env.py
 - FutuLoader
-- redact_internal_paths
+- redact_payload
 - test_controlled_shadow_evaluation_acceptance.py
 - CompressionPipeline
 - trading212/sdk.py
-- Scheduler
-- QVerisConfig
+- runtime/runner.py
+- test_mt5_connector.py
 - swarm_tool.py
 - test_enforcement_l6.py
 - ObservationSession
 - WeixinChannel
-- order_guard.py
+- test_advisory.py
 - SaveSkillTool
 - CandlestickChart.tsx
 - RunDetail.tsx
@@ -126,32 +126,32 @@
 - MochatChannel
 - alpha_bench_tool.py
 - BackgroundManager
-- tools/mcp.py
+- MCPServerConfig
 - MemorySearchIndex
 - ocr/engine.py
 - CompositeEngine
 - DataLoader
 - test_perpetual_risk.py
-- _align
+- BaseEngine
 - research_reports_tool.py
-- LiveOrderGuardTool
+- ._make_loader
 - runtime_metrics/engine.py
 - test_pattern_tool.py
 - GlobalFuturesEngine
 - validate_date_range
-- MT5Config
-- safe_run_dir
+- reads.py
+- path_utils.py
 - .patch
 - _make_engine
 - DataLoader
 - test_market_data.py
 - JobStore
 - test_financial_rigor_tool.py
-- stream.py
-- _make_equity
+- StreamRenderer
+- load_agent_config
 - MSTeamsChannel
 - SessionSearchIndex
-- ProviderStreamError
+- test_agent_loop_terminal_state.py
 - api_server.py
 - DataLoader
 - GoalStore
@@ -161,10 +161,10 @@
 - factors/cli_handlers.py
 - dhan/sdk.py
 - load_constraints
-- test_alpha_compare_api.py
+- resolve_benchmark
 - SlackChannel
 - PrecisionExecution.tsx
-- RememberTool
+- MemoryLifecycle
 - auth_routes.py
 - test_report_audit_tool.py
 - ExperimentResult
@@ -174,45 +174,45 @@
 - MTPyBridgeService
 - test_longbridge_runtime.py
 - EaBridgeDashboard.tsx
-- image_vision_tool.py
+- test_context_attribution_layers.py
 - shoonya/sdk.py
-- QVerisClient
-- onboard.py
+- test_swarm_m1_config_plumbing.py
+- RememberTool
 - bar_returns
 - EmailChannel
 - test_strategy_store.py
-- test_runtime_mt5_order_executor_acceptance.py
+- MT5TradingProfile
 - _reload_base_with_bottleneck
-- HTFMarketStructureService
-- test_sse_ticket_and_headers.py
+- .__init__
+- test_loop_helpers.py
 - scan_today_signals
-- LLMResponse
+- worker.py
 - api
-- RailRunDashboard
+- test_cli_ui_redesign.py
 - AnalyticsEngine
 - Settings.tsx
-- test_agent_loop_content_filter.py
+- settings_routes.py
 - WhatsAppChannel
 - test_swarm_grounding.py
 - ui_services.py
-- test_progress.py
-- SessionStore
+- doc_reader_tool.py
+- Any
 - HypothesisRegistry
-- eastmoney_client.py
+- lockup_expiry_tool.py
 - TelegramChannel
-- _qr_register_inner
+- QVerisConfig
 - canonical_json
 - Runner
 - test_nonpositive_prices.py
 - HistoricalDataset
 - DataLoader
 - test_validation.py
-- path_utils.py
+- redact_internal_paths
 - DecaySnapshot
 - FredMacroTool
 - experiment_analyzer.py
 - MT5RuntimeInputs
-- backtester.py
+- SessionStore
 - Series
 - SqliteStrategyStore
 - Runtime.tsx
@@ -223,25 +223,25 @@
 - DataLoader
 - test_sina_loader.py
 - test_tiingo_loader.py
-- test_security_scanner.py
+- with_security_warnings
 - fetch_sina_penalties.py
 - test_mandate_enforcement.py
 - TushareFundamentalProvider
-- MessageBus
+- test_channels_runtime.py
 - GovernanceDecision
 - HarnessReport
 - DingTalkChannel
-- llm.py
+- get_provider_capabilities
 - IWenCaiSearchTool
-- GlobalEquityEngine
+- IndiaEquityEngine
 - TestMainRouting
-- doc_reader_tool.py
-- block_trades_tool.py
+- test_swarm_run_metadata.py
+- margin_trading_tool.py
 - Path
 - test_runtime_liveness.py
 - WecomChannel
 - WebSearchTool
-- settings_routes.py
+- LongbridgeConfigError
 - compare_alphas
 - test_options_pricing_degenerate.py
 - forward
@@ -252,38 +252,38 @@
 - qveris_routes.py
 - sec_edgar_client.py
 - ETF 分析 Skill
-- test_shadow_account.py
+- ShadowProfile
 - yfinance_loader.py
-- add_goal_evidence
-- DataLoader
+- render_tool_event
+- eastmoney_client.py
 - test_qveris_loader.py
 - _reset_crumb
 - test_alpha_compare.py
 - get_env_config
 - pattern_job.py
 - test_mcp_regression.py
-- SkillsLoader
+- akshare_loader.py
 - test_india_broker_loader.py
-- Actor
-- test_runtime_pipeline_runner_acceptance.py
+- config_path
+- _make_equity
 - test_goal_store.py
 - resolve_longbridge_credentials
 - Path
-- stooq_loader.py
-- backtest/validation.py
+- ._process_message_update
+- QVerisClient
 - symbol_search_tool.py
 - A 股 ST/*ST 风险预测
 - formatters.ts
-- goal/store.py
-- test_agent_loop_stream_retry.py
+- test_runtime_forex_risk_manager_acceptance.py
+- test_security_scanner.py
 - alpaca/sdk.py
 - longbridge/sdk.py
 - TestErrorPaths
 - diagnostic-improvements.ts
 - run_options_backtest
 - test_risk_xray.py
-- test_settings_api.py
-- test_content_filter_e2e.py
+- calc_bars_per_year
+- goal/store.py
 - 1. Supported Strategy Types
 - fundamentals_loader.py
 - test_sec_edgar_client.py
@@ -293,9 +293,9 @@
 - Geopolitical Risk Analysis
 - main.py
 - dispatch
-- test_trading_connections.py
+- LongbridgeConfig
 - test_oauth_token_cache.py
-- BrokerCredentialEncryptionService
+- walkforward_engine.py
 - AlpacaConfig
 - test_autopilot_phase3.py
 - ScheduledResearchExecutor
@@ -312,36 +312,36 @@
 - NapcatChannel
 - pairing/store.py
 - test_cli_runtime.py
-- validate_url_target
-- system_routes.py
-- ChinaAEngine
+- MessageBus
+- shadow_account/extractor.py
+- BacktestConfigSchema
 - index.ts
 - compute
 - auto_trade/__init__.py
-- _build_response_from_run_dir
+- SessionService
 - test_stooq_loader.py
 - diagnostics-dashboard.ts
 - DiagnosticFilters.tsx
 - .compute_signal
 - BenchResult
-- BaseTool
-- .send_delta
-- _tokenize
+- goal_tool.py
+- test_fundamental_schema.py
+- test_url_target_security.py
 - test_mcp_host_origin_guard.py
 - test_doc_reader.py
 - dependencies
-- DataLoader
+- TestConfig
 - FlagSnapshot
 - Hypothesis
-- test_runtime_forex_risk_manager_acceptance.py
+- QuoteSnapshot
 - Correlation and Cointegration Analysis
-- test_autopilot_tool.py
+- autopilot_tool.py
 - tushare_fallbacks.py
 - README_ja.md
 - build_runner
 - README_ko.md
 - CapabilityCandidate
-- skills.py
+- SkillsLoader
 - test_alpaca_tap_routing.py
 - test_alpha_bench_universe_metadata.py
 - TestTurnoverAwareOptimize
@@ -351,41 +351,41 @@
 - ScheduledResearchJobStore
 - SignalEngine
 - ._generate_one
-- risk_xray.py
+- MT5Config
 - BotExecutionConfigurationProvider
 - StockNewsTool
-- swarm_runs_root
+- mcp_http_test_helpers.py
 - test_runtime_forex_signal_engine_acceptance.py
-- akshare_loader.py
+- DataLoader
 - TestCtaTemplate
 - _EnvReadVisitor
-- infer_market
+- test_correlation.py
 - DataLoader
 - auto_selection/__init__.py
 - scheduled_routes.py
-- ._on_media_message
-- loop.py
+- MatrixChannel
+- AgentLoop
 - .generate
 - test_runtime_forex_decision_engine_acceptance.py
-- walkforward_engine.py
+- walkforward/__init__.py
 - test_get_market_data_unresolved.py
 - AutoTradeExecutionLog.tsx
-- Any
+- block_trades_tool.py
 - write_run_card
 - test_mt5_integration_routes.py
 - 2. Extraction Methodology
 - northbound_tool.py
 - dev
 - _ServesPanelLoader
-- test_fundamental_schema.py
+- GlobalEquityEngine
 - _FakeIB
-- test_get_market_data_size.py
-- test_fundamentals_pit.py
+- backtest/validation.py
+- ArtifactLifecycle
 - MaCrossStrategy
 - DecayEvaluator
-- shareholder_count_tool.py
-- ._make_loader
-- MemoryLifecycle
+- resolve_secid
+- test_walkforward.py
+- Path
 - test_auth_precedence.py
 - test_regime.py
 - _run_visitor
@@ -395,18 +395,18 @@
 - kill_switch/models.py
 - scheduled_research/executor.py
 - ._generate_one
-- compute_rebalance_notes
+- test_runtime_pipeline_runner_acceptance.py
 - env_schema.py
 - 市场情绪分析
 - build_alpha_library.py
 - w4a_patch_blog.py
 - [0.1.8] — 2026-05-17
-- ChatOpenAIWithReasoning
+- ._auto_trade_configuration
 - validate_schedule
 - README_ar.md
 - test_alpha_bench_meta_survivorship.py
 - test_packaging_dependencies.py
-- MatrixChannel
+- sec_filings_tool.py
 - test_upload_api.py
 - StrategyAutoSelection.tsx
 - compilerOptions
@@ -415,7 +415,7 @@
 - test_rsshub_events_provider.py
 - auto_trade/strategy_runner.py
 - test_skill_reference_links.py
-- .message
+- read_url
 - .generate
 - alpha_zoo_tool.py
 - Performance Attribution Analysis
@@ -424,34 +424,34 @@
 - test_scheduled_routes.py
 - test_serve_bind.py
 - compilerOptions
-- test_env_schema.py
+- LLMConfig
 - _calc_options_metrics
-- ArtifactLifecycle
+- SectorInfoTool
 - _rolling_correlation_matrix
 - ObservationArchiveBatch
-- .execute
+- get_runtime_root
 - SignalEngine
 - ._compute_signal
 - test_auto_trade_execution_logger.py
 - Trade Execution Modeling
 - 1. TradingView — Pine Script v6
 - Risk Measurement and Stress Testing
-- compute_ic_series
-- QVerisClient
+- test_factor_analysis_core.py
+- stream.py
 - test_run_card.py
-- test_ccxt_loader_bounded.py
+- load_swarm_agent_config
 - yahoo_client.py
-- BaseEngine
+- engines/base.py
 - SignalEngine
 - minute-analysis/example_signal_engine.py
 - SignalEngine
-- ._fetch_one
+- risk_xray.py
 - Agent Contributor Guide
 - Asset Allocation and Portfolio Optimization
 - A股可转债分析
-- test_system_routes.py
+- system_routes.py
 - test_mcp_server_happy_path
-- TestSyncProviderEnv
+- test_llm.py
 - test_runtime_forex_feature_builder_acceptance.py
 - test_ci_env_var_gate.py
 - wiki/main.js
@@ -459,46 +459,46 @@
 - Management Deep Dive: Buying a Stock Is Buying a Person
 - On-Chain Data Analysis
 - Quantitative Statistical Methods
-- Any
+- test_runtime_mt5_order_executor_acceptance.py
 - _LastObservationOptimizer
 - 财报三表解读
 - SwarmStore
 - QVeris REST API Reference
 - _parse_pages
 - Professional Research Report Generation
-- PortfolioRiskXrayTool
-- test_agent_loop_repeatable_tools.py
-- main
+- RunStateStore
+- test_trading_connections.py
+- ChatOpenAIWithReasoning
 - SignalEngine
-- test_lookahead.py
-- .get
+- test_alpha_has_no_lookahead
+- test_ccxt_loader_bounded.py
 - test_distribution_skill_manifest.py
 - test_mcp_goal_session_contract.py
-- TestRegistry
+- test_sse_ticket_and_headers.py
 - check_social_cards.py
 - Deep-Company Series: An 8-Part Deep Dive on One Company
+- test_get_market_data_size.py
 - ._fetch_one
-- build_registry
 - SEC EDGAR Filing Analysis
 - SignalEngine
 - Macroeconomic Analysis
 - 行业轮动分析
-- TestIsETFListed
+- load_fundamental_panel
 - test_india_universe.py
-- test_qlib158_samples.py
+- _rows_to_frame
 - test_channels_api.py
 - Strategy Development Manager
 - ShadowComparison
 - test_options_partial_close.py
 - test_run_card_content_filter.py
-- CompareRequest
-- .send
+- alpha_routes.py
+- _qr_register_inner
 - TestParseEnvBool
 - Valuation Methodology
 - AutoTrade.tsx
 - alpha101/alpha_046.py
-- test_gtja191_part2_samples.py
-- Any
+- PortfolioRiskXrayTool
+- test_killswitch_blocks_orders.py
 - alpha101/alpha_049.py
 - validate_invariants
 - SignalEngine
@@ -506,14 +506,14 @@
 - simple_autotrade.py
 - benchmarks/conftest.py
 - test_goal_api.py
-- _parse_run_dir
+- test_telegram_split_fence_hang.py
 - DiagnosticDataSources.tsx
 - Loading Tools from External MCP Servers
-- ._upload_and_send_attachment
-- TestFallbackChains
+- Actor
+- test_yahoo_loader.py
 - a_mootdx_fetcher.py
 - TestReportOutput
-- _write_journal
+- strategy_registry.py
 - execution_context.py
 - TestModels
 - test_longbridge_loader.py
@@ -523,16 +523,16 @@
 - TestParsePenaltyList
 - client
 - _should_skip
-- _render_table_box
-- ._fetch_media_attachment
-- LTFSupplyDemandService
-- _load_config
+- split_message
+- banner.py
+- _tokenize
+- Any
 - integration/shadow/coordinator.py
 - TestSchemaGeneration
 - Factor Research Framework
-- _sig_render_table
+- _parse_run_dir
 - Strategy Evaluation Metrics
-- _version.py
+- test_env_schema.py
 - ._load_from_env
 - TestNormalizeFullwidth
 - Supply-Chain Bottleneck Hunter
@@ -540,11 +540,11 @@
 - validate_mt5_demo.py
 - ._calc_weights
 - Mode B: Tracking Check
-- EventProviderError
+- FeedSpec
 - gates.py
 - ComparisonPort
 - ObservationPort
-- options_chain_tool.py
+- test_options_chain_tool.py
 - get_candles
 - _default_db_path
 - fake_mcp_server.py
@@ -555,9 +555,9 @@
 - TestFetchPenaltyListFallback
 - TestTargetRelevance
 - TestValidateStockid
-- ._send_text
+- get_historical_bars
 - OHLCVFileParser
-- test_alpha101_samples.py
+- CompareRequest
 - test_cli_swarm_run_args.py
 - Earnings Revision & Guidance Analysis
 - package.json
@@ -568,9 +568,9 @@
 - Core Concepts
 - alpha101/alpha_021.py
 - Supported Data Types
-- TestKimiTemperature
+- SecFilingsTool
 - Correlation-Regime Detection and Crisis Attribution
-- alpha101/alpha_024.py
+- _version.py
 - scoring.py
 - precise-stop-loss.ts
 - _cancel_via_tap
@@ -579,9 +579,9 @@
 - factors/conftest.py
 - test_agent_guide_paths.py
 - enrich_price_frames_with_events
-- ._is_group_message_for_bot
+- _to_yahoo_interval
 - DiagnosticProfileSettings.tsx
-- commands/session.py
+- ThinkingSpinner
 - DiagnosticNotificationSettings.tsx
 - demo_smoke_test.py
 - content.js
@@ -625,9 +625,9 @@
 - TestOsEnvironSubscriptReadFlagged
 - Core Concepts
 - test_fundamental_filter_example.py
-- test_no_set_mandate_tool.py
+- chat_log.py
 - tap_env
-- _env
+- _require_auth
 - i18next.d.ts
 - vite.config.ts
 - stats.js
@@ -640,18 +640,18 @@
 - connectors/__init__.py
 - robinhood/__init__.py
 - benchmarks/__init__.py
-- test_qveris_routes.py
+- test_cli_channels.py
 - Task Handoff - Sesi 4 Agustus 2026 (Unit Tests MT5 Integration)
 - test_precision_analysis_api.py
-- .query_events
+- rsshub_events.py
 - i18next
 - test_data_routing_sources_subset.py
 - react-i18next
 - Handoff Sesi 4 Agustus 2026 — Project Complete: All Phases Finished ✅🎉
 - remark-math
-- tailwind-merge
-- test_readonly_default.py
-- alpha101/alpha_008.py
+- _sig_render_table
+- ToolClass
+- alpha101/alpha_024.py
 - alpha101/alpha_047.py
 - ci_grep_gates.sh
 - vibe-trading-ai
@@ -666,16 +666,16 @@
 - 金融监管知识库
 - test_block_trades_tool.py
 - Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Bot dan Launcher One-Click
-- rsshub_events.py
+- alpha101/alpha_051.py
 - 接口列表
 - Event-Driven Strategy
 - Core Concepts
 - Core Concepts
 - Advanced Options Strategies
 - Core Concepts
-- alpha101/alpha_027.py
-- alpha101/alpha_063.py
-- test_qveris_minute_granularity_tokens.py
+- TradeClassifier
+- Handoff Sesi 6 Agustus 2026 — Fixed Controls dan Konversi Pip XAUUSD
+- test_dhan_period_reject.py
 - test_stock_profile_tool.py
 - Backtest Diagnosis
 - Core Concepts
@@ -692,21 +692,21 @@
 - 二、固收产品分析
 - Seasonal / Calendar Effect Strategy
 - Shadow Account — 影子账户
-- TestCliInit
+- Handoff Sesi 6 Agustus 2026 — Fixed Controls dan Konversi Pip XAUUSD
 - NgodingPakeAI — Codebase Sync
-- .tick
+- compute_edge_density
 - data-feed.ts
-- TestResolveSecidUS
+- test_qveris_routes.py
 - Data Routing (Router)
 - 推动浪关系
 - Elliott Wave Theory
 - Machine-Learning Predictive Strategy
 - QVeris
-- build_swarm_registry
+- TestCliInit
 - Handoff Sesi 4 Agustus 2026 — Backend First: MT5 Integration & MCP Bridge Infrastructure
-- get_market_data
+- TestTushareE2E
 - ts_rank
-- alpha101/alpha_051.py
+- Handoff Sesi 6 Agustus 2026 — Finalisasi Persistensi MCP Token
 - Kakushadze 101 Formulaic Alphas — License & Provenance
 - GTJA Alpha 191 — Provenance and Licensing Note
 - Candlestick Pattern Recognition
@@ -718,25 +718,26 @@
 - Web Reading
 - CorruptStoreError
 - Handoff Sesi 5 Agustus 2026 — Debug `/auto-trade`: Settings, Blank Refresh, NEXT CYCLE, Start Button
-- TestTushareE2E
+- test_reasoning_delta_throttle.py
 - Alpha Zoo
 - ccxt/SKILL.md
 - sec_edgar_client — SEC EDGAR transport
 - Decay Scan Report
 - Volatility Strategy
-- test_auto_trade_config_api.py
+- Handoff Sesi 6 Agustus 2026 — Finalisasi Persistensi MCP Token
 - Handoff Sesi 5 Agustus 2026 — Debug Halaman `/auto-trade` (Settings, Blank Refresh, NEXT CYCLE, Start)
 - ADR-INDEX.md
 - Foundation Baseline
 - 🔌 Loading Tools from External MCP Servers (MCP Client Mode)
 - Session Log
-- Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Auto Trade dan Launcher One-Click
+- Handoff Sesi 6 Agustus 2026 — Persistensi MCP Token di Auto Trade
 - .__init__
-- _expand_artifacts_spec
-- _dispatch_data
-- ._effective_media_limit_bytes
-- ._download_message_media
+- ._format_telegram_error
+- ._is_group_message_for_bot
+- SignalEngine
+- test_auto_trade_broker_credentials_api.py
 - rank
+- _is_intraday_interval
 - 一、信用分析框架
 - 推动浪 (Impulse Wave)
 - PRZ（潜在反转区）交易
@@ -763,8 +764,10 @@
 - 🚀 Quick Start
 - 🚀 Quick Start
 - Security Policy
-- AgentLoop
-- longbridge/__init__.py
+- infer_market
+- _is_supported
+- BaseTool
+- _candlestick_enums
 - 分型（FX）
 - 笔（BI）
 - Credit Analysis Skill — 固收与信用分析
@@ -782,7 +785,7 @@
 - 国家政策法规库
 - 申万实时行情
 - ST风险警示板股票
-- alpha101/alpha_030.py
+- LotSizeCalculationService
 - ADR-012: Immutable Observation Archive and Deterministic Audit Chain
 - ADR-013: Evidence Analytics and Policy Insights
 - ADR-014: Deterministic Evidence-Layer Integration and Validation
@@ -790,7 +793,7 @@
 - ADR-016: Evidence-only Runtime Integration Harness
 - ADR-017: Controlled Evidence-only Shadow Assessment
 - alpha101/alpha_019.py
-- _QVerisBaseTool
+- alpha101/alpha_030.py
 - alpha101/alpha_052.py
 - qlib158 zoo — license & attribution
 - 三买 / 三卖（第三类买卖点）
@@ -798,31 +801,36 @@
 - 中枢（ZS / Zhong Shu）
 - 五、Python 代码模板
 - 交易所指数实时日线
-- test_tiger_period_hour_case.py
+- test_tushare_daily_alias_1d.py
 - ADR-010: Versioned Trust-Policy Snapshots
 - ADR-011: Evidence-Only Verification Manifests
 - Project Context
-- FibonacciPremiumDiscountService
-- test_academic_samples.py
-- VPS Context
 - Handoff Sesi 6 Agustus 2026 — Spread Fix, Setup Confirmation, Liquidity TP, Home Command Center, Investigasi Anomali Eksekusi
+- alpha101/alpha_063.py
+- _truncate_body
+- VPS Context
+- Handoff Sesi 6 Agustus 2026 — Persistensi MCP Token di Auto Trade
+- _QVerisBaseTool
 - EaBridgeReconciliation.tsx
 - Academic Baseline Factors — Attributions and Stance
-- test_tushare_daily_alias_1d.py
+- RACRReversalDetectionService
 - Handoff Sesi Sebelumnya (Referensi Historis)
 - 一买 / 一卖（第一类买卖点）
 - 四、信用利差分析
 - QVeris Coverage Map
 - 结构突破 (BOS) 与性质转变 (ChoCH)
+- TestProfilesAndRegistration
 - Status Sebelumnya (Handoff Lengkap Sesi 31 Juli 2026)
-- test_auto_trade_broker_credentials_api.py
-- _build_parser
+- regime.py
+- detect_regimes
+- test_cli_session_id.py
 - WelcomeScreen.tsx
-- _SwarmDashboard
+- test_tiger_period_hour_case.py
 - AI Research Bias Self-Check
-- _require_auth
+- test_run_with_agent_keeps_event_loop_responsive_during_registry_build
 - Vibe-Trading Wiki
 - Handoff Sesi 6 Agustus 2026 — Spread Fix, Setup Confirmation, Liquidity TP, Home Command Center, Investigasi Anomali Eksekusi
+- _dispatch_data
 - sprint1_make_data.py
 - references/参考数据/大宗交易.md
 - 股东户数.md
@@ -1078,46 +1086,67 @@
 - yahoo_client_get_options.md
 - yahoo_client_get_quote_summary.md
 - yahoo_client_search.md
-- TestEnums
+- AgentTuningConfig
+- _is_open_order
 - XAUUSD Diagnostics & Precision Execution
+- Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Auto Trade dan Launcher One-Click
 - TradeHistoryTable.tsx
 - TestOcrIntegration
-- TestAvailability
-- .to_dict
+- test_data_sources_api.py
+- test_notification_preferences_api.py
+- test_session_store_messages_corrupt.py
+- test_auto_trade_config_api.py
 - 💡 예제
 - 💡 Examples
+- ._fetch_one
+- test_diagnostic_csv_api.py
+- test_notifications_api.py
+- _expand_artifacts_spec
 - Tasks
 - precision_execution_routes.py
+- ._derive_topic_session_key
+- feed_specs_from_config
+- _backend.py
+- stock_data_example.py
+- ._download_message_media
 - decay_linear
-- RapidOcrEngine
+- ._start_typing
+- TestIsETFListed
+- .__init__
+- .to_dict
 - ActivityLogPanel.tsx
 - SignalCard.tsx
 - EaLatencySimulation.tsx
+- _fused_episodes
+- _FakeLbTrade
+- ._flush_media_group
 - EaConnectionStatus.tsx
 - components/EaDeployment.tsx
 - EaDownloadGuide.tsx
 - EmergencyCloseButton.tsx
 - ExecutionModeToggle.tsx
 - LiveOHLC.tsx
-- test_sdk_order_gate.py
+- 💡 Keputusan Teknis yang Diambil
+- live/paths.py
+- ._add_reaction
+- ._normalize_telegram_command
+- default_hypotheses_path
 - FailSafeDashboard.tsx
 - BacktestEngine.tsx
 - pages/EaDeployment.tsx
 - OwnershipDashboard.tsx
-- 📁 File Summary Sesi Ini (Phase 5 Complete)
-- 📊 Ringkasan Pekerjaan yang Diselesaikan
-- .__init__
+- .environment
+- .trd_env_name
+- fund_data_example.py
 - react-dom
 - react-router
 - recharts
 - sonner
-- _isolated_qveris_config
-- test_auto_fallback_chains_do_not_contain_qveris
-- test_explicit_unavailable_qveris_does_not_fallback_to_network
 - i18next-browser-languagedetector
+- react-markdown
+- test_mt5_connector_project_period_aliases.py
 - AutoTradeBotEngine
 - start-auto-trade.ps1
-- test_notifications_api.py
 
 ## God Nodes (most connected - your core abstractions)
 1. `safe_div()` - 683 edges
@@ -1140,41 +1169,41 @@
   agent/src/trading/connectors/mt5/orders.py → scripts/runtime_integration_test.py
 - `main()` --calls--> `HistoricalDataset`  [INFERRED]
   scripts/import_dataset.py → agent/src/trading/data/dataset.py
-- `build_runner()` --calls--> `RuntimeDecisionEngine`  [INFERRED]
-  scripts/runtime_integration_test.py → agent/src/trading/forex_decisions/engine.py
+- `main()` --calls--> `PendingOrdersState`  [INFERRED]
+  scripts/sprint1_probe.py → agent/src/trading/forex_decisions/contracts.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (1123 total, 309 thin omitted)
+## Communities (1152 total, 312 thin omitted)
 
 ### Community 0 - "safe_div"
 Cohesion: 0.01
-Nodes (318): _argmax_last(), _argmin_last(), _as_float(), DataFrame, ndarray, Alpha Zoo base operators. Operators all act on **wide** ``pd.DataFrame`` where…, Safe division: ``a / (b + eps * sign(b))``. Where ``b == 0`` exactly (or NaN),…, Cross-sectional z-score per row (axis=1, sample std). Rows with zero or NaN… (+310 more)
+Nodes (312): _argmax_last(), _argmin_last(), ndarray, Alpha Zoo base operators. Operators all act on **wide** ``pd.DataFrame`` where…, Safe division: ``a / (b + eps * sign(b))``. Where ``b == 0`` exactly (or NaN),…, safe_div(), compute(), _cross_sectional_zscore() (+304 more)
 
 ### Community 1 - "_legacy.py"
 Cohesion: 0.01
-Nodes (287): cmd_memory(), Any, Console, ``/memory`` — list / show persistent memory snippets. Delegates to the legacy…, Return the shared CLI console., Dispatch sub-actions: * ``/memory`` → list * ``/memory <name>`` → show *…, Single-entrypoint wrapper for the slash router., _resolve_console() (+279 more)
+Nodes (264): cmd_memory(), Any, Console, ``/memory`` — list / show persistent memory snippets. Delegates to the legacy…, Return the shared CLI console., Dispatch sub-actions: * ``/memory`` → list * ``/memory <name>`` → show *…, Single-entrypoint wrapper for the slash router., _resolve_console() (+256 more)
 
-### Community 2 - "DiagnosticRecommendationService"
-Cohesion: 0.05
-Nodes (66): ConnectDataSourceRequest, _csv_optional_float(), CsvTradeImportResponse, DataSourceResponse, DiagnosticCauseResponse, DiagnosticExportRequest, DiagnosticRecommendationResponse, DiagnosticRecommendationsResponse (+58 more)
+### Community 2 - "Position"
+Cohesion: 0.04
+Nodes (47): CryptoEngine, Series, Timestamp, Crypto perpetual-contract backtest engine. Market rules: - 24/7 trading, no…, Crypto perpetual contract engine. Config keys: - leverage: default 1.0 -…, Crypto: 24/7, long/short/close all allowed., Crypto supports fractional sizes, round to 6 decimals., Maker/Taker separated. Opens typically hit taker, closes hit maker.… (+39 more)
 
 ### Community 3 - "ts_std"
-Cohesion: 0.03
-Nodes (74): Rolling sample std (ddof=1) per column, warmup → NaN., ts_std(), compute(), _cross_sectional_zscore(), DataFrame, Per-row z-score: (x - row_mean) / row_std; zero/NaN std rows -> NaN., Return cross-sectional z-scored negative rolling beta (BAB long leg). Market…, compute() (+66 more)
+Cohesion: 0.02
+Nodes (111): Rolling sample covariance per column, min_periods=n., Rolling sample std (ddof=1) per column, warmup → NaN., ts_cov(), ts_std(), compute(), _cross_sectional_zscore(), DataFrame, Per-row z-score: (x - row_mean) / row_std; zero/NaN std rows -> NaN. (+103 more)
 
 ### Community 4 - "Mandate"
-Cohesion: 0.03
+Cohesion: 0.02
 Nodes (140): _account_balance_market_value(), _as_float(), avg_daily_dollar_volume(), _breach(), BreachEvent, check_mandate(), _check_universe_floors(), _coerce_position_rows() (+132 more)
 
-### Community 5 - "test_mcp_stdio_integration.py"
-Cohesion: 0.18
-Nodes (17): _make_agent_json(), Any, Path, Integration tests: full-stack MCP client path with a real stdio subprocess.…, The remote echo tool can be called and returns the correct result., The remote add tool computes the correct sum., Every MCP-injected tool must have is_readonly=False (serial-only). v1 design:…, enabledTools allowlist restricts which remote tools appear in the registry. (+9 more)
+### Community 5 - "trading/service.py"
+Cohesion: 0.07
+Nodes (62): has_cached_oauth_token(), Return whether a cached OAuth token already exists for a live channel.…, Connector-first trading tools. Tools take an optional ``connection`` profile…, Any, Robinhood remote MCP generic-operation mapping., Return the Robinhood remote tool name for a generic operation., Return the Robinhood remote tool name used by live runner plumbing., Normalize generic arguments for a Robinhood remote MCP operation. (+54 more)
 
 ### Community 6 - "mcp_server.py"
-Cohesion: 0.05
-Nodes (85): analyze_options(), analyze_trade_journal(), backtest(), extract_shadow_strategy(), factor_analysis(), get_block_trades(), get_dragon_tiger(), get_financial_statements() (+77 more)
+Cohesion: 0.03
+Nodes (123): analyze_options(), analyze_trade_journal(), backtest(), _build_network_app(), _build_run_payload(), _env_shell_tools_enabled(), extract_shadow_strategy(), factor_analysis() (+115 more)
 
 ### Community 7 - "RegistryRecord"
 Cohesion: 0.02
@@ -1186,183 +1215,183 @@ Nodes (105): FrozenContract, BaseModel, Base configuration for deterministic, si
 
 ### Community 9 - "PersistentMemory"
 Cohesion: 0.04
-Nodes (54): _now_iso(), Update quality score based on usage feedback. Args: name: Memory entry name…, Increment access_count and update last_accessed for a recalled entry., Execute a GC action (archive or delete) on an entry., Write compressed content back to the memory file atomically. Updates…, Update a single frontmatter field in a memory file. Uses an atomic write-then-…, Current time as ISO-8601 string., _coerce_str() (+46 more)
+Nodes (59): _coerce_str(), MemoryEntry, PersistentMemory, Path, A single memory entry on disk., Coerce frontmatter values to a display string., File-based persistent memory that survives across sessions., Load index as frozen snapshot. Called once at init. (+51 more)
 
 ### Community 10 - "ts_min"
 Cohesion: 0.02
-Nodes (125): Rolling max per column, warmup → NaN., Rolling min per column, warmup → NaN., ts_max(), ts_min(), compute(), DataFrame, Vectorised ternary `(cond ? a : b)` returning a DataFrame. ``cond`` is a…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame. (+117 more)
+Nodes (122): Rolling max per column, warmup → NaN., Rolling min per column, warmup → NaN., ts_max(), ts_min(), compute(), DataFrame, Vectorised ternary `(cond ? a : b)` returning a DataFrame. ``cond`` is a…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame. (+114 more)
 
-### Community 11 - "test_telegram_split_fence_hang.py"
-Cohesion: 0.21
-Nodes (14): Split raw Telegram Markdown without leaving fenced code blocks unbalanced., _split_telegram_markdown(), _alarm_handler(), _Hang, Exception, Regression: telegram markdown split must not hang on long fenced bodies., Fence at index 0 with mid-size max_len must not rebuild the same chunk., Install minimal stubs so telegram.py imports without python-telegram-bot. (+6 more)
+### Community 11 - "RailRunDashboard"
+Cohesion: 0.13
+Nodes (25): _append_arg_text(), _arg_value(), _clip(), _clip_preserve(), _coerce_int(), _collapse_ws(), _command_from_args(), _compact_lines() (+17 more)
 
 ### Community 12 - "SemanticLinker"
 Cohesion: 0.05
-Nodes (45): compute_bm25_score(), compute_idf(), Path, Semantic linking between memory entries via BM25 similarity (Tier 2).…, Compute BM25 score for a single document against query tokens. Formula per term…, Manages BM25-based semantic links between memory entries. Responsible for…, Initialize with the memory directory path. Args: memory_dir: Path to the…, The memory directory this linker operates on. (+37 more)
+Nodes (46): Save a new memory entry and update the index., Append or update an entry in MEMORY.md., compute_bm25_score(), compute_idf(), Path, Semantic linking between memory entries via BM25 similarity (Tier 2).…, Compute BM25 score for a single document against query tokens. Formula per term…, Manages BM25-based semantic links between memory entries. Responsible for… (+38 more)
 
 ### Community 13 - "ts_argmax"
 Cohesion: 0.02
-Nodes (114): bench_operators(), Benchmark factor operators: old pandas vs new fast paths., Rolling argmax (0-based index into the window), warmup → NaN. Uses…, Rolling argmin (0-based index into the window), warmup → NaN. Uses…, ts_argmax(), ts_argmin(), compute(), DataFrame (+106 more)
+Nodes (114): bench_operators(), Performance benchmark: compare old vs new operator/equity paths. Development-…, Benchmark factor operators: old pandas vs new fast paths., Rolling argmax (0-based index into the window), warmup → NaN. Uses…, Rolling argmin (0-based index into the window), warmup → NaN. Uses…, ts_argmax(), ts_argmin(), compute() (+106 more)
 
 ### Community 14 - "backtest/runner.py"
 Cohesion: 0.03
-Nodes (117): _attribute_root_name(), _AutoLoader, _build_price_panel(), _columns_required_from_factor_spec(), DataFetchResult, _detect_primary_source(), _detect_source(), _fetch_auto() (+109 more)
+Nodes (104): _attribute_root_name(), _AutoLoader, _build_price_panel(), _columns_required_from_factor_spec(), DataFetchResult, _detect_primary_source(), _fetch_auto(), fetch_data_map() (+96 more)
 
 ### Community 15 - "WebSocketChannel"
-Cohesion: 0.04
-Nodes (49): _extract_data_url_mime(), _is_valid_chat_id(), _is_websocket_upgrade(), _parse_envelope(), _parse_inbound_payload(), Any, BaseModel, field_validator (+41 more)
+Cohesion: 0.05
+Nodes (44): _extract_data_url_mime(), _is_valid_chat_id(), _is_websocket_upgrade(), _parse_envelope(), _parse_inbound_payload(), Any, BaseModel, field_validator (+36 more)
 
 ### Community 16 - "live_routes.py"
-Cohesion: 0.06
-Nodes (52): _build_live_runner(), _canonical_utc_timestamp(), _check_connector_status(), _closed_vocabulary(), _ConnectorVerifyCache, _drive_runner(), _emit_live_event(), _fetch_broker_ceilings() (+44 more)
+Cohesion: 0.04
+Nodes (65): _active_mandate_state(), ActiveMandateState, BrokerAuthState, _build_live_runner(), _canonical_utc_timestamp(), _check_connector_status(), _closed_vocabulary(), _ConnectorVerifyCache (+57 more)
 
 ### Community 17 - "Trigger"
-Cohesion: 0.05
-Nodes (67): _active_mandate_state(), ActiveMandateState, BrokerAuthState, LiveAuthorizeRequest, LiveBrokerStatus, LiveHaltRequest, LiveRunnerControlRequest, LiveStatusResponse (+59 more)
+Cohesion: 0.07
+Nodes (47): Persistent live-trading runtime (SPEC.md §7.5). The runtime makes the "agentic"…, due_now(), due_now_at(), market_is_open(), market_is_open_at(), _MarketSpec, _ms_to_aware_dt(), _now_ms() (+39 more)
 
-### Community 18 - "ts_cov"
-Cohesion: 0.02
-Nodes (92): Rolling sample covariance per column, min_periods=n., ``sign(df) * |df|**p`` — preserves sign; never produces complex output., signed_power(), ts_cov(), compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., compute() (+84 more)
+### Community 18 - "signed_power"
+Cohesion: 0.04
+Nodes (47): ``sign(df) * |df|**p`` — preserves sign; never produces complex output., signed_power(), compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., compute(), _ind_neutralize(), DataFrame (+39 more)
 
 ### Community 19 - "DataLoader"
-Cohesion: 0.06
-Nodes (40): positive_env_int(), Read a positive integer env var, warning and falling back on invalid values., DataLoader, _first_proxy_env(), _okx_proxy_config(), _okx_session(), DataFrame, OKX spot candle loader (crypto). Uses OKX V5 public REST API (no auth).… (+32 more)
+Cohesion: 0.07
+Nodes (38): DataLoader, _first_proxy_env(), _okx_proxy_config(), _okx_session(), DataFrame, OKX spot candle loader (crypto). Uses OKX V5 public REST API (no auth).…, OKX crypto OHLCV loader., Probe public candles with a short timeout (honours proxy env). (+30 more)
 
 ### Community 20 - "broker_dir"
 Cohesion: 0.03
-Nodes (120): _oauth_token_present(), Return whether an OAuth token cache exists for a broker (C2 auth state)., _atomic_write_json(), commit_mandate(), CommitError, _consent_dir(), _invalidate_proposal(), _load_proposal() (+112 more)
+Nodes (139): _atomic_write_json(), commit_mandate(), CommitError, _consent_dir(), _invalidate_proposal(), _load_proposal(), _new_id(), _normalize_limits() (+131 more)
 
-### Community 21 - "unit"
-Cohesion: 0.07
-Nodes (61): extract_shadow_profile(), Path, Build the Section 1 one-paragraph portrait (English)., Extract a ShadowProfile from a broker journal file. Args: journal_path:…, _render_profile_text(), _price_frame(), MonkeyPatch, Path (+53 more)
+### Community 21 - "test_shadow_account.py"
+Cohesion: 0.04
+Nodes (137): Flatten a ShadowRule into the scalar fields the template consumes., _rule_to_context(), extract_shadow_profile(), Path, Extract a ShadowProfile from a broker journal file. Args: journal_path:…, ExtractShadowStrategyTool, Extract a Shadow Account profile from a user's trade journal., _daily_index() (+129 more)
 
 ### Community 22 - "ToolCallRequest"
-Cohesion: 0.02
-Nodes (81): ContextBuilder, Any, ContextBuilder: builds LLM message context for the ReAct AgentLoop., Builds message context for AgentLoop. Attributes: registry: Tool registry.…, Initialize ContextBuilder. Args: registry: Tool registry. memory: Workspace…, Build system prompt. Injects one-line skill summaries via get_descriptions;…, Count registered backtest data sources for the system prompt. Derived from the…, Build full message list. Auto-recalls relevant persistent memories and injects… (+73 more)
+Cohesion: 0.03
+Nodes (87): Format an assistant tool_calls message, preserving thinking text. Args:…, _attach_tool_call_thought_signatures(), Attach Gemini thought signatures to assistant replay tool calls. The replay…, _dedupe_finish_reason(), _extract_tool_call_extra_content(), _is_no_stream_chunk_error(), _is_possible_dsml_tool_call_prefix(), _merge_tool_call_extra_content() (+79 more)
 
 ### Community 23 - "FakeMT5"
-Cohesion: 0.04
-Nodes (35): classify_mt5_symbol(), is_forex_pair(), normalize_base(), Pure MT5 symbol normalization + mandate classification (no SDK import). Broker…, Collapse ``EUR/USD`` / ``eur-usd`` / ``EURUSD.FX`` to ``EURUSD``. Uppercases…, Split a broker account-type suffix off a normalized token. ``EURUSDM`` →…, True when ``token`` (optionally broker-suffixed) is a currency pair., Map an MT5 symbol to its mandate ``(InstrumentType, AssetClass)``. Currency… (+27 more)
+Cohesion: 0.08
+Nodes (11): FakeMT5, _paper_config(), Any, SimpleNamespace, Configurable in-memory stand-in exposing the MetaTrader5 module surface., _symbol(), TestCancelOrder, TestIdentityGuard (+3 more)
 
 ### Community 24 - "RealtimeMarketIndicatorService"
 Cohesion: 0.11
 Nodes (22): _atr(), _classify_regime(), _ema(), Incremental market indicators for real-time strategy selection., Return the latest immutable snapshot, if any., Append or replace the latest candle and return fresh indicators., Apply an ordered batch and return the final snapshot., Maintain a bounded candle stream and calculate indicators on update. Re-sending… (+14 more)
 
-### Community 25 - "IndiaEquityEngine"
-Cohesion: 0.05
-Nodes (31): _build_rule_engines(), Instantiate one sub-engine per market type detected in codes., _bar_date(), IndiaEquityEngine, Series, Cash equity trades in 1-share lots., India delivery cost stack (see module docstring). ``_direction`` is unused —…, India slippage (configurable). (+23 more)
+### Community 25 - "test_runtime_runner.py"
+Cohesion: 0.07
+Nodes (47): _parse_expiry(), Return whether a reconcile report flags an unsafe / ambiguous state. R4 owns…, Parse an ISO-8601 UTC ``expires_at`` string into an aware ``datetime``. The…, _report_is_unsafe(), Build a market-session trigger for a known market key. Args: market: A key into…, _build_runner(), _FakeJob, _FakeScheduler (+39 more)
 
 ### Community 26 - "DiagnosticsStore"
 Cohesion: 0.02
-Nodes (121): DiagnosticDataSource, DiagnosticNotification, DiagnosticsStore, DiagnosticUser, Row, Create or reconnect source metadata without storing connector credentials., Atomically import validated CSV trades and update CSV-source metrics., Return the basic win/loss aggregate for one user. (+113 more)
+Nodes (163): ConnectDataSourceRequest, _csv_optional_float(), CsvTradeImportResponse, DataSourceResponse, DiagnosticCauseResponse, DiagnosticExportRequest, DiagnosticRecommendationResponse, DiagnosticRecommendationsResponse (+155 more)
 
-### Community 27 - "test_channels_runtime.py"
-Cohesion: 0.03
-Nodes (107): Write a compatibility attribute onto ``api_server`` when present., set_host_attr(), _get_channel_runtime(), _get_session_service(), Lazy-init service singletons shared by session, channel, and live routes., Lazy-init session service when ENABLE_SESSION_RUNTIME=true., Lazy-init IM channel runtime without starting platform adapters., InboundMessage (+99 more)
+### Community 27 - "Scheduler"
+Cohesion: 0.07
+Nodes (45): advance_after_fire(), compute_sleep_ms(), due_jobs(), earliest_next_run(), Job, _now_ms(), NowFn, Wall-clock scheduler for the live runtime (SPEC.md §7.5 #1). Follows the… (+37 more)
 
-### Community 28 - "._process_message_update"
-Cohesion: 0.11
-Nodes (18): Handle /start command., Handle /help command for allowed users only., Build sender_id with username for allowlist matching., Derive topic-scoped session key for Telegram chats with threads., Build common Telegram inbound metadata payload., Cache Telegram thread context by chat/message id for follow-up replies., Return the final vibe-trading session key used for ordered Telegram ingress., Sort by chat message id first, then Telegram update id. (+10 more)
+### Community 28 - "test_factor_gate_fund_prefix.py"
+Cohesion: 0.17
+Nodes (17): AlphaMeta, BaseModel, field_validator, Validate factor panel dependencies. Price columns are fixed, while fundamental…, Strict metadata schema; matches the ``__alpha_meta__`` dict literal., _meta(), Any, MonkeyPatch (+9 more)
 
 ### Community 29 - "loaders/base.py"
-Cohesion: 0.05
-Nodes (86): _cache_index_columns(), cached_loader_fetch(), check_budget(), DataLoaderProtocol, _duckdb_sql_string(), _frame_for_loader_cache(), loader_cache_enabled(), loader_cache_get() (+78 more)
+Cohesion: 0.03
+Nodes (117): BaoStock loader: free, no-auth A-share data via TCP protocol. BaoStock…, _cache_index_columns(), cached_loader_fetch(), check_budget(), DataLoaderProtocol, _duckdb_sql_string(), _frame_for_loader_cache(), loader_cache_enabled() (+109 more)
 
 ### Community 30 - "FeishuChannel"
-Cohesion: 0.02
-Nodes (71): _extract_element_content(), _extract_interactive_content(), _extract_post_content(), _extract_post_text(), _extract_share_card_content(), FeishuChannel, FeishuConfig, _load_lark_runtime() (+63 more)
+Cohesion: 0.03
+Nodes (65): _extract_post_content(), _extract_post_text(), FeishuChannel, FeishuConfig, _load_lark_runtime(), Any, BaseModel, Task (+57 more)
 
 ### Community 31 - "ts_corr"
 Cohesion: 0.02
-Nodes (80): Rolling Pearson correlation per column, min_periods=n. Constant series in the…, ts_corr(), compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame. (+72 more)
+Nodes (91): Rolling Pearson correlation per column, min_periods=n. Constant series in the…, ts_corr(), compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame. (+83 more)
 
 ### Community 32 - "delta"
 Cohesion: 0.03
-Nodes (85): delta(), First difference at lag ``d``: ``df - df.shift(d)``. Lookahead ban: ``d >= 1``…, compute(), _cross_sectional_zscore(), DataFrame, Per-row z-score: (x - row_mean) / row_std; zero/NaN std rows -> NaN., Return 252-day minus 21-day return z-score (Carhart UMD). Uses canonical (252,…, compute() (+77 more)
+Nodes (83): delta(), First difference at lag ``d``: ``df - df.shift(d)``. Lookahead ban: ``d >= 1``…, compute(), _cross_sectional_zscore(), DataFrame, Per-row z-score: (x - row_mean) / row_std; zero/NaN std rows -> NaN., Return 252-day minus 21-day return z-score (Carhart UMD). Uses canonical (252,…, compute() (+75 more)
 
 ### Community 33 - "Path"
-Cohesion: 0.06
-Nodes (27): content_hash(), Generate deterministic hash for deduplication., Path, Tests for content deduplication in PersistentMemory., Each PersistentMemory instance has its own _recent_hashes cache., Integration tests: dedup check within the add() method., Second add() with same name+desc within window returns None., Blocked duplicate does not write a second .md file. (+19 more)
+Cohesion: 0.05
+Nodes (29): content_hash(), Generate deterministic hash for deduplication., Check if a memory with similar content was recently written. Uses a 30-second…, Remove hash entries older than the dedup window to bound memory use., Path, Tests for content deduplication in PersistentMemory., Each PersistentMemory instance has its own _recent_hashes cache., Integration tests: dedup check within the add() method. (+21 more)
 
 ### Community 34 - "reporter.py"
 Cohesion: 0.09
 Nodes (38): apply_matplotlib_cjk_font(), cjk_css_font_face(), cjk_font_path(), fonts_dir(), Path, Shadow Account — font handling for PDF rendering. Tries to guarantee that…, Emit an ``@font-face`` CSS block weasyprint can bundle. Returns an empty string…, Return the Shadow Account fonts cache dir (auto-created). (+30 more)
 
-### Community 35 - "alpha101/alpha_091.py"
-Cohesion: 0.47
-Nodes (5): compute(), _ind_neutralize(), DataFrame, Industry/sector neutralize: subtract the row-wise sector group mean. If panel…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame.
+### Community 35 - "MessageBubble.tsx"
+Cohesion: 0.08
+Nodes (22): AgentAvatar(), formatLeverage(), formatUniverse(), formatUsd(), MandateProposalCard, ProfileTile(), Props, MessageBubble (+14 more)
 
 ### Community 36 - "LiveActionEvent"
-Cohesion: 0.04
-Nodes (92): aggregate_evidence(), EvidenceBundle, flatten(), Any, Deterministic aggregation of phase evidence; observation only., audit_ledger_path(), LiveActionEvent, _new_audit_id() (+84 more)
+Cohesion: 0.07
+Nodes (50): audit_ledger_path(), LiveActionEvent, _new_audit_id(), Any, Path, Protocol, Live-action audit ledger (SPEC.md Consent §5). Every live action — order…, One immutable live-action audit record (SPEC.md Consent §5). Attributes: kind:… (+42 more)
 
 ### Community 37 - "replay_engine.py"
-Cohesion: 0.04
-Nodes (80): ACTION, _canonical_json(), DecisionSnapshot, PendingOrdersState, PositionState, PositionStateSnapshot, Any, BaseModel (+72 more)
+Cohesion: 0.07
+Nodes (36): Deterministic runtime forex feature construction from validated closed bars., AccountSnapshot, ApprovalStatus, ApprovedOrderPlan, _canonical_json(), Any, BaseModel, datetime (+28 more)
 
-### Community 38 - "render_tool_event"
-Cohesion: 0.04
-Nodes (52): Console, Text, Minimal chat-log renderer — stub for the demo. Iterates a list of turn dicts…, Return ``console`` if given, else the shared CLI console., Compose the meta header line for one turn., Print past turns to ``console``. Args: turns: Iterable of turn dicts (see…, render_history(), _render_turn() (+44 more)
-
-### Community 39 - "MCPServerConfig"
+### Community 38 - "input.py"
 Cohesion: 0.06
-Nodes (46): cmd_live_authorize(), _live_server_config(), Resolve the protected MCP server config for ``broker``. The config is read at…, Bootstrap the OAuth handshake for a live broker channel (desktop only). Builds…, ConfigBase, MCPOAuthConfig, MCPServerConfig, MCPServerConfigOverride (+38 more)
+Nodes (34): _build_keybindings(), ctrl_c_within_window(), _CtrlCState, _default_history_path(), _force_utf8_stdout(), get_user_input(), _has_unbalanced_brackets(), make_session() (+26 more)
+
+### Community 39 - "flatten_and_cancel"
+Cohesion: 0.08
+Nodes (43): aggregate_evidence(), EvidenceBundle, flatten(), Any, Deterministic aggregation of phase evidence; observation only., Live trading channel (Robinhood Agentic Trading). Bounded-autonomy live…, _audit(), _cancel_resting_orders() (+35 more)
 
 ### Community 40 - "validate_ohlc"
 Cohesion: 0.05
 Nodes (62): Drop, flag, or reject bars that violate OHLC invariants. Loaders only drop NaN…, validate_ohlc(), DataLoader, _load_config(), _normalize_columns(), Any, DataFrame, Local data loader: reads CSV, Parquet, and DuckDB files from user config.… (+54 more)
 
-### Community 41 - "register"
+### Community 41 - "resolve_loader"
 Cohesion: 0.04
-Nodes (33): NoAvailableSourceError, Exception, Raised when no data source is available for a given market., _ensure_registered(), get_loader_cls_with_fallback(), Any, Loader registry with market-level fallback chains. Loaders self-register via…, Return the first *available* loader instance for *market*. Walks the fallback… (+25 more)
+Nodes (32): _ensure_registered(), get_loader_cls_with_fallback(), Any, Return the first *available* loader instance for *market*. Walks the fallback…, Return a loader *class* for *source*, falling back if unavailable. Args:…, Import every known loader module so ``@register`` decorators fire. Safe to call…, resolve_loader(), Every registered loader name must be an accepted config source, so a new loader… (+24 more)
 
 ### Community 42 - "test_trade_journal.py"
-Cohesion: 0.06
-Nodes (82): Convert records to a standardized DataFrame (datetime column parsed)., records_to_dataframe(), analyze_trade_journal(), _anchoring(), _apply_filter(), _chasing_momentum(), _compute_behavior(), _compute_profile() (+74 more)
+Cohesion: 0.04
+Nodes (97): _infer_market_from_symbol(), Best-effort market inference from a symbol string., analyze_trade_journal(), _anchoring(), _apply_filter(), _chasing_momentum(), _compute_behavior(), _compute_profile() (+89 more)
 
-### Community 43 - "ToolClass"
-Cohesion: 0.05
-Nodes (51): is_live_broker_url(), Return whether a URL points at a known live-broker host. A live broker is…, classify_tool(), Enum, str, Read/write classification for live-channel remote MCP tools. We do not own the…, Read/write classification of a remote MCP tool. Attributes: READ: Observed to…, Classify one remote tool via the 3-tier precedence ladder. The curated map is… (+43 more)
+### Community 43 - "Any"
+Cohesion: 0.07
+Nodes (39): add_goal_evidence(), _audit_rows_from_payload(), _blank_to_none(), _clean_list(), _default_goal_criteria(), _execute_key_gated(), _get_goal_store(), get_research_goal() (+31 more)
 
-### Community 44 - "ForexEngine"
-Cohesion: 0.05
-Nodes (31): ForexEngine, _pip_value(), Series, Timestamp, Symbol-aware slippage with correct spread. Args: symbol: Forex pair. price: Mid…, Apply daily swap/rollover at end of trading day., Forex: multiplier is 1.0 (size is in currency units)., Size of 1 pip for the pair. Args: symbol: Forex pair (e.g. 'EUR/USD',… (+23 more)
+### Community 44 - "test_sdk_order_gate.py"
+Cohesion: 0.12
+Nodes (36): ConsentMeta, Provenance proving the user (not the agent) authored this mandate. Attributes:…, execute_live_order(), Run the live mandate gate around a direct-SDK ``place_order``. Args: broker:…, test_live_mandate_allow_routes_order_through_tap(), test_live_mandate_deny_blocks_before_any_tap_call(), test_live_mandate_halt_blocks_before_any_tap_call(), _expired_mandate() (+28 more)
 
 ### Community 45 - "calc_metrics"
-Cohesion: 0.03
-Nodes (49): by_exit_reason_stats(), by_symbol_stats(), calc_bars_per_year(), calc_metrics(), calc_turnover_series(), _empty_metrics(), _normalize_interval(), Any (+41 more)
+Cohesion: 0.04
+Nodes (47): _OpenOrder, A fully priced opening order that can be committed atomically., Cash consumed by the fill., by_exit_reason_stats(), by_symbol_stats(), calc_metrics(), calc_turnover_series(), DataFrame (+39 more)
 
-### Community 46 - "types.py"
-Cohesion: 0.02
-Nodes (183): cmd_connector_configure(), cmd_connector_use(), Select the default trading connector profile., Configure a local connector profile., has_cached_oauth_token(), Return whether a cached OAuth token already exists for a live channel.…, Connector-first trading tools. Tools take an optional ``connection`` profile…, Read positions from a trading connector profile. (+175 more)
+### Community 46 - "local.py"
+Cohesion: 0.05
+Nodes (88): cmd_connector_configure(), Configure a local connector profile., Interactive Brokers connector package., _account_summary(), _account_value_to_dict(), _assert_profile(), _bar_to_dict(), _call() (+80 more)
 
 ### Community 47 - "test_api_infrastructure.py"
 Cohesion: 0.03
-Nodes (81): _coerce_float(), _coerce_int(), _dotenv_key(), _format_env_value(), _is_configured_secret(), _is_spa_html_route(), _project_relative_path(), Path (+73 more)
+Nodes (71): _dotenv_key(), _is_spa_html_route(), _project_relative_path(), Path, Remove basic dotenv quotes and inline comments., Return the canonical env key, stripping an optional ``export `` prefix. python-…, Read active KEY=value entries from a dotenv file., Return a project-relative display path without leaking an absolute path. (+63 more)
 
 ### Community 48 - "test_tier2_benchmark.py"
 Cohesion: 0.06
 Nodes (48): compression_result(), fts5_result(), hierarchy_result(), links_result(), Any, fixture, Path, TempPathFactory (+40 more)
 
-### Community 49 - "Position"
+### Community 49 - "ForexEngine"
 Cohesion: 0.04
-Nodes (46): CryptoEngine, Series, Timestamp, Crypto perpetual contract engine. Config keys: - leverage: default 1.0 -…, Crypto: 24/7, long/short/close all allowed., Crypto supports fractional sizes, round to 6 decimals., Maker/Taker separated. Opens typically hit taker, closes hit maker.…, Slippage: unfavourable direction. (+38 more)
+Nodes (47): Timestamp, Composite cross-market backtest engine. Manages a shared capital pool across…, Per-bar hooks dispatched by market type., ForexEngine, _pip_value(), Series, Timestamp, Forex (FX spot / CFD) backtest engine. Market rules: - 24x5 (Mon Sydney open to… (+39 more)
 
-### Community 50 - "OrchestrationEvent"
-Cohesion: 0.17
-Nodes (16): build_pipeline(), Pure observation pipeline that validates evidence chains without actions., _freeze(), OrchestrationEvent, Any, Content-addressed orchestration observations., _thaw(), ObservationResult (+8 more)
+### Community 50 - "types.py"
+Cohesion: 0.06
+Nodes (37): build_pipeline(), Pure observation pipeline that validates evidence chains without actions., _freeze(), OrchestrationEvent, Any, Content-addressed orchestration observations., _thaw(), ObservationResult (+29 more)
 
 ### Community 51 - "validate_identifier_segment"
 Cohesion: 0.04
 Nodes (62): Any, field_validator, Stable, immutable identifiers shared by AIOS foundation contracts., Normalize and validate one portable identifier segment., validate_identifier_segment(), field_validator, Ownership metadata for governed resources., field_validator (+54 more)
 
-### Community 52 - "TraceWriter"
-Cohesion: 0.03
-Nodes (71): cmd_init(), _make_synced_legacy_wrapper(), Vibe-Trading CLI package. The legacy single-file CLI has been preserved…, Mirror package-level monkeypatches onto ``_legacy``'s module globals. Tests…, Compatibility wrapper for callers patching ``cli._INIT_ENV_PATH``., Wrap ``legacy_fn`` so the package-level monkeypatch sync fires first., _sync_legacy_test_overrides(), _env_int() (+63 more)
+### Community 52 - "_is_china_futures"
+Cohesion: 0.08
+Nodes (19): _detect_market(), _is_china_futures(), Infer market type from symbol format. Args: code: Ticker / symbol string.…, Check whether a futures code belongs to a Chinese exchange. Recognises two…, _detect_source(), _group_codes_by_market(), Infer legacy source name from symbol (back-compat for metrics/engine). Args:…, Group symbols by detected market type. Args: codes: List of symbol strings.… (+11 more)
 
 ### Community 53 - "futu/sdk.py"
-Cohesion: 0.06
-Nodes (84): Futu (moomoo) trading connector. Read-only account/market access in Layer A via…, _acc_id_of(), _account_to_dict(), _assert_gateway(), _bar_to_dict(), build_config(), cancel_order(), check_status() (+76 more)
+Cohesion: 0.07
+Nodes (80): Futu (moomoo) trading connector. Read-only account/market access in Layer A via…, _acc_id_of(), _account_to_dict(), _assert_gateway(), _bar_to_dict(), build_config(), cancel_order(), check_status() (+72 more)
 
 ### Community 54 - "DataLoader"
 Cohesion: 0.08
@@ -1370,11 +1399,11 @@ Nodes (28): _is_etf_listed(), Shared symbol-type detection utilities for loaders
 
 ### Community 55 - "halt_flag_set"
 Cohesion: 0.04
-Nodes (91): _authorize_timeout_seconds(), cmd_connector_halt(), cmd_live_halt(), cmd_live_mandate(), cmd_live_resume(), cmd_live_revoke(), cmd_live_status(), _format_expiry_countdown() (+83 more)
+Nodes (90): _authorize_timeout_seconds(), cmd_connector_halt(), cmd_connector_resume(), cmd_live_halt(), cmd_live_mandate(), cmd_live_resume(), cmd_live_status(), _format_expiry_countdown() (+82 more)
 
 ### Community 56 - "LlmVisionOcrEngine"
-Cohesion: 0.05
-Nodes (34): LlmVisionOcrEngine, ndarray, Built-in LLM vision OCR engine — works with any OpenAI-compatible provider that…, Resolve base_url, api_key, model from the configured LLM provider. Provider…, Cloud OCR via any OpenAI-compatible multimodal LLM. Provider config is resolved…, Available if an API key is configured., Return a cached OpenAI client, recreating if config changed., Convert numpy array to base64 JPEG (10x smaller than PNG for OCR). (+26 more)
+Cohesion: 0.04
+Nodes (45): LlmVisionOcrEngine, ndarray, Built-in LLM vision OCR engine — works with any OpenAI-compatible provider that…, Resolve base_url, api_key, model from the configured LLM provider. Provider…, Cloud OCR via any OpenAI-compatible multimodal LLM. Provider config is resolved…, Available if an API key is configured., Return a cached OpenAI client, recreating if config changed., Convert numpy array to base64 JPEG (10x smaller than PNG for OCR). (+37 more)
 
 ### Community 57 - "EventBus"
 Cohesion: 0.08
@@ -1382,27 +1411,27 @@ Nodes (24): AbstractEventLoop, EventBus, Any, Queue, SSE event bus with support 
 
 ### Community 58 - "test_base.py"
 Cohesion: 0.03
-Nodes (70): Alpha, AlphaCompute, Market, Enum, Protocol, str, Market identifier used by ``vwap`` for market-specific formulas., Market-aware VWAP-equivalent reference price. - ``equity_cn``: ``(amount *… (+62 more)
+Nodes (83): AlphaCompute, _as_float(), Market, DataFrame, Enum, Protocol, str, Market identifier used by ``vwap`` for market-specific formulas. (+75 more)
 
 ### Community 59 - "test_evidence_verification_acceptance.py"
 Cohesion: 0.04
 Nodes (65): Storage-independent compatibility declarations., Inclusive lower and exclusive upper semantic-version bounds., VersionRange, ExecutionEnvironment, Enum, str, Execution environment and release-channel primitives., ReleaseChannel (+57 more)
 
 ### Community 60 - "Registry"
-Cohesion: 0.05
-Nodes (72): AlphaMeta, load_alpha_meta_from_py(), _LoadError, Any, BaseModel, DataFrame, Exception, field_validator (+64 more)
+Cohesion: 0.03
+Nodes (107): Alpha, Lightweight handle for a registered alpha (registry-owned)., load_alpha_meta_from_py(), _LoadError, Any, DataFrame, Exception, ModuleType (+99 more)
 
 ### Community 61 - "test_swarm_m4_e2e.py"
-Cohesion: 0.10
-Nodes (32): _agent_spec(), _FakeMCPClient, _final_response(), _make_factory(), _make_server_config(), _make_state(), _ok_call_result(), Any (+24 more)
+Cohesion: 0.13
+Nodes (30): _agent_spec(), _FakeMCPClient, _final_response(), _make_factory(), _make_server_config(), _make_state(), _ok_call_result(), Any (+22 more)
 
 ### Community 62 - "gateway_services.py"
 Cohesion: 0.05
 Nodes (43): build_gateway_services(), GatewayServices, GatewaySessionManagerAdapter, _is_relative_to(), MediaService, Any, Path, Gateway services used by the WebSocket channel. (+35 more)
 
 ### Community 63 - "EnvConfig"
-Cohesion: 0.15
-Nodes (9): EnvConfig, Root configuration model composing all environment variable groups.…, MonkeyPatch, Verify env-var strings are coerced to the correct Python types., Verify env vars override defaults and reset restores them., Verify every field defaults correctly when no env vars are set., TestEnvConfigDefaults, TestEnvConfigOverride (+1 more)
+Cohesion: 0.13
+Nodes (11): EnvConfig, Root configuration model composing all environment variable groups.…, MonkeyPatch, Verify env-var strings are coerced to the correct Python types., Verify env vars override defaults and reset restores them., Verify VIBE_TRADING_API_KEY → api_auth_key alias resolution., Verify every field defaults correctly when no env vars are set., TestAPIKeyAlias (+3 more)
 
 ### Community 64 - "QQChannel"
 Cohesion: 0.06
@@ -1418,31 +1447,31 @@ Nodes (80): alpha_series_paired(), categorise_strict(), compute_random_ic_series
 
 ### Community 67 - "test_runtime_forex_position_manager_acceptance.py"
 Cohesion: 0.08
-Nodes (54): AccountPolicy, _aware(), _canonical_json(), DealEntry, DealHistorySnapshot, Direction, MT5PositionEntry, MT5PositionSnapshot (+46 more)
+Nodes (55): AccountPolicy, _aware(), _canonical_json(), DealEntry, DealHistorySnapshot, Direction, MT5PositionEntry, MT5PositionSnapshot (+47 more)
 
 ### Community 68 - "DiscordChannel"
-Cohesion: 0.05
+Cohesion: 0.04
 Nodes (46): DiscordBotClient, DiscordChannel, DiscordConfig, Any, BaseModel, Thread, Send an ephemeral interaction response and report success., Send a vibe-trading outbound message using Discord transport rules. (+38 more)
 
-### Community 69 - "resolve_min_interval"
-Cohesion: 0.06
-Nodes (41): DataLoader, _extract_provider_message(), _min_interval(), _parse_bar(), DataFrame, Alpha Vantage loader: US-equity daily OHLCV via the free key-gated REST API.…, Available when a non-placeholder ``ALPHAVANTAGE_API_KEY`` is set., Fetch daily OHLCV bars for ``codes`` within ``[start_date, end_date]``. Args:… (+33 more)
+### Community 69 - "onboard.py"
+Cohesion: 0.13
+Nodes (28): _env_dir(), _env_path(), _finalize(), _intro_header(), _partial_path(), _prompt_secret(), _prompt_text(), Provider (+20 more)
 
 ### Community 70 - "openai_codex.py"
-Cohesion: 0.09
-Nodes (39): _build_headers(), CodexAIMessage, CodexStreamError, CodexToolCall, _convert_messages(), _convert_tools(), _convert_user_message(), _decode_tool_args() (+31 more)
+Cohesion: 0.08
+Nodes (41): _build_headers(), CodexAIMessage, CodexStreamError, CodexToolCall, _convert_messages(), _convert_tools(), _convert_user_message(), _decode_tool_args() (+33 more)
 
 ### Community 71 - "tiger/sdk.py"
 Cohesion: 0.07
 Nodes (72): _as_iter(), _assert_profile(), _asset_to_dict(), _bar_to_dict(), build_config(), cancel_order(), check_status(), _client_config() (+64 more)
 
 ### Community 72 - "FundFlowTool"
-Cohesion: 0.10
-Nodes (16): main(), 读取一只股票近 N 日的主力净流入序列。 Args: code: 带后缀 symbol，如 "600519.SH"。 days: 保留最近 N 根日线。…, 列出该股票所属行业/概念板块，并打印今日行业涨幅榜前 5。, study_main_force(), study_sectors(), FundFlowTool, Fetch order-bucket net capital inflow (main/large/medium/small) for stocks., Tests for fund_flow_tool: envelope shape, parsing, per-symbol isolation. All… (+8 more)
-
-### Community 73 - "MessageBubble.tsx"
 Cohesion: 0.08
-Nodes (22): AgentAvatar(), formatLeverage(), formatUniverse(), formatUsd(), MandateProposalCard, ProfileTile(), Props, MessageBubble (+14 more)
+Nodes (25): main(), 读取一只股票近 N 日的主力净流入序列。 Args: code: 带后缀 symbol，如 "600519.SH"。 days: 保留最近 N 根日线。…, 列出该股票所属行业/概念板块，并打印今日行业涨幅榜前 5。, study_main_force(), study_sectors(), _error(), _fetch_symbol_flow(), FundFlowTool (+17 more)
+
+### Community 73 - "LLMResponse"
+Cohesion: 0.03
+Nodes (95): LLMResponse, Return True if the response contains tool calls., LLM response. Attributes: content: Text content (final answer or thinking…, _estimate_tokens(), Return token usage for a single LLM call, real if available. Prefers the…, _ContentFilterLoopLLM, _EmptyResponseLoopLLM, Any (+87 more)
 
 ### Community 74 - "RuntimeEvent"
 Cohesion: 0.05
@@ -1450,79 +1479,75 @@ Nodes (54): CanonicalRuntimeAdapter, EvidenceRecord, Protocol, RuntimeEvent, Pur
 
 ### Community 75 - "scale"
 Cohesion: 0.03
-Nodes (60): Per-row L1 normalize so sum of absolute values equals ``a``. Rows whose abs-sum…, scale(), compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., compute(), _delay(), DataFrame (+52 more)
+Nodes (62): Per-row L1 normalize so sum of absolute values equals ``a``. Rows whose abs-sum…, scale(), compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., compute(), _delay(), DataFrame (+54 more)
 
-### Community 76 - "Any"
-Cohesion: 0.11
-Nodes (25): _connection(), _int_or_none(), _json_result(), _num_or_none(), _overrides(), Any, Persist the selected profile id., Check a trading connector profile. (+17 more)
+### Community 76 - "test_settings_api.py"
+Cohesion: 0.15
+Nodes (31): _atomic_write_secret(), Write *content* to *path* atomically with 0600 permissions. The file holds…, client(), fixture, MonkeyPatch, parametrize, Path, TestClient (+23 more)
 
 ### Community 77 - "binance/sdk.py"
 Cohesion: 0.05
 Nodes (72): Binance (spot) trading connector. Read-only account/market access in Layer A…, _as_iter(), _assert_host(), BinanceConfig, BinanceConfigError, BinanceDependencyError, build_config(), cancel_order() (+64 more)
 
-### Community 78 - "shadow_account_tool.py"
-Cohesion: 0.08
-Nodes (38): load_cached_result(), Load the last cached backtest result for a shadow, if any., find_by_journal_hash(), hash_journal(), load_profile(), new_shadow_id(), now_iso(), profiles_dir() (+30 more)
-
 ### Community 79 - "okx/sdk.py"
 Cohesion: 0.06
-Nodes (73): _account_client(), _as_iter(), _balance_detail_to_dict(), build_config(), cancel_order(), _candle_to_dict(), check_status(), config_path() (+65 more)
+Nodes (74): _account_client(), _as_iter(), _balance_detail_to_dict(), build_config(), cancel_order(), _candle_to_dict(), check_status(), config_path() (+66 more)
 
 ### Community 80 - "TradingMemory"
 Cohesion: 0.07
 Nodes (61): _cell(), ExcelMemoryWriter, Any, Path, Human-readable normalized Trading Memory workbook writer., Trading Memory System v1.0 public API., JsonMemoryWriter, Path (+53 more)
 
-### Community 81 - "AgentConfig"
-Cohesion: 0.04
-Nodes (107): load_channels_config(), Any, Path, Channel config loading helpers., Load the operator IM channel config from the structured agent config. Args:…, Agent configuration helpers for MCP client integration., _default_mcp_server_payload(), load_agent_config() (+99 more)
+### Community 81 - "test_agent_config.py"
+Cohesion: 0.06
+Nodes (49): load_channels_config(), Any, Path, Channel config loading helpers., Load the operator IM channel config from the structured agent config. Args:…, load_runtime_agent_config(), Strip operator-only keys from API-caller-supplied session overrides.…, Load disk config and apply runtime overrides. Args: config_path: Optional… (+41 more)
 
 ### Community 82 - "reconcile"
 Cohesion: 0.05
 Nodes (75): _client_order_id(), CorruptRuntimeState, DeltaKind, _diff_orders(), _diff_positions(), _is_confirmed(), _load_state(), _order_identity() (+67 more)
 
 ### Community 83 - "RuntimeConfig"
-Cohesion: 0.07
-Nodes (26): PaperExecutor, PaperPosition, _aware(), ReplayClock, ReplayEngine, _production_replay(), Any, Explicit parameter-to-runtime factory registry. (+18 more)
+Cohesion: 0.17
+Nodes (15): load_runtime_config(), Any, Path, Strict JSON/YAML runtime configuration loader., default_runtime_config(), Canonical defaults reproducing the pre-injection production behavior., Immutable production runtime configuration., BaseModel (+7 more)
 
 ### Community 84 - "api.ts"
 Cohesion: 0.04
 Nodes (55): AddGoalEvidenceRequest, AddGoalEvidenceResponse, AlphaBenchRequest, AlphaCompareRequest, AlphaCompareRow, AlphaCompareSkip, AlphaDetail, AlphaListParams (+47 more)
 
-### Community 85 - "ChatLLM"
-Cohesion: 0.03
-Nodes (100): ChatLLM, _extract_tool_call_extra_content(), _is_no_stream_chunk_error(), _is_possible_dsml_tool_call_prefix(), _merge_tool_call_extra_content(), _parse_dsml_attrs(), _parse_dsml_tool_calls(), Any (+92 more)
+### Community 85 - "ProviderStreamError"
+Cohesion: 0.05
+Nodes (61): ProviderStreamError, RuntimeError, Raised when provider streaming fails before a complete response., Whether a single retry could plausibly succeed. Returns: False for…, _bad_request_error(), _FlakyLoopLLM, Any, Exception (+53 more)
 
 ### Community 86 - "SignalChannel"
-Cohesion: 0.04
-Nodes (53): _partition_styles(), Any, Path, Get formatted context from the group's message buffer. Args: group_id: The…, Return the directory signal-cli writes inbound attachments to. Defaults to…, Normalize Signal identifiers (phone/uuid/service-id) for matching., Return True if any normalized variant of sender_id is on allow_list. Both…, Remember known bot identifiers for mention matching. (+45 more)
-
-### Community 87 - "SwarmRun"
-Cohesion: 0.02
-Nodes (183): Structured agent config schema for MCP client integration., Convert snake_case names to camelCase aliases. Args: name: Field name in…, Convert internal snake_case seed keys to external config aliases., Return the copy-pasteable Robinhood ``mcpServers`` config seed., Return the lower-cased hostname of an http(s) URL, or ``""``. Args: url: A…, robinhood_mcp_server_seed_config(), _to_camel(), _to_wire_config_value() (+175 more)
-
-### Community 88 - "DataLoader"
 Cohesion: 0.05
-Nodes (58): DataLoader, Any, Binance spot / USD-M perpetual OHLCV loader (via CCXT). Dedicated source name…, Binance-only crypto OHLCV loader (public REST via CCXT)., Always use Binance spot or Binance USD-M (swap), ignore CCXT_EXCHANGE., _ccxt_proxy_config(), DataLoader, _first_proxy_env() (+50 more)
+Nodes (41): Any, Path, Get formatted context from the group's message buffer. Args: group_id: The…, Return the directory signal-cli writes inbound attachments to. Defaults to…, Normalize Signal identifiers (phone/uuid/service-id) for matching., Return True if any normalized variant of sender_id is on allow_list. Both…, Remember known bot identifiers for mention matching., Return True when an identifier refers to the bot account. (+33 more)
+
+### Community 87 - "test_swarm_runs_root_and_shell_tools.py"
+Cohesion: 0.20
+Nodes (13): Single source of truth for where swarm runs are persisted. The swarm store…, swarm_runs_root(), build_filtered_registry(), _filter_registry(), Build a ToolRegistry with only specified tools. Local-tools-only filtered…, Project a full registry down to a whitelist with consistent drop logging., Regression tests for P03-A (run-root / store single source of truth) and P03-B…, Whatever swarm_runs_root() returns MUST be inside the sandbox allow-list,… (+5 more)
+
+### Community 88 - "register"
+Cohesion: 0.04
+Nodes (63): positive_env_int(), Read a positive integer env var, warning and falling back on invalid values., DataLoader, Any, Binance spot / USD-M perpetual OHLCV loader (via CCXT). Dedicated source name…, Binance-only crypto OHLCV loader (public REST via CCXT)., Always use Binance spot or Binance USD-M (swap), ignore CCXT_EXCHANGE., _ccxt_proxy_config() (+55 more)
 
 ### Community 89 - "ts_mean"
 Cohesion: 0.03
-Nodes (61): Rolling mean per column, warmup → NaN., ts_mean(), compute(), _cross_sectional_zscore(), DataFrame, Per-row z-score: (x - row_mean) / row_std; zero/NaN std rows -> NaN., Return 21-day Amihud illiquidity cross-sectional z-score per stock., compute() (+53 more)
+Nodes (62): Rolling mean per column, warmup → NaN., ts_mean(), compute(), _cross_sectional_zscore(), DataFrame, Per-row z-score: (x - row_mean) / row_std; zero/NaN std rows -> NaN., Return 21-day Amihud illiquidity cross-sectional z-score per stock., compute() (+54 more)
 
 ### Community 90 - "trade_journal_parsers.py"
-Cohesion: 0.04
-Nodes (83): detect_format(), _futu_datetime(), _futu_market(), _generic_datetime_cell(), _infer_market_from_symbol(), _is_empty_code(), load_dataframe(), _normalize_side() (+75 more)
+Cohesion: 0.05
+Nodes (68): detect_format(), _futu_datetime(), _futu_market(), _generic_datetime_cell(), _is_empty_code(), load_dataframe(), _normalize_side(), parse_eastmoney() (+60 more)
 
-### Community 91 - "test_runtime_runner.py"
-Cohesion: 0.08
-Nodes (41): _mandate_is_expired(), _parse_expiry(), _pin_mandate_prompt(), Parse an ISO-8601 UTC ``expires_at`` string into an aware ``datetime``. The…, Return whether ``mandate`` is at/past its expiry as of ``now`` (fail-closed).…, Build the autonomous-turn prompt with the full mandate pinned inline. The…, Build a market-session trigger for a known market key. Args: market: A key into…, _build_runner() (+33 more)
+### Community 91 - "test_cli_connector_env.py"
+Cohesion: 0.28
+Nodes (8): MonkeyPatch, Regression (#901): the ``connector`` CLI path must load ``~/.vibe-…, The dotenv load must happen before the subcommand reads any config., Credentials living only in the ``.env`` file resolve after a dispatch., ``override=False``: an exported variable outranks the ``.env`` file., test_connector_path_resolves_longbridge_credentials_from_dotenv(), test_dispatch_connector_loads_dotenv_before_running_the_subcommand(), test_dispatch_connector_never_overrides_a_real_environment_variable()
 
 ### Community 92 - "FutuLoader"
-Cohesion: 0.05
-Nodes (29): FutuLoader, _normalize_frame(), DataFrame, Futu OpenAPI-backed loader for HK and China A-share OHLCV data., Fetch HK and China A-share bars from Futu OpenAPI. Requires FutuOpenD running…, Return True if FutuOpenD is reachable., Fetch OHLCV history from Futu OpenAPI. Args: codes: Project symbols such as…, Convert project symbol to Futu OpenAPI format. Examples: 700.HK -> HK.00700… (+21 more)
+Cohesion: 0.06
+Nodes (26): FutuLoader, _normalize_frame(), DataFrame, Fetch HK and China A-share bars from Futu OpenAPI. Requires FutuOpenD running…, Return True if FutuOpenD is reachable., Convert project symbol to Futu OpenAPI format. Examples: 700.HK -> HK.00700…, Map project interval string to a futu KLType enum value. Lazy-imports futu so…, Normalise a Futu kline DataFrame to the standard OHLCV schema. Args: df: Raw… (+18 more)
 
-### Community 93 - "redact_internal_paths"
-Cohesion: 0.09
-Nodes (34): Any, Shared serialization helpers for the swarm read boundaries. Single source of…, First failed task's error, for a top-level ``error`` field. Returns ``None``…, run_level_error(), _fold_key(), _internal_roots(), is_sensitive_arg(), Any (+26 more)
+### Community 93 - "redact_payload"
+Cohesion: 0.17
+Nodes (19): is_sensitive_arg(), Any, Return whether a tool-argument / payload key name should be redacted. A key is…, Recursively redact sensitive keys in a structured payload. Walks dicts and…, redact_payload(), parametrize, Shared redaction helpers promoted from the swarm worker (#142 → public). Covers…, H1: curated exact account/PII field names redact. (+11 more)
 
 ### Community 94 - "test_controlled_shadow_evaluation_acceptance.py"
 Cohesion: 0.05
@@ -1536,21 +1561,21 @@ Nodes (48): CompressionPipeline, compute_tfidf(), extract_key_sentences(), Path,
 Cohesion: 0.07
 Nodes (71): _as_iter(), build_config(), cancel_order(), check_status(), config_path(), _error_message(), _extract_items(), _first() (+63 more)
 
-### Community 97 - "Scheduler"
-Cohesion: 0.03
-Nodes (84): _default_clock(), _Job, LiveRunner, Any, datetime, Protocol, Persistent live-trading runner loop (SPEC.md §7.5 components 2 + 7). The runner…, Return the current time as a timezone-aware UTC ``datetime``. (+76 more)
+### Community 97 - "runtime/runner.py"
+Cohesion: 0.06
+Nodes (41): _default_clock(), _Job, LiveRunner, _mandate_is_expired(), _pin_mandate_prompt(), Any, datetime, Protocol (+33 more)
 
-### Community 98 - "QVerisConfig"
-Cohesion: 0.11
-Nodes (29): cmd_qveris_disable(), cmd_qveris_enable(), cmd_qveris_mode(), Enable QVeris if an API key is present or supplied., Switch QVeris between free and paid modes., Disable QVeris without deleting the stored key., Read a supported config file format into a dictionary. Args: path: Config file…, _read_config_file() (+21 more)
+### Community 98 - "test_mt5_connector.py"
+Cohesion: 0.09
+Nodes (22): MT5ConfigError, MT5 config, session lifecycle, identity guard, and USD sizing helpers. The…, Raised when the connector configuration or a symbol is missing/invalid., classify_mt5_symbol(), is_forex_pair(), normalize_base(), Pure MT5 symbol normalization + mandate classification (no SDK import). Broker…, Collapse ``EUR/USD`` / ``eur-usd`` / ``EURUSD.FX`` to ``EURUSD``. Uppercases… (+14 more)
 
 ### Community 99 - "swarm_tool.py"
 Cohesion: 0.03
-Nodes (88): _get_swarm_runtime(), AuthDep, FastAPI, Swarm HTTP routes. Mounted by ``agent/api_server.py`` via…, Lazy-init SwarmRuntime singleton., Mount the swarm routes onto ``app``. Resolves ``require_auth`` and…, register_swarm_routes(), list_presets() (+80 more)
+Nodes (93): AuthDep, FastAPI, Swarm HTTP routes. Mounted by ``agent/api_server.py`` via…, Mount the swarm routes onto ``app``. Resolves ``require_auth`` and…, register_swarm_routes(), list_presets(), load_preset(), _preset_search_dirs() (+85 more)
 
 ### Community 100 - "test_enforcement_l6.py"
-Cohesion: 0.07
-Nodes (42): get_extractor(), Per-broker order-intent extractors (SPEC.md Mandate Enforcement §4). Vibe-…, Return the registered extractor for ``broker``, or ``None``. Args: broker:…, _extract_instrument(), extract_order_intent(), _extract_side(), _extract_size(), _extract_symbol() (+34 more)
+Cohesion: 0.08
+Nodes (35): extract_order_intent(), _extract_side(), _extract_size(), _extract_symbol(), _first_positive_float(), Return the normalized upper-case symbol, or ``None`` if absent., Return normalized ``"buy"`` / ``"sell"``, or ``None`` if ambiguous., Return ``(notional_usd, quantity)``, each parsed or ``None``. Both may be… (+27 more)
 
 ### Community 101 - "ObservationSession"
 Cohesion: 0.05
@@ -1560,9 +1585,9 @@ Nodes (66): datetime, Immutable archive entries wrapping sealed observation sess
 Cohesion: 0.05
 Nodes (37): _decrypt_aes_ecb(), _encrypt_aes_ecb(), _ext_for_type(), _has_downloadable_media_locator(), _parse_aes_key(), _pkcs7_unpad_safe(), Any, BaseModel (+29 more)
 
-### Community 103 - "order_guard.py"
-Cohesion: 0.05
-Nodes (62): AdvisoryContext, AdvisoryOrchestrator, AdvisoryResult, AggregatedVerdict, clear_advisory_providers(), get_advisory_providers(), PreTradeAdvisoryInterface, ABC (+54 more)
+### Community 103 - "test_advisory.py"
+Cohesion: 0.06
+Nodes (55): AdvisoryContext, AdvisoryOrchestrator, AdvisoryResult, AggregatedVerdict, clear_advisory_providers(), get_advisory_providers(), PreTradeAdvisoryInterface, ABC (+47 more)
 
 ### Community 104 - "SaveSkillTool"
 Cohesion: 0.06
@@ -1581,52 +1606,52 @@ Cohesion: 0.06
 Nodes (65): mean_reciprocal_rank(), ndcg_at_k(), precision_at_k(), Retrieval quality metrics: P@K, MRR, NDCG@K. All functions follow the…, P@K: fraction of top-K retrieved items that appear in ground truth. Args:…, MRR: reciprocal of the rank of the first relevant result. Args: retrieved:…, NDCG@K: Normalized Discounted Cumulative Gain at rank K. Uses binary relevance…, ABResult (+57 more)
 
 ### Community 108 - "MochatChannel"
-Cohesion: 0.07
-Nodes (25): build_buffered_body(), extract_mention_ids(), _make_synthetic_event(), MochatBufferedEntry, MochatChannel, normalize_mochat_content(), parse_timestamp(), Any (+17 more)
+Cohesion: 0.06
+Nodes (41): build_buffered_body(), DelayState, extract_mention_ids(), _make_synthetic_event(), MochatBufferedEntry, MochatChannel, MochatConfig, MochatGroupRule (+33 more)
 
 ### Community 109 - "alpha_bench_tool.py"
 Cohesion: 0.06
 Nodes (63): AlphaBenchTool, _bench_one_alpha(), _cache_hmac_key(), _cache_mac(), _compute_forward_returns(), _default_output_dir(), _esc(), _fetch_sp500_constituents() (+55 more)
 
 ### Community 110 - "BackgroundManager"
-Cohesion: 0.05
-Nodes (54): BackgroundManager, BackgroundRunTool, CancelBackgroundTool, CheckBackgroundTool, _combined_output(), _force_stop_process_tree(), Any, Popen (+46 more)
+Cohesion: 0.06
+Nodes (46): BackgroundManager, BackgroundRunTool, CancelBackgroundTool, CheckBackgroundTool, _combined_output(), _force_stop_process_tree(), Any, Popen (+38 more)
 
-### Community 111 - "tools/mcp.py"
-Cohesion: 0.04
-Nodes (83): Return the canonical Robinhood read-only tool allowlist., robinhood_readonly_enabled_tools(), build_mcp_tool_wrappers(), _dedupe_local_tool_name(), _dedupe_server_name_segment(), format_mcp_server_name_collision_warning(), _format_zero_enabled_tools_warning(), _make_cache_key() (+75 more)
+### Community 111 - "MCPServerConfig"
+Cohesion: 0.01
+Nodes (224): AgentConfig, _allows_readonly_wildcard_probe(), ConfigBase, format_robinhood_mcp_config_guidance(), format_robinhood_mcp_server_seed_json(), is_live_broker_entry(), is_live_broker_url(), live_broker_key_for_entry() (+216 more)
 
 ### Community 112 - "MemorySearchIndex"
 Cohesion: 0.05
-Nodes (45): _cjk_query_tokens(), _dedupe_cjk_runs(), _expand_cjk_buffer(), _is_cjk_char(), MemoryMatch, MemorySearchIndex, Connection, Path (+37 more)
+Nodes (47): _cjk_query_tokens(), _dedupe_cjk_runs(), _expand_cjk_buffer(), get_shared_index(), _is_cjk_char(), MemoryMatch, MemorySearchIndex, Connection (+39 more)
 
 ### Community 113 - "ocr/engine.py"
 Cohesion: 0.06
-Nodes (40): _all_engines(), _discover_plugins(), _get_ocr_choice(), get_ocr_engine(), get_ocr_install_hint(), OcrEngine, ndarray, Protocol (+32 more)
+Nodes (35): _all_engines(), _discover_plugins(), _get_ocr_choice(), get_ocr_engine(), get_ocr_install_hint(), OcrEngine, ndarray, Protocol (+27 more)
 
 ### Community 114 - "CompositeEngine"
 Cohesion: 0.03
-Nodes (55): _calc_pct_change(), ChinaFuturesEngine, _extract_product(), Series, Extract product code from futures symbol. Examples: 'IF2406.CFFEX' -> 'IF'…, China futures engine covering CFFEX / SHFE / DCE / ZCE / INE / GFEX. Config…, China futures: T+0, both directions, price-limit enforced. Args: symbol:…, Minimum 1 contract, integer lots only. (+47 more)
+Nodes (60): _calc_pct_change(), ChinaFuturesEngine, _extract_product(), Series, China futures backtest engine. Market rules (exchange-level, CFFEX / SHFE / DCE…, Extract product code from futures symbol. Examples: 'IF2406.CFFEX' -> 'IF'…, China futures engine covering CFFEX / SHFE / DCE / ZCE / INE / GFEX. Config…, China futures: T+0, both directions, price-limit enforced. Args: symbol:… (+52 more)
 
 ### Community 115 - "DataLoader"
-Cohesion: 0.05
-Nodes (42): DataLoader, _epoch_seconds(), _is_intraday_interval(), _is_supported(), DataFrame, Yahoo Finance loader: free, no-auth US/HK equity OHLCV via direct HTTP. Wraps…, Convert a ``YYYY-MM-DD`` date to UTC midnight epoch seconds. Computed from the…, Build the OHLCV frame from chart rows, clipped to the inclusive window. For… (+34 more)
+Cohesion: 0.17
+Nodes (8): DataLoader, Yahoo Finance US/HK equity OHLCV loader (free, direct HTTP, no auth)., Always available — uses the throttled public HTTP client., Initialize the loader (no credentials needed for public data)., fetch dispatches per symbol, mocks get_chart, isolates failures., Static loader attributes match the registry contract., TestFetch, TestLoaderMetadata
 
 ### Community 116 - "test_perpetual_risk.py"
 Cohesion: 0.09
 Nodes (57): AccountState, CrossMarginRiskModel, evaluate_isolated(), ExecutionFrame, maintenance_margin(), MaintenanceBracket, MaintenanceSchedule, _mark_price() (+49 more)
 
-### Community 117 - "_align"
+### Community 117 - "BaseEngine"
 Cohesion: 0.03
-Nodes (65): _align(), _detect_market_for_align(), DatetimeIndex, Path, Series, Write CSV artifacts compatible with daily_portfolio format., Build aligned date index, close matrix, target-position matrix, return matrix.…, Full backtest pipeline. Signature matches ``daily_portfolio.run_backtest`` for… (+57 more)
+Nodes (83): _align(), BaseEngine, _detect_market_for_align(), _ffill_1d(), _ffill_2d(), ndarray, In-place forward-fill a 1D array with limit., Forward-fill NaN values column-wise with limit. (+75 more)
 
 ### Community 118 - "research_reports_tool.py"
 Cohesion: 0.10
 Nodes (37): _bare_code(), _clamp_limit(), _clean_date(), _clean_text(), _error(), _fetch_consensus_eps(), _first(), _normalize_report() (+29 more)
 
-### Community 119 - "LiveOrderGuardTool"
-Cohesion: 0.08
-Nodes (26): LiveOrderGuardTool, Initialize the gate wrapper. Args: adapter: Adapter used to invoke the remote…, The broker's un-prefixed remote tool name (e.g. ``place_order``)., Read a USD price for ``symbol`` from the broker's quote tool. Calls the ungated…, Read the first responsive broker read tool, fail-closed. Routes through the…, Return connector-specific read tools, falling back to legacy names., Best-effort parse of the forwarded broker result for the audit record., Whether the forwarded result is an error envelope (H2).… (+18 more)
+### Community 119 - "._make_loader"
+Cohesion: 0.12
+Nodes (11): _make_minute_df(), _make_ohlcv_df(), DataFrame, Build a minimal OHLCV DataFrame matching tushare's column layout., Verify _fetch_daily_frame calls the correct tushare endpoint per symbol type., Verify _fetch_minutes routes by symbol type (B1 fix)., Verify _merge_basic_fields skips non-stock codes (B2 fix)., TestFetchDailyFrameRouting (+3 more)
 
 ### Community 120 - "runtime_metrics/engine.py"
 Cohesion: 0.08
@@ -1637,28 +1662,28 @@ Cohesion: 0.06
 Nodes (62): broadening(), candlestick_patterns(), double_top_bottom(), find_peaks_valleys(), head_and_shoulders(), PatternTool, DataFrame, Series (+54 more)
 
 ### Community 122 - "GlobalFuturesEngine"
-Cohesion: 0.05
-Nodes (39): _calc_pct_change(), _extract_product(), GlobalFuturesEngine, Series, International futures engine (CME/CBOT/NYMEX/COMEX/ICE/Eurex). Config keys: -…, Global futures: T+0, both directions, limit checks for equity index. Args:…, Integer contracts, minimum 1., Per-contract fixed commission (uses _active_symbol for product lookup).… (+31 more)
+Cohesion: 0.04
+Nodes (44): FuturesBaseEngine, Base class for all futures engines. Adds contract-multiplier awareness on top…, BaseEngine with contract-multiplier support. Subclasses must implement…, Contract multiplier for the instrument. Args: symbol: Futures symbol (e.g.…, _calc_pct_change(), _extract_product(), GlobalFuturesEngine, Series (+36 more)
 
 ### Community 123 - "validate_date_range"
 Cohesion: 0.08
-Nodes (17): Fetch OHLCV data via AKShare. Args: codes: Symbol list. start_date: YYYY-MM-DD.…, Validate that start_date <= end_date. Args: start_date: Start date string…, validate_date_range(), DataLoader, _is_a_share(), DataFrame, Tencent Finance loader: free, no-auth A-share data via HTTP API. Uses Tencent's…, Tencent Finance A-share OHLCV loader (free, HTTP, no auth). (+9 more)
+Nodes (16): Fetch OHLCV data via AKShare. Args: codes: Symbol list. start_date: YYYY-MM-DD.…, Validate that start_date <= end_date. Args: start_date: Start date string…, validate_date_range(), DataLoader, _is_a_share(), DataFrame, Tencent Finance A-share OHLCV loader (free, HTTP, no auth)., Always available — uses plain HTTP. (+8 more)
 
-### Community 124 - "MT5Config"
-Cohesion: 0.04
-Nodes (102): _assert_profile(), build_config(), config_path(), _last_error(), load_config(), _missing_fields(), mt5_available(), MT5Config (+94 more)
+### Community 124 - "reads.py"
+Cohesion: 0.09
+Nodes (45): load_config(), mt5_available(), MT5ConnectionError, MT5DependencyError, MT5ProfileMismatchError, ModuleType, RuntimeError, Load MT5 settings from ``~/.vibe-trading/mt5.json``. (+37 more)
 
-### Community 125 - "safe_run_dir"
-Cohesion: 0.11
-Nodes (15): Validate a user-supplied broker/export file path. Args: p: User-supplied path.…, Validate a document-reader file path. Args: p: User-supplied document path. `~`…, Validate a run directory used by generated-code tools. Args: p: User/LLM-…, Resolve `p` under `workdir` and ensure it stays inside. Args: p: User-supplied…, safe_document_path(), safe_path(), safe_run_dir(), safe_user_path() (+7 more)
+### Community 125 - "path_utils.py"
+Cohesion: 0.07
+Nodes (39): _agent_root(), allowed_file_roots(), _allowed_run_roots(), allowed_write_roots(), _configured_file_roots(), _default_file_roots(), _default_run_roots(), _import_candidate() (+31 more)
 
 ### Community 126 - ".patch"
-Cohesion: 0.06
-Nodes (20): MarketScreenerTool, Rank a full market's listed instruments by change%, volume or turnover., Look up sector / concept board membership for a stock, or rank boards., SectorInfoTool, TestConnectorLiveDispatch, Too few or too many args should fall through to the legacy dispatcher., TestReplConnectorBridge, TestRunnerDispatch (+12 more)
+Cohesion: 0.03
+Nodes (78): cmd_live_authorize(), Bootstrap the OAuth handshake for a live broker channel (desktop only). Builds…, build_registry(), _discover_subclasses(), Import all modules in this package, then collect BaseTool subclasses. Results…, Build the tool registry via auto-discovery, optionally enriched with MCP tools.…, MarketScreenerTool, Rank a full market's listed instruments by change%, volume or turnover. (+70 more)
 
 ### Community 127 - "_make_engine"
 Cohesion: 0.06
-Nodes (29): _bar_date(), _calc_pct_change(), Series, Extract date from bar, handling various column names., Calculate price change percentage from bar data., A-share execution rules. Args: symbol: Stock code (e.g. 000001.SZ). direction:…, _make_bar(), _make_engine() (+21 more)
+Nodes (31): _bar_date(), _calc_pct_change(), _price_limit(), Series, Extract date from bar, handling various column names., Calculate price change percentage from bar data., Determine price limit based on board. Args: symbol: Stock code (e.g. 300001.SZ,…, A-share execution rules. Args: symbol: Stock code (e.g. 000001.SZ). direction:… (+23 more)
 
 ### Community 128 - "DataLoader"
 Cohesion: 0.05
@@ -1666,47 +1691,47 @@ Nodes (41): _at(), DataLoader, _min_interval(), Any, DataFrame, Finnhub loader: 
 
 ### Community 129 - "test_market_data.py"
 Cohesion: 0.05
-Nodes (52): _cap_rows(), _detect_source(), Bound a per-symbol row list to keep the MCP payload within budget. max_rows==0…, cap_rows(), detect_source(), fetch_market_data(), fetch_market_data_json(), _json_safe() (+44 more)
+Nodes (54): _cap_rows(), _detect_source(), _get_loader(), get_market_data(), Get loader class via registry with fallback support., Bound a per-symbol row list to keep the MCP payload within budget. max_rows==0…, Fetch OHLCV market data for stocks, crypto, or mixed symbols. Supported…, cap_rows() (+46 more)
 
 ### Community 130 - "JobStore"
-Cohesion: 0.08
-Nodes (38): CorruptJobStoreError, JobStore, Path, RuntimeError, Durable, crash-safe job store for the live runtime (SPEC.md §7.5 #1). The…, Atomically persist the job set. Write sequence (durable even under SIGKILL):…, Rename the corrupt store aside as ``<name>.corrupt-<ts>``. Args: cause: Reason…, Fsync a directory fd so a contained ``os.replace`` is durable. On platforms… (+30 more)
+Cohesion: 0.07
+Nodes (41): live_root(), Path, Return the root directory for all live-channel state. Returns:…, CorruptJobStoreError, JobStore, Path, RuntimeError, Durable, crash-safe job store for the live runtime (SPEC.md §7.5 #1). The… (+33 more)
 
 ### Community 131 - "test_financial_rigor_tool.py"
 Cohesion: 0.06
 Nodes (60): benford_check(), cross_validate(), _err(), _eval_arith_node(), _exact(), exact_calc(), FinancialRigorTool, _fmt() (+52 more)
 
-### Community 132 - "stream.py"
-Cohesion: 0.06
-Nodes (38): beautify_tool_name(), Console, Text, Streaming renderer + thinking spinner for the interactive CLI. Single-agent…, Transient spinner that can be paused/resumed safely. ``pause()`` is a context…, Begin rendering. ``verb`` rerolls per turn if not supplied., Stop and erase the spinner line., Update the right-hand suffix (e.g. token / cost preview). (+30 more)
+### Community 132 - "StreamRenderer"
+Cohesion: 0.09
+Nodes (19): beautify_tool_name(), Text, Transient spinner that can be paused/resumed safely. ``pause()`` is a context…, Begin rendering. ``verb`` rerolls per turn if not supplied., Stop and erase the spinner line., Update the right-hand suffix (e.g. token / cost preview)., Suspend the spinner so the caller can safely ``console.print``., Refresh duration label every 100 ms. (+11 more)
 
-### Community 133 - "_make_equity"
-Cohesion: 0.12
-Nodes (17): bootstrap_sharpe_ci(), Resample daily returns to estimate Sharpe confidence interval. Args:…, Split backtest into sequential windows, check consistency. Each window is…, walk_forward_analysis(), _make_equity(), parametrize, Series, The observed Sharpe should usually fall within the CI. (+9 more)
+### Community 133 - "load_agent_config"
+Cohesion: 0.14
+Nodes (27): load_agent_config(), Load structured agent config from disk with safe fallback. Args: config_path:…, _make_agent_json(), Any, Path, Integration tests: full-stack SSE MCP client path with a real FastMCP server.…, _sse_url(), test_enabled_tools_filter_limits_remote_sse_tools() (+19 more)
 
 ### Community 134 - "MSTeamsChannel"
 Cohesion: 0.06
 Nodes (33): ConversationRef, MSTeamsChannel, MSTeamsConfig, Any, BaseModel, Microsoft Teams channel (DM-first MVP)., Start the Teams webhook listener., Send a plain text reply into an existing Teams conversation. (+25 more)
 
 ### Community 135 - "SessionSearchIndex"
-Cohesion: 0.05
-Nodes (33): get_shared_index(), Connection, Path, SQLite FTS5 session search index for cross-session full-text search. Stores an…, Upsert a session record. Args: session_id: Session ID. title: Session title.…, Index a single message. Args: session_id: Session ID. role: Message role…, Sanitize a user query for FTS5 MATCH syntax. - Splits on non-alphanumeric/CJK…, Full-text search across all sessions. Args: query: Search query (keywords or… (+25 more)
-
-### Community 136 - "ProviderStreamError"
 Cohesion: 0.06
-Nodes (46): ProviderStreamError, RuntimeError, Raised when provider streaming fails before a complete response., Whether a single retry could plausibly succeed. Returns: False for…, _build_agent(), Any, MonkeyPatch, Path (+38 more)
+Nodes (29): Connection, Path, SQLite FTS5 session search index for cross-session full-text search. Stores an…, Upsert a session record. Args: session_id: Session ID. title: Session title.…, Index a single message. Args: session_id: Session ID. role: Message role…, Sanitize a user query for FTS5 MATCH syntax. - Splits on non-alphanumeric/CJK…, Full-text search across all sessions. Args: query: Search query (keywords or…, Rebuild the entire index from file-based session store. Args: store_base_dir:… (+21 more)
+
+### Community 136 - "test_agent_loop_terminal_state.py"
+Cohesion: 0.06
+Nodes (40): _build_agent(), Any, MonkeyPatch, Path, Regression tests for AgentLoop terminal-state result dict (issue #114). Before…, LLM stub that cancels the loop from inside the LLM call. Mimics the user…, Build an AgentLoop with a real (but empty) registry and a stub LLM., Empty no-tool provider output is distinct from exhausting iterations. (+32 more)
 
 ### Community 137 - "api_server.py"
 Cohesion: 0.03
-Nodes (108): Run preflight checks on server startup., Stop the scheduled research executor on server shutdown., Start the API server from CLI-style arguments., _run_startup_preflight(), serve_main(), _stop_scheduled_research_on_shutdown(), Any, register_auto_selection_routes() (+100 more)
+Nodes (127): Stop the scheduled research executor on server shutdown., Start the API server from CLI-style arguments., serve_main(), _stop_scheduled_research_on_shutdown(), Any, register_auto_selection_routes(), register_auto_trade_routes(), _websocket_authorized() (+119 more)
 
 ### Community 138 - "DataLoader"
 Cohesion: 0.06
 Nodes (34): _api_key(), DataLoader, _fmp_symbol(), _min_interval(), _parse_historical(), Any, DataFrame, Financial Modeling Prep (FMP) loader: key-gated US-equity OHLCV via HTTP. FMP… (+26 more)
 
 ### Community 139 - "GoalStore"
-Cohesion: 0.08
-Nodes (36): normalize_required_text(), Strip and validate a required text field. Args: value: User supplied text.…, _default_db_path(), GoalStore, _id(), _json_dumps(), _now_iso(), EvidenceRecord (+28 more)
+Cohesion: 0.07
+Nodes (37): normalize_required_text(), Strip and validate a required text field. Args: value: User supplied text.…, _default_db_path(), GoalStore, _id(), _json_dumps(), _json_loads(), _now_iso() (+29 more)
 
 ### Community 140 - "MemoryHierarchy"
 Cohesion: 0.06
@@ -1725,16 +1750,16 @@ Cohesion: 0.06
 Nodes (54): add_subparser(), cmd_alpha_bench(), cmd_alpha_compare(), cmd_alpha_export_manifest(), cmd_alpha_list(), cmd_alpha_show(), _confirm_bench_all(), dispatch() (+46 more)
 
 ### Community 144 - "dhan/sdk.py"
-Cohesion: 0.07
-Nodes (50): Dhan trading connector. Read-only and paper/live account access via the…, _as_list(), build_config(), cancel_order(), check_status(), config_path(), dhan_available(), _dhan_client() (+42 more)
+Cohesion: 0.09
+Nodes (45): _as_list(), build_config(), cancel_order(), check_status(), config_path(), dhan_available(), _dhan_client(), DhanConfig (+37 more)
 
 ### Community 145 - "load_constraints"
 Cohesion: 0.07
 Nodes (28): apply_constraints_frame(), _bounded_fraction(), _build_constraint(), GroupExposure, load_constraints(), MaxWeight, MinWeight, Any (+20 more)
 
-### Community 146 - "test_alpha_compare_api.py"
-Cohesion: 0.15
-Nodes (23): Synchronous compare worker (called via ``asyncio.to_thread``). Unlike bench,…, _run_compare_blocking(), HTTP route packages mounted onto the main FastAPI app in ``api_server.py``., _clear_compare_jobs(), _client(), Any, fixture, TestClient (+15 more)
+### Community 146 - "resolve_benchmark"
+Cohesion: 0.09
+Nodes (26): BenchmarkResult, _extract_frame(), _fetch_benchmark(), _infer_market(), Any, DataFrame, Benchmark ticker resolution and fetch for backtest comparison. Provides a…, Pick the benchmark ticker to use. (+18 more)
 
 ### Community 147 - "SlackChannel"
 Cohesion: 0.06
@@ -1744,9 +1769,9 @@ Nodes (28): Any, Match, Stop the Slack client., Send a message through Slack., R
 Cohesion: 0.05
 Nodes (32): AcrZonesPanel(), ActionableSignalCard(), FibonacciValuationPanel(), frames, HtfConvergencePanel(), InteractiveLotCalculator(), formatBytes(), OhlcFileUpload() (+24 more)
 
-### Community 149 - "RememberTool"
+### Community 149 - "MemoryLifecycle"
 Cohesion: 0.03
-Nodes (63): Memory lifecycle management: quality scoring, decay, and garbage collection.…, compute_importance(), _is_decay_enabled(), _is_quality_enabled(), _parse_timestamp(), PersistentMemory: file-based cross-session memory, zero external dependencies., Check if quality scoring is enabled via VT_MEMORY_QUALITY env var., Parse a timestamp from frontmatter. Returns epoch float. (+55 more)
+Nodes (76): is_decay_enabled(), is_gc_enabled(), is_quality_enabled(), MemoryLifecycle, _now_iso(), Path, Memory lifecycle management: quality scoring, decay, and garbage collection.…, Return the underlying memory directory. (+68 more)
 
 ### Community 150 - "auth_routes.py"
 Cohesion: 0.05
@@ -1757,8 +1782,8 @@ Cohesion: 0.07
 Nodes (54): _clean_num(), _err(), extract_data_points(), _is_valid_label(), _parse_md_tables(), _pct_diff(), _pct_diff_for_json(), Any (+46 more)
 
 ### Community 152 - "ExperimentResult"
-Cohesion: 0.07
-Nodes (38): Experiment, ExperimentConfig, Path, Deterministic multi-configuration experiment orchestration., ExperimentResult, Any, Path, Serializable immutable result of one research run. (+30 more)
+Cohesion: 0.09
+Nodes (34): Experiment, ExperimentConfig, Path, Deterministic multi-configuration experiment orchestration., ExperimentResult, Any, Path, Serializable immutable result of one research run. (+26 more)
 
 ### Community 153 - "runtime_pipeline/runner.py"
 Cohesion: 0.07
@@ -1769,12 +1794,12 @@ Cohesion: 0.04
 Nodes (74): ConversationTimeline, Props, ProgressBar(), ProgressBarProps, Props, SwarmStatusCard, Props, ThinkingTimeline (+66 more)
 
 ### Community 155 - "goal.py"
-Cohesion: 0.09
-Nodes (46): cmd_cancel(), cmd_complete(), cmd_evidence(), cmd_help(), cmd_start(), cmd_status(), _create_cli_session(), _criterion_is_covered() (+38 more)
+Cohesion: 0.06
+Nodes (63): cmd_cancel(), cmd_complete(), cmd_evidence(), cmd_help(), cmd_start(), cmd_status(), _create_cli_session(), _criterion_is_covered() (+55 more)
 
 ### Community 156 - "MTPyBridgeService"
 Cohesion: 0.02
-Nodes (95): MT5 Direct Integration & MCP Bridge infrastructure., ExecutionSource, LiveOHLCBar, MCPTokenMetadata, MTPyConnectionInfo, OrderStatus, PositionSide, Enum (+87 more)
+Nodes (94): MT5 Direct Integration & MCP Bridge infrastructure., ExecutionSource, LiveOHLCBar, MCPTokenMetadata, MTPyConnectionInfo, OrderStatus, PositionSide, Enum (+86 more)
 
 ### Community 157 - "test_longbridge_runtime.py"
 Cohesion: 0.07
@@ -1784,25 +1809,25 @@ Nodes (56): _client(), parametrize, Path, TestClient, Tests for Longbridge trans
 Cohesion: 0.06
 Nodes (34): EaConnectionDashboard(), EaEngineStatus(), EaFailSafeBanner(), statusTone, EaTerminalStatusIndicator(), LivePendingOrders(), statusTone, LivePositions() (+26 more)
 
-### Community 159 - "image_vision_tool.py"
-Cohesion: 0.18
-Nodes (10): AnalyzeImageTool, Vision analysis for local images via the configured multimodal LLM. The…, Answer questions about a local image using the multimodal LLM., png_in_allowed_root(), fixture, Path, Tests for image_vision_tool: path safety, input validation, LLM plumbing. The…, test_empty_model_answer_is_an_error() (+2 more)
+### Community 159 - "test_context_attribution_layers.py"
+Cohesion: 0.06
+Nodes (21): Count registered backtest data sources for the system prompt. Derived from the…, MonkeyPatch, unit, Tests for the post-backtest attribution layers in system prompt., Threshold rationale is documented inline, not via a gitignored docs/ path., Regression tests for dynamic data-source count in the system prompt., Live count derives from VALID_SOURCES minus the auto selector., Import failures fall back to 18 without propagating. (+13 more)
 
 ### Community 160 - "shoonya/sdk.py"
-Cohesion: 0.09
-Nodes (45): Shoonya (Finvasia) trading connector. Read-only and paper/live account access…, _as_list(), build_config(), cancel_order(), check_status(), config_path(), get_account_snapshot(), get_historical_bars() (+37 more)
-
-### Community 161 - "QVerisClient"
-Cohesion: 0.14
-Nodes (15): _json_response(), _parse_expected_cost(), Any, _quote_from_tool(), QVerisClient, Serialize a tool response., Extract a numeric expected-cost hint from QVeris metadata., Project quote fields from a QVeris tool descriptor. (+7 more)
-
-### Community 162 - "onboard.py"
 Cohesion: 0.13
-Nodes (28): _env_dir(), _env_path(), _finalize(), _intro_header(), _partial_path(), _prompt_secret(), _prompt_text(), Provider (+20 more)
+Nodes (34): _as_list(), build_config(), cancel_order(), check_status(), config_path(), get_account_snapshot(), get_open_orders(), get_positions() (+26 more)
+
+### Community 161 - "test_swarm_m1_config_plumbing.py"
+Cohesion: 0.19
+Nodes (18): _make_agent_spec(), _make_runtime(), _make_task(), Path, M1 — SWARM external MCP tools: config plumbing regression tests. Covers…, Default construction forwards ``agent_config=None`` to ``run_worker``.…, A misconfigured MCP server must not break ``SwarmRuntime`` construction.…, Build a SwarmRuntime backed by a tmp-path SwarmStore. (+10 more)
+
+### Community 162 - "RememberTool"
+Cohesion: 0.09
+Nodes (14): Any, Save, recall, or forget cross-session memories. Memories persist to ~/.vibe-…, Initialize RememberTool. Args: memory: PersistentMemory instance (auto-created…, Execute a memory action. Args: **kwargs: Must include action; other params…, RememberTool, fixture, Path, Create a RememberTool backed by a tmp_path memory directory. (+6 more)
 
 ### Community 163 - "bar_returns"
 Cohesion: 0.06
-Nodes (50): bar_returns(), buy_and_hold_return(), Per-bar simple returns, defined only where the prior price is positive.…, Total buy-and-hold return as a price relative, not a compounded product. ``(1 +…, delu(), fixture, parametrize, Series (+42 more)
+Nodes (53): bar_returns(), buy_and_hold_return(), _empty_metrics(), Any, Per-bar simple returns, defined only where the prior price is positive.…, Total buy-and-hold return as a price relative, not a compounded product. ``(1 +…, Return zero-valued metrics when no data is available., delu() (+45 more)
 
 ### Community 164 - "EmailChannel"
 Cohesion: 0.07
@@ -1812,85 +1837,85 @@ Nodes (23): EmailChannel, EmailConfig, Any, BaseModel, date, Exception, Path, St
 Cohesion: 0.08
 Nodes (36): _classify(), Decay state machine — pure logic for evaluating factor/strategy health., Determine if a status transition should occur. Args: current_status: Current…, active → monitoring: WARNING+ for warnings_for_monitoring consecutive., monitoring → active (recovery) or monitoring → decayed., decayed → disabled: CRITICAL for critical_for_disabled consecutive., Convenience: evaluate metrics and determine transition in one call. Args:…, Return the worse of two signals. (+28 more)
 
-### Community 166 - "test_runtime_mt5_order_executor_acceptance.py"
+### Community 166 - "MT5TradingProfile"
 Cohesion: 0.08
-Nodes (42): BrokerCheckResult, BrokerExecutionResponse, _canonical_json(), ExecutionResult, MT5TradingProfile, Any, BaseModel, datetime (+34 more)
+Nodes (27): BrokerCheckResult, BrokerExecutionResponse, _canonical_json(), ExecutionResult, ExecutionStatus, MT5TradingProfile, Any, BaseModel (+19 more)
 
 ### Community 167 - "_reload_base_with_bottleneck"
 Cohesion: 0.07
 Nodes (29): DataFrame, fixture, parametrize, random_df(), random_df_with_nan(), Equivalence tests for optimized factor operators. Tests verify that the fast…, Fast path matches pandas reference on clean data., Fast path matches pandas reference with NaN values. (+21 more)
 
-### Community 168 - "HTFMarketStructureService"
-Cohesion: 0.26
-Nodes (9): _confirmed_swings(), HTFMarketStructureService, MarketStructureMap, Confirmed-pivot HTF market structure mapping with BOS/CHOCH events., StructureBreak, StructureSwing, _bars(), test_structure_maps_confirmed_swings_bos_and_choch_once() (+1 more)
+### Community 168 - ".__init__"
+Cohesion: 0.12
+Nodes (20): _confirmed_swings(), HTFMarketStructureService, MarketStructureMap, Confirmed-pivot HTF market structure mapping with BOS/CHOCH events., StructureBreak, StructureSwing, OrderBlock, OrderBlockDetectionService (+12 more)
 
-### Community 169 - "test_sse_ticket_and_headers.py"
-Cohesion: 0.16
-Nodes (19): _clean_state(), _local_client(), fixture, MonkeyPatch, TestClient, VT-003 / VT-006 regression tests: SSE tickets, security headers, log redaction., Return a TestClient that simulates a non-loopback caller., Headers must wrap error responses from inner middleware too. (+11 more)
+### Community 169 - "test_loop_helpers.py"
+Cohesion: 0.07
+Nodes (20): _context_collapse(), estimate_tokens(), _fix_tool_pairs(), _is_tool_success(), _microcompact(), Rough token count estimate (~4 chars/token). Args: messages: Message list.…, Layer 1: silently prune old tool results, keeping the most recent N intact.…, Layer 2: fold long text blocks in older messages without LLM call. Preserves… (+12 more)
 
 ### Community 170 - "scan_today_signals"
 Cohesion: 0.08
 Nodes (50): _compare(), _compute_features(), _compute_rsi(), _entry_condition_matches(), _feature_for_condition_key(), _get_price_frame(), _int_condition_value(), _normalize_bars() (+42 more)
 
-### Community 171 - "LLMResponse"
+### Community 171 - "worker.py"
 Cohesion: 0.02
-Nodes (147): ToolRegistry, LLMResponse, Return True if the response contains tool calls., LLM response. Attributes: content: Text content (final answer or thinking…, compute_content_filter_warnings(), get_content_filter_threshold(), Content-filter resilience helpers shared by AgentLoop and swarm worker. When an…, Return the configured content-filter warning threshold. Reads… (+139 more)
+Nodes (197): compute_content_filter_warnings(), Compute content-filter warnings based on the hit ratio. Args:…, Swarm multi-agent system — package entry point., BaseModel, Enum, str, Swarm multi-agent system — data models. All Pydantic models defined here,…, SwarmTask lifecycle status. Transitions: pending -> blocked -> in_progress ->… (+189 more)
 
 ### Community 172 - "api"
 Cohesion: 0.07
 Nodes (32): Category, CATEGORY_META, DominantPatternChart(), DominantPatternChartProps, LossPatternSummary(), PatternCard(), PatternCardProps, severityBadgeClass() (+24 more)
 
-### Community 173 - "RailRunDashboard"
-Cohesion: 0.05
-Nodes (72): Compatibility wrapper for the interactive startup banner., Namespace of Rich :class:`Style` instances used across the CLI. Use as…, Theme, _center_pad(), _gradient_line(), _gradient_style(), _lerp(), print_banner() (+64 more)
+### Community 173 - "test_cli_ui_redesign.py"
+Cohesion: 0.11
+Nodes (34): Visual building blocks for the interactive CLI., _clean_inline_markdown(), _format_duration(), _is_pipe_row(), _is_table_start(), _parse_table(), Group, Table (+26 more)
 
 ### Community 174 - "AnalyticsEngine"
-Cohesion: 0.05
-Nodes (47): AnalyticsEngine, AnalyticsResult, Any, Path, Analytics orchestration over a replay journal and session., Deterministic diagnostics for historical replay results., calculate_performance_metrics(), _longest_streak() (+39 more)
+Cohesion: 0.08
+Nodes (21): AnalyticsEngine, Candle, CandleFeed, Causal, one-candle-at-a-time OHLCV input., _utc(), Deterministic, broker-free historical replay components., PaperExecutor, PaperPosition (+13 more)
 
 ### Community 175 - "Settings.tsx"
 Cohesion: 0.06
 Nodes (29): formFromConfig(), QVerisConfig, QVerisForm, QVerisMode, QVerisSettings(), QVerisStatus, requestJson(), ESHandler (+21 more)
 
-### Community 176 - "test_agent_loop_content_filter.py"
-Cohesion: 0.11
-Nodes (28): _ContentFilterLoopLLM, _EmptyResponseLoopLLM, Any, MonkeyPatch, Path, _RatioFilterLoopLLM, AgentLoop content-filter skip-and-continue behavior. When the LLM returns a…, Content filter on first call, then normal response -> loop continues and… (+20 more)
+### Community 176 - "settings_routes.py"
+Cohesion: 0.09
+Nodes (34): _baostock_installed(), _baostock_supported(), _build_data_source_settings_response(), _build_llm_settings_response(), DataSourceSettingsResponse, _host(), LLMProviderOption, LLMSettingsResponse (+26 more)
 
 ### Community 177 - "WhatsAppChannel"
 Cohesion: 0.12
 Nodes (26): _bare_jid(), _classify_sender_ids(), _context_infos(), _default_database_path(), _has_field(), _jid_to_string(), _legacy_bridge_config_fields(), _load_neonize() (+18 more)
 
 ### Community 178 - "test_swarm_grounding.py"
-Cohesion: 0.05
-Nodes (50): DataFrame, Series, Cross-market strategy example: vol-adjusted dual-MA with per-market parameters.…, SignalEngine, extract_symbols_from_user_vars(), fetch_grounding_data(), format_grounding_block(), max_grounding_symbols() (+42 more)
+Cohesion: 0.07
+Nodes (43): extract_symbols_from_user_vars(), fetch_grounding_data(), format_grounding_block(), max_grounding_symbols(), date, Pre-fetch market data for symbols mentioned in a swarm's user_vars. Why this…, Return the deduplicated list of symbols mentioned anywhere in *user_vars*.…, Return the configured cap for symbols fetched into worker prompts. (+35 more)
 
 ### Community 179 - "ui_services.py"
-Cohesion: 0.09
-Nodes (48): build_indicator_series(), build_run_analysis(), build_trade_markers(), collect_run_logs(), _compute_fetch_start_date(), _flatten_data_map(), format_run_date(), group_price_rows() (+40 more)
-
-### Community 180 - "test_progress.py"
 Cohesion: 0.05
-Nodes (58): emit_progress(), _get_emitter(), ProgressEvent, Progress emission channel for long-running tools. Two mechanisms: * Tool-level…, Structured progress event emitted by a tool mid-execution. Attributes: tool:…, Install the active progress emitter for the current thread. Args: emit:…, Return the active emitter on the current thread, if any., Publish a structured progress event from a tool. Silently no-ops when called… (+50 more)
+Nodes (74): Artifact, BacktestMetrics, BaseModel, RAGSelection, Pydantic response models shared across API route modules., Artifact file metadata., Backtest summary metrics., Compact run row for list views. (+66 more)
 
-### Community 181 - "SessionStore"
-Cohesion: 0.07
-Nodes (26): Any, Serialize the message to a dictionary. Returns: A JSON-serializable dictionary., Deserialize a message from a dictionary. Args: data: Dictionary produced from…, Serialize the attempt to a dictionary. Returns: A JSON-serializable dictionary., Serialize the session to a dictionary. Returns: A JSON-serializable dictionary., Deserialize a session from a dictionary. Args: data: Dictionary produced from…, Any, Path (+18 more)
+### Community 180 - "doc_reader_tool.py"
+Cohesion: 0.06
+Nodes (59): emit_progress(), _get_emitter(), ProgressEvent, Progress emission channel for long-running tools. Two mechanisms: * Tool-level…, Structured progress event emitted by a tool mid-execution. Attributes: tool:…, Install the active progress emitter for the current thread. Args: emit:…, Return the active emitter on the current thread, if any., Publish a structured progress event from a tool. Silently no-ops when called… (+51 more)
+
+### Community 181 - "Any"
+Cohesion: 0.11
+Nodes (25): _connection(), _int_or_none(), _json_result(), _num_or_none(), _overrides(), Any, Persist the selected profile id., Check a trading connector profile. (+17 more)
 
 ### Community 182 - "HypothesisRegistry"
-Cohesion: 0.08
-Nodes (41): Durable research hypothesis registry., default_hypotheses_path(), HypothesisRegistry, Path, File-backed registry for research hypotheses., Initialize the registry. Args: path: Optional storage path. Defaults to env…, Return the configured hypotheses JSON path. Returns: Env override path when…, CreateHypothesisTool (+33 more)
+Cohesion: 0.10
+Nodes (36): HypothesisRegistry, File-backed registry for research hypotheses., CreateHypothesisTool, _error(), LinkBacktestTool, _ok(), Any, Exception (+28 more)
 
-### Community 183 - "eastmoney_client.py"
-Cohesion: 0.04
-Nodes (53): Shared Eastmoney HTTP client: secid resolution + push2his kline fetch.…, Map an A-share ``code`` + exchange ``suffix`` to its Eastmoney secid. SH…, _resolve_a_share_secid(), _build_filter(), _clamp_horizon(), _compact(), _extract_rows(), _fetch_lockups() (+45 more)
+### Community 183 - "lockup_expiry_tool.py"
+Cohesion: 0.08
+Nodes (37): _build_filter(), _clamp_horizon(), _compact(), _extract_rows(), _fetch_lockups(), get_lockup_expiry(), LockupExpiryTool, _normalize_code() (+29 more)
 
 ### Community 184 - "TelegramChannel"
-Cohesion: 0.09
-Nodes (15): Wait briefly, then forward buffered media-group as one turn., Start sending 'typing...' indicator for a chat., Stop the typing indicator for a chat., Add emoji reaction to a message (best-effort, non-blocking)., Remove emoji reaction from a message (best-effort, non-blocking)., Repeatedly send 'typing' action until cancelled., Build inline keyboard markup if inline_keyboards is enabled., Telegram channel using long polling or webhook mode. Long polling is the… (+7 more)
+Cohesion: 0.10
+Nodes (18): Any, Split an oversized stream buffer mid-flight. Edits the current stream message…, Strip block-level and inline markdown for readable plain-text preview. Used…, Stop the typing indicator for a chat., Remove emoji reaction from a message (best-effort, non-blocking)., Build inline keyboard markup if inline_keyboards is enabled., Telegram channel using long polling or webhook mode. Long polling is the…, Start the Telegram bot. (+10 more)
 
-### Community 185 - "_qr_register_inner"
-Cohesion: 0.15
-Nodes (16): _accounts_base_url(), _begin_registration(), _init_registration(), _poll_registration(), _post_registration(), _print_qr_code(), qr_register(), _qr_register_inner() (+8 more)
+### Community 185 - "QVerisConfig"
+Cohesion: 0.12
+Nodes (28): cmd_qveris_disable(), cmd_qveris_enable(), Enable QVeris if an API key is present or supplied., Disable QVeris without deleting the stored key., QVerisConfig, QVerisExecuteTool, QVeris local configuration., Execute a selected QVeris capability behind paid-mode budget gates. (+20 more)
 
 ### Community 186 - "canonical_json"
 Cohesion: 0.07
@@ -1916,9 +1941,9 @@ Nodes (34): DataLoader, _is_a_share(), _is_bj(), DataFrame, Mootdx loader: A-sha
 Cohesion: 0.10
 Nodes (22): monte_carlo_test(), TradeRecord, Run configured validation checks. Reads from config["validation"]: -…, Shuffle trade PnL order to test path significance. Null hypothesis: the…, run_validation(), _make_trades(), Path, TradeRecord (+14 more)
 
-### Community 192 - "path_utils.py"
-Cohesion: 0.05
-Nodes (63): EditFileTool, Any, Edit file tool: find-and-replace in workspace files., Find and replace the first occurrence of a string in a workspace file., Perform find-and-replace. Args: **kwargs: Must include path, old_text,…, _error(), Any, Build the failure envelope as a JSON string. Args: message: Human-readable… (+55 more)
+### Community 192 - "redact_internal_paths"
+Cohesion: 0.07
+Nodes (45): Shared serialization helpers for the swarm read boundaries. Single source of…, BacktestTool, Run backtest: validate config.json + signal_engine.py, invoke built-in engine.…, Backtest execution tool., run_backtest(), EditFileTool, Any, Edit file tool: find-and-replace in workspace files. (+37 more)
 
 ### Community 193 - "DecaySnapshot"
 Cohesion: 0.06
@@ -1929,16 +1954,16 @@ Cohesion: 0.10
 Nodes (15): FredMacroTool, Available only when a FRED API key is configured. Returns: ``True`` when…, Fetch a single FRED macroeconomic time series from the St. Louis Fed., _ok_payload(), Any, Tests for fred_macro_tool: availability gating, success + error envelopes. All…, execute returns a failure envelope and never raises., _parse_observations tolerates malformed bodies. (+7 more)
 
 ### Community 195 - "experiment_analyzer.py"
-Cohesion: 0.12
-Nodes (39): calculate_correlations(), CorrelationResult, _finite(), _numeric(), _pearson(), Descriptive parameter-to-performance correlations; no model fitting., _strength(), ExperimentAnalyzer (+31 more)
+Cohesion: 0.14
+Nodes (36): calculate_correlations(), CorrelationResult, _finite(), _numeric(), _pearson(), Descriptive parameter-to-performance correlations; no model fitting., _strength(), ExperimentIntelligenceResult (+28 more)
 
 ### Community 196 - "MT5RuntimeInputs"
 Cohesion: 0.09
 Nodes (16): _get(), MT5BrokerTransport, MT5RuntimeInputs, Any, datetime, Read-only MT5-to-runtime mapping seam; all dependencies are injected., BrokerTransport backed by one injected MT5-compatible API object., _time() (+8 more)
 
-### Community 197 - "backtester.py"
-Cohesion: 0.11
-Nodes (33): _aggregate_holding_range(), _attribution_or_zero(), _cache_result(), _coerce_numeric(), _compute_attribution(), _default_run_backtest_fn(), flatten_codes(), _load_equity_curve() (+25 more)
+### Community 197 - "SessionStore"
+Cohesion: 0.12
+Nodes (15): Any, Path, Delete a session and all of its data. Args: session_id: Session ID. Returns:…, List all sessions in descending update-time order. Args: limit: Maximum number…, Append a message to the session JSONL log. Args: message: Message to append., Read all messages for a session. Args: session_id: Session ID. limit: Maximum…, Filesystem-backed persistent storage. Directory structure:: sessions/ ├──…, Create an execution attempt. Args: attempt: Attempt to create. Returns: The… (+7 more)
 
 ### Community 198 - "Series"
 Cohesion: 0.09
@@ -1961,16 +1986,16 @@ Cohesion: 0.12
 Nodes (11): FinancialStatementsTool, Fetch a stock's three financial statements or key per-period indicators., Tests for financial_statements_tool: envelope shape, dispatch, isolation. All…, A resolvable symbol yields the ok envelope with parsed periods., When the fetch fails for every requested code, the envelope is ok=false. The…, Period is chosen client-side. Eastmoney's REPORT_TYPE is locale text (年报 / 一季报)…, Input validation returns the ok=false envelope before any HTTP., TestAllFailedSurfacesError (+3 more)
 
 ### Community 203 - "sessions_routes.py"
-Cohesion: 0.06
-Nodes (47): AddGoalEvidenceRequest, AddGoalEvidenceResponse, CreateGoalRequest, CreateSessionRequest, _get_goal_store(), GoalAuditRowRequest, GoalSnapshotResponse, _live_action_frame_from_tool_result() (+39 more)
+Cohesion: 0.07
+Nodes (42): AddGoalEvidenceRequest, AddGoalEvidenceResponse, CreateGoalRequest, CreateSessionRequest, _get_goal_store(), GoalAuditRowRequest, GoalSnapshotResponse, _live_action_frame_from_tool_result() (+34 more)
 
 ### Community 204 - "run_bench"
-Cohesion: 0.05
-Nodes (57): main(), W4.a bench driver: run 4 zoo×universe combinations and emit summary JSON.…, Run a single bench end-to-end. Returns a summary entry. Delegates the math to…, _run_one(), _compare_result_for_wire(), _get_bench_semaphore(), _get_compare_semaphore(), _job_event_stream() (+49 more)
+Cohesion: 0.07
+Nodes (35): main(), W4.a bench driver: run 4 zoo×universe combinations and emit summary JSON.…, Run a single bench end-to-end. Returns a summary entry. Delegates the math to…, _run_one(), categorise(), _compute_single_alpha(), _init_bench_worker(), Any (+27 more)
 
 ### Community 205 - "DataLoader"
 Cohesion: 0.07
-Nodes (27): DataLoader, _is_a_share(), DataFrame, BaoStock loader: free, no-auth A-share data via TCP protocol. BaoStock…, Fetch a single A-share symbol., BaoStock A-share OHLCV loader (free, TCP protocol, no auth)., Available if baostock is installed., Fetch OHLCV data via BaoStock. Args: codes: Symbol list (e.g. ["601595.SH",… (+19 more)
+Nodes (26): DataLoader, _is_a_share(), DataFrame, Fetch a single A-share symbol., BaoStock A-share OHLCV loader (free, TCP protocol, no auth)., Available if baostock is installed., Fetch OHLCV data via BaoStock. Args: codes: Symbol list (e.g. ["601595.SH",…, BaoStock must reject non-daily intervals instead of silently returning day bars. (+18 more)
 
 ### Community 206 - "test_sina_loader.py"
 Cohesion: 0.08
@@ -1980,25 +2005,25 @@ Nodes (37): _bars_to_frame(), DataLoader, _is_us_equity(), DataFrame, Sina Finan
 Cohesion: 0.09
 Nodes (36): DataLoader, DataFrame, Tiingo loader: US-equity daily OHLCV via the Tiingo REST API (key-gated).…, Fetch US-equity daily OHLCV bars from Tiingo (key-gated REST)., Initialize the loader (no network or SDK touched at construction)., Return whether a usable Tiingo API key is configured., Fetch OHLCV history keyed by the original project symbols. Each symbol is…, Fetch and normalize a single symbol's daily bars. Args: code: Original project… (+28 more)
 
-### Community 208 - "test_security_scanner.py"
-Cohesion: 0.08
-Nodes (41): _compact_match(), _defang_special_token(), InjectionRule, _iter_selected_targets(), neutralize_special_tokens(), Any, Match, Prompt-injection warning scanner for external tool content. The scanner is… (+33 more)
+### Community 208 - "with_security_warnings"
+Cohesion: 0.12
+Nodes (26): _defang_special_token(), InjectionRule, _iter_selected_targets(), neutralize_special_tokens(), Any, Match, Prompt-injection warning scanner for external tool content. The scanner is…, Insert a ZWSP right after the opening delimiter char of a matched token. (+18 more)
 
 ### Community 209 - "fetch_sina_penalties.py"
 Cohesion: 0.08
 Nodes (30): _annotate_relevance(), _apply_date_filter(), _build_record(), _build_target_aliases(), _classify_target_relevance(), _contains_any_alias(), _extract_event_type(), fetch_penalty_list() (+22 more)
 
 ### Community 210 - "test_mandate_enforcement.py"
-Cohesion: 0.13
-Nodes (40): _check(), _guard(), _intent(), live_runtime(), _mandate(), _MockAdapter, Any, fixture (+32 more)
+Cohesion: 0.10
+Nodes (46): Layer (b): user-set universe the agent picks symbols WITHIN. Not a ticker…, UniverseConstraint, _check(), _FailingForwardAdapter, _guard(), _intent(), live_runtime(), _mandate() (+38 more)
 
 ### Community 211 - "TushareFundamentalProvider"
 Cohesion: 0.07
 Nodes (45): ColumnSchema, DataProviderError, enrich_price_frames_with_fundamentals(), _parse_tushare_date(), Any, DataFrame, Exception, Timestamp (+37 more)
 
-### Community 212 - "MessageBus"
-Cohesion: 0.02
-Nodes (147): cmd_channels_login(), Run a channel adapter's interactive login hook when available., BaseChannel, ABC, Any, Base channel interface for chat platforms., Stream a chunk of model reasoning/thinking content. Default implementation…, Mark the end of a reasoning stream segment. Default implementation emits no… (+139 more)
+### Community 212 - "test_channels_runtime.py"
+Cohesion: 0.03
+Nodes (105): InboundMessage, Message received from a chat channel., Unique key for session identification., Publish a message from a channel to the agent., Consume the next inbound message (blocks until available)., _channel_class_from_module(), ChannelAvailability, _config_section() (+97 more)
 
 ### Community 213 - "GovernanceDecision"
 Cohesion: 0.09
@@ -2012,29 +2037,29 @@ Nodes (19): HarnessReport, HarnessSession, IngestionOutcome, Any, datetime, Evid
 Cohesion: 0.08
 Nodes (18): DingTalkChannel, DingTalkConfig, Any, BaseModel, DingTalk channel configuration using Stream mode., DingTalk channel using Stream Mode. Uses WebSocket to receive events via…, Start the DingTalk bot with Stream Mode., Stop the DingTalk bot. (+10 more)
 
-### Community 216 - "llm.py"
-Cohesion: 0.02
-Nodes (98): get_llm_credentials(), get_provider_capabilities(), _infer_from_model(), _package_version(), _provider_default_base_url(), _provider_default_base_urls(), provider_env_names(), ProviderCapabilities (+90 more)
+### Community 216 - "get_provider_capabilities"
+Cohesion: 0.04
+Nodes (42): get_llm_credentials(), get_provider_capabilities(), _infer_from_model(), _package_version(), _provider_default_base_url(), _provider_default_base_urls(), provider_env_names(), ProviderCapabilities (+34 more)
 
 ### Community 217 - "IWenCaiSearchTool"
 Cohesion: 0.09
 Nodes (27): _coerce_limit(), _extract_rows(), IWenCaiSearchTool, _min_interval(), _project_row(), Any, iWenCai (问财) natural-language A-share research search tool. iWenCai is a…, Extract the ``datas`` rows from one ``txt`` block, if present. Args: txt: One… (+19 more)
 
-### Community 218 - "GlobalEquityEngine"
-Cohesion: 0.03
-Nodes (62): BenchmarkResult, _extract_frame(), _fetch_benchmark(), _infer_market(), Any, DataFrame, Benchmark ticker resolution and fetch for backtest comparison. Provides a…, Pick the benchmark ticker to use. (+54 more)
+### Community 218 - "IndiaEquityEngine"
+Cohesion: 0.05
+Nodes (37): _build_rule_engines(), Instantiate one sub-engine per market type detected in codes., _bar_date(), IndiaEquityEngine, Series, India equity (NSE / BSE) backtest engine. Models the Indian cash-equity…, Cash equity trades in 1-share lots., India delivery cost stack (see module docstring). ``_direction`` is unused —… (+29 more)
 
 ### Community 219 - "TestMainRouting"
 Cohesion: 0.08
 Nodes (22): _extract_max_iter(), _is_interactive_invocation(), _is_supported_chat_invocation(), Pull ``--max-iter <N>`` (or ``--max-iter=N``) out of ``argv``. The legacy…, Decide whether this invocation should drive the interactive loop. Interactive…, Return True for chat invocations handled by the interactive front door., MonkeyPatch, parametrize (+14 more)
 
-### Community 220 - "doc_reader_tool.py"
-Cohesion: 0.11
-Nodes (35): DocReaderTool, _envelope(), _err(), _get_ocr(), _ocr_available(), _ocr_image_array(), Any, Path (+27 more)
+### Community 220 - "test_swarm_run_metadata.py"
+Cohesion: 0.19
+Nodes (12): _base_kwargs(), parametrize, Unit tests for run-level provider/model metadata on SwarmRun. The fields…, Required-only kwargs for a SwarmRun instance., Explicitly-supplied provider/model should appear in serialization., Both fields are optional and default to None., Existing run.json files predate provider/model and must still load.…, Field accepts any string — provider list is not enumerated at runtime. (+4 more)
 
-### Community 221 - "block_trades_tool.py"
-Cohesion: 0.06
-Nodes (44): dragon_tiger_seats(), main(), margin_balance_trend(), 打印指定个股在某交易日的龙虎榜买卖席位排名。, 打印近 N 日大宗交易的折溢价与买卖营业部。, recent_block_trades(), BlockTradesTool, _clamp_days() (+36 more)
+### Community 221 - "margin_trading_tool.py"
+Cohesion: 0.12
+Nodes (20): _clamp_days(), _err(), _extract_code(), MarginTradingTool, _normalize_row(), Any, Read-only margin-trading (融资融券) balance tool backed by Eastmoney. Eastmoney's…, Project one datacenter row onto our headline-balance schema. Args: raw: One… (+12 more)
 
 ### Community 222 - "Path"
 Cohesion: 0.11
@@ -2052,9 +2077,9 @@ Nodes (22): _guess_wecom_media_type(), Any, BaseModel, Start the WeCom bot with 
 Cohesion: 0.08
 Nodes (34): _aliyun_iqs_search(), _bing_cn_search(), Any, Web search tool: free multi-engine search via ddgs (no API key). `ddgs` (the…, Scrape sogou.com results — better CN financial query quality than cn.bing.…, Search the web via ddgs across several free engines and return top results., Available only if ddgs or duckduckgo_search is installed., Run a web search across free engines with retry and backend fallback. Args:… (+26 more)
 
-### Community 226 - "settings_routes.py"
-Cohesion: 0.09
-Nodes (34): _baostock_installed(), _baostock_supported(), _build_data_source_settings_response(), _build_llm_settings_response(), DataSourceSettingsResponse, _host(), LLMProviderOption, LLMSettingsResponse (+26 more)
+### Community 226 - "LongbridgeConfigError"
+Cohesion: 0.14
+Nodes (14): config_path(), load_config(), LongbridgeConfigError, LongbridgeDependencyError, Path, RuntimeError, Return a copy with safe profile/region overlays applied. Credential arguments…, Return the user-level Longbridge config path. (+6 more)
 
 ### Community 227 - "compare_alphas"
 Cohesion: 0.08
@@ -2073,8 +2098,8 @@ Cohesion: 0.07
 Nodes (27): BaseOptimizer, ABC, Any, ndarray, Shared base class for portfolio optimizers. Handles preprocessing, rolling…, Compute target weights from context. Args: ctx: Dict from ``_build_context``.…, Normalize nonnegative weights to sum 1., Equal weights for n assets. (+19 more)
 
 ### Community 231 - "ScheduledResearchJob"
-Cohesion: 0.10
-Nodes (15): is_due(), Return whether *current* is the same scheduled run we started. ``created_at``…, Write a finished job back, unless it was changed during dispatch. Dispatch is…, Return whether *job* should fire at ``now_ms``. Cancelled and failed jobs are…, Any, Serialize to a plain JSON-serializable dict. Returns: A dict containing all job…, Reconstruct a job from a plain dict. Args: data: A raw dict as produced by…, Immutable record describing a scheduled research / backtest job. Attributes:… (+7 more)
+Cohesion: 0.07
+Nodes (18): is_due(), Start the background loop. Idempotent. When disabled, this is a no-op., Run one poll/dispatch pass. Args: now_ms: Optional explicit reference time.…, Reset jobs left ``RUNNING`` by a previous executor process. This runs at most…, Return whether *current* is the same scheduled run we started. ``created_at``…, Write a finished job back, unless it was changed during dispatch. Dispatch is…, Return whether *job* should fire at ``now_ms``. Cancelled and failed jobs are…, Any (+10 more)
 
 ### Community 232 - ".create"
 Cohesion: 0.12
@@ -2089,44 +2114,44 @@ Cohesion: 0.11
 Nodes (35): cmd_qveris_status(), _print_qveris_config(), Render local QVeris config., Show QVeris local config and live status when configured., _config_response(), get_qveris_config(), get_qveris_status(), put_qveris_config() (+27 more)
 
 ### Community 235 - "sec_edgar_client.py"
-Cohesion: 0.05
-Nodes (62): _build_ticker_map(), cik_for(), get_company_facts(), get_submissions(), _min_interval(), _pad_cik(), Any, Shared SEC EDGAR REST client: ticker->CIK mapping + filings/facts fetch. The… (+54 more)
+Cohesion: 0.11
+Nodes (29): _build_ticker_map(), cik_for(), get_company_facts(), get_submissions(), _min_interval(), _pad_cik(), Any, Shared SEC EDGAR REST client: ticker->CIK mapping + filings/facts fetch. The… (+21 more)
 
 ### Community 236 - "ETF 分析 Skill"
 Cohesion: 0.04
 Nodes (44): 1.1 按标的资产分类, 1.2 结构类型, 1. ETF 产品分类, 2.1 跟踪误差（Tracking Error）, 2.2 信息比率（Information Ratio）, 2.3 折溢价率, 2.4 流动性指标, 2.5 费率体系 (+36 more)
 
-### Community 237 - "test_shadow_account.py"
+### Community 237 - "ShadowProfile"
 Cohesion: 0.04
-Nodes (120): Pick representative tickers for each target market. Priority: 1. If the…, select_multi_market_codes(), Path, Shadow Account — code generation (rules → signal_engine.py + config.json).…, Static-check a generated signal_engine source. Checks: 1. ``ast.parse``…, Build the ``config.json`` dict for a shadow backtest run. Args: profile:…, Materialize a full run_dir with ``code/signal_engine.py`` + ``config.json``.…, Flatten a ShadowRule into the scalar fields the template consumes. (+112 more)
+Nodes (98): _aggregate_holding_range(), _attribution_or_zero(), _cache_result(), _coerce_numeric(), _compute_attribution(), _default_run_backtest_fn(), flatten_codes(), load_cached_result() (+90 more)
 
 ### Community 238 - "yfinance_loader.py"
 Cohesion: 0.07
 Nodes (35): _download_history(), _extract_symbol_frame(), _flatten_columns(), _normalize_frame(), DataFrame, yfinance-backed loader for HK/US equity OHLCV data., Download raw historical data via yfinance. Args: tickers: One or more yfinance…, Flatten any leftover multi-index columns after symbol selection. Args: frame:… (+27 more)
 
-### Community 239 - "add_goal_evidence"
-Cohesion: 0.10
-Nodes (28): add_goal_evidence(), _audit_rows_from_payload(), _blank_to_none(), _clean_list(), _default_goal_criteria(), _get_goal_store(), get_research_goal(), get_stock_profile() (+20 more)
+### Community 239 - "render_tool_event"
+Cohesion: 0.12
+Nodes (21): Reusable CLI render components. Each component returns a Rich renderable (Text…, _format_duration(), _format_duration_local(), _pretty_tool_name(), Any, Text, Single tool invocation render. Layout (matches design_proposal §3.5): ● Get…, Local fallback when ``agent.cli.utils.format.format_duration`` is absent.… (+13 more)
 
-### Community 240 - "DataLoader"
-Cohesion: 0.10
-Nodes (17): DataLoader, DataFrame, Eastmoney loader: free, no-auth OHLCV across A-share, HK and US equities.…, Resolve one symbol and build its OHLCV frame, or ``None`` on a miss. Args:…, Assemble the canonical OHLCV DataFrame from client kline rows. Args: rows:…, Convert a ``YYYY-MM-DD`` date into Eastmoney's ``YYYYMMDD`` form. Args: value:…, Eastmoney OHLCV loader (free, throttled HTTP, no auth)., Always available — uses unauthenticated throttled HTTP. (+9 more)
+### Community 240 - "eastmoney_client.py"
+Cohesion: 0.03
+Nodes (34): Shared Eastmoney HTTP client: secid resolution + push2his kline fetch.…, DataLoader, DataFrame, Eastmoney loader: free, no-auth OHLCV across A-share, HK and US equities.…, Resolve one symbol and build its OHLCV frame, or ``None`` on a miss. Args:…, Assemble the canonical OHLCV DataFrame from client kline rows. Args: rows:…, Convert a ``YYYY-MM-DD`` date into Eastmoney's ``YYYYMMDD`` form. Args: value:…, Eastmoney OHLCV loader (free, throttled HTTP, no auth). (+26 more)
 
 ### Community 241 - "test_qveris_loader.py"
-Cohesion: 0.13
-Nodes (18): _capability(), _FakeResponse, _FakeSession, _install_session(), Any, Tests for qveris_loader: config gating, mocked HTTP fetches, and registry…, fetch() search-selects, executes, normalizes, and isolates empty symbols., Small response stub for the loader's embedded HTTP client. (+10 more)
+Cohesion: 0.08
+Nodes (27): _capability(), _FakeResponse, _FakeSession, _install_session(), _isolated_qveris_config(), Any, fixture, Tests for qveris_loader: config gating, mocked HTTP fetches, and registry… (+19 more)
 
 ### Community 242 - "_reset_crumb"
 Cohesion: 0.07
 Nodes (15): _FakeResponse, Any, Tests for yahoo_client: symbol mapping, payload parsing, crumb retry, errors.…, v10 quoteSummary with the cookie+crumb handshake., Minimal stand-in for ``requests.Response`` used by throttled_get., v7 option chain — now behind the same cookie+crumb handshake., Clear the process-wide crumb cache so each test handshakes fresh., Vibe-Trading -> Yahoo ticker translation. (+7 more)
 
 ### Community 243 - "test_alpha_compare.py"
-Cohesion: 0.14
-Nodes (33): _args(), _fake_run_bench(), _FakeRegistry, _metrics(), Any, CaptureFixture, DataFrame, MonkeyPatch (+25 more)
+Cohesion: 0.22
+Nodes (25): _args(), _fake_run_bench(), _FakeRegistry, _metrics(), Any, CaptureFixture, Namespace, Unit + integration tests for ``vibe-trading alpha compare``. Two layers are… (+17 more)
 
 ### Community 244 - "get_env_config"
 Cohesion: 0.02
-Nodes (109): get_env_config(), Lazy singleton accessor for EnvConfig. Use :func:`get_env_config` to get the…, Return the cached :class:`EnvConfig` singleton, creating it on first access.…, Clear the cached :class:`EnvConfig` singleton. Acquires the same lock used by…, reset_env_config(), _ensure_bottleneck(), __getattr__(), Any (+101 more)
+Nodes (131): Run preflight checks on server startup., _run_startup_preflight(), _api_auth_headers(), Return Bearer auth headers for CLI-to-API control calls., get_env_config(), Lazy singleton accessor for EnvConfig. Use :func:`get_env_config` to get the…, Return the cached :class:`EnvConfig` singleton, creating it on first access.…, Clear the cached :class:`EnvConfig` singleton. Acquires the same lock used by… (+123 more)
 
 ### Community 245 - "pattern_job.py"
 Cohesion: 0.19
@@ -2136,21 +2161,21 @@ Nodes (16): _enabled(), _interval_seconds(), _month_period(), datetime, Event, L
 Cohesion: 0.08
 Nodes (33): _import_mcp_server(), Any, MonkeyPatch, Regression tests: existing MCP server mode and no-config behavior. These tests…, agent/mcp_server.py must import cleanly (no side-effects on import)., The MCP server FastMCP instance must expose the expected number of tools. 35…, Well-known tool names must be registered on the MCP server instance. Uses the…, The module-level default must be fail-closed (no shell tools). (+25 more)
 
-### Community 247 - "SkillsLoader"
-Cohesion: 0.10
-Nodes (20): Return skills grouped by category for the system prompt. Returns: Grouped skill…, Load skills from bundled skills/ directory and user skills directory.…, SkillsLoader, Initialize LoadSkillTool. Args: skills_loader: SkillsLoader instance; creates…, Path, Tests for the bundled dividend-analysis skill., Dividend analysis skill ships with valid frontmatter., Skill includes the decision frameworks needed for agent answers. (+12 more)
+### Community 247 - "akshare_loader.py"
+Cohesion: 0.11
+Nodes (16): _is_a_share(), _is_forex(), _is_hk(), AKShare loader: free, no-auth data for A-shares, US, HK, futures, forex, macro.…, Detect forex pairs by matching against AKShare's symbol_market_map. Issue #54 —…, AKShare daily map must accept connector-style lowercase 1d/1w aliases., fake_akshare(), DataFrame (+8 more)
 
 ### Community 248 - "test_india_broker_loader.py"
 Cohesion: 0.10
 Nodes (28): _bars_to_frame(), _base_symbol(), DataLoader, _exchange_for(), DataFrame, India broker data bridge: feed Shoonya / Dhan history into the backtest layer.…, Shoonya / Dhan history adapter for the ``india_equity`` market., True only when an India broker SDK is importable and configured. (+20 more)
 
-### Community 249 - "Actor"
-Cohesion: 0.16
-Nodes (12): Actor, ActorType, Enum, str, Governance actor identities., Authenticated actor reference without authentication implementation., ApprovalStatus, datetime (+4 more)
+### Community 249 - "config_path"
+Cohesion: 0.50
+Nodes (5): config_path(), Path, Return the user-level MT5 config path., Persist MT5 settings with owner-only permissions (best-effort on Windows)., save_config()
 
-### Community 250 - "test_runtime_pipeline_runner_acceptance.py"
-Cohesion: 0.16
-Nodes (26): ExecutionStatus, str, _decision(), _execution(), _feature(), _market(), _plan(), _position() (+18 more)
+### Community 250 - "_make_equity"
+Cohesion: 0.12
+Nodes (17): bootstrap_sharpe_ci(), Resample daily returns to estimate Sharpe confidence interval. Args:…, Split backtest into sequential windows, check consistency. Each window is…, walk_forward_analysis(), _make_equity(), parametrize, Series, The observed Sharpe should usually fall within the CI. (+9 more)
 
 ### Community 251 - "test_goal_store.py"
 Cohesion: 0.17
@@ -2162,15 +2187,15 @@ Nodes (33): CredentialResolution, _environment_values(), LongbridgeCredentials, 
 
 ### Community 253 - "Path"
 Cohesion: 0.09
-Nodes (16): _make_frontend_with_vite(), parametrize, Path, Unit tests for the cross-platform `vibe-trading setup` and `vibe-trading dev`…, When Node and the frontend dir are present, cmd_setup should invoke the right…, `vibe-trading dev` should use vite.config.ts's port (5899), not 5173, and…, Hardcoded wrong-port regression: this is the value users see in the banner.…, Create a fake frontend directory with a placeholder Vite binary so that… (+8 more)
+Nodes (17): _make_frontend_with_vite(), parametrize, Path, Unit tests for the cross-platform `vibe-trading setup` and `vibe-trading dev`…, When Node and the frontend dir are present, cmd_setup should invoke the right…, `vibe-trading dev` should use vite.config.ts's port (5899), not 5173, and…, Hardcoded wrong-port regression: this is the value users see in the banner.…, Create a fake frontend directory with a placeholder Vite binary so that… (+9 more)
 
-### Community 254 - "stooq_loader.py"
-Cohesion: 0.11
-Nodes (20): _compact_date(), DataLoader, map_symbol(), _min_interval(), _parse_csv(), DataFrame, Stooq loader: free, no-auth US-equity EOD OHLCV via CSV download. Stooq…, Fetch and parse one symbol's CSV; ``None`` when Stooq has no data. (+12 more)
+### Community 254 - "._process_message_update"
+Cohesion: 0.12
+Nodes (16): Handle /start command., Handle /help command for allowed users only., Build sender_id with username for allowlist matching., Build common Telegram inbound metadata payload., Cache Telegram thread context by chat/message id for follow-up replies., Sort by chat message id first, then Telegram update id., Stage a Telegram update behind a short per-session reorder window., Drain one Telegram session buffer in stable message order. (+8 more)
 
-### Community 255 - "backtest/validation.py"
-Cohesion: 0.13
-Nodes (24): _json_safe(), _load_equity(), _load_trades(), main(), _path_metrics(), Any, ndarray, Path (+16 more)
+### Community 255 - "QVerisClient"
+Cohesion: 0.14
+Nodes (15): _json_response(), _parse_expected_cost(), Any, _quote_from_tool(), QVerisClient, Serialize a tool response., Extract a numeric expected-cost hint from QVeris metadata., Project quote fields from a QVeris tool descriptor. (+7 more)
 
 ### Community 256 - "symbol_search_tool.py"
 Cohesion: 0.10
@@ -2184,21 +2209,21 @@ Nodes (40): A-shares, Built-in Loader, Column Names, Date Format, Macro / Forex 
 Cohesion: 0.10
 Nodes (26): MetricsCard, Props, SENTIMENT, RunListItem, DISPLAY_ORDER, formatMetricVal(), formatTimestamp(), getMetricLabel() (+18 more)
 
-### Community 259 - "goal/store.py"
-Cohesion: 0.12
-Nodes (25): Finance research goal runtime primitives., EvidenceRecord, GoalClaim, GoalCriterion, GoalRecord, GoalStatus, Enum, str (+17 more)
+### Community 259 - "test_runtime_forex_risk_manager_acceptance.py"
+Cohesion: 0.25
+Nodes (21): _account(), _assess(), _assess_exit(), _config(), _decision(), _exit_decision(), _manager(), _position() (+13 more)
 
-### Community 260 - "test_agent_loop_stream_retry.py"
-Cohesion: 0.13
-Nodes (21): _bad_request_error(), _FlakyLoopLLM, Any, Exception, Path, AgentLoop single stream retry on ProviderStreamError. Mirrors the swarm worker…, Run an AgentLoop turn against the given scripted LLM. Args: monkeypatch: pytest…, One transient ProviderStreamError then success → run completes (2 calls). (+13 more)
+### Community 260 - "test_security_scanner.py"
+Cohesion: 0.10
+Nodes (27): _compact_match(), Return prompt-injection findings for untrusted external text. Args: text:…, Return a short, single-line match excerpt for warning metadata., scan_prompt_injection(), Read any supported document; dispatch by extension. Args: file_path: Absolute…, read_document(), clear_allowed_roots(), fixture (+19 more)
 
 ### Community 261 - "alpaca/sdk.py"
 Cohesion: 0.14
 Nodes (32): alpaca_available(), AlpacaDependencyError, _as_iter(), _bar_to_dict(), _data_client(), _data_feed(), get_historical_bars(), get_open_orders() (+24 more)
 
 ### Community 262 - "longbridge/sdk.py"
-Cohesion: 0.06
-Nodes (83): LongbridgeCredentialError, RuntimeError, Raised when no single safe, complete credential source can be selected., _as_iter(), _balance_to_dict(), _bar_to_dict(), build_config(), _call() (+75 more)
+Cohesion: 0.17
+Nodes (33): _as_iter(), _balance_to_dict(), _bar_to_dict(), build_config(), _call(), _credential_error(), _execution_to_dict(), _first() (+25 more)
 
 ### Community 263 - "TestErrorPaths"
 Cohesion: 0.07
@@ -2216,13 +2241,13 @@ Nodes (26): bs_greeks(), bs_price(), _find_matching_position(), historical_volat
 Cohesion: 0.18
 Nodes (28): average_invested_weights(), compute_risk_xray(), Derive the run's average basket from the target position frame. Returns…, Render an x-ray report as a compact Markdown summary., Compute the risk x-ray for a weighted basket. Args: closes: Close-price panel,…, render_risk_xray_markdown(), _assert_strict_json(), _closes() (+20 more)
 
-### Community 267 - "test_settings_api.py"
-Cohesion: 0.15
-Nodes (31): _atomic_write_secret(), Write *content* to *path* atomically with 0600 permissions. The file holds…, client(), fixture, MonkeyPatch, parametrize, Path, TestClient (+23 more)
+### Community 267 - "calc_bars_per_year"
+Cohesion: 0.11
+Nodes (6): calc_bars_per_year(), _normalize_interval(), Map project interval tokens onto ``_BARS_PER_DAY`` keys. Minute bars stay…, Number of bars per year for annualisation. Args: interval: Bar size (1m / 5m /…, Every entry in VALID_SOURCES must have a trading-days lookup., TestBarsPerYear
 
-### Community 268 - "test_content_filter_e2e.py"
-Cohesion: 0.15
-Nodes (16): _CleanRunLLM, _InterleavedFilterLLM, Any, MonkeyPatch, Path, E2E content-filter resilience: detection -> skip -> ratio -> warning -> trace.…, Build an AgentLoop, wire up a scratch run_dir, and execute., Read trace.jsonl entries from a run directory. (+8 more)
+### Community 268 - "goal/store.py"
+Cohesion: 0.13
+Nodes (24): Finance research goal runtime primitives., EvidenceRecord, GoalClaim, GoalCriterion, GoalRecord, GoalStatus, Enum, str (+16 more)
 
 ### Community 269 - "1. Supported Strategy Types"
 Cohesion: 0.05
@@ -2230,15 +2255,15 @@ Nodes (42): 1.1 Single-Leg Strategies, 1.2 Vertical Spreads, 1.3 Straddles / Str
 
 ### Community 270 - "fundamentals_loader.py"
 Cohesion: 0.16
-Nodes (29): _collect_raw_fields(), _compute_derived(), _derived_dependencies(), _derived_field(), _empty_field_frame(), _empty_panel(), _extract_concept_series(), _fetch_symbol_raw_frame() (+21 more)
+Nodes (27): _collect_raw_fields(), _compute_derived(), _derived_dependencies(), _derived_field(), _empty_field_frame(), _empty_panel(), _extract_concept_series(), _fetch_symbol_raw_frame() (+19 more)
 
 ### Community 271 - "test_sec_edgar_client.py"
 Cohesion: 0.06
 Nodes (14): Clear the memoized ticker map. Test-only hook; never called in prod., _reset_ticker_cache_for_tests(), _clear_cache(), fixture, Tests for sec_edgar_client: ticker->CIK mapping, CIK padding, payload parse.…, A transport error propagates unchanged for the caller's retry policy., Reset the memoized ticker map before and after every test., Ticker -> zero-padded 10-digit CIK resolution. (+6 more)
 
 ### Community 272 - "precision_execution/__init__.py"
-Cohesion: 0.08
-Nodes (48): OHLCVBar, One finalized or in-progress OHLCV candle., ACRInvalidation, ACRZone, _invalidation(), Close-confirmed bullish and bearish ACR zone detection., FVGACRConfluence, FVGACRConfluenceService (+40 more)
+Cohesion: 0.07
+Nodes (52): OHLCVBar, One finalized or in-progress OHLCV candle., ACRInvalidation, ACRZone, ACRZoneDetectionService, ACRZoneStatusValidationService, _invalidation(), Close-confirmed bullish and bearish ACR zone detection. (+44 more)
 
 ### Community 273 - "financial_statements_tool.py"
 Cohesion: 0.11
@@ -2254,31 +2279,31 @@ Nodes (41): 1. GPR Index (Most Important Quantitative Dataset), 1. Risk Layering
 
 ### Community 276 - "main.py"
 Cohesion: 0.02
-Nodes (161): cmd_clear(), cmd_debug(), cmd_journal(), cmd_model(), cmd_quit(), cmd_shadow(), cmd_swarm(), _coming_soon() (+153 more)
+Nodes (158): cmd_clear(), cmd_debug(), cmd_journal(), cmd_model(), cmd_quit(), cmd_shadow(), cmd_swarm(), _coming_soon() (+150 more)
 
 ### Community 277 - "dispatch"
 Cohesion: 0.24
 Nodes (15): dispatch(), Dispatch ``hypothesis <sub>`` to the matching handler. Returns the exit code;…, _build_args(), _make_registry(), CaptureFixture, Namespace, Path, Tests for the ``vibe-trading hypothesis`` CLI subcommands. (+7 more)
 
-### Community 278 - "test_trading_connections.py"
-Cohesion: 0.14
-Nodes (22): Select the default trading connector profile., Place an order through a trading connector profile. Paper profiles place…, TradingPlaceOrderTool, TradingSelectConnectionTool, _agent_config(), MonkeyPatch, SimpleNamespace, Tests for connector-first trading profile operations. (+14 more)
+### Community 278 - "LongbridgeConfig"
+Cohesion: 0.09
+Nodes (30): LongbridgeCredentialError, RuntimeError, Raised when no single safe, complete credential source can be selected., cancel_order(), check_status(), _connection_error_code(), _connection_error_message(), _credential_error_message() (+22 more)
 
 ### Community 279 - "test_oauth_token_cache.py"
 Cohesion: 0.17
 Nodes (21): _build_token_store(), Build a persistent OAuth token store rooted at ``cache_dir``. The directory is…, _assert_owner_only_mode_on_posix(), Path, Unit tests for the OAuth token cache backend (``_build_token_store``). These…, The token lives only on disk — it is never passed via constructor args.…, Path-shaped keys are stored under a sanitized cache-local filename., A token injected via tool args is stripped before reaching the broker.… (+13 more)
 
-### Community 280 - "BrokerCredentialEncryptionService"
-Cohesion: 0.10
-Nodes (20): BrokerConnectionVerification, BrokerConnectionVerificationService, BrokerCredentialNotFoundError, EncryptedCredentialSource, Protocol, ValueError, Decrypt stored credentials only for a bounded broker connection check., Verify one encrypted credential without returning decrypted material. (+12 more)
+### Community 280 - "walkforward_engine.py"
+Cohesion: 0.19
+Nodes (16): calculate_stability(), _down(), _drift(), _finite(), _mean(), _parameter_stability(), Deterministic train-to-forward stability diagnostics., _up() (+8 more)
 
 ### Community 281 - "AlpacaConfig"
 Cohesion: 0.10
 Nodes (25): AlpacaConfig, AlpacaConfigError, build_config(), cancel_order(), check_status(), get_account_snapshot(), load_config(), _missing_fields() (+17 more)
 
 ### Community 282 - "test_autopilot_phase3.py"
-Cohesion: 0.18
-Nodes (28): _get_hypothesis(), LinkAutopilotBacktestTool, Research Autopilot: goal-hypothesis bridge + backtest config generation. Phase…, Return a hypothesis by id, or None when absent., Write a contract-correct ``signal_engine.py`` stub for a hypothesis. The…, Read run_card.json metrics and link the run to a hypothesis. After a backtest…, ScaffoldSignalEngineTool, isolated_env() (+20 more)
+Cohesion: 0.22
+Nodes (25): LinkAutopilotBacktestTool, Write a contract-correct ``signal_engine.py`` stub for a hypothesis. The…, Read run_card.json metrics and link the run to a hypothesis. After a backtest…, ScaffoldSignalEngineTool, isolated_env(), _make_hypothesis(), fixture, MonkeyPatch (+17 more)
 
 ### Community 283 - "ScheduledResearchExecutor"
 Cohesion: 0.20
@@ -2289,8 +2314,8 @@ Cohesion: 0.06
 Nodes (31): autoprefixer, devDependencies, autoprefixer, jsdom, postcss, tailwindcss, @tailwindcss/typography, @testing-library/jest-dom (+23 more)
 
 ### Community 285 - "qveris_loader.py"
-Cohesion: 0.16
-Nodes (27): _build_parameters(), _capability_rank(), _capability_text(), _date_keyed_records(), _expected_cost(), _first_value(), _interval_value(), _is_end_param() (+19 more)
+Cohesion: 0.06
+Nodes (59): _build_parameters(), _capability_rank(), _capability_text(), DataLoader, _date_keyed_records(), _expected_cost(), _first_value(), _granularity_tokens() (+51 more)
 
 ### Community 286 - "TurnoverAwareOptimizer"
 Cohesion: 0.16
@@ -2302,7 +2327,7 @@ Nodes (35): 1.1 Twitter/X — The FinTwit Ecosystem, 1.2 Telegram — The Core V
 
 ### Community 288 - "test_sdk_connectors.py"
 Cohesion: 0.04
-Nodes (42): Read historical bars from a trading connector profile., TradingHistoryTool, OKX trading connector. Read-only account/market access in Layer A via the…, _exception_chain_from_payload(), _FakeLbTrade, _FakeOkxMarket, _FakeTigerQuote, BaseException (+34 more)
+Nodes (49): Read historical bars from a trading connector profile., TradingHistoryTool, OKX trading connector. Read-only account/market access in Layer A via the…, check_connection(), Check a connector profile without mutating broker state., _exception_chain_from_payload(), _FakeTigerQuote, BaseException (+41 more)
 
 ### Community 289 - "harmonic/example_signal_engine.py"
 Cohesion: 0.11
@@ -2329,24 +2354,24 @@ Cohesion: 0.16
 Nodes (8): NapcatChannel, NapcatConfig, Any, BaseException, BaseModel, Napcat (OneBot v11) channel configuration., Lookup group member nickname. Fallback to user id., Napcat / OneBot v11 channel.
 
 ### Community 295 - "pairing/store.py"
-Cohesion: 0.13
-Nodes (31): Pairing module for DM sender approval., approve_code(), deny_code(), format_expiry(), format_pairing_reply(), _gc_pending(), generate_code(), get_approved() (+23 more)
+Cohesion: 0.10
+Nodes (35): Check sender permission: star > allowlist > pairing store > deny., Handle an incoming message: check permissions, issue pairing codes in DMs, or…, Pairing module for DM sender approval., approve_code(), deny_code(), format_expiry(), format_pairing_reply(), _gc_pending() (+27 more)
 
 ### Community 296 - "test_cli_runtime.py"
-Cohesion: 0.03
-Nodes (68): Any, Console, ``/help`` — Show the slash command list and keyboard shortcuts. Renders…, Return the shared CLI console., Print the help screen. Always returns 0., _resolve_console(), run(), Slash command implementations. Each command module exports a ``run(ctx, *args)… (+60 more)
+Cohesion: 0.02
+Nodes (78): Any, Console, ``/help`` — Show the slash command list and keyboard shortcuts. Renders…, Return the shared CLI console., Print the help screen. Always returns 0., _resolve_console(), run(), Slash command implementations. Each command module exports a ``run(ctx, *args)… (+70 more)
 
-### Community 297 - "validate_url_target"
-Cohesion: 0.07
-Nodes (35): _is_allowed_loopback_target(), _is_private(), IPv4Address, Check that *hostname* is a literal loopback host and every addr is loopback., Check whether *addr* is non-globally-routable (private/internal/mesh).…, Validate a URL is safe to fetch: scheme, hostname, and resolved IPs.…, validate_url_target(), normalize_config_path() (+27 more)
+### Community 297 - "MessageBus"
+Cohesion: 0.02
+Nodes (151): cmd_channels_login(), Run a channel adapter's interactive login hook when available., BaseChannel, ABC, Any, Base channel interface for chat platforms., Stream a chunk of model reasoning/thinking content. Default implementation…, Mark the end of a reasoning stream segment. Default implementation emits no… (+143 more)
 
-### Community 298 - "system_routes.py"
+### Community 298 - "shadow_account/extractor.py"
 Cohesion: 0.10
-Nodes (18): _client_key(), HealthResponse, BaseModel, FastAPI, Request, System and utility HTTP routes. Mounted by ``agent/api_server.py`` via…, Return a stable per-client bucket key (client IP, or a fixed fallback)., Mount the system routes onto ``app``. Resolves ``_security``,… (+10 more)
+Nodes (36): _as_of_index(), _attach_price_features(), _auto_cluster(), _cluster_to_rule(), _compute_features(), _compute_rsi(), _dominant(), _extract_rules() (+28 more)
 
-### Community 299 - "ChinaAEngine"
+### Community 299 - "BacktestConfigSchema"
 Cohesion: 0.04
-Nodes (39): ChinaAEngine, A-share market engine. Config keys: - commission_rate: default 0.00025 (万2.5) -…, Round down to 100-share lots., A-share fee structure: commission + stamp tax (sell) + transfer fee.…, A-share slippage (relatively small due to tick size)., Backtest engines. Wave 1 (v1): - BaseEngine: ABC for bar-by-bar execution with…, DataLoader, Fetch HK/US equity bars from Yahoo Finance via yfinance. (+31 more)
+Nodes (33): Backtest engines. Wave 1 (v1): - BaseEngine: ABC for bar-by-bar execution with…, DataLoader, Fetch HK/US equity bars from Yahoo Finance via yfinance., Always available (free public data, no auth)., Initialize the loader. yfinance is a free public-data wrapper and does not…, BacktestConfigSchema, BaseModel, field_validator (+25 more)
 
 ### Community 300 - "index.ts"
 Cohesion: 0.07
@@ -2357,12 +2382,12 @@ Cohesion: 0.13
 Nodes (24): compute(), _cross_sectional_zscore(), DataFrame, ndarray, Rolling per-bar, per-asset rewiring scores (row means of |Δρ|). Args: returns:…, Per-row z-score: (x - row_mean) / row_std; zero/NaN std rows -> NaN., Return the cross-sectional z-scored negative correlation-rewiring score. At…, NaN-aware correlation matrix of one trailing window. Args: window: Array of… (+16 more)
 
 ### Community 302 - "auto_trade/__init__.py"
-Cohesion: 0.11
-Nodes (23): BrokerOrderRequest, BrokerOrderResult, BrokerOrderService, DuplicateBrokerOrderError, Any, ValueError, Safe application boundary for submitting auto-trade orders to broker APIs., Submit each idempotency key once through the protected trading service. (+15 more)
+Cohesion: 0.06
+Nodes (43): BrokerConnectionVerification, BrokerConnectionVerificationService, BrokerCredentialNotFoundError, EncryptedCredentialSource, Protocol, ValueError, Decrypt stored credentials only for a bounded broker connection check., Verify one encrypted credential without returning decrypted material. (+35 more)
 
-### Community 303 - "_build_response_from_run_dir"
+### Community 303 - "SessionService"
 Cohesion: 0.11
-Nodes (26): Artifact, BacktestMetrics, BaseModel, RAGSelection, Pydantic response models shared across API route modules., Artifact file metadata., Backtest summary metrics., Compact run row for list views. (+18 more)
+Nodes (15): Any, Path, Return the message history., Cancel the currently running AgentLoop for a session. Args: session_id: Session…, Execute an Attempt in the background., Execute an attempt with the V5 AgentLoop. Args: attempt: Current execution…, Convert Session messages into OpenAI-format history. Keeps the readable…, Session lifecycle service. Attributes: store: Session persistence store.… (+7 more)
 
 ### Community 304 - "test_stooq_loader.py"
 Cohesion: 0.09
@@ -2384,17 +2409,17 @@ Nodes (17): _default_registry(), _EmptyRegistry, _FakeRegistry, Any, DataFrame, 
 Cohesion: 0.14
 Nodes (12): BenchResult, Backtest result for an artifact., Run decay monitoring scan on active factors/strategies., SdmDecayScanTool, Register a new factor or strategy into the strategy store., SdmRegisterTool, Integration tests for the three SDM BaseTool wrappers., Registering the same (name, universe) twice returns an error. (+4 more)
 
-### Community 309 - "BaseTool"
-Cohesion: 0.04
-Nodes (68): Agent core module: ReAct AgentLoop, tool registry, context, workspace memory,…, BaseTool, ABC, BaseTool + ToolRegistry: tool infrastructure., Tool base class. Attributes: name: Unique tool identifier. description: Tool…, Check if this tool's dependencies are met. Override in subclasses to check for…, Start a research workflow from a durable hypothesis. Reads a hypothesis from…, RunResearchAutopilotTool (+60 more)
+### Community 309 - "goal_tool.py"
+Cohesion: 0.06
+Nodes (51): default_goal_criteria(), Return the default research goal acceptance checklist., AddGoalEvidenceTool, _coerce_audit_rows(), _coerce_string_list(), GetResearchGoalTool, _GoalToolBase, _json_error() (+43 more)
 
-### Community 310 - ".send_delta"
-Cohesion: 0.11
-Nodes (12): Any, Exception, Split an oversized stream buffer mid-flight. Edits the current stream message…, Strip block-level and inline markdown for readable plain-text preview. Used…, Return a short, readable error summary for logs., Keep long-polling network failures to a single readable line., Log polling / handler errors instead of silently swallowing them., True when the error indicates sendRichMessage is unavailable. (+4 more)
+### Community 310 - "test_fundamental_schema.py"
+Cohesion: 0.12
+Nodes (13): list_supported_fields(), Series, Unified fundamental field schema and SEC XBRL concept aliases. This module is…, Resolve a supported fundamental field to its schema entry. Args: field: Unified…, Return all supported raw and schema-derived fundamental field names., Divide two aligned series, returning NaN where the denominator is zero., resolve_field(), _safe_divide() (+5 more)
 
-### Community 311 - "_tokenize"
-Cohesion: 0.27
-Nodes (3): Split text into searchable tokens (ASCII >=3 chars + non-Latin chars)., _tokenize(), TestTokenize
+### Community 311 - "test_url_target_security.py"
+Cohesion: 0.12
+Nodes (20): _is_allowed_loopback_target(), _is_private(), IPv4Address, Check that *hostname* is a literal loopback host and every addr is loopback., Check whether *addr* is non-globally-routable (private/internal/mesh).…, _FakeHttp, _FakeResp, _make_qq_channel() (+12 more)
 
 ### Community 312 - "test_mcp_host_origin_guard.py"
 Cohesion: 0.10
@@ -2408,9 +2433,9 @@ Nodes (24): allow_tmp_documents(), _call(), fixture, MonkeyPatch, parametrize, P
 Cohesion: 0.07
 Nodes (27): clsx, echarts, @fontsource/inter, @fontsource/jetbrains-mono, dependencies, clsx, echarts, @fontsource/inter (+19 more)
 
-### Community 315 - "DataLoader"
-Cohesion: 0.14
-Nodes (16): DataLoader, AKShare universal OHLCV loader (free, no auth)., Available if akshare is installed., AKShare a-share fetch must not silently remap unknown intervals to daily., test_akshare_a_share_keeps_supported_monthly(), test_akshare_a_share_rejects_minute_interval(), SimpleNamespace, TestRouting (+8 more)
+### Community 315 - "TestConfig"
+Cohesion: 0.11
+Nodes (16): _assert_profile(), build_config(), _last_error(), _public_config(), Any, Return a copy with CLI/tool overrides applied., Resolve config: saved file ← profile defaults ← CLI overrides., Redacted config for health/error payloads (never leaks secrets). (+8 more)
 
 ### Community 316 - "FlagSnapshot"
 Cohesion: 0.06
@@ -2420,17 +2445,17 @@ Nodes (33): FlagContext, Any, field_serializer, field_validator, Deterministic f
 Cohesion: 0.15
 Nodes (16): _coerce_str_list(), Hypothesis, _new_hypothesis_id(), Any, Pure-code durable research hypothesis registry. The registry is intentionally…, Serialize the hypothesis to plain JSON-compatible data., Build a hypothesis from persisted JSON data. Args: data: Raw dictionary loaded…, Create and persist a new hypothesis. Args: title: Short hypothesis title.… (+8 more)
 
-### Community 318 - "test_runtime_forex_risk_manager_acceptance.py"
-Cohesion: 0.25
-Nodes (21): _account(), _assess(), _assess_exit(), _config(), _decision(), _exit_decision(), _manager(), _position() (+13 more)
+### Community 318 - "QuoteSnapshot"
+Cohesion: 0.07
+Nodes (43): ACTION, _canonical_json(), DecisionSnapshot, PendingOrdersState, PositionState, PositionStateSnapshot, Any, BaseModel (+35 more)
 
 ### Community 319 - "Correlation and Cointegration Analysis"
 Cohesion: 0.06
 Nodes (33): Cointegration Analysis, Comparison of Three Linkage Methods, Core Metrics, Correlation Across China A-Share Sectors, Correlation and Cointegration Analysis, Correlation Breakdown During Crises, Correlation-Coefficient Selection Guide, Cross-Market Correlation (+25 more)
 
-### Community 320 - "test_autopilot_tool.py"
-Cohesion: 0.17
-Nodes (22): GenerateBacktestConfigTool, _lookup_codes(), Generate backtest config.json from a research hypothesis. Reads a hypothesis,…, MonkeyPatch, Path, Tests for Research Autopilot bridge tools., A missing hypothesis id returns a clean not-found error, not a crash., The returned run_dir must be accepted by safe_run_dir. Regression for the high-… (+14 more)
+### Community 320 - "autopilot_tool.py"
+Cohesion: 0.08
+Nodes (40): Durable research hypothesis registry., _error(), GenerateBacktestConfigTool, _get_hypothesis(), _lookup_codes(), _ok(), Any, Exception (+32 more)
 
 ### Community 321 - "tushare_fallbacks.py"
 Cohesion: 0.22
@@ -2452,9 +2477,9 @@ Nodes (27): 🌐 API 서버, 🖥 CLI 참조, 🔌 MCP Plugin, MetaTrader 5 (Exn
 Cohesion: 0.16
 Nodes (15): CapabilityCandidate, CapabilityRequirement, CapabilityResolution, Immutable capability request and candidate contracts., CapabilityResolver, LocalCapabilityResolver, Protocol, Capability resolver interfaces with no registry or runtime connection. (+7 more)
 
-### Community 326 - "skills.py"
-Cohesion: 0.07
-Nodes (17): parse_frontmatter(), Any, Shared YAML-like frontmatter parser for skills and memory files., Parse YAML-like frontmatter and body from a markdown file. Supports string,…, _load_skill_dir(), Path, SkillsLoader: loads scenario guides from the skills/ directory. Uses…, Initialize SkillsLoader. Args: skills_dir: Bundled skills directory path;… (+9 more)
+### Community 326 - "SkillsLoader"
+Cohesion: 0.04
+Nodes (39): Track swarm state and render a Rich Live panel., Register an agent by its ID if not already tracked. Return its key., Process a swarm event and update internal state., _SwarmDashboard, parse_frontmatter(), Any, Shared YAML-like frontmatter parser for skills and memory files., Parse YAML-like frontmatter and body from a markdown file. Supports string,… (+31 more)
 
 ### Community 327 - "test_alpaca_tap_routing.py"
 Cohesion: 0.18
@@ -2477,8 +2502,8 @@ Cohesion: 0.06
 Nodes (28): flag_audit_event(), kill_audit_event(), AuditEvent, Audit evidence constructors for flag observations., FlagEvaluation, CompositeAuditSink, AuditEvent, Fan-out audit sink; failures are surfaced, never silently converted to policy. (+20 more)
 
 ### Community 332 - "Session"
-Cohesion: 0.05
-Nodes (45): _session_for(), Session management package for conversations, persistence, and SSE streams., Attempt, AttemptStatus, Enum, str, Session data models for the core Session, Message, and Attempt entities., A strategy execution attempt corresponding to one pipeline run. Attributes:… (+37 more)
+Cohesion: 0.11
+Nodes (24): Session management package for conversations, persistence, and SSE streams., Attempt, AttemptStatus, Enum, str, Session data models for the core Session, Message, and Attempt entities., A strategy execution attempt corresponding to one pipeline run. Attributes:…, Session lifecycle states. (+16 more)
 
 ### Community 333 - "ScheduledResearchJobStore"
 Cohesion: 0.26
@@ -2492,9 +2517,9 @@ Nodes (14): _fetch_okx(), DataFrame, Series, 艾略特波浪理论信号引擎�
 Cohesion: 0.15
 Nodes (18): compute_adx(), compute_bollinger(), compute_obv(), compute_rsi(), _fetch_okx(), DataFrame, Series, 技术面基础指标合集信号引擎。 将趋势（EMA/ADX）、均值回归（BB/RSI）、量价（OBV/量比）三维度合并， 通过投票机制生成综合交易信号。纯… (+10 more)
 
-### Community 336 - "risk_xray.py"
-Cohesion: 0.19
-Nodes (19): _concentration(), _correlation(), _diversification(), _drawdown(), _finite(), Any, DataFrame, ndarray (+11 more)
+### Community 336 - "MT5Config"
+Cohesion: 0.13
+Nodes (29): _missing_fields(), MT5Config, Return ``paper`` or ``live`` for this profile., Return whether this profile targets the broker's demo account., Fields the connector cannot operate without (login pin is mandatory)., MT5 connector connection settings (persisted in ``~/.vibe-trading/mt5.json``).…, MetaTrader 5 connector (Exness-style MT5 brokers) — ``broker_sdk`` transport.…, _build_request() (+21 more)
 
 ### Community 337 - "BotExecutionConfigurationProvider"
 Cohesion: 0.18
@@ -2504,17 +2529,17 @@ Nodes (14): BotConfigurationNotReadyError, BotConfigurationSource, BotExecutionC
 Cohesion: 0.06
 Nodes (39): _bare_query(), _clamp_limit(), _decode_jsonp(), _em_article(), _fetch_eastmoney_news(), _fetch_yahoo_news(), Any, Read-only news tool: per-stock and global financial headlines. Two public, no-… (+31 more)
 
-### Community 339 - "swarm_runs_root"
-Cohesion: 0.11
-Nodes (21): _build_run_payload(), get_run_result(), get_swarm_status(), _get_swarm_store(), list_runs(), Run a swarm multi-agent team and stream progress back to the caller. Assembles…, Public projection of a (live-hydrated) :class:`SwarmRun`. ``timed_out`` flips…, Reconcile + project a run for the MCP response. Used by ``run_swarm`` (polling… (+13 more)
+### Community 339 - "mcp_http_test_helpers.py"
+Cohesion: 0.10
+Nodes (44): _collect_process_output(), _format_start_failure(), HttpMCPServerHandle, _loopback_proxy_bypass(), make_single_server_agent_json(), _merge_loopback_no_proxy(), _probe_ready_url(), Any (+36 more)
 
 ### Community 340 - "test_runtime_forex_signal_engine_acceptance.py"
 Cohesion: 0.22
 Nodes (21): _engine(), _feature(), FeatureSnapshot, parametrize, RuntimeSignalEngine, WarmupStatus, Acceptance tests for the deterministic Runtime Forex Signal Engine., test_canonical_replay_hash_changes_with_signal_material() (+13 more)
 
-### Community 341 - "akshare_loader.py"
-Cohesion: 0.11
-Nodes (16): _is_a_share(), _is_forex(), _is_hk(), AKShare loader: free, no-auth data for A-shares, US, HK, futures, forex, macro.…, Detect forex pairs by matching against AKShare's symbol_market_map. Issue #54 —…, AKShare daily map must accept connector-style lowercase 1d/1w aliases., fake_akshare(), DataFrame (+8 more)
+### Community 341 - "DataLoader"
+Cohesion: 0.14
+Nodes (16): DataLoader, AKShare universal OHLCV loader (free, no auth)., Available if akshare is installed., AKShare a-share fetch must not silently remap unknown intervals to daily., test_akshare_a_share_keeps_supported_monthly(), test_akshare_a_share_rejects_minute_interval(), SimpleNamespace, TestRouting (+8 more)
 
 ### Community 342 - "TestCtaTemplate"
 Cohesion: 0.09
@@ -2524,9 +2549,9 @@ Nodes (3): Tests for the vnpy-export skill — SKILL.md integrity and template v
 Cohesion: 0.14
 Nodes (12): expr, Subscript, _collect_python_files(), _EnvReadVisitor, main(), Call, Path, Return True when *node* is ``os.getenv``. (+4 more)
 
-### Community 344 - "infer_market"
-Cohesion: 0.11
-Nodes (14): compute_correlation_matrix(), _fetch_price_series(), infer_market(), _normalize_symbol(), Cross-asset correlation matrix computation. Computes pairwise Pearson or…, Fetch daily price frames for each code via the loader fallback chains. Args:…, Infer market key from a ticker symbol. Resolution order: 1. Crypto pair…, Fetch price data and compute correlation matrix for a list of assets. Args:… (+6 more)
+### Community 344 - "test_correlation.py"
+Cohesion: 0.15
+Nodes (11): compute_correlation_matrix(), _fetch_price_series(), _normalize_symbol(), Cross-asset correlation matrix computation. Computes pairwise Pearson or…, Fetch daily price frames for each code via the loader fallback chains. Args:…, Fetch price data and compute correlation matrix for a list of assets. Args:…, Convert a user-supplied code to the project's canonical loader symbol. The data…, Tests for backtest/correlation.py (+3 more)
 
 ### Community 345 - "DataLoader"
 Cohesion: 0.05
@@ -2540,13 +2565,13 @@ Nodes (38): AutoSelectionStatus, AutoSelectionStatusResponse, AutoSelectionStatu
 Cohesion: 0.13
 Nodes (20): CreateScheduledRunRequest, _dispatch_scheduled_research_job(), _get_scheduled_research_executor(), _get_scheduled_research_store(), AuthDep, BaseModel, FastAPI, Scheduled research HTTP routes. Mounted by ``agent/api_server.py`` via… (+12 more)
 
-### Community 348 - "._on_media_message"
-Cohesion: 0.18
-Nodes (9): Best-effort typing indicator update., Start periodic typing refresh (spec-recommended keepalive)., Check m.mentions payload for bot mention., Skip events that landed in the timeline before this process started. Matrix…, Apply sender and room policy checks., Build common metadata for text and media handlers., MatrixRoom, RoomMessage (+1 more)
+### Community 348 - "MatrixChannel"
+Cohesion: 0.05
+Nodes (41): _build_matrix_text_content(), MatrixChannel, MatrixConfig, Any, BaseModel, Path, Render markdown to sanitized HTML; returns None for plain text., Constructs and returns a dictionary representing the matrix text content with… (+33 more)
 
-### Community 349 - "loop.py"
-Cohesion: 0.03
-Nodes (90): _coerce_usage_int(), _context_collapse(), estimate_tokens(), _fix_tool_pairs(), _format_timeout(), _goal_max_continuations(), _heartbeat_interval_s(), _is_tool_success() (+82 more)
+### Community 349 - "AgentLoop"
+Cohesion: 0.02
+Nodes (136): ContextBuilder, Any, Builds message context for AgentLoop. Attributes: registry: Tool registry.…, Build system prompt. Injects one-line skill summaries via get_descriptions;…, Build full message list. Auto-recalls relevant persistent memories and injects…, Format tool descriptions., Format a tool execution result as a message., AgentLoop (+128 more)
 
 ### Community 350 - ".generate"
 Cohesion: 0.14
@@ -2556,9 +2581,9 @@ Nodes (17): _check_zhongshu(), _df_to_bars(), _get_signals(), DataFrame, Series,
 Cohesion: 0.19
 Nodes (30): _decide(), _engine(), _feature(), _pending(), _position(), datetime, FeatureSnapshot, parametrize (+22 more)
 
-### Community 352 - "walkforward_engine.py"
-Cohesion: 0.08
-Nodes (52): Production walk-forward validation over existing trading infrastructure., _average(), _period(), Any, datetime, Path, CSV, text, and strict JSON walk-forward reports., _strict() (+44 more)
+### Community 352 - "walkforward/__init__.py"
+Cohesion: 0.17
+Nodes (22): ExperimentAnalyzer, Path, Production walk-forward validation over existing trading infrastructure., _average(), _period(), Any, datetime, Path (+14 more)
 
 ### Community 353 - "test_get_market_data_unresolved.py"
 Cohesion: 0.13
@@ -2568,9 +2593,9 @@ Nodes (17): _BoomLoader, _call(), _df(), good_only(), _GoodOnlyLoader, _PartialL
 Cohesion: 0.15
 Nodes (9): LogFilter, previewMessages, Execution, AutoTradeConnectionStatus, AutoTradeEngineStatus, AutoTradeExecutionStatus, AutoTradeLogEntry, AutoTradeLogLevel (+1 more)
 
-### Community 355 - "Any"
-Cohesion: 0.11
-Nodes (17): _execute_key_gated(), get_macro_series(), _host_matches(), _HostGuardMiddleware, iwencai_search(), _key_gated_tool_classes(), _origin_allowed(), _OriginGuardMiddleware (+9 more)
+### Community 355 - "block_trades_tool.py"
+Cohesion: 0.12
+Nodes (24): dragon_tiger_seats(), main(), margin_balance_trend(), 打印指定个股在某交易日的龙虎榜买卖席位排名。, 打印近 N 日大宗交易的折溢价与买卖营业部。, recent_block_trades(), BlockTradesTool, _clamp_days() (+16 more)
 
 ### Community 356 - "write_run_card"
 Cohesion: 0.23
@@ -2578,7 +2603,7 @@ Nodes (18): _backtest_summary(), _file_hash(), _is_scalar(), _json_hash(), _json
 
 ### Community 357 - "test_mt5_integration_routes.py"
 Cohesion: 0.08
-Nodes (35): create_app(), FastAPI, Path, Create FastAPI app with optional custom DB path for tests., get_test_client(), Contract tests for the MT5 integration and MCP bridge endpoints., Limit query parameter enforces minimum and maximum boundaries., Helper to create isolated test client per function. (+27 more)
+Nodes (37): create_app(), FastAPI, Path, Create FastAPI app with optional custom DB path for tests., get_test_client(), Contract tests for the MT5 integration and MCP bridge endpoints., Limit query parameter enforces minimum and maximum boundaries., Helper to create isolated test client per function. (+29 more)
 
 ### Community 358 - "2. Extraction Methodology"
 Cohesion: 0.06
@@ -2592,17 +2617,21 @@ Nodes (24): _clamp_lookback(), _coerce_float(), NorthboundFlowTool, _parse_histo
 Cohesion: 0.27
 Nodes (16): dev script, cmd_logs(), cmd_open(), cmd_restart(), cmd_status(), cmd_stop(), cmd_up(), cmd_urls() (+8 more)
 
-### Community 362 - "test_fundamental_schema.py"
-Cohesion: 0.12
-Nodes (13): list_supported_fields(), Series, Unified fundamental field schema and SEC XBRL concept aliases. This module is…, Resolve a supported fundamental field to its schema entry. Args: field: Unified…, Return all supported raw and schema-derived fundamental field names., Divide two aligned series, returning NaN where the denominator is zero., resolve_field(), _safe_divide() (+5 more)
+### Community 362 - "GlobalEquityEngine"
+Cohesion: 0.05
+Nodes (31): GlobalEquityEngine, Series, Global equity (US / HK) backtest engine. Market rules: US: - T+0, long/short…, US / HK equity engine, selected by *market* parameter. Config keys: -…, US/HK: T+0, both directions allowed., US: fractional shares (0.01). HK: 100-share lots., US: zero commission. HK: stamp tax + levies. ``_direction`` is unused —…, US: low slippage. HK: moderate slippage. (+23 more)
 
-### Community 364 - "test_get_market_data_size.py"
-Cohesion: 0.16
-Nodes (17): _call(), _loader_with_rows(), Regression test for P07 — get_market_data must bound its per-symbol output.…, No-regression: under the cap the shape is the original plain list., The canonical ~251-row 1y-daily request must no longer be unbounded., G3 (i): exactly at the cap returns the plain list, not truncated., G3 (ii): a negative max_rows is invalid -> cap enforced, never unbounded., G3 (iii): stride sample — last row == original last, dates strictly increasing,… (+9 more)
+### Community 363 - "_FakeIB"
+Cohesion: 0.11
+Nodes (6): Read positions from a trading connector profile., TradingPositionsTool, _FakeContract, _FakeIB, _FakeStock, test_positions_tool_returns_json()
 
-### Community 365 - "test_fundamentals_pit.py"
-Cohesion: 0.48
-Nodes (14): _fact_row(), _facts(), _install_schema_stub(), _patch_sec(), LogCaptureFixture, MonkeyPatch, Regression: SEC duration entries mix 3-month, YTD, and full-year frames. Live…, test_concept_alias_union_resolves_new_standard_revenue_concept() (+6 more)
+### Community 364 - "backtest/validation.py"
+Cohesion: 0.13
+Nodes (24): _json_safe(), _load_equity(), _load_trades(), main(), _path_metrics(), Any, ndarray, Path (+16 more)
+
+### Community 365 - "ArtifactLifecycle"
+Cohesion: 0.20
+Nodes (15): ArtifactLifecycle, Enum, str, Lifecycle states and deterministic transition validation., Raise when an artifact transition is not part of the frozen state graph., Raise when a runtime transition is not part of the frozen state graph., RuntimeLifecycle, validate_artifact_transition() (+7 more)
 
 ### Community 366 - "MaCrossStrategy"
 Cohesion: 0.11
@@ -2612,25 +2641,25 @@ Nodes (8): MaCrossStrategy, Vibe-Trading → vnpy export: MA crossover strategy 
 Cohesion: 0.19
 Nodes (6): DecayEvaluator, DecayThresholds, Configurable thresholds for decay evaluation., Evaluates factor/strategy health and determines status transitions. Pure logic…, Tests for the pure-logic DecayEvaluator state machine., TestDecayEvaluator
 
-### Community 368 - "shareholder_count_tool.py"
+### Community 368 - "resolve_secid"
+Cohesion: 0.09
+Nodes (33): Map an A-share ``code`` + exchange ``suffix`` to its Eastmoney secid. SH…, Map a Vibe-Trading symbol to its Eastmoney secid. Supported suffixes: ``.SH`` /…, _resolve_a_share_secid(), resolve_secid(), broker_consensus(), holder_trend(), main(), 打印 A 股股东户数环比趋势（最新两期）。 (+25 more)
+
+### Community 369 - "test_walkforward.py"
+Cohesion: 0.13
+Nodes (18): Coordinate existing production research components without optimizing itself., WalkForwardEngine, Period, datetime, Enum, str, Leakage-safe chronological walk-forward window generation., A half-open UTC interval, preventing observations leaking at boundaries. (+10 more)
+
+### Community 370 - "Path"
 Cohesion: 0.10
-Nodes (29): broker_consensus(), holder_trend(), main(), 打印 A 股股东户数环比趋势（最新两期）。, us_hk_indicators(), _clamp_periods(), _clean_date(), _error() (+21 more)
-
-### Community 369 - "._make_loader"
-Cohesion: 0.12
-Nodes (11): _make_minute_df(), _make_ohlcv_df(), DataFrame, Build a minimal OHLCV DataFrame matching tushare's column layout., Verify _fetch_daily_frame calls the correct tushare endpoint per symbol type., Verify _fetch_minutes routes by symbol type (B1 fix)., Verify _merge_basic_fields skips non-stock codes (B2 fix)., TestFetchDailyFrameRouting (+3 more)
-
-### Community 370 - "MemoryLifecycle"
-Cohesion: 0.05
-Nodes (44): MemoryLifecycle, Path, Return the underlying memory directory., Append GC decisions to gc.log., Lifecycle management for persistent memory: quality scoring, decay, GC. Wraps a…, Initialize RememberTool. Args: memory: PersistentMemory instance (auto-created…, With VT_MEMORY_COMPRESSION=true, run_gc compresses old raw entries., _create_memory_file() (+36 more)
+Nodes (20): _create_memory_file(), Path, quality_score outside [0,1] should be clamped., Non-integer access_count should reset to 0., More than 5 keywords should be truncated., Non-6-char or non-hex IDs in related_memories should be dropped., Missing id field should auto-generate 6-char hex., task_success event should increase quality_score by 0.1. (+12 more)
 
 ### Community 371 - "test_auth_precedence.py"
 Cohesion: 0.25
 Nodes (18): clear_api_key(), _loopback_client(), fixture, MonkeyPatch, TestClient, GHSA-7wgj regression: API auth must check the configured key BEFORE trusting a…, TestClient whose peer host ('testclient') is treated as loopback., Start every test from dev-mode auth (no configured key). (+10 more)
 
 ### Community 372 - "test_regime.py"
-Cohesion: 0.06
-Nodes (35): _aligned_returns(), compute_edge_density(), compute_regime_timeline(), detect_regimes(), _fused_episodes(), DataFrame, Series, Correlation-regime timeline: edge density + hysteresis over time. Implements… (+27 more)
+Cohesion: 0.10
+Nodes (15): compute_regime_timeline(), Fetch price data and compute the correlation-regime timeline. Args: codes: List…, _install_panel(), local_client(), DataFrame, fixture, MonkeyPatch, Tests for backtest/regime.py and the /correlation/regime route. The math tests… (+7 more)
 
 ### Community 373 - "_run_visitor"
 Cohesion: 0.14
@@ -2645,8 +2674,8 @@ Cohesion: 0.06
 Nodes (34): 🌐 API Server, 🖥 CLI Reference, Contributing, Contributors, Cross-Session Memory, 📡 Data Sources & Smart Fallback, 🎬 Demo, 🔩 Detailed Capabilities (+26 more)
 
 ### Community 376 - "test_get_fundamentals_tool.py"
-Cohesion: 0.24
-Nodes (17): compute(), DataFrame, Return cross-sectional z-scored earnings yield., GetFundamentalsTool, Fetch PIT-aligned fundamental fields as daily wide panels., _assert_row_zscore_properties(), _install_loader(), _panel() (+9 more)
+Cohesion: 0.27
+Nodes (15): compute(), DataFrame, Return cross-sectional z-scored earnings yield., _assert_row_zscore_properties(), _install_loader(), _panel(), DataFrame, MonkeyPatch (+7 more)
 
 ### Community 377 - "kill_switch/models.py"
 Cohesion: 0.18
@@ -2660,13 +2689,13 @@ Nodes (14): _day_matches(), _next_cron_due(), _now_ms(), _parse_cron_field(), da
 Cohesion: 0.16
 Nodes (14): compute_hv(), compute_hv_percentile(), _fetch_okx(), DataFrame, Series, 波动率策略信号引擎。 基于历史波动率（HV）百分位排名进行均值回归交易： 低波区间做多等待扩张，高波区间做空等待收缩。纯 pandas 实现。, 从 OKX API 获取 K 线数据。 Args: inst_id: 交易对标识，如 "BTC-USDT"。 bar: K 线周期。 limit: 获取根数。…, 计算年化历史波动率。 Args: close: 收盘价序列。 window: 波动率计算窗口。 annualize: 年化系数（A股252，加密365）。… (+6 more)
 
-### Community 380 - "compute_rebalance_notes"
-Cohesion: 0.20
-Nodes (18): compute_rebalance_notes(), Any, DataFrame, Path, Rebalance notes: per-rebalance turnover and weight-drift detail. The Portfolio…, Render notes as a compact Markdown report., Write notes to ``path`` as strict, RFC-8259 JSON. Mirrors…, Summarize per-date weight changes in a target position frame. Args: target_pos:… (+10 more)
+### Community 380 - "test_runtime_pipeline_runner_acceptance.py"
+Cohesion: 0.17
+Nodes (25): _decision(), _execution(), _feature(), _market(), _plan(), _position(), ApprovalStatus, DecisionSnapshot (+17 more)
 
 ### Community 381 - "env_schema.py"
-Cohesion: 0.17
-Nodes (14): APIConfig, _EnvBase, MemoryConfig, _MemoryPreset, OcrConfig, BaseModel, Enum, str (+6 more)
+Cohesion: 0.15
+Nodes (16): APIConfig, _EnvBase, MemoryConfig, _MemoryPreset, OcrConfig, PathConfig, BaseModel, Enum (+8 more)
 
 ### Community 382 - "市场情绪分析"
 Cohesion: 0.07
@@ -2684,9 +2713,9 @@ Nodes (16): _build_dead_cards(), _build_top5_cards(), _formula_to_html(), _gtja_
 Cohesion: 0.07
 Nodes (27): [0.1.10] — 2026-06-19, [0.1.11] — 2026-07-11, [0.1.12] — 2026-07-22, [0.1.8] — 2026-05-17, [0.1.9] — 2026-06-01, Added, Added, Added (+19 more)
 
-### Community 386 - "ChatOpenAIWithReasoning"
-Cohesion: 0.22
-Nodes (7): ChatOpenAIWithReasoning, Any, Re-attach Gemini thought signatures dropped by dict->message conversion. The…, Re-inject reasoning_content and normalize assistant content. LangChain strips…, ChatOpenAI that preserves provider reasoning across invoke + stream. langchain-…, Initialize while retaining the resolved provider name., ChatOpenAI
+### Community 386 - "._auto_trade_configuration"
+Cohesion: 0.12
+Nodes (8): Row, Create a durable auto-trade configuration for an existing user., List configurations owned by one user, newest first., Return a configuration only when it belongs to the user., Replace a user-owned configuration, preserving its creation timestamp., Create encrypted credential metadata for an existing user., Replace encrypted material while preserving its key version., Atomically replace encrypted material and increment its key version.
 
 ### Community 387 - "validate_schedule"
 Cohesion: 0.21
@@ -2704,9 +2733,9 @@ Nodes (14): _captured_html_context(), _envelope(), _FakeReg, _ns(), fixture, ``a
 Cohesion: 0.15
 Nodes (16): _normalized_requirement_name(), Packaging dependency regression tests., Contributor style commands should be installed by the dev extra., Both Slack extras should use the same resolvable dependency range., Keep optional harmonic plotting deps from breaking baseline installs., Users who need harmonic pattern detection can still opt in explicitly., Broker SDK dependencies must not perturb every baseline installation., The built-in WebSocket gateway imports websockets at module import time. (+8 more)
 
-### Community 391 - "MatrixChannel"
-Cohesion: 0.15
-Nodes (8): MatrixChannel, Matrix (Element) channel using long-polling sync., Start Matrix client and begin sync loop., Stop the Matrix channel with graceful sync shutdown., Save login session to disk for persistence across restarts., InviteEvent, KeyVerificationEvent, LoginResponse
+### Community 391 - "sec_filings_tool.py"
+Cohesion: 0.14
+Nodes (23): _at(), _clamp_limit(), _document_url(), _error(), _normalize_point(), _parse_filings(), _parse_metric(), _pick_unit() (+15 more)
 
 ### Community 392 - "test_upload_api.py"
 Cohesion: 0.34
@@ -2725,12 +2754,12 @@ Cohesion: 0.07
 Nodes (26): 1. Short Straddle, 2. Protective Put, 3. Iron Butterfly, 4. Volatility Arbitrage, Analysis Framework, Arbitrage Risk Control, Arbitrage Strategies, Basic Concepts (+18 more)
 
 ### Community 396 - "RSSHubEventProvider"
-Cohesion: 0.11
-Nodes (18): FeedSpec, Any, Machine-readable metadata for one RSSHub feed route. Attributes: name: Stable…, Whether the route is parameterised by instrument code., Point-in-time-safe event/sentiment provider backed by RSSHub. Attributes:…, Initialise the provider. Args: base_url: RSSHub root URL; defaults to…, Whether a usable RSSHub base URL is configured., Return the spec for a registered feed. Raises: UnknownFeedError: If ``feed`` is… (+10 more)
+Cohesion: 0.15
+Nodes (13): Any, Point-in-time-safe event/sentiment provider backed by RSSHub. Attributes:…, Initialise the provider. Args: base_url: RSSHub root URL; defaults to…, Whether a usable RSSHub base URL is configured., Fetch raw RSS XML for one feed/code, bounded by a wall-clock budget. Returns…, Construct a default httpx client (imported lazily)., RSSHubEventProvider, _FakeClient (+5 more)
 
 ### Community 397 - "test_rsshub_events_provider.py"
-Cohesion: 0.15
-Nodes (21): feed_specs_from_config(), format_code_for_route(), Build :class:`FeedSpec` objects from backtest-config dicts. Each entry must…, Convert a backtest code (e.g. ``"600519.SH"``) to a route's expected form.…, _provider(), parametrize, Unit tests for the RSSHub event/sentiment provider (no network)., test_after_close_publication_rolls_to_next_day() (+13 more)
+Cohesion: 0.14
+Nodes (21): default_lexicon_scorer(), format_code_for_route(), Score text in ``[-1, 1]`` by net positive/negative term frequency. A…, Convert a backtest code (e.g. ``"600519.SH"``) to a route's expected form.…, _provider(), parametrize, Unit tests for the RSSHub event/sentiment provider (no network)., test_after_close_publication_rolls_to_next_day() (+13 more)
 
 ### Community 398 - "auto_trade/strategy_runner.py"
 Cohesion: 0.15
@@ -2740,9 +2769,9 @@ Nodes (12): DiagnosticPatternSource, _pattern_blocker(), Protocol, Validate trad
 Cohesion: 0.16
 Nodes (16): _all_links(), _extract_reference_links(), parametrize, Regression tests: every ``references/`` link in data-source SKILL.md files…, Guard: a bare references/ path (no prefix) is NOT resolvable. This documents…, Return every markdown link target containing ``references/``. Args: skill:…, Resolve a path through the read_file tool and return the parsed body. Args:…, Collect (skill, link) pairs across all skills under test. (+8 more)
 
-### Community 400 - ".message"
-Cohesion: 0.12
-Nodes (14): Compatibility accessor for ported channel code., _format_exception_message(), _is_retryable_error(), _message_looks_transient(), Exception, Tool, Determine whether a failure should receive a single retry. Args: exc: Exception…, List tools exposed by the remote MCP server. (+6 more)
+### Community 400 - "read_url"
+Cohesion: 0.13
+Nodes (20): Web reader tool: fetch a URL as Markdown text via the Jina Reader API., Return whether a URL is safe to forward to the remote reader service., Fetch web page content via the Jina Reader API. The full URL (including query…, read_url(), _url_allowed(), WebReaderTool, captured(), fixture (+12 more)
 
 ### Community 401 - ".generate"
 Cohesion: 0.16
@@ -2776,29 +2805,29 @@ Nodes (15): CaptureFixture, MonkeyPatch, parametrize, Path, unit, Tests for the 
 Cohesion: 0.07
 Nodes (28): compilerOptions, allowImportingTsExtensions, isolatedModules, jsx, lib, module, moduleDetection, moduleResolution (+20 more)
 
-### Community 409 - "test_env_schema.py"
-Cohesion: 0.12
-Nodes (23): AgentTuningConfig, DataConfig, LLMConfig, PathConfig, LLM provider and generation parameters. Sources: ``src/providers/llm.py``,…, Market-data source credentials and tuning. Sources: ``backtest/loaders/*.py``,…, Multi-agent swarm execution parameters. Sources: ``src/swarm/worker.py``,…, Agent loop tuning, content-filter, scheduler, and feature flags. Sources:… (+15 more)
+### Community 409 - "LLMConfig"
+Cohesion: 0.17
+Nodes (11): DataConfig, LLMConfig, LLM provider and generation parameters. Sources: ``src/providers/llm.py``,…, Market-data source credentials and tuning. Sources: ``backtest/loaders/*.py``,…, Multi-agent swarm execution parameters. Sources: ``src/swarm/worker.py``,…, SwarmConfig, Verify concurrent access to get_env_config is safe., Interleaved reset + read must not raise. (+3 more)
 
 ### Community 410 - "_calc_options_metrics"
 Cohesion: 0.22
 Nodes (14): _calc_options_metrics(), Calculate options backtest metrics. Args: equity: Equity series. initial_cash:…, parametrize, Focused accounting and metric regressions for the options engine., 1m OKX bars_per_year can OverflowError on modest equity growth., test_daily_bar_annualization_still_finite(), test_empty_equity_returns_json_safe_undefined_metrics(), test_minute_bar_annualization_does_not_overflow() (+6 more)
 
-### Community 411 - "ArtifactLifecycle"
-Cohesion: 0.20
-Nodes (15): ArtifactLifecycle, Enum, str, Lifecycle states and deterministic transition validation., Raise when an artifact transition is not part of the frozen state graph., Raise when a runtime transition is not part of the frozen state graph., RuntimeLifecycle, validate_artifact_transition() (+7 more)
+### Community 411 - "SectorInfoTool"
+Cohesion: 0.14
+Nodes (9): Look up sector / concept board membership for a stock, or rank boards., SectorInfoTool, Tests for sector_tool: envelope shape, parsing, mode dispatch, validation. All…, Validation and request failures return the ok=false envelope., A resolvable stock yields the ok envelope with parsed boards., mode='ranking' enumerates the industry-board universe., TestErrorEnvelope, TestMembershipEnvelope (+1 more)
 
 ### Community 412 - "_rolling_correlation_matrix"
-Cohesion: 0.19
-Nodes (10): _close_series(), DataFrame, Series, Compute correlation matrix for multiple price series. Args: price_series:…, Extract the close-price series from a loader frame, date-indexed and sorted.…, _rolling_correlation_matrix(), Build a DataFrame with trade_date as the index name (like real loaders)., OHLCV frames with an unnamed DatetimeIndex must not KeyError on trade_date. (+2 more)
+Cohesion: 0.26
+Nodes (6): Compute correlation matrix for multiple price series. Args: price_series:…, _rolling_correlation_matrix(), Build a DataFrame with trade_date as the index name (like real loaders)., OHLCV frames with an unnamed DatetimeIndex must not KeyError on trade_date., test_rolling_correlation_unnamed_datetime_index(), TestRollingCorrelationMatrix
 
 ### Community 413 - "ObservationArchiveBatch"
 Cohesion: 0.06
 Nodes (46): ArchiveDashboard, ArchiveHealth, build_archive_dashboard(), Enum, field_validator, model_validator, str, Read-only projections for observation archive evidence. (+38 more)
 
-### Community 414 - ".execute"
-Cohesion: 0.17
-Nodes (12): _error(), _ok(), Any, Exception, Path, Pick a valid loader source from the hypothesis, else fall back to ``auto``. A…, Validate backtest dates before writing any run artifacts., Return a path-contained run directory for any persisted hypothesis id. (+4 more)
+### Community 414 - "get_runtime_root"
+Cohesion: 0.09
+Nodes (38): Best-effort raw lookup used only to explain invalid live config., _raw_live_server_config_entry(), Agent configuration helpers for MCP client integration., _default_mcp_server_payload(), _merge_agent_config_dicts(), merge_agent_config_overrides(), _merge_dicts(), _merge_mcp_server_dicts() (+30 more)
 
 ### Community 415 - "SignalEngine"
 Cohesion: 0.18
@@ -2824,29 +2853,29 @@ Nodes (24): 1. TradingView — Pine Script v6, 2. 通达信 / 同花顺 / 东方
 Cohesion: 0.08
 Nodes (24): 1. VaR (Value at Risk), 2. CVaR / ES (Conditional VaR / Expected Shortfall), 3. Maximum Drawdown Analysis, 4. Monte Carlo Simulation, Analysis Framework, Analysis Steps, Geometric Brownian Motion (GBM), Historical Scenario Stress Tests (+16 more)
 
-### Community 421 - "compute_ic_series"
-Cohesion: 0.08
-Nodes (32): compute_group_equity(), compute_ic_series(), DataFrame, Series, Pure IC/IR + layered backtest math shared by factor_analysis_tool and…, Layered backtest: rank by factor value daily, hold equal-weight, compute…, Compute daily Spearman rank correlation (IC) between factor values and returns.…, FactorAnalysisTool (+24 more)
+### Community 421 - "test_factor_analysis_core.py"
+Cohesion: 0.16
+Nodes (15): compute_group_equity(), DataFrame, Pure IC/IR + layered backtest math shared by factor_analysis_tool and…, Layered backtest: rank by factor value daily, hold equal-weight, compute…, Any, Run factor analysis. Args: **kwargs: Must include factor_csv, return_csv,…, Run the full factor analysis pipeline: IC/IR + layered backtest. Args:…, run_factor_analysis() (+7 more)
 
-### Community 422 - "QVerisClient"
-Cohesion: 0.22
-Nodes (8): _min_interval(), QVerisClient, Resolve the minimum interval between QVeris requests., Minimal QVeris HTTP client for search, execute, and full-result GET., Call ``POST /search``. Args: query: Natural-language capability query. limit:…, Call ``POST /tools/execute`` and hydrate truncated results. Args: tool_id:…, Parse a Retry-After header, falling back to the default interval., _retry_after_seconds()
+### Community 422 - "stream.py"
+Cohesion: 0.14
+Nodes (17): Streaming renderer + thinking spinner for the interactive CLI. Single-agent…, ``/show <id> · N tool calls · 4.1s · 1.2k tokens · $0.003``., Compact single-line preview. Prefers query/symbol/url; truncates long., summarize_args(), _truncate(), abbreviate_num(), format_duration(), format_tokens() (+9 more)
 
 ### Community 423 - "test_run_card.py"
 Cohesion: 0.26
 Nodes (14): Path, Tests for Trust Layer run card generation., test_api_run_response_can_filter_chart_symbol(), test_api_run_response_default_chart_payload_is_unchanged(), test_api_run_response_includes_llm_usage(), test_api_run_response_includes_run_card(), test_api_run_response_summary_chart_payload_discovers_symbols(), test_artifact_listing_includes_expected_existing_files() (+6 more)
 
-### Community 424 - "test_ccxt_loader_bounded.py"
-Cohesion: 0.15
-Nodes (13): _bars(), _FakeEx, _no_sleep(), fixture, Regression tests for P12-b — the ccxt loader must fail fast instead of hanging…, Scripted exchange: each fetch_ohlcv call consumes the next script item; an…, The old 10-min hang: now a bounded TimeoutError after a fixed budget., test_get_exchange_sets_explicit_timeout() (+5 more)
+### Community 424 - "load_swarm_agent_config"
+Cohesion: 0.19
+Nodes (21): load_swarm_agent_config(), Pick the operator config the swarm runtime should boot against. Resolution…, Load the swarm-side AgentConfig using the M3 boot resolution order. This is the…, _resolve_swarm_agent_config_path(), MonkeyPatch, Path, M3 — SWARM external MCP tools: boot wiring & config resolution. Covers…, ``agent.json`` is reused when no swarm-specific file is provided. Single-config… (+13 more)
 
 ### Community 425 - "yahoo_client.py"
-Cohesion: 0.05
-Nodes (70): HostThrottle, Any, Shared HTTP helpers for direct-API loaders: per-host throttling + JSON/CSV GET.…, GET ``url`` after waiting out the per-host minimum interval. Args: url: Fully-…, Throttled GET that decodes the response body as JSON. Same contract as…, Process-wide minimum-spacing gate keyed by an arbitrary host bucket. One…, Block until ``bucket`` is allowed to fire again, then record the slot. The…, throttled_get() (+62 more)
-
-### Community 426 - "BaseEngine"
 Cohesion: 0.02
-Nodes (104): BaseEngine, _event_feed_specs(), _ffill_1d(), _ffill_2d(), _json_safe_scalar_metrics(), _load_optimizer(), _maybe_enrich_events(), _maybe_enrich_fundamentals() (+96 more)
+Nodes (130): DataLoader, _extract_provider_message(), _min_interval(), _parse_bar(), DataFrame, Alpha Vantage loader: US-equity daily OHLCV via the free key-gated REST API.…, Available when a non-placeholder ``ALPHAVANTAGE_API_KEY`` is set., Fetch daily OHLCV bars for ``codes`` within ``[start_date, end_date]``. Args:… (+122 more)
+
+### Community 426 - "engines/base.py"
+Cohesion: 0.04
+Nodes (57): _json_safe_scalar_metrics(), _load_optimizer(), _maybe_enrich_fundamentals(), _normalise_fundamental_fields(), ABC, Any, DataFrame, DatetimeIndex (+49 more)
 
 ### Community 427 - "SignalEngine"
 Cohesion: 0.18
@@ -2860,9 +2889,9 @@ Nodes (13): compute_twap(), compute_vwap(), fetch_minute_candles(), hourly_volum
 Cohesion: 0.19
 Nodes (10): _fetch_okx(), DataFrame, Series, 季节性/日历效应策略信号引擎。 基于月份效应、周内效应等时间规律生成交易信号。 纯 pandas 实现，适用于任何 OHLCV 数据。, 从 OKX API 获取 K 线数据。 Args: inst_id: 交易对标识，如 "BTC-USDT"。 bar: K 线周期。 limit: 获取根数。…, 季节性日历效应信号引擎。 根据月份和周内效应生成做多/做空信号。 Attributes: bullish_months: 看多月份列表。…, 初始化季节性引擎。 Args: bullish_months: 看多月份（1-12），默认 [1,2,3,11,12]。 bearish_months:…, 根据日历效应生成交易信号。 Args: data_map: 标的代码到 OHLCV DataFrame 的映射。 Returns: 标的代码到信号… (+2 more)
 
-### Community 430 - "._fetch_one"
-Cohesion: 0.18
-Nodes (10): _is_us(), DataFrame, Fetch a single symbol., Fetch A-share via stock_zh_a_hist., Fetch US stock via stock_us_hist., Fetch exchange-listed ETF / LOF via fund_etf_hist_sina. Sina symbol format is…, Fetch forex pair via forex_hist_em. Columns returned are 日期 / 代码 / 名称 / 今开 /…, Fetch HK stock via stock_hk_hist. (+2 more)
+### Community 430 - "risk_xray.py"
+Cohesion: 0.19
+Nodes (19): _concentration(), _correlation(), _diversification(), _drawdown(), _finite(), Any, DataFrame, ndarray (+11 more)
 
 ### Community 431 - "Agent Contributor Guide"
 Cohesion: 0.08
@@ -2876,17 +2905,17 @@ Nodes (23): 1. `equal_volatility`, 1. Modern Portfolio Theory (MPT, Markowitz), 
 Cohesion: 0.08
 Nodes (23): 1. 纯债价值（债底）, 2. 转股价值（股性）, 3. 期权价值, A股可转债分析, 三维估值体系, 三维判断矩阵, 下修博弈, 关键指标 (+15 more)
 
-### Community 434 - "test_system_routes.py"
-Cohesion: 0.11
-Nodes (29): _provider_readiness(), Report whether the configured LLM provider looks usable, cheaply. Mirrors the…, local_client(), fixture, MonkeyPatch, TestClient, Route-level contracts for the system endpoints. Exercises the REST surface…, The un-mocked helper reports ready when provider+model+key are present. (+21 more)
+### Community 434 - "system_routes.py"
+Cohesion: 0.06
+Nodes (43): _client_key(), HealthResponse, _provider_readiness(), BaseModel, FastAPI, Request, System and utility HTTP routes. Mounted by ``agent/api_server.py`` via…, Return a stable per-client bucket key (client IP, or a fixed fallback). (+35 more)
 
 ### Community 435 - "test_mcp_server_happy_path"
 Cohesion: 0.23
 Nodes (13): _extract_tool_result(), integration, Popen, Queue, Smoke test for the MCP server entry point. Regression test for PR #85 (deadlock…, Pull the structured payload out of a ``tools/call`` JSON-RPC response. FastMCP…, End-to-end smoke check for ``vibe-trading-mcp``. Verifies (1) the JSON-RPC…, Pump every line from *stream* into *q*; signal EOF with ``None``. (+5 more)
 
-### Community 436 - "TestSyncProviderEnv"
-Cohesion: 0.19
-Nodes (4): Provider-specific env vars → OPENAI_* mapping., Run _sync_provider_env with a clean env and return relevant keys., If provider-specific key is missing, fall back to OPENAI_API_KEY., TestSyncProviderEnv
+### Community 436 - "test_llm.py"
+Cohesion: 0.05
+Nodes (28): _is_anthropic_temperature_unsupported_error(), BaseException, Return True when an Anthropic error reports `temperature` as unsupported.…, _make_fake_anthropic_base(), Tests for LLM provider mapping and JSON extraction., Provider-specific env vars → OPENAI_* mapping., Run _sync_provider_env with a clean env and return relevant keys., If provider-specific key is missing, fall back to OPENAI_API_KEY. (+20 more)
 
 ### Community 437 - "test_runtime_forex_feature_builder_acceptance.py"
 Cohesion: 0.32
@@ -2916,9 +2945,9 @@ Nodes (23): Activity Analysis Framework, Analysis Framework, Composite On-Chain 
 Cohesion: 0.08
 Nodes (23): 1. ADF Unit-Root Test (Stationarity Test), 1. Heteroskedasticity Test, 2. Autocorrelation Test, 2. Cointegration Test, 3. Granger Causality Test, 3. Multicollinearity Test, Bootstrap Applications in Quant, Bootstrap Methods (+15 more)
 
-### Community 444 - "Any"
-Cohesion: 0.05
-Nodes (50): AsyncMCPClient, _collapse_nullable_union(), _collect_top_level_property_names(), _extract_result_error(), _extract_text_content(), _is_null_schema(), _json_default(), _make_jsonable() (+42 more)
+### Community 444 - "test_runtime_mt5_order_executor_acceptance.py"
+Cohesion: 0.33
+Nodes (17): _executor(), FakeTransport, _plan(), _profile(), parametrize, _quote(), Acceptance tests for the injected-transport Runtime MT5 Order Executor., _spec() (+9 more)
 
 ### Community 445 - "_LastObservationOptimizer"
 Cohesion: 0.23
@@ -2929,8 +2958,8 @@ Cohesion: 0.09
 Nodes (22): 12个红旗信号, 三级分解, 三表勾稽关系, 三表核心框架, 五级分解, 利润表（赚了多少）, 勾稽验证公式, 应计 vs 现金流 (+14 more)
 
 ### Community 447 - "SwarmStore"
-Cohesion: 0.03
-Nodes (104): Swarm event log entry. Appended to events.jsonl; supports SSE streaming and…, SwarmEvent, Initialize SwarmRuntime. Args: store: SwarmStore instance for run persistence.…, _is_transient_windows_error(), _last_event_timestamp(), _parse_iso(), datetime, Path (+96 more)
+Cohesion: 0.02
+Nodes (166): HeartbeatTimer, Background thread that emits keepalive ticks while a tool runs. Use as a…, _get_swarm_runtime(), Lazy-init SwarmRuntime singleton., Swarm event log entry. Appended to events.jsonl; supports SSE streaming and…, Complete state of a single Swarm preset execution. Persisted as…, SwarmEvent, SwarmRun (+158 more)
 
 ### Community 448 - "QVeris REST API Reference"
 Cohesion: 0.09
@@ -2944,29 +2973,29 @@ Nodes (12): _parse_pages(), Parse '1-10' / '5' / '1,3,5-8' into zero-based indic
 Cohesion: 0.09
 Nodes (22): Analysis Framework, Backtest Report Template, Chart Substitute (Text Description + Data Table), Common Abbreviations, Equity Ratings, Heading Hierarchy, Markdown Formatting Standards, Notes (+14 more)
 
-### Community 451 - "PortfolioRiskXrayTool"
+### Community 451 - "RunStateStore"
+Cohesion: 0.15
+Nodes (14): Any, Path, Run state persistence: creates run directories and records status., Run state store: manages run directories and their lifecycle status., Create a unique run directory. Args: workspace: Parent directory (typically…, Save the user request. Args: run_dir: Run directory. prompt: User prompt.…, Mark the run as successful. Args: run_dir: Run directory., Mark the run as failed. Args: run_dir: Run directory. reason: Failure reason. (+6 more)
+
+### Community 452 - "test_trading_connections.py"
+Cohesion: 0.16
+Nodes (20): Select the default trading connector profile., Place an order through a trading connector profile. Paper profiles place…, TradingPlaceOrderTool, TradingSelectConnectionTool, _agent_config(), MonkeyPatch, SimpleNamespace, Tests for connector-first trading profile operations. (+12 more)
+
+### Community 453 - "ChatOpenAIWithReasoning"
 Cohesion: 0.22
-Nodes (10): PortfolioRiskXrayTool, Any, DataFrame, Shape the fetch envelope into a date-indexed close-price panel., Compute concentration, volatility, drawdown, tail risk, and co-movement for a…, _stub_fetcher(), test_tool_happy_path_equal_weights(), test_tool_rejects_bad_arguments() (+2 more)
-
-### Community 452 - "test_agent_loop_repeatable_tools.py"
-Cohesion: 0.19
-Nodes (11): _error(), _frame_records(), _json_safe(), Any, DataFrame, Read-only fundamental panel facade backed by the loader layer., Validate inputs, call the loader, and return a JSON envelope. Args: **kwargs:…, Build the failure envelope as a JSON string. Args: message: Human-readable… (+3 more)
-
-### Community 453 - "main"
-Cohesion: 0.14
-Nodes (14): _build_network_app(), _env_shell_tools_enabled(), main(), _normalize_host(), _parse_allowed_hosts(), Resolve whether the MCP server should register shell tools. Process-control…, Normalize a Host header value (or allow-list entry) for comparison. Strips the…, Parse ``VIBE_TRADING_MCP_ALLOWED_HOSTS`` into a Host/Origin allow-list. Entries… (+6 more)
+Nodes (7): ChatOpenAIWithReasoning, Any, Re-attach Gemini thought signatures dropped by dict->message conversion. The…, Re-inject reasoning_content and normalize assistant content. LangChain strips…, ChatOpenAI that preserves provider reasoning across invoke + stream. langchain-…, Initialize while retaining the resolved provider name., ChatOpenAI
 
 ### Community 454 - "SignalEngine"
 Cohesion: 0.18
 Nodes (9): _fetch_okx(), DataFrame, Series, 配对交易策略信号引擎。 基于两个相关标的的价格比值 Z-score 进行均值回归交易。 需要恰好两个标的，等权分配。纯 pandas 实现。, 从 OKX API 获取 K 线数据。 Args: inst_id: 交易对标识，如 "BTC-USDT"。 bar: K 线周期。 limit: 获取根数。…, 配对交易信号引擎。 计算两个标的的价格比值，通过 Z-score 判断偏离程度， 偏离过大时反向交易等待回归。 Attributes: lookback:…, 初始化配对交易引擎。 Args: lookback: 均值和标准差回看窗口。 entry_z: 开仓 Z-score 阈值。 exit_z: 平仓…, 根据价格比值 Z-score 生成配对交易信号。 Args: data_map: 恰好两个标的代码到 OHLCV DataFrame 的映射。… (+1 more)
 
-### Community 455 - "test_lookahead.py"
-Cohesion: 0.20
-Nodes (13): _attach_sector(), _baseline_panel(), _corrupt_future(), DataFrame, parametrize, skipif, Look-ahead guard: factor values at row ``t`` must not depend on rows > t.…, Return a deep copy where rows ``>= PERTURB_FROM`` are sentinel-poisoned. (+5 more)
+### Community 455 - "test_alpha_has_no_lookahead"
+Cohesion: 0.22
+Nodes (11): _attach_sector(), _baseline_panel(), _corrupt_future(), DataFrame, parametrize, skipif, Return a deep copy where rows ``>= PERTURB_FROM`` are sentinel-poisoned., Future corruption at row ``>=60`` must not alter factor value at row 50. (+3 more)
 
-### Community 456 - ".get"
-Cohesion: 0.17
-Nodes (7): Return whether a tool is known to be side-effect free., Any, Execute the tool and return a JSON string., Convert to OpenAI function calling format., Retrieve a tool by name., Return all tools in OpenAI function calling format., Execute a tool and guarantee a valid JSON return value.
+### Community 456 - "test_ccxt_loader_bounded.py"
+Cohesion: 0.15
+Nodes (13): _bars(), _FakeEx, _no_sleep(), fixture, Regression tests for P12-b — the ccxt loader must fail fast instead of hanging…, Scripted exchange: each fetch_ohlcv call consumes the next script item; an…, The old 10-min hang: now a bounded TimeoutError after a fixed budget., test_get_exchange_sets_explicit_timeout() (+5 more)
 
 ### Community 457 - "test_distribution_skill_manifest.py"
 Cohesion: 0.32
@@ -2976,9 +3005,9 @@ Nodes (11): _assert_all_counts(), _literal_assignment(), _manifest_text(), Path,
 Cohesion: 0.17
 Nodes (9): fixture, parametrize, The MCP goal tools must not ask the model to invent a session id. Issue #885,…, Making session_id optional must not loosen the real inputs., The end-to-end point: an omitted id must not become a validation error., test_session_id_is_not_a_required_argument(), test_start_research_goal_works_without_a_session_id(), test_the_other_arguments_stay_required() (+1 more)
 
-### Community 459 - "TestRegistry"
+### Community 459 - "test_sse_ticket_and_headers.py"
 Cohesion: 0.17
-Nodes (7): Test the built-in registry and plugin discovery., rapid and llm-vision should be in the built-in registry., rapid engine should have is_cloud=False., llm-vision engine should have is_cloud=True., _reset_plugin_cache should clear the lru_cache., A plugin with the same name as a builtin should override it., TestRegistry
+Nodes (18): _clean_state(), _local_client(), fixture, MonkeyPatch, TestClient, VT-003 / VT-006 regression tests: SSE tickets, security headers, log redaction., Return a TestClient that simulates a non-loopback caller., Headers must wrap error responses from inner middleware too. (+10 more)
 
 ### Community 460 - "check_social_cards.py"
 Cohesion: 0.23
@@ -2988,13 +3017,13 @@ Nodes (9): main(), MetaParser, page_meta(), png_size(), HTMLParser, Path, Valida
 Cohesion: 0.09
 Nodes (21): 1. Verify facts first (don't just change), 1. When to Use, 2. Grade the revision, 2. Series Template (8 Parts), 3. Cascade check after a fix, 3. Writing Style, 4. Strict Fact-Check Checklist (the Core IP), 5. Execution (+13 more)
 
-### Community 462 - "._fetch_one"
-Cohesion: 0.24
-Nodes (8): DataLoader, DataFrame, QVeris OHLCV loader, available only when explicitly configured., Return whether paid QVeris routing is enabled and keyed., Fetch daily OHLCV history through selected QVeris capabilities. Args: codes:…, Build a capability-search query for one symbol., _search_query(), _str_or_none()
+### Community 462 - "test_get_market_data_size.py"
+Cohesion: 0.16
+Nodes (17): _call(), _loader_with_rows(), Regression test for P07 — get_market_data must bound its per-symbol output.…, No-regression: under the cap the shape is the original plain list., The canonical ~251-row 1y-daily request must no longer be unbounded., G3 (i): exactly at the cap returns the plain list, not truncated., G3 (ii): a negative max_rows is invalid -> cap enforced, never unbounded., G3 (iii): stride sample — last row == original last, dates strictly increasing,… (+9 more)
 
-### Community 463 - "build_registry"
-Cohesion: 0.04
-Nodes (93): build_registry(), Build the tool registry via auto-discovery, optionally enriched with MCP tools.…, _collect_process_output(), _format_start_failure(), HttpMCPServerHandle, _loopback_proxy_bypass(), make_single_server_agent_json(), _merge_loopback_no_proxy() (+85 more)
+### Community 463 - "._fetch_one"
+Cohesion: 0.18
+Nodes (10): _is_us(), DataFrame, Fetch a single symbol., Fetch A-share via stock_zh_a_hist., Fetch US stock via stock_us_hist., Fetch exchange-listed ETF / LOF via fund_etf_hist_sina. Sina symbol format is…, Fetch forex pair via forex_hist_em. Columns returned are 日期 / 代码 / 名称 / 今开 /…, Fetch HK stock via stock_hk_hist. (+2 more)
 
 ### Community 464 - "SEC EDGAR Filing Analysis"
 Cohesion: 0.09
@@ -3012,13 +3041,17 @@ Nodes (21): Analysis Framework, Asset Performance by Stage, Central Bank Policy 
 Cohesion: 0.09
 Nodes (21): 一级行业（31个）, 产业链上下游传导, 价格动量, 传导规律, 估值比较, 典型传导链条, 景气度变化信号, 景气度评分框架 (+13 more)
 
+### Community 468 - "load_fundamental_panel"
+Cohesion: 0.43
+Nodes (16): load_fundamental_panel(), Load SEC fundamental fields as dense date-by-symbol panels. Args: symbols:…, _fact_row(), _facts(), _install_schema_stub(), _patch_sec(), LogCaptureFixture, MonkeyPatch (+8 more)
+
 ### Community 469 - "test_india_universe.py"
 Cohesion: 0.27
 Nodes (10): _india_panel(), fixture, parametrize, India (equity_in) factor-universe coverage against the bundled zoo. Verifies…, Synthetic NSE-shape OHLCV panel; vwap injected as India typical price., registry(), test_alpha101_and_qlib158_listed_for_india(), test_china_scale_gtja191_not_listed_for_india() (+2 more)
 
-### Community 470 - "test_qlib158_samples.py"
-Cohesion: 0.27
-Nodes (10): _build_panel(), panel(), DataFrame, fixture, parametrize, Golden-fixture regression tests for sampled qlib158 alphas. We pin 5 alphas…, Deterministic panel matching the golden generation procedure., Compute the alpha and compare against the pinned golden CSV. (+2 more)
+### Community 470 - "_rows_to_frame"
+Cohesion: 0.21
+Nodes (9): Build the OHLCV frame from chart rows, clipped to the inclusive window. For…, _rows_to_frame(), _intraday_stamped_row(), Daily-and-coarser bars normalize to midnight; intraday keep their time.…, _rows_to_frame normalizes, clips to the inclusive window, drops bad bars., A daily bar carrying Yahoo's real session-open epoch (14:30 UTC)., _row(), TestDailyIndexNormalization (+1 more)
 
 ### Community 471 - "test_channels_api.py"
 Cohesion: 0.35
@@ -3040,17 +3073,17 @@ Nodes (9): _FakeLoader, Path, Regression (#577): options close honors a partial-
 Cohesion: 0.24
 Nodes (10): Path, Tests that content_filter_warnings from config flows through to run_card.json…, End-to-end: options engine without content_filter_warnings produces empty…, When config carries content_filter_warnings, run_card.json warnings must…, When config has no content_filter_warnings, run_card.json warnings is empty., End-to-end: options engine passes config content_filter_warnings to run_card., test_content_filter_warnings_surfaced_in_run_card(), test_no_content_filter_warnings_yields_empty_warnings() (+2 more)
 
-### Community 476 - "CompareRequest"
-Cohesion: 0.25
-Nodes (6): BenchRequest, CompareRequest, BaseModel, field_validator, POST /alpha/bench body., POST /alpha/compare body — a head-to-head of >= 2 named alphas.
+### Community 476 - "alpha_routes.py"
+Cohesion: 0.05
+Nodes (56): _compare_result_for_wire(), _get_bench_semaphore(), _get_compare_semaphore(), _job_event_stream(), _make_progress_cb(), _prune_old_jobs(), Any, AuthDep (+48 more)
 
-### Community 477 - ".send"
-Cohesion: 0.18
-Nodes (8): _build_matrix_text_content(), Render markdown to sanitized HTML; returns None for plain text., Constructs and returns a dictionary representing the matrix text content with…, Send m.room.message with E2EE options., Send outbound content; clear typing for non-progress messages., _render_markdown_html(), RoomSendError, RoomSendResponse
+### Community 477 - "_qr_register_inner"
+Cohesion: 0.15
+Nodes (16): _accounts_base_url(), _begin_registration(), _init_registration(), _poll_registration(), _post_registration(), _print_qr_code(), qr_register(), _qr_register_inner() (+8 more)
 
 ### Community 478 - "TestParseEnvBool"
-Cohesion: 0.16
-Nodes (11): _parse_bool(), Parse a string (or ``None``) into a boolean. Truthy values (case-insensitive):…, _parse_env_bool(), Coerce environment string values to ``bool``. Accepts ``"1"``, ``"true"``,…, parametrize, Verify the unified boolean parser from accessor.py., Verify the Pydantic BeforeValidator for EnvBool fields., Non-string values pass through for Pydantic's built-in coercion. (+3 more)
+Cohesion: 0.25
+Nodes (7): _parse_env_bool(), Coerce environment string values to ``bool``. Accepts ``"1"``, ``"true"``,…, parametrize, Verify the Pydantic BeforeValidator for EnvBool fields., Non-string values pass through for Pydantic's built-in coercion., Unrecognized strings pass through (Pydantic will reject them)., TestParseEnvBool
 
 ### Community 479 - "Valuation Methodology"
 Cohesion: 0.09
@@ -3064,13 +3097,13 @@ Nodes (28): TerminalChart(), AutoSelectionStatus, AutoTradeConfig, AutoTradeRunn
 Cohesion: 0.33
 Nodes (9): compute(), _delay(), _make_one(), DataFrame, Backward shift by n (lookahead-safe; n>=1 required)., A DataFrame of 1.0 with the same shape/index/columns as ``ref``., Vectorised ternary `(cond ? a : b)` returning a DataFrame. ``cond`` is a…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame. (+1 more)
 
-### Community 482 - "test_gtja191_part2_samples.py"
-Cohesion: 0.27
-Nodes (10): _build_panel(), panel(), DataFrame, fixture, parametrize, Golden-fixture regression tests for the GTJA-191 part-2 port (alphas 101-191).…, Each sample alpha must reproduce its pinned CSV golden bit-equivalently., Reproducible 80-row × 5-symbol OHLCV+amount+benchmark panel (seed=42). (+2 more)
+### Community 482 - "PortfolioRiskXrayTool"
+Cohesion: 0.22
+Nodes (10): PortfolioRiskXrayTool, Any, DataFrame, Shape the fetch envelope into a date-indexed close-price panel., Compute concentration, volatility, drawdown, tail risk, and co-movement for a…, _stub_fetcher(), test_tool_happy_path_equal_weights(), test_tool_rejects_bad_arguments() (+2 more)
 
-### Community 483 - "Any"
-Cohesion: 0.19
-Nodes (7): MatrixConfig, Any, BaseModel, Matrix (Element) channel configuration., Log Matrix response errors — auth errors at ERROR level, rest at WARNING., JoinError, SyncError
+### Community 483 - "test_killswitch_blocks_orders.py"
+Cohesion: 0.23
+Nodes (13): live_runtime(), _MockAdapter, _order_spec(), fixture, MonkeyPatch, Path, Kill switch blocks live orders at the gate (SPEC.md Consent §4, gate-level).…, A plain read tool is NOT a guard — HALT must not block reads. (+5 more)
 
 ### Community 484 - "alpha101/alpha_049.py"
 Cohesion: 0.33
@@ -3100,9 +3133,9 @@ Nodes (9): memories_corpus(), Any, fixture, queries_dataset(), Shared fixtures f
 Cohesion: 0.49
 Nodes (9): _client(), Path, TestClient, API regressions for research goal status and defaults., _session_id(), test_api_can_cancel_current_goal(), test_api_can_complete_goal_with_verified_evidence(), test_api_can_edit_current_goal_objective() (+1 more)
 
-### Community 491 - "_parse_run_dir"
-Cohesion: 0.29
-Nodes (10): _parse_run_dir(), Validate CLI input and return a usable run directory path., Path, test_accepts_existing_directory(), test_main_writes_strict_json_for_non_finite_results(), test_rejects_blank_run_dir(), test_rejects_malformed_run_dir(), test_rejects_missing_directory() (+2 more)
+### Community 491 - "test_telegram_split_fence_hang.py"
+Cohesion: 0.21
+Nodes (14): Split raw Telegram Markdown without leaving fenced code blocks unbalanced., _split_telegram_markdown(), _alarm_handler(), _Hang, Exception, Regression: telegram markdown split must not hang on long fenced bodies., Fence at index 0 with mid-size max_len must not rebuild the same chunk., Install minimal stubs so telegram.py imports without python-telegram-bot. (+6 more)
 
 ### Community 492 - "DiagnosticDataSources.tsx"
 Cohesion: 0.27
@@ -3112,13 +3145,13 @@ Nodes (5): DiagnosticDataSource, diagnosticDataSourcesStub, DiagnosticSourceStat
 Cohesion: 0.10
 Nodes (20): Alpha Zoo (462 pre-built alphas), API Key Requirements, Available MCP Tools (54), Backtesting, Config fields, Examples, Failure handling, Finance Skills (88) (+12 more)
 
-### Community 494 - "._upload_and_send_attachment"
-Cohesion: 0.20
-Nodes (5): Path, Check path is inside workspace (when restriction enabled)., Deduplicate and resolve outbound attachment paths., Build Matrix content payload for an uploaded file/image/audio/video., Upload one local file to Matrix and send it as a media message. Returns failure…
+### Community 494 - "Actor"
+Cohesion: 0.16
+Nodes (12): Actor, ActorType, Enum, str, Governance actor identities., Authenticated actor reference without authentication implementation., ApprovalStatus, datetime (+4 more)
 
-### Community 495 - "TestFallbackChains"
-Cohesion: 0.15
-Nodes (6): yfinance is a fallback for crypto when OKX, Binance and CCXT fail., Equity chains lead with throttle-tolerant public sources and trail with key-…, sina' must be reachable for US equities (after yahoo/stooq) so it is not a dead…, baostock' must remain a reachable A-share fallback., crypto/futures/fund/macro/forex chains must be left untouched., TestFallbackChains
+### Community 495 - "test_yahoo_loader.py"
+Cohesion: 0.20
+Nodes (10): _epoch_seconds(), Yahoo Finance loader: free, no-auth US/HK equity OHLCV via direct HTTP. Wraps…, Convert a ``YYYY-MM-DD`` date to UTC midnight epoch seconds. Computed from the…, _epoch(), _open_epoch(), Tests for yahoo_loader: symbol gating, epoch window, frame normalization. All…, _epoch_seconds derives from the calendar date, not wall-clock time., UTC-midnight epoch seconds for a date, used to build fake chart rows. (+2 more)
 
 ### Community 496 - "a_mootdx_fetcher.py"
 Cohesion: 0.47
@@ -3128,9 +3161,9 @@ Nodes (8): batch_fetch_daily(), _code_to_symbol(), fetch_daily(), fetch_realtime
 Cohesion: 0.17
 Nodes (7): Verify bench_report.json structure and content., Verify report contains all required fields., Verify report metric values are in valid ranges., Verify corpus size matches expected 200., Verify query count matches expected 50., Verify bench_report.json file exists on disk., TestReportOutput
 
-### Community 498 - "_write_journal"
-Cohesion: 0.21
-Nodes (13): insufficient_journal(), _make_tonghuashun_rows(), no_roundtrips_journal(), _offline_prices(), profitable_journal(), fixture, Only 2 profitable roundtrips — below MIN_PROFITABLE_ROUNDTRIPS., Only buys, no sells — zero roundtrips. (+5 more)
+### Community 498 - "strategy_registry.py"
+Cohesion: 0.23
+Nodes (7): production_registry(), _production_replay(), Any, Explicit parameter-to-runtime factory registry., Build only configurations that the protected ReplayEngine truly exposes., StrategyRegistry, RuntimeFactory
 
 ### Community 499 - "execution_context.py"
 Cohesion: 0.33
@@ -3141,8 +3174,8 @@ Cohesion: 0.17
 Nodes (5): Artifact, update_artifact returns None for unknown artifact., Tests for data-model dataclasses and enums., Tuple fields round-trip through JSON serialization., TestModels
 
 ### Community 501 - "test_longbridge_loader.py"
-Cohesion: 0.06
-Nodes (44): _date_windows(), LongbridgeDependencyError, LongbridgeLoader, _normalize_frame(), Any, DataFrame, date, RuntimeError (+36 more)
+Cohesion: 0.14
+Nodes (22): LongbridgeLoader, Fetch US and HK equity bars from LongPort OpenAPI. Resolves one atomic…, Return True if the LongPort SDK is installed and credentials exist.…, Longbridge (LongPort OpenAPI) trading connector. Read-only account/market…, _configured_loader(), MonkeyPatch, parametrize, Contract tests for the optional Longbridge historical-data loader. (+14 more)
 
 ### Community 502 - "market_data_example.py"
 Cohesion: 0.33
@@ -3164,17 +3197,21 @@ Nodes (8): client(), fixture, MonkeyPatch, parametrize, Path, TestClient, Securi
 Cohesion: 0.25
 Nodes (6): Return True when *rel_path* falls in a skipped or allowed zone., _should_skip(), Files in agent/src/config/ are NOT scanned (skipped entirely)., Files in agent/tests/ are NOT scanned., TestConfigDirectoryAllowed, TestTestsDirectorySkipped
 
-### Community 508 - "_render_table_box"
-Cohesion: 0.20
-Nodes (11): Strip markdown inline formatting from text., Split a markdown table row, keeping empty leading/trailing cells.…, Convert markdown pipe-table to compact aligned text for <pre> display., _render_table_box(), _split_md_row(), _strip_md(), Telegram markdown tables must keep empty leading/trailing columns., Install minimal stubs so telegram.py imports without python-telegram-bot. (+3 more)
+### Community 508 - "split_message"
+Cohesion: 0.08
+Nodes (31): _partition_styles(), Partition Signal textStyle ranges across message chunks. ``split_message``…, UTF-16 code-unit length, matching Signal BodyRange semantics., _utf16_len(), _escape_telegram_html(), _markdown_to_telegram_html(), Escape text for Telegram HTML parse mode., Render tool hints as an expandable blockquote (collapsed by default). (+23 more)
 
-### Community 510 - "LTFSupplyDemandService"
-Cohesion: 0.29
-Nodes (7): LTFSupplyDemandService, Mechanical lower-timeframe supply and demand zone detection., SupplyDemandZone, _zone_status(), _bar(), test_detects_demand_zone_and_tracks_retest(), test_detects_supply_zone_and_marks_close_invalidation()
+### Community 509 - "banner.py"
+Cohesion: 0.24
+Nodes (11): Compatibility wrapper for the interactive startup banner., _center_pad(), _gradient_line(), _gradient_style(), _lerp(), print_banner(), Console, Text (+3 more)
 
-### Community 511 - "_load_config"
-Cohesion: 0.20
-Nodes (8): _load_config(), _normalize_mode(), QVerisConfig, Normalize QVeris paid-route mode., Initialize a session-bound client. Args: config: Resolved QVeris config…, Initialize without network access., Resolved QVeris loader configuration., Read QVeris config with environment overrides. Returns: Resolved config.…
+### Community 510 - "_tokenize"
+Cohesion: 0.27
+Nodes (3): Split text into searchable tokens (ASCII >=3 chars + non-Latin chars)., _tokenize(), TestTokenize
+
+### Community 511 - "Any"
+Cohesion: 0.15
+Nodes (7): Any, Serialize the message to a dictionary. Returns: A JSON-serializable dictionary., Deserialize a message from a dictionary. Args: data: Dictionary produced from…, Serialize the attempt to a dictionary. Returns: A JSON-serializable dictionary., Deserialize an attempt from a dictionary. Args: data: Dictionary produced from…, Serialize the session to a dictionary. Returns: A JSON-serializable dictionary., Deserialize a session from a dictionary. Args: data: Dictionary produced from…
 
 ### Community 512 - "integration/shadow/coordinator.py"
 Cohesion: 0.32
@@ -3188,17 +3225,17 @@ Nodes (5): Test NEW_TABLE_SQL generates valid SQLite schema for v15 migration., 
 Cohesion: 0.10
 Nodes (20): Calling Zoo Factors, Common Pitfalls, Dependencies, Equal-Weight Combination, `factor_analysis` Tool Parameters, Factor Combination Methods, Factor Crowding, Factor Research Framework (+12 more)
 
-### Community 515 - "_sig_render_table"
-Cohesion: 0.24
-Nodes (9): Strip inline markdown from a table cell for plain-text rendering., Split a markdown table row, keeping empty leading/trailing cells.…, Render a markdown pipe-table as fixed-width plain text., _sig_render_table(), _sig_split_row(), _sig_strip_cell(), Signal markdown tables must keep empty leading/trailing columns., test_sig_render_table_keeps_leading_empty_header_with_row_labels() (+1 more)
+### Community 515 - "_parse_run_dir"
+Cohesion: 0.29
+Nodes (10): _parse_run_dir(), Validate CLI input and return a usable run directory path., Path, test_accepts_existing_directory(), test_main_writes_strict_json_for_non_finite_results(), test_rejects_blank_run_dir(), test_rejects_malformed_run_dir(), test_rejects_missing_directory() (+2 more)
 
 ### Community 516 - "Strategy Evaluation Metrics"
 Cohesion: 0.10
 Nodes (20): 1.1 Primary Metrics, 1.2 Secondary Metrics, 1.3 Metric Definitions, 1.4 Evaluation Priority, 1. Strategy Evaluation Metrics, 2.1 How Strategy Decay Differs from Factor Decay, 2.2 Strategy-Specific Decay Signals, 2.3 Strategy State Transition Rules (+12 more)
 
-### Community 517 - "_version.py"
-Cohesion: 0.24
-Nodes (6): Single source of truth for the CLI version string. Reads ``vibe-trading-ai``'s…, Read ``[project] version`` from the repo's ``pyproject.toml``. Returns: The…, _version_from_pyproject(), _declared_version(), Regression tests for issue #156 — CLI version must track pyproject.toml. The…, test_pyproject_fallback_matches_declared_version()
+### Community 517 - "test_env_schema.py"
+Cohesion: 0.21
+Nodes (8): _parse_bool(), Parse a string (or ``None``) into a boolean. Truthy values (case-insensitive):…, _clean_env(), fixture, Comprehensive tests for EnvConfig schema and accessor singleton. Covers: -…, Verify the unified boolean parser from accessor.py., Remove all EnvConfig-related env vars and reset the singleton., TestParseBool
 
 ### Community 518 - "._load_from_env"
 Cohesion: 0.22
@@ -3228,9 +3265,9 @@ Nodes (4): Any, ndarray, SLSQP weights for the penalized objective; updates turn
 Cohesion: 0.10
 Nodes (19): A0: Data Collection, A1: Core Thesis (must be writable in ≤200 words), A2: Core Assumptions List, A3: Red Lines (triggering any one = must re-evaluate), A4: Valuation Anchors, A5: Save the Thesis, B1: Read the Existing Thesis, B2: Gather Latest Data (+11 more)
 
-### Community 525 - "EventProviderError"
-Cohesion: 0.19
-Nodes (9): EventProviderError, Exception, Base error for event-provider failures., Raised when a requested feed name is not registered., UnknownFeedError, _FailingClient, _FakeResponse, Client whose every request raises a transient error. (+1 more)
+### Community 525 - "FeedSpec"
+Cohesion: 0.16
+Nodes (8): FeedSpec, Machine-readable metadata for one RSSHub feed route. Attributes: name: Stable…, Whether the route is parameterised by instrument code., _FailingClient, _FakeResponse, Client whose every request raises a transient error., test_all_feeds_unreachable_raises(), test_feedspec_rejects_unknown_code_style()
 
 ### Community 526 - "gates.py"
 Cohesion: 0.38
@@ -3244,9 +3281,9 @@ Nodes (5): ComparisonPort, Any, Protocol, Protocol for pure shadow comparisons.,
 Cohesion: 0.29
 Nodes (5): ObservationPort, Any, Protocol, Protocol for read-only observation providers., Return one observation without changing runtime state.
 
-### Community 529 - "options_chain_tool.py"
-Cohesion: 0.09
-Nodes (19): _coerce_expiration(), _contracts(), _error(), OptionsChainTool, Any, Read-only options-chain tool backed by the shared Yahoo Finance client.…, Coerce an epoch-second expiration to ``int``; ``None`` when absent/bad., Build the success envelope from a quote-chain ``result[0]`` mapping. (+11 more)
+### Community 529 - "test_options_chain_tool.py"
+Cohesion: 0.18
+Nodes (6): Tests for the get_options_chain tool. All HTTP is mocked at…, Error envelopes: missing ticker, bad expiration, upstream failure., Happy-path envelope shape and field normalization., _sample_result(), TestOptionsChainErrors, TestOptionsChainSuccess
 
 ### Community 530 - "get_candles"
 Cohesion: 0.43
@@ -3272,17 +3309,17 @@ Nodes (5): add(), echo(), tool, Minimal FastMCP streamable HTTP server for integ
 Cohesion: 0.29
 Nodes (5): fsp(), fixture, ashare-pre-st-filter / fetch_sina_penalties.py 单元测试。 覆盖 CR P0/P1 修复点： -…, 未闭合 <tr> 的脏 HTML，旧灾难性正则在此会指数级回溯。 新 HTMLParser 实现应在毫秒级完成。, TestNoCatastrophicBacktracking
 
-### Community 540 - "._send_text"
-Cohesion: 0.22
-Nodes (9): _escape_telegram_html(), _markdown_to_telegram_html(), Escape text for Telegram HTML parse mode., Render tool hints as an expandable blockquote (collapsed by default)., Convert markdown to Telegram-safe HTML., Split raw Telegram Markdown and return HTML chunks within Telegram's limit., Send a plain text message with HTML fallback., _split_telegram_markdown_html() (+1 more)
+### Community 540 - "get_historical_bars"
+Cohesion: 0.20
+Nodes (11): Shoonya (Finvasia) trading connector. Read-only and paper/live account access…, get_historical_bars(), Fetch historical OHLCV bars., test_tushare_daily_fetch_uses_opt_in_cache_for_bars_and_fields(), _cfg(), _FakeApi, Shoonya period map must not silently collapse 4h/1H/1w/1M to daily., test_history_1H_maps_to_60_not_daily() (+3 more)
 
 ### Community 541 - "OHLCVFileParser"
 Cohesion: 0.23
 Nodes (10): _bar(), OHLCVFileParser, OHLCVParseError, ValueError, Strict, bounded parsing for user-supplied OHLCV CSV and JSON files., parametrize, test_parser_enforces_file_and_row_limits(), test_parser_reads_strict_csv_and_json_without_persisting() (+2 more)
 
-### Community 542 - "test_alpha101_samples.py"
-Cohesion: 0.18
-Nodes (15): _build_panel(), _load_golden(), panel(), DataFrame, fixture, parametrize, Numerical golden tests for a representative slice of the alpha101 zoo. Five…, Recomputed factor must match the checked-in golden CSV to 1e-6 rtol. (+7 more)
+### Community 542 - "CompareRequest"
+Cohesion: 0.25
+Nodes (6): BenchRequest, CompareRequest, BaseModel, field_validator, POST /alpha/bench body., POST /alpha/compare body — a head-to-head of >= 2 named alphas.
 
 ### Community 543 - "test_cli_swarm_run_args.py"
 Cohesion: 0.20
@@ -3324,17 +3361,17 @@ Nodes (9): compute(), _make_one(), DataFrame, Rolling window sum; warmup -> NaN.
 Cohesion: 0.11
 Nodes (17): 1. Historical OHLCV, 2. Company Info, 3. Financial Statements, 4. Dividends and Splits, 5. Institutional Holdings, 6. Indices and ETFs, 7. FX Rates, Backtest Usage (+9 more)
 
-### Community 553 - "TestKimiTemperature"
-Cohesion: 0.25
-Nodes (6): Kimi reasoning models reject any temperature other than 1., kimi-k3 must be forced to 1.0 (API rejects other values)., Regression: kimi-k2.x keeps the existing forcing behavior., Regression: kimi-for-coding alias keeps the existing behavior., Non-reasoning Moonshot models keep the configured temperature., TestKimiTemperature
+### Community 553 - "SecFilingsTool"
+Cohesion: 0.31
+Nodes (10): List recent SEC filings and optionally one XBRL us-gaap metric series., SecFilingsTool, Tests for get_sec_filings: success + error envelopes, HTTP fully mocked. The…, test_form_filter_keeps_only_matching_forms(), test_metric_series_picks_richest_unit_and_caps_limit(), test_missing_ticker_returns_error_envelope(), test_submissions_failure_is_caught_as_error_envelope(), test_success_lists_filings_with_document_urls() (+2 more)
 
 ### Community 554 - "Correlation-Regime Detection and Crisis Attribution"
 Cohesion: 0.12
 Nodes (16): Calibration Discipline, Correlation-Regime Detection and Crisis Attribution, Dependencies, Look-Ahead Warning, Mode 1: Correlation-Regime Detection (Edge Density + Hysteresis), Mode 2: Regime-Aware Risk Context (De-Grossing), Mode 3: Crisis First-Mover Attribution, Mode 4: Correlation-Rewiring Leaderboard (+8 more)
 
-### Community 555 - "alpha101/alpha_024.py"
-Cohesion: 0.33
-Nodes (9): compute(), _delay(), DataFrame, Rolling window sum; warmup -> NaN., Backward shift by n (lookahead-safe; n>=1 required)., Vectorised ternary `(cond ? a : b)` returning a DataFrame. ``cond`` is a…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum() (+1 more)
+### Community 555 - "_version.py"
+Cohesion: 0.24
+Nodes (6): Single source of truth for the CLI version string. Reads ``vibe-trading-ai``'s…, Read ``[project] version`` from the repo's ``pyproject.toml``. Returns: The…, _version_from_pyproject(), _declared_version(), Regression tests for issue #156 — CLI version must track pyproject.toml. The…, test_pyproject_fallback_matches_declared_version()
 
 ### Community 556 - "scoring.py"
 Cohesion: 0.40
@@ -3368,13 +3405,13 @@ Nodes (5): _is_intentionally_absent(), Guard the AI contributor guide against si
 Cohesion: 0.31
 Nodes (11): enrich_price_frames_with_events(), Attach a point-in-time-safe ``event_score`` column to price frames. For each…, _events(), _price_frame(), DataFrame, No-look-ahead guarantee for RSSHub event enrichment. Echoes the discipline of…, Returns a fixed event frame verbatim (ignores ``as_of``). Ignoring ``as_of`` is…, _StubProvider (+3 more)
 
-### Community 564 - "._is_group_message_for_bot"
-Cohesion: 0.22
-Nodes (4): Extract text from the message being replied to, if any., Load bot identity once and reuse it for mention/reply checks., Check Telegram mention entities against the bot username., Allow group messages when policy is open, @mentioned, or replying to the bot.
+### Community 564 - "_to_yahoo_interval"
+Cohesion: 0.31
+Nodes (4): Map a project interval string to Yahoo's chart interval string. Args: interval:…, _to_yahoo_interval(), _to_yahoo_interval maps project intervals to Yahoo's strings., TestIntervalMap
 
-### Community 566 - "commands/session.py"
-Cohesion: 0.22
-Nodes (13): cmd_export(), cmd_history(), cmd_search(), Any, Console, ``/history``, ``/search``, ``/export`` — session lifecycle commands. *…, Return the shared CLI console., List recent sessions via legacy ``cmd_sessions``. (+5 more)
+### Community 566 - "ThinkingSpinner"
+Cohesion: 0.10
+Nodes (16): _pick_verb(), BaseException, Console, Thinking spinner — picks a random verb on entry, hides on exit. Wraps…, Swap the verb mid-run (e.g. ``"Backtesting…"`` once tools fire)., Yield a context manager that hides the spinner inside its block. Useful when…, Inner context manager returned by :meth:`ThinkingSpinner.pause`., Pick a thinking verb via the shared helper, with a local fallback. (+8 more)
 
 ### Community 568 - "demo_smoke_test.py"
 Cohesion: 0.60
@@ -3394,7 +3431,7 @@ Nodes (8): _eastmoney_payload(), Tests for the search_symbol tool. All HTTP is m
 
 ### Community 572 - "auto_trade_routes.py"
 Cohesion: 0.07
-Nodes (29): AutoTradeConfigurationResponse, AutoTradeConfigurationValues, AutoTradeExecutionLogResponse, BrokerCredentialResponse, BrokerCredentialValues, CreateAutoTradeConfigurationRequest, CreateBrokerCredentialRequest, _encrypted_values() (+21 more)
+Nodes (28): AutoTradeConfigurationResponse, AutoTradeConfigurationValues, AutoTradeExecutionLogResponse, BrokerCredentialResponse, BrokerCredentialValues, CreateAutoTradeConfigurationRequest, CreateBrokerCredentialRequest, _encrypted_values() (+20 more)
 
 ### Community 573 - "🎉 Handoff Sesi 4 Agustus 2026 — PROJECT COMPLETE: All Phases Finished ✅🎊"
 Cohesion: 0.13
@@ -3520,49 +3557,53 @@ Nodes (3): CaptureFixture, --allowlist prints the allowlist and exits 0., TestAl
 Cohesion: 0.12
 Nodes (15): 1. Funding Rate Mechanics, 2. Funding Rate Signal Framework, 3. Spot-Futures Basis Analysis, 4. Cash-Carry Arbitrage (Delta-Neutral), 5. Cross-Exchange Funding Arbitrage, 6. Funding Rate as Directional Indicator, 7. Open Interest × Funding Rate Matrix, Core Concepts (+7 more)
 
-### Community 610 - "test_no_set_mandate_tool.py"
-Cohesion: 0.22
-Nodes (9): _py_files(), Path, Structural guarantee: nothing the agent can reach writes the mandate store.…, The assembled tool registry exposes no tool that can write a mandate., No agent-importable live module opens the mandate file in a write mode., test_agent_reachable_modules_never_open_mandate_for_write(), test_no_self_authorization_named_function_in_live(), test_registry_has_no_mandate_write_tool() (+1 more)
+### Community 610 - "chat_log.py"
+Cohesion: 0.27
+Nodes (9): Console, Text, Minimal chat-log renderer — stub for the demo. Iterates a list of turn dicts…, Return ``console`` if given, else the shared CLI console., Compose the meta header line for one turn., Print past turns to ``console``. Args: turns: Iterable of turn dicts (see…, render_history(), _render_turn() (+1 more)
 
 ### Community 611 - "tap_env"
 Cohesion: 0.67
 Nodes (3): fixture, Configure TAP purely via the environment (no .env scanning)., tap_env()
 
-### Community 612 - "_env"
-Cohesion: 0.29
-Nodes (8): _env(), _literal_safe_value(), Any, Environment, _python_literal(), Return a value that can be faithfully represented as a Python literal., Render ``value`` as source text for a safe Python literal., Jinja2 environment rooted at our templates directory.
+### Community 612 - "_require_auth"
+Cohesion: 0.24
+Nodes (10): _events_from_usage(), _host(), Any, get, HTTPAuthorizationCredentials, Request, Delegate read auth to api_server.require_auth., Delegate write auth to api_server.require_settings_write_auth. (+2 more)
 
-### Community 625 - "test_qveris_routes.py"
-Cohesion: 0.27
-Nodes (12): client(), fixture, MonkeyPatch, Path, TestClient, test_get_config_returns_redacted_unconfigured_shape(), test_put_config_empty_key_preserves_existing_key(), test_put_config_persists_and_never_returns_plain_key() (+4 more)
+### Community 625 - "test_cli_channels.py"
+Cohesion: 0.22
+Nodes (9): parametrize, Path, CLI coverage for IM channel commands., test_channels_api_call_sends_configured_bearer_token(), test_channels_pairing_command_runs_against_local_store(), test_channels_parser_accepts_status_start_stop_login_and_pairing(), test_channels_start_stop_return_failure_in_every_output_mode(), test_channels_start_stop_return_success_in_every_output_mode() (+1 more)
 
 ### Community 626 - "Task Handoff - Sesi 4 Agustus 2026 (Unit Tests MT5 Integration)"
 Cohesion: 0.10
-Nodes (21): **1. Sync Conversion for Testing**, **2. Timezone-Aware Validation**, **3. Direct App Registration**, **4. Frozen Dataclasses**, **5. Soft Invalidaton Pattern**, **Baru Created:**, 🔧 Command Penting yang Dijalankan, **Commands untuk Start Session Baru:** (+13 more)
+Nodes (19): **Baru Created:**, 🔧 Command Penting yang Dijalankan, **Commands untuk Start Session Baru:**, **Debugging Commands:**, **Deleted Removed:**, ⚡ Error / Kendala yang Tersisa, 📁 File yang Dibuat / Diubah / Dihapus, **Graphify Status** (+11 more)
 
 ### Community 627 - "test_precision_analysis_api.py"
 Cohesion: 0.47
 Nodes (7): _csv(), TestClient, test_analyze_is_user_scoped(), test_analyze_rejects_non_positive_pip_size(), test_analyze_rejects_too_short_dataset(), test_analyze_uploaded_dataset_returns_contract_sections_and_metadata(), _upload()
 
-### Community 628 - ".query_events"
-Cohesion: 0.19
-Nodes (10): _knowable_date(), _parse_pubdate(), DataFrame, Timestamp, Return the date an item becomes actionable (post-cutoff rolls to next day).…, Return registered feed names in stable order., Fetch and normalise feed items, dropping anything not yet knowable. Args:…, Parse RSS 2.0 ``<item>`` nodes into normalised event rows. Uses ``defusedxml``… (+2 more)
+### Community 628 - "rsshub_events.py"
+Cohesion: 0.11
+Nodes (19): _clean_summary(), EventProviderError, _knowable_date(), _parse_pubdate(), DataFrame, Exception, Timestamp, RSSHub event/sentiment provider with point-in-time safeguards. A news /… (+11 more)
 
 ### Community 630 - "test_data_routing_sources_subset.py"
 Cohesion: 0.19
 Nodes (13): _capability_markets_in_skill(), Guard test: data-routing SKILL.md can never drift from the loader registry. The…, Extract the market-coverage cell for each Capability-table tool. Returns:…, The Capability table must name every market each tool's description covers.…, Extract the source names listed in the SKILL.md Source Overview table. Returns:…, The skill must actually enumerate sources (guards a broken parse / empty doc)., Every source named in the skill must be registered in VALID_SOURCES., The eight newly registered sources must each appear in the Source Overview. (+5 more)
 
 ### Community 632 - "Handoff Sesi 4 Agustus 2026 — Project Complete: All Phases Finished ✅🎉"
-Cohesion: 0.12
-Nodes (17): 🔧 Command Penting, 🔧 Command Penting Yang Dijalankan, Commands untuk Start Session Baru:, ❌ Error/Kendala Tersisa, 📁 File Summary, Handoff Sesi 4 Agustus 2026 — Project Complete: All Phases Finished ✅🎉, ✅ Hasil Validasi, 💡 Keputusan Teknis (+9 more)
+Cohesion: 0.10
+Nodes (21): Backend Endpoints ~45 APIs:, 🔧 Command Penting, 🔧 Command Penting Yang Dijalankan, Commands untuk Start Session Baru:, Components ~50 files:, ❌ Error/Kendala Tersisa, 📁 File Summary, 📁 File Summary Sesi Ini (Phase 5 Complete) (+13 more)
 
-### Community 635 - "test_readonly_default.py"
-Cohesion: 0.04
-Nodes (57): is_live_broker(), Decide whether to register a live channel given session interactivity. SPEC…, Re-wrap a live broker's discovered tools by read/write class. READ tools are…, Return whether an MCP server denotes a live-trading broker. Detection is by…, should_register_live_channel(), wrap_live_broker_tools(), MCPRemoteTool, BaseTool wrapper for a discovered remote MCP tool. (+49 more)
+### Community 634 - "_sig_render_table"
+Cohesion: 0.24
+Nodes (9): Strip inline markdown from a table cell for plain-text rendering., Split a markdown table row, keeping empty leading/trailing cells.…, Render a markdown pipe-table as fixed-width plain text., _sig_render_table(), _sig_split_row(), _sig_strip_cell(), Signal markdown tables must keep empty leading/trailing columns., test_sig_render_table_keeps_leading_empty_header_with_row_labels() (+1 more)
 
-### Community 636 - "alpha101/alpha_008.py"
-Cohesion: 0.39
-Nodes (7): compute(), _delay(), DataFrame, Rolling window sum; warmup -> NaN., Backward shift by n (lookahead-safe; n>=1 required)., Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum()
+### Community 635 - "ToolClass"
+Cohesion: 0.03
+Nodes (105): classify_tool(), Enum, str, Read/write classification for live-channel remote MCP tools. We do not own the…, Read/write classification of a remote MCP tool. Attributes: READ: Observed to…, Classify one remote tool via the 3-tier precedence ladder. The curated map is…, ToolClass, _broker_for() (+97 more)
+
+### Community 636 - "alpha101/alpha_024.py"
+Cohesion: 0.33
+Nodes (9): compute(), _delay(), DataFrame, Rolling window sum; warmup -> NaN., Backward shift by n (lookahead-safe; n>=1 required)., Vectorised ternary `(cond ? a : b)` returning a DataFrame. ``cond`` is a…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum() (+1 more)
 
 ### Community 637 - "alpha101/alpha_047.py"
 Cohesion: 0.33
@@ -3612,9 +3653,9 @@ Nodes (6): Tests for the get_block_trades tool. All HTTP is mocked at…, Error 
 Cohesion: 0.20
 Nodes (10): Command Penting, Error / Kendala Tersisa, File Dibuat / Diubah / Dihapus, Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Bot dan Launcher One-Click, Hasil Validasi, Keputusan Teknis, Next Step, Pekerjaan Selesai (+2 more)
 
-### Community 667 - "rsshub_events.py"
-Cohesion: 0.29
-Nodes (6): _clean_summary(), default_lexicon_scorer(), RSSHub event/sentiment provider with point-in-time safeguards. A news /…, Score text in ``[-1, 1]`` by net positive/negative term frequency. A…, Collapse whitespace and strip commas so the value is CSV-safe., test_default_lexicon_scorer_bounds()
+### Community 667 - "alpha101/alpha_051.py"
+Cohesion: 0.33
+Nodes (9): compute(), _delay(), _make_one(), DataFrame, Backward shift by n (lookahead-safe; n>=1 required)., A DataFrame of 1.0 with the same shape/index/columns as ``ref``., Vectorised ternary `(cond ? a : b)` returning a DataFrame. ``cond`` is a…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame. (+1 more)
 
 ### Community 668 - "接口列表"
 Cohesion: 0.14
@@ -3640,17 +3681,17 @@ Nodes (13): 1. Calendar Spread, 2. Volatility Arbitrage, 3. Skew Trade, 4. Optio
 Cohesion: 0.14
 Nodes (13): 1. Stablecoin Supply as Market Indicator, 2. Mint/Burn Event Analysis, 3. Exchange Stablecoin Reserves, 4. Stablecoin Dominance, 5. On-Chain Stablecoin Velocity, 6. Chain-Level Stablecoin Distribution, 7. Composite Stablecoin Signal, Core Concepts (+5 more)
 
-### Community 674 - "alpha101/alpha_027.py"
-Cohesion: 0.33
-Nodes (9): compute(), _make_one(), DataFrame, Rolling window sum; warmup -> NaN., A DataFrame of 1.0 with the same shape/index/columns as ``ref``., Vectorised ternary `(cond ? a : b)` returning a DataFrame. ``cond`` is a…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum() (+1 more)
+### Community 674 - "TradeClassifier"
+Cohesion: 0.09
+Nodes (32): AnalyticsResult, Any, Path, Analytics orchestration over a replay journal and session., Deterministic diagnostics for historical replay results., calculate_performance_metrics(), _longest_streak(), _maximum_drawdown() (+24 more)
 
-### Community 675 - "alpha101/alpha_063.py"
-Cohesion: 0.39
-Nodes (7): compute(), _ind_neutralize(), DataFrame, Rolling window sum; warmup -> NaN., Industry/sector neutralize: subtract the row-wise sector group mean. If panel…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum()
+### Community 675 - "Handoff Sesi 6 Agustus 2026 — Fixed Controls dan Konversi Pip XAUUSD"
+Cohesion: 0.20
+Nodes (10): Command dan Validasi, File Sesi Ini, Handoff Sesi 6 Agustus 2026 — Fixed Controls dan Konversi Pip XAUUSD, Implementasi, Kendala dan Risiko Tersisa, Keputusan Teknis, Next Step, Perilaku yang Dikunci Test (+2 more)
 
-### Community 676 - "test_qveris_minute_granularity_tokens.py"
-Cohesion: 0.33
-Nodes (8): _granularity_tokens(), Return (wanted, unwanted) capability-text tokens for a bar interval.…, QVeris must rank minute intervals as intraday, not fall through to daily., _sample_results(), test_five_minute_tokens_are_intraday(), test_month_token_stays_monthly_not_minute(), test_one_minute_prefers_intraday_capability_over_daily(), test_one_minute_tokens_are_intraday()
+### Community 676 - "test_dhan_period_reject.py"
+Cohesion: 0.24
+Nodes (5): Dhan trading connector. Read-only and paper/live account access via the…, _FakeDhanClient, Dhan history must reject unsupported periods instead of serving daily bars., test_dhan_keeps_supported_daily_and_intraday(), test_dhan_rejects_hour_period_instead_of_daily()
 
 ### Community 677 - "test_stock_profile_tool.py"
 Cohesion: 0.18
@@ -3697,8 +3738,8 @@ Cohesion: 0.33
 Nodes (4): get_env_or(), Read an env var with a backward-compatible alias fallback. Several env vars…, Verify the env-var fallback helper., TestGetEnvOr
 
 ### Community 688 - "get_json"
-Cohesion: 0.06
-Nodes (52): fetch_kline(), get_json(), _parse_kline_row(), _parse_us_secid(), Any, Extract a US ``<market>.<code>`` secid from a search/suggest payload.…, Decode a possibly JSONP-wrapped body to a Python object. The suggest endpoint…, Resolve a US ticker to its Eastmoney secid via search, with caching. Args:… (+44 more)
+Cohesion: 0.09
+Nodes (32): fetch_kline(), get_json(), _min_interval(), _parse_kline_row(), _parse_us_secid(), Any, Extract a US ``<market>.<code>`` secid from a search/suggest payload.…, Decode a possibly JSONP-wrapped body to a Python object. The suggest endpoint… (+24 more)
 
 ### Community 689 - "ADR / H-Share / A-Share Cross-Listing Analysis"
 Cohesion: 0.17
@@ -3716,21 +3757,25 @@ Nodes (11): Combined Mode, Common Calendar Effects Reference, Common Pitfalls, D
 Cohesion: 0.17
 Nodes (11): Shadow Account — 影子账户, 产出解读, 何时触发, 反事实 Top 5, 回测矩阵, 对话模板, 工作流（四步）, 差值归因（PDF Section 5 — gut punch） (+3 more)
 
+### Community 693 - "Handoff Sesi 6 Agustus 2026 — Fixed Controls dan Konversi Pip XAUUSD"
+Cohesion: 0.20
+Nodes (10): Command Penting, Contoh Fixed Controls, File Dibuat / Diubah / Dihapus, Handoff Sesi 6 Agustus 2026 — Fixed Controls dan Konversi Pip XAUUSD, Hasil Validasi, Next Step, Pekerjaan Belum Selesai / Risiko, Pekerjaan Selesai (+2 more)
+
 ### Community 694 - "NgodingPakeAI — Codebase Sync"
 Cohesion: 0.17
 Nodes (11): Command reference, Hard rules — do not violate, If you get stuck (don't go silent), Instructions — run these in order, NgodingPakeAI — Codebase Sync, Prerequisites, Privacy modes, Putting a task back to `todo` (reset) — only when the USER asks (+3 more)
 
-### Community 695 - ".tick"
-Cohesion: 0.29
-Nodes (3): Start the background loop. Idempotent. When disabled, this is a no-op., Run one poll/dispatch pass. Args: now_ms: Optional explicit reference time.…, Reset jobs left ``RUNNING`` by a previous executor process. This runs at most…
+### Community 695 - "compute_edge_density"
+Cohesion: 0.26
+Nodes (10): compute_edge_density(), Reduce rolling correlation matrices to an edge-density series. Edge density is…, _calm_block(), _fused_block(), ndarray, Stack return blocks into a date-indexed multi-asset returns frame., Independent idiosyncratic returns — pairwise correlations near zero., One common factor dominating — pairwise correlations near one. (+2 more)
 
 ### Community 696 - "data-feed.ts"
 Cohesion: 0.22
 Nodes (8): dataFeedPreview, DataFeedSnapshot, generateDataFeedSnapshot(), generateOHLCBar(), generateTick(), OHLCBar, TickData, DataFeedPusher()
 
-### Community 697 - "TestResolveSecidUS"
-Cohesion: 0.25
-Nodes (3): US tickers resolve via the search endpoint and cache the result., A non-JSONP body whose strings contain parens must parse intact. Regression for…, TestResolveSecidUS
+### Community 697 - "test_qveris_routes.py"
+Cohesion: 0.31
+Nodes (9): client(), fixture, Path, TestClient, test_get_config_returns_redacted_unconfigured_shape(), test_put_config_empty_key_preserves_existing_key(), test_put_config_persists_and_never_returns_plain_key(), test_put_config_rejects_bad_mode_and_bad_url() (+1 more)
 
 ### Community 698 - "Data Routing (Router)"
 Cohesion: 0.18
@@ -3752,25 +3797,21 @@ Nodes (10): Common Pitfalls, Complete SignalEngine Example, Dependencies, Featur
 Cohesion: 0.18
 Nodes (10): 1. Discover with `qveris_search`, 2. Inspect with `qveris_inspect`, 3. Call with `qveris_execute`, Balance and Usage, Billing and Modes, Choosing a Capability, QVeris, References (+2 more)
 
-### Community 703 - "build_swarm_registry"
-Cohesion: 0.12
-Nodes (26): build_swarm_registry(), _prune_agent_config_for_swarm_tools(), Build a per-worker registry that merges local + remote MCP tools. Swarm workers…, Keep only MCP servers whose local tool prefix appears in ``tool_names``., _make_agent_config(), _make_fake_wrappers(), Any, M2 — SWARM external MCP tools: registry assembly regression tests. Covers… (+18 more)
-
 ### Community 704 - "Handoff Sesi 4 Agustus 2026 — Backend First: MT5 Integration & MCP Bridge Infrastructure"
 Cohesion: 0.12
 Nodes (16): 1. Database Schema v15 Migration, 2. Service Layer Implementation, 3. FastAPI Routes Registration, 4. Frontend Data Feed Stub (Complete from Previous Loop), Baru (6 file):, 📄 File Dibuat / Diubah, 📊 Graphify Status, Handoff Sesi 4 Agustus 2026 — Backend First: MT5 Integration & MCP Bridge Infrastructure (+8 more)
 
-### Community 705 - "get_market_data"
+### Community 705 - "TestTushareE2E"
 Cohesion: 0.33
-Nodes (6): _get_loader(), get_market_data(), Get loader class via registry with fallback support., Fetch OHLCV market data for stocks, crypto, or mixed symbols. Supported…, get_loader(), Get loader class via registry with fallback support.
+Nodes (3): skipif, Real API calls — requires TUSHARE_TOKEN env var., TestTushareE2E
 
 ### Community 706 - "ts_rank"
-Cohesion: 0.03
-Nodes (83): Rolling rank (last value's rank within the n-window), per column. Warmup (first…, ts_rank(), compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame. (+75 more)
+Cohesion: 0.02
+Nodes (87): Rolling rank (last value's rank within the n-window), per column. Warmup (first…, ts_rank(), compute(), DataFrame, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., compute(), _make_one(), DataFrame (+79 more)
 
-### Community 707 - "alpha101/alpha_051.py"
-Cohesion: 0.33
-Nodes (9): compute(), _delay(), _make_one(), DataFrame, Backward shift by n (lookahead-safe; n>=1 required)., A DataFrame of 1.0 with the same shape/index/columns as ``ref``., Vectorised ternary `(cond ? a : b)` returning a DataFrame. ``cond`` is a…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame. (+1 more)
+### Community 707 - "Handoff Sesi 6 Agustus 2026 — Finalisasi Persistensi MCP Token"
+Cohesion: 0.22
+Nodes (9): Command dan Hasil Validasi, File, Handoff Sesi 6 Agustus 2026 — Finalisasi Persistensi MCP Token, Implementasi Selesai, Kendala Tersisa, Keputusan Teknis, Next Step, Status Graphify (+1 more)
 
 ### Community 708 - "Kakushadze 101 Formulaic Alphas — License & Provenance"
 Cohesion: 0.20
@@ -3816,9 +3857,9 @@ Nodes (7): CorruptStoreError, _default_store_path(), Path, RuntimeError, Return 
 Cohesion: 0.18
 Nodes (11): 🔧 Command Penting, ⚠️ Error / Kendala Tersisa, 📁 File Dibuat / Diubah / Dihapus, Handoff Sesi 5 Agustus 2026 — Debug `/auto-trade`: Settings, Blank Refresh, NEXT CYCLE, Start Button, ✅ Hasil Validasi, 🔍 Investigasi Tombol START AUTO TRADE — BELUM SELESAI, 💡 Keputusan Teknis, 🔄 Next Step untuk Chat Berikutnya (+3 more)
 
-### Community 719 - "TestTushareE2E"
-Cohesion: 0.33
-Nodes (3): skipif, Real API calls — requires TUSHARE_TOKEN env var., TestTushareE2E
+### Community 719 - "test_reasoning_delta_throttle.py"
+Cohesion: 0.20
+Nodes (11): _build_agent(), Any, Path, Regression test: reasoning_delta SSE events are throttled. Long DeepSeek/Kimi…, Minimal stand-in for ChatLLM's response object., LLM stub that fires many reasoning chunks in a tight loop., Build an AgentLoop with a real (but shell-free) registry and a stub LLM. Args:…, A burst of reasoning chunks must collapse to few events, first one instant. (+3 more)
 
 ### Community 720 - "Alpha Zoo"
 Cohesion: 0.22
@@ -3840,9 +3881,9 @@ Nodes (8): Decay Scan Report, Decayed/Critical Factors (action required), Detail
 Cohesion: 0.22
 Nodes (8): Common Pitfalls, Dependencies, Key Implementation Details, Parameters, Purpose, Signal Convention, Signal Logic, Volatility Strategy
 
-### Community 725 - "test_auto_trade_config_api.py"
-Cohesion: 0.67
-Nodes (5): _payload(), _prepare_users(), test_auto_trade_configuration_crud_contract_is_user_scoped(), test_auto_trade_configuration_rejects_unsafe_limits(), test_auto_trade_configuration_requires_existing_user()
+### Community 725 - "Handoff Sesi 6 Agustus 2026 — Finalisasi Persistensi MCP Token"
+Cohesion: 0.22
+Nodes (9): Belum Selesai / Risiko, Command dan Validasi, File, Handoff Sesi 6 Agustus 2026 — Finalisasi Persistensi MCP Token, Keputusan Teknis, Next Step, Ringkasan, Selesai (+1 more)
 
 ### Community 726 - "Handoff Sesi 5 Agustus 2026 — Debug Halaman `/auto-trade` (Settings, Blank Refresh, NEXT CYCLE, Start)"
 Cohesion: 0.18
@@ -3861,28 +3902,40 @@ Cohesion: 0.22
 Nodes (9): Config reference, 🔌 Loading Tools from External MCP Servers (MCP Client Mode), Official IBKR MCP read-only probe, Per-session overrides (API), Quick start, 🔐 TAP Mode — full credential isolation & human-approved writes, Tool naming, Trading connectors: fastest path (+1 more)
 
 ### Community 730 - "Session Log"
-Cohesion: 0.22
+Cohesion: 0.25
 Nodes (8): Commands untuk Start:, Handoff Sesi 3 Agustus 2026 — EA Bridge, MT5 Direct UI, Precision Execution, Handoff Sesi Awal — Fase 1-4 Completeness, Next Step untuk Chat Berikutnya, Pilihan Lanjutan (User Choice):, Rekomendasi Saya:, Ringkasan Historis Handoff (Sebelum Sesi Ini), Session Log
 
-### Community 731 - "Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Auto Trade dan Launcher One-Click"
-Cohesion: 0.22
-Nodes (9): Command dan Validasi, File Sesi Ini, Graphify, Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Auto Trade dan Launcher One-Click, Implementasi Selesai, Kendala dan Catatan, Keputusan Teknis, Next Step (+1 more)
+### Community 731 - "Handoff Sesi 6 Agustus 2026 — Persistensi MCP Token di Auto Trade"
+Cohesion: 0.20
+Nodes (10): Command dan Validasi, File Sesi Ini, Handoff Sesi 6 Agustus 2026 — Persistensi MCP Token di Auto Trade, Implementasi, Kendala dan Risiko Tersisa, Keputusan Teknis, Next Step, Perilaku Setelah Perbaikan (+2 more)
 
 ### Community 732 - ".__init__"
 Cohesion: 0.40
 Nodes (3): Any, Initialize the heartbeat timer (not started until ``__enter__``). Args:…, Return a JSON-serializable dict for SSE payloads.
 
-### Community 733 - "_expand_artifacts_spec"
-Cohesion: 0.50
-Nodes (4): _expand_artifacts_spec(), Any, Expand artifacts_spec into a name -> metadata dict. Args: spec: Raw artifact…, Initialize runner. Args: timeout: Max subprocess runtime in seconds.…
+### Community 733 - "._format_telegram_error"
+Cohesion: 0.25
+Nodes (5): Exception, Return a short, readable error summary for logs., Keep long-polling network failures to a single readable line., Log polling / handler errors instead of silently swallowing them., True when the error indicates sendRichMessage is unavailable.
 
-### Community 734 - "_dispatch_data"
-Cohesion: 0.50
-Nodes (4): cmd_qveris_usage(), _dispatch_data(), Show recent QVeris usage events., Dispatch user-facing data-routing commands.
+### Community 734 - "._is_group_message_for_bot"
+Cohesion: 0.22
+Nodes (4): Extract text from the message being replied to, if any., Load bot identity once and reuse it for mention/reply checks., Check Telegram mention entities against the bot username., Allow group messages when policy is open, @mentioned, or replying to the bot.
+
+### Community 735 - "SignalEngine"
+Cohesion: 0.31
+Nodes (4): DataFrame, Series, Cross-market strategy example: vol-adjusted dual-MA with per-market parameters.…, SignalEngine
+
+### Community 736 - "test_auto_trade_broker_credentials_api.py"
+Cohesion: 0.39
+Nodes (7): _configure(), _prepare_users(), _stored_credential(), test_broker_credential_create_update_rotate_contract(), test_broker_credential_routes_require_auth_for_non_local_clients(), test_broker_credentials_are_user_scoped_and_validate_input(), test_broker_credentials_fail_closed_without_valid_master_key()
 
 ### Community 737 - "rank"
 Cohesion: 0.03
-Nodes (74): rank(), Cross-sectional percentile rank per row (axis=1, ties=average, pct=True). NaN…, compute(), DataFrame, Rolling window sum; warmup -> NaN., Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum(), compute() (+66 more)
+Nodes (76): rank(), Cross-sectional percentile rank per row (axis=1, ties=average, pct=True). NaN…, compute(), DataFrame, Rolling window sum; warmup -> NaN., Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum(), compute() (+68 more)
+
+### Community 738 - "_is_intraday_interval"
+Cohesion: 0.36
+Nodes (4): _is_intraday_interval(), Return whether *interval* is finer than one day (minute/hour bars). Daily-and-…, _is_intraday_interval splits minute/hour from day/week/month., TestIsIntradayInterval
 
 ### Community 739 - "一、信用分析框架"
 Cohesion: 0.25
@@ -3988,13 +4041,21 @@ Nodes (8): Path A: Docker（零配置）, Path B: Local install, Path C: MCP plu
 Cohesion: 0.25
 Nodes (7): Disclosure, Generated backtest code, Official channels & impersonation, Reporting a Vulnerability, Scope, Security Policy, Supported Versions
 
-### Community 767 - "AgentLoop"
-Cohesion: 0.04
-Nodes (65): AgentLoop, Update workspace memory counters after tool execution., ReAct Agent core loop. Attributes: registry: Tool registry. llm: ChatLLM…, Initialize AgentLoop. Args: registry: Tool registry. llm: ChatLLM client.…, Cancel the current loop. Sets a thread-safe flag polled at every iteration…, _chat_llm(), _Chunk, _EchoProbeTool (+57 more)
+### Community 765 - "infer_market"
+Cohesion: 0.31
+Nodes (3): infer_market(), Infer market key from a ticker symbol. Resolution order: 1. Crypto pair…, TestInferMarket
 
-### Community 768 - "longbridge/__init__.py"
+### Community 766 - "_is_supported"
+Cohesion: 0.36
+Nodes (4): _is_supported(), Return whether *code* is a symbol this loader handles. Covers US/HK/India…, _is_supported accepts US/HK/India suffixes only., TestSymbolGating
+
+### Community 767 - "BaseTool"
+Cohesion: 0.02
+Nodes (123): ContextBuilder: builds LLM message context for the ReAct AgentLoop., Initialize ContextBuilder. Args: registry: Tool registry. memory: Workspace…, Agent core module: ReAct AgentLoop, tool registry, context, workspace memory,…, Initialize AgentLoop. Args: registry: Tool registry. llm: ChatLLM client.…, Workspace memory: shared state across tool calls within a single run.…, Shared workspace state between tools during a single agent run. Attributes:…, Increment a counter and return the new value. Args: key: Counter key (typically…, Generate a state summary for the LLM. Includes run_dir and tool counters. This… (+115 more)
+
+### Community 768 - "_candlestick_enums"
 Cohesion: 0.33
-Nodes (3): Longbridge (LongPort OpenAPI) trading connector. Read-only account/market…, Longbridge connector period map must treat 1H/4H like the loader., test_candlestick_enums_1H_not_day()
+Nodes (4): _candlestick_enums(), Map a period string to the SDK ``Period`` and ``AdjustType`` enums., Longbridge connector period map must treat 1H/4H like the loader., test_candlestick_enums_1H_not_day()
 
 ### Community 769 - "分型（FX）"
 Cohesion: 0.29
@@ -4064,9 +4125,9 @@ Nodes (6): 代码示例, 接口介绍, 数据结果, 申万实时行情, 输入�
 Cohesion: 0.29
 Nodes (6): ST风险警示板股票, 代码示例, 接口介绍, 数据结果, 输入参数, 输出参数
 
-### Community 786 - "alpha101/alpha_030.py"
-Cohesion: 0.39
-Nodes (7): compute(), _delay(), DataFrame, Rolling window sum; warmup -> NaN., Backward shift by n (lookahead-safe; n>=1 required)., Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum()
+### Community 786 - "LotSizeCalculationService"
+Cohesion: 0.36
+Nodes (5): LotSizeCalculation, LotSizeCalculationService, Risk-based lot sizing with broker step and boundary enforcement., test_calculates_and_rounds_lot_down_to_broker_step(), test_lot_is_bounded_and_invalid_inputs_fail_closed()
 
 ### Community 787 - "ADR-012: Immutable Observation Archive and Deterministic Audit Chain"
 Cohesion: 0.29
@@ -4096,9 +4157,9 @@ Nodes (6): ADR-017: Controlled Evidence-only Shadow Assessment, Authority bounda
 Cohesion: 0.39
 Nodes (7): compute(), _delay(), DataFrame, Rolling window sum; warmup -> NaN., Backward shift by n (lookahead-safe; n>=1 required)., Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum()
 
-### Community 794 - "_QVerisBaseTool"
-Cohesion: 0.25
-Nodes (7): _QVerisBaseTool, QVerisInspectTool, QVerisSearchTool, Shared availability and client helpers for QVeris tools., Hide QVeris tools until explicitly enabled and keyed., Discover QVeris capabilities., Inspect full QVeris tool parameter schemas.
+### Community 794 - "alpha101/alpha_030.py"
+Cohesion: 0.39
+Nodes (7): compute(), _delay(), DataFrame, Rolling window sum; warmup -> NaN., Backward shift by n (lookahead-safe; n>=1 required)., Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum()
 
 ### Community 795 - "alpha101/alpha_052.py"
 Cohesion: 0.39
@@ -4128,9 +4189,9 @@ Nodes (6): 5.1 债券定价与久期计算, 5.2 收益率曲线拟合（Nelson-S
 Cohesion: 0.33
 Nodes (5): 交易所指数实时日线, 代码示例, 数据结果, 输入参数, 输出参数
 
-### Community 802 - "test_tiger_period_hour_case.py"
-Cohesion: 0.25
-Nodes (3): Tiger Brokers (TigerOpen) trading connector. Read-only account/market access in…, _FakeTigerQuote, Tiger period map must treat project-style 1H/4H as hour bars, not day.
+### Community 802 - "test_tushare_daily_alias_1d.py"
+Cohesion: 0.33
+Nodes (5): _daily_frame(), DataFrame, Tushare daily fetch must accept lowercase 1d instead of falling into minutes., ``1d`` used to miss ``!= "1D"`` and return empty from minute freq_map., test_lowercase_1d_uses_daily_path_not_minutes()
 
 ### Community 803 - "ADR-010: Versioned Trust-Policy Snapshots"
 Cohesion: 0.33
@@ -4144,21 +4205,29 @@ Nodes (5): ADR-011: Evidence-Only Verification Manifests, Consequences, Decision
 Cohesion: 0.33
 Nodes (5): Keputusan Teknis Penting, Project Context, Stack Teknologi, Struktur Folder, Tujuan Project
 
-### Community 807 - "FibonacciPremiumDiscountService"
-Cohesion: 0.36
-Nodes (5): FibonacciPremiumDiscountService, FibonacciValuation, Fibonacci dealing-range premium and discount classification., test_buy_discount_and_sell_premium_are_eligible(), test_wrong_valuation_is_ineligible_and_inputs_are_validated()
+### Community 806 - "Handoff Sesi 6 Agustus 2026 — Spread Fix, Setup Confirmation, Liquidity TP, Home Command Center, Investigasi Anomali Eksekusi"
+Cohesion: 0.18
+Nodes (11): Command Penting, Error / Kendala yang Tersisa, File Dibuat / Diubah / Dihapus, Handoff Sesi 6 Agustus 2026 — Spread Fix, Setup Confirmation, Liquidity TP, Home Command Center, Investigasi Anomali Eksekusi, Hasil Validasi, Keputusan Teknis, Next Step untuk Chat Berikutnya, Pekerjaan Belum Selesai (+3 more)
 
-### Community 808 - "test_academic_samples.py"
+### Community 807 - "alpha101/alpha_063.py"
+Cohesion: 0.39
+Nodes (7): compute(), _ind_neutralize(), DataFrame, Rolling window sum; warmup -> NaN., Industry/sector neutralize: subtract the row-wise sector group mean. If panel…, Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum()
+
+### Community 808 - "_truncate_body"
 Cohesion: 0.36
-Nodes (7): _build_panel(), _load_golden(), DataFrame, parametrize, Golden-output regression for ``zoo/academic`` factors. Generates the same…, Recreate the exact seeded panel used to write the golden CSVs., test_academic_factor_matches_golden()
+Nodes (4): Clip `content` to `limit` chars, leaving room for the marker., _truncate_body(), Regression for #109 — enforce MAX_ENTRY_CHARS at write with visible marker., TestTruncateBody
 
 ### Community 809 - "VPS Context"
 Cohesion: 0.33
 Nodes (5): Command Penting, Info Deployment VPS, Path Project di Server, Service yang Digunakan, VPS Context
 
-### Community 810 - "Handoff Sesi 6 Agustus 2026 — Spread Fix, Setup Confirmation, Liquidity TP, Home Command Center, Investigasi Anomali Eksekusi"
+### Community 810 - "Handoff Sesi 6 Agustus 2026 — Persistensi MCP Token di Auto Trade"
 Cohesion: 0.18
-Nodes (11): Command Penting, Error / Kendala yang Tersisa, File Dibuat / Diubah / Dihapus, Handoff Sesi 6 Agustus 2026 — Spread Fix, Setup Confirmation, Liquidity TP, Home Command Center, Investigasi Anomali Eksekusi, Hasil Validasi, Keputusan Teknis, Next Step untuk Chat Berikutnya, Pekerjaan Belum Selesai (+3 more)
+Nodes (11): Command Penting, Error / Kendala, File Dibuat / Diubah / Dihapus, Handoff Sesi 6 Agustus 2026 — Persistensi MCP Token di Auto Trade, Hasil Validasi, Keputusan Teknis, Next Step, Pekerjaan Belum Selesai / Risiko (+3 more)
+
+### Community 811 - "_QVerisBaseTool"
+Cohesion: 0.25
+Nodes (7): _QVerisBaseTool, QVerisInspectTool, QVerisSearchTool, Shared availability and client helpers for QVeris tools., Hide QVeris tools until explicitly enabled and keyed., Discover QVeris capabilities., Inspect full QVeris tool parameter schemas.
 
 ### Community 812 - "EaBridgeReconciliation.tsx"
 Cohesion: 0.25
@@ -4168,9 +4237,9 @@ Nodes (5): EaBridgeReconciliation(), initialRows, ReconciliationRow, Reconciliat
 Cohesion: 0.40
 Nodes (4): Academic Baseline Factors — Attributions and Stance, Disclosure: these are price-based proxies, not the original factors, Source attributions, Stance on factor definitions
 
-### Community 814 - "test_tushare_daily_alias_1d.py"
-Cohesion: 0.33
-Nodes (5): _daily_frame(), DataFrame, Tushare daily fetch must accept lowercase 1d instead of falling into minutes., ``1d`` used to miss ``!= "1D"`` and return empty from minute freq_map., test_lowercase_1d_uses_daily_path_not_minutes()
+### Community 814 - "RACRReversalDetectionService"
+Cohesion: 0.31
+Nodes (6): RACRReversalDetectionService, RACRReversalSignal, Liquidity-sweep and reclaim detection for R-ACR reversal signals., _bar(), test_detects_bullish_low_sweep_reclaim_and_bearish_high_sweep_rejection(), test_equal_extreme_and_sweep_without_reclaim_do_not_trigger()
 
 ### Community 815 - "Handoff Sesi Sebelumnya (Referensi Historis)"
 Cohesion: 0.12
@@ -4192,33 +4261,41 @@ Nodes (4): Agent Policy, Category Routing, Provider Head List, QVeris Coverage M
 Cohesion: 0.40
 Nodes (4): BOS (Break of Structure), ChoCH (Change of Character), 信号权重, 结构突破 (BOS) 与性质转变 (ChoCH)
 
+### Community 820 - "TestProfilesAndRegistration"
+Cohesion: 0.12
+Nodes (8): _order_classification(), Return ``(InstrumentType, AssetClass | None)`` for an order's mandate gate.…, fake_mt5(), fixture, MonkeyPatch, Path, TestAvailability, TestProfilesAndRegistration
+
 ### Community 821 - "Status Sebelumnya (Handoff Lengkap Sesi 31 Juli 2026)"
 Cohesion: 0.14
 Nodes (14): 1. Pekerjaan yang Sudah Dikerjakan, 2. File yang Dibuat atau Diubah, 3. Command Penting yang Dijalankan, 4. Error atau Masalah Terakhir, 5. Keputusan Teknis yang Diambil, 6. Next Step untuk Chat Baru, Akhir Fase 3 Backend — Rekomendasi Perbaikan, Backend dibuat/diubah (+6 more)
 
-### Community 822 - "test_auto_trade_broker_credentials_api.py"
-Cohesion: 0.46
-Nodes (7): _configure(), _prepare_users(), _stored_credential(), test_broker_credential_create_update_rotate_contract(), test_broker_credential_routes_require_auth_for_non_local_clients(), test_broker_credentials_are_user_scoped_and_validate_input(), test_broker_credentials_fail_closed_without_valid_master_key()
+### Community 822 - "regime.py"
+Cohesion: 0.25
+Nodes (8): _close_series(), DataFrame, Series, Extract the close-price series from a loader frame, date-indexed and sorted.…, _aligned_returns(), DataFrame, Correlation-regime timeline: edge density + hysteresis over time. Implements…, Build a date-aligned daily-returns frame (one column per code). Mirrors the…
 
-### Community 824 - "_build_parser"
+### Community 823 - "detect_regimes"
+Cohesion: 0.36
+Nodes (5): detect_regimes(), Series, Hysteresis (Schmitt-trigger) regime state machine on smoothed density. The…, Series, TestDetectRegimes
+
+### Community 824 - "test_cli_session_id.py"
 Cohesion: 0.10
-Nodes (17): _build_parser(), ArgumentParser, Build the CLI parser with subcommands and compatibility flags., parametrize, Path, CLI coverage for IM channel commands., test_channels_api_call_sends_configured_bearer_token(), test_channels_pairing_command_runs_against_local_store() (+9 more)
+Nodes (25): _ensure_session_id(), Return a host-owned session id, registering the session record if new. The…, _capture_session_ids(), fixture, Path, Regression tests for host session-id injection in non-interactive CLI runs.…, Re-registering an existing session returns the id rather than raising., Goals must accumulate across continuations, so the id has to be stable. (+17 more)
 
 ### Community 825 - "WelcomeScreen.tsx"
 Cohesion: 0.29
 Nodes (6): CAPABILITY_CHIP_KEYS, CATEGORIES, Category, Example, Props, WelcomeScreen()
 
-### Community 826 - "_SwarmDashboard"
-Cohesion: 0.33
-Nodes (4): Track swarm state and render a Rich Live panel., Register an agent by its ID if not already tracked. Return its key., Process a swarm event and update internal state., _SwarmDashboard
+### Community 826 - "test_tiger_period_hour_case.py"
+Cohesion: 0.25
+Nodes (3): Tiger Brokers (TigerOpen) trading connector. Read-only account/market access in…, _FakeTigerQuote, Tiger period map must treat project-style 1H/4H as hour bars, not day.
 
 ### Community 827 - "AI Research Bias Self-Check"
 Cohesion: 0.50
 Nodes (3): AI Research Bias Self-Check, How to apply, The biases and their corrections
 
-### Community 828 - "_require_auth"
-Cohesion: 0.24
-Nodes (10): _events_from_usage(), _host(), Any, get, HTTPAuthorizationCredentials, Request, Delegate read auth to api_server.require_auth., Delegate write auth to api_server.require_settings_write_auth. (+2 more)
+### Community 828 - "test_run_with_agent_keeps_event_loop_responsive_during_registry_build"
+Cohesion: 0.25
+Nodes (4): _DummyAgentLoop, _DummyIndex, Path, test_run_with_agent_keeps_event_loop_responsive_during_registry_build()
 
 ### Community 829 - "Vibe-Trading Wiki"
 Cohesion: 0.50
@@ -4228,9 +4305,25 @@ Nodes (3): Cloudflare Pages, Local preview, Vibe-Trading Wiki
 Cohesion: 0.22
 Nodes (9): Command dan Validasi, File Sesi Ini, Graphify, Handoff Sesi 6 Agustus 2026 — Spread Fix, Setup Confirmation, Liquidity TP, Home Command Center, Investigasi Anomali Eksekusi, Implementasi Selesai, Kendala dan Catatan, Keputusan Teknis, Next Step untuk Chat Berikutnya (+1 more)
 
+### Community 832 - "_dispatch_data"
+Cohesion: 0.33
+Nodes (6): cmd_qveris_mode(), cmd_qveris_usage(), _dispatch_data(), Switch QVeris between free and paid modes., Show recent QVeris usage events., Dispatch user-facing data-routing commands.
+
+### Community 1088 - "AgentTuningConfig"
+Cohesion: 0.33
+Nodes (4): AgentTuningConfig, Agent loop tuning, content-filter, scheduler, and feature flags. Sources:…, Verify get_env_config / reset_env_config singleton semantics., TestSingletonBehavior
+
+### Community 1090 - "_is_open_order"
+Cohesion: 0.33
+Nodes (6): _is_open_order(), _normalize_status(), Normalize a status to a bare lower-case member name for comparison., Return whether a mapped order row is still live (not in a terminal state)., Terminal-status filtering must work across SDK string forms., test_longbridge_status_normalization_variants()
+
 ### Community 1091 - "XAUUSD Diagnostics & Precision Execution"
 Cohesion: 0.29
 Nodes (7): Credential encryption, Extension API, Extension status, Local development, Safety model, Validation, XAUUSD Diagnostics & Precision Execution
+
+### Community 1092 - "Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Auto Trade dan Launcher One-Click"
+Cohesion: 0.22
+Nodes (9): Command dan Validasi, File Sesi Ini, Graphify, Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Auto Trade dan Launcher One-Click, Implementasi Selesai, Kendala dan Catatan, Keputusan Teknis, Next Step (+1 more)
 
 ### Community 1093 - "TradeHistoryTable.tsx"
 Cohesion: 0.25
@@ -4240,6 +4333,22 @@ Nodes (4): mockTrades, SourceType, TradeRecord, TradeStatus
 Cohesion: 0.33
 Nodes (5): Path, skipif, End-to-end OCR tests requiring RapidOCR., Create a scanned PDF with text, run _read_pdf, verify OCR output., TestOcrIntegration
 
+### Community 1095 - "test_data_sources_api.py"
+Cohesion: 0.47
+Nodes (5): _client_with_user(), TestClient, Contract tests for diagnostics data-source connection metadata., test_connect_data_source_creates_and_reconnects_metadata(), test_connect_data_source_rejects_missing_user_invalid_input_and_secrets()
+
+### Community 1096 - "test_notification_preferences_api.py"
+Cohesion: 0.47
+Nodes (5): _client(), TestClient, Contract tests for user notification preferences., test_get_returns_defaults_and_put_persists_complete_preferences(), test_notification_preferences_validate_user_and_quiet_hours()
+
+### Community 1097 - "test_session_store_messages_corrupt.py"
+Cohesion: 0.60
+Nodes (5): Path, Schema-bad messages.jsonl lines must be skipped like JSONDecodeError lines., _seed(), test_get_messages_skips_non_object_json_and_keeps_siblings(), test_get_messages_skips_unexpected_keys_and_keeps_siblings()
+
+### Community 1098 - "test_auto_trade_config_api.py"
+Cohesion: 0.67
+Nodes (5): _payload(), _prepare_users(), test_auto_trade_configuration_crud_contract_is_user_scoped(), test_auto_trade_configuration_rejects_unsafe_limits(), test_auto_trade_configuration_requires_existing_user()
+
 ### Community 1099 - "💡 예제"
 Cohesion: 0.33
 Nodes (6): Swarm 워크플로, 문서 업로드 & 분석, 시장 리서치, 💡 예제, 전략 & 백테스팅, 크로스세션 메모리
@@ -4248,21 +4357,45 @@ Nodes (6): Swarm 워크플로, 문서 업로드 & 분석, 시장 리서치, 💡
 Cohesion: 0.33
 Nodes (6): Cross-Session Memory, 💡 Examples, Market Research, Strategy & Backtesting, Swarm Workflows, Upload & Analyze Documents
 
+### Community 1101 - "._fetch_one"
+Cohesion: 0.50
+Nodes (3): DataFrame, Fetch OHLCV history keyed by the original project symbols. Args: codes: Project…, Fetch and normalize one symbol's chart, or ``None`` when unusable. Args: code:…
+
+### Community 1102 - "test_diagnostic_csv_api.py"
+Cohesion: 0.50
+Nodes (7): _client(), TestClient, Contract tests for diagnostics CSV trade ingestion., test_csv_import_creates_trades_and_accumulates_source_metrics(), test_csv_import_rejects_invalid_batch_without_partial_writes(), test_csv_import_validates_user_file_type_encoding_and_size(), _upload()
+
+### Community 1103 - "test_notifications_api.py"
+Cohesion: 0.47
+Nodes (5): TestClient, Contract tests for user-scoped diagnostic notifications., _seed(), test_notifications_are_newest_first_and_user_scoped(), test_notifications_support_unread_filter_limit_and_missing_user()
+
+### Community 1104 - "_expand_artifacts_spec"
+Cohesion: 0.50
+Nodes (4): _expand_artifacts_spec(), Any, Expand artifacts_spec into a name -> metadata dict. Args: spec: Raw artifact…, Initialize runner. Args: timeout: Max subprocess runtime in seconds.…
+
 ### Community 1105 - "Tasks"
 Cohesion: 0.17
 Nodes (11): Commands untuk Start:, File Utama Sesi Ini, Handoff Sesi 3 Agustus 2026 — EA Bridge, MT5 Direct, dan Precision UI Lanjutan, Next Step Chat Baru, Next Step untuk Chat Berikutnya, Pilihan Lanjutan (User Choice):, Rekomendasi Saya:, Status Terakhir (+3 more)
 
 ### Community 1106 - "precision_execution_routes.py"
-Cohesion: 0.08
-Nodes (28): OHLCVUploadResponse, PrecisionAnalysisRequest, PrecisionAnalysisResponse, PrecisionDataset, PrecisionDatasetStore, BaseModel, Upload and analyze bounded OHLCV datasets for precision execution., RiskCalculatorRequest (+20 more)
+Cohesion: 0.07
+Nodes (27): OHLCVUploadResponse, PrecisionAnalysisRequest, PrecisionAnalysisResponse, PrecisionDataset, PrecisionDatasetStore, Any, BaseModel, Upload and analyze bounded OHLCV datasets for precision execution. (+19 more)
+
+### Community 1108 - "feed_specs_from_config"
+Cohesion: 0.29
+Nodes (7): _event_feed_specs(), _maybe_enrich_events(), Parse the optional ``event_feeds`` feed definitions from backtest config.…, Attach a point-in-time-safe ``event_score`` column before signal generation., feed_specs_from_config(), Build :class:`FeedSpec` objects from backtest-config dicts. Each entry must…, test_feed_specs_from_config_parses_and_validates()
+
+### Community 1109 - "_backend.py"
+Cohesion: 0.33
+Nodes (6): _ensure_bottleneck(), __getattr__(), Any, Graceful bottleneck import with env-var override. Bottleneck provides…, Attempt to import bottleneck on first access. Reads…, Lazily resolve ``HAS_BOTTLENECK`` and ``bn`` on first attribute access.
+
+### Community 1110 - "stock_data_example.py"
+Cohesion: 0.70
+Nodes (4): get_daily_data(), get_financial_data(), get_stock_list(), main()
 
 ### Community 1112 - "decay_linear"
 Cohesion: 0.03
-Nodes (72): decay_linear(), Linear decay-weighted moving average, weights ``n, n-1, ..., 1`` normalized.…, compute(), DataFrame, Rolling window sum; warmup -> NaN., Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum(), compute() (+64 more)
-
-### Community 1114 - "RapidOcrEngine"
-Cohesion: 0.40
-Nodes (3): ndarray, RapidOcrEngine, Local OCR engine using RapidOCR (PaddleOCR-derived, ONNX Runtime).
+Nodes (77): decay_linear(), Linear decay-weighted moving average, weights ``n, n-1, ..., 1`` normalized.…, compute(), DataFrame, Rolling window sum; warmup -> NaN., Compute the alpha on the OHLCV+ panel and return a wide DataFrame., _rolling_sum(), compute() (+69 more)
 
 ### Community 1117 - "ActivityLogPanel.tsx"
 Cohesion: 0.33
@@ -4271,6 +4404,10 @@ Nodes (3): ActivityLog, LogType, mockLogs
 ### Community 1118 - "SignalCard.tsx"
 Cohesion: 0.33
 Nodes (4): mockSignals, SignalSide, SignalStatus, TradingSignal
+
+### Community 1120 - "_fused_episodes"
+Cohesion: 0.47
+Nodes (3): _fused_episodes(), Contiguous FUSED intervals within the returned window. ``end`` is the last date…, TestFusedEpisodes
 
 ### Community 1123 - "EaConnectionStatus.tsx"
 Cohesion: 0.40
@@ -4292,25 +4429,25 @@ Nodes (3): mockPositions, OpenPosition, PositionStatus
 Cohesion: 0.40
 Nodes (3): defaultSettings, ExecutionMode, ModeSetting
 
-### Community 1130 - "test_sdk_order_gate.py"
-Cohesion: 0.05
-Nodes (76): _counter_path(), daily_order_lock(), DailyOrderLockUnavailable, increment_daily_count(), RuntimeError, Per-broker daily order counter (UTC calendar day, atomic write). Shared by…, Return today's order count for ``broker`` (UTC rollover; 0 on any miss)., Persist ``broker``'s incremented count for today (atomic). Returns new count. (+68 more)
+### Community 1129 - "💡 Keputusan Teknis yang Diambil"
+Cohesion: 0.33
+Nodes (6): **1. Sync Conversion for Testing**, **2. Timezone-Aware Validation**, **3. Direct App Registration**, **4. Frozen Dataclasses**, **5. Soft Invalidaton Pattern**, 💡 Keputusan Teknis yang Diambil
+
+### Community 1130 - "live/paths.py"
+Cohesion: 0.10
+Nodes (26): _counter_path(), daily_order_lock(), DailyOrderLockUnavailable, increment_daily_count(), RuntimeError, Per-broker daily order counter (UTC calendar day, atomic write). Shared by…, Return today's order count for ``broker`` (UTC rollover; 0 on any miss)., Persist ``broker``'s incremented count for today (atomic). Returns new count. (+18 more)
+
+### Community 1133 - "default_hypotheses_path"
+Cohesion: 0.50
+Nodes (4): default_hypotheses_path(), Path, Initialize the registry. Args: path: Optional storage path. Defaults to env…, Return the configured hypotheses JSON path. Returns: Env override path when…
 
 ### Community 1134 - "FailSafeDashboard.tsx"
 Cohesion: 0.33
 Nodes (4): ConnectionTimeoutConfig(), ConnectionTimeoutConfigProps, PendingOrder, Position
 
-### Community 1138 - "📁 File Summary Sesi Ini (Phase 5 Complete)"
-Cohesion: 0.50
-Nodes (4): Backend Endpoints ~45 APIs:, Components ~50 files:, 📁 File Summary Sesi Ini (Phase 5 Complete), Frontend Pages (~38 files):
-
-### Community 1139 - "📊 Ringkasan Pekerjaan yang Diselesaikan"
-Cohesion: 0.50
-Nodes (4): 📊 Ringkasan Pekerjaan yang Diselesaikan, ✅ **Task #1: MT5 Models & Schema** - 23/23 PASSED, ✅ **Task #2: MT5 Services** - 28/28 PASSED, ⚠️ **Task #3: MT5 Routes (API)** - Tidak Lengkap (Infrastructure Fix Needed)
-
-### Community 1145 - "_isolated_qveris_config"
-Cohesion: 0.67
-Nodes (3): _isolated_qveris_config(), fixture, Default every test to disabled QVeris with no cache or request sleep.
+### Community 1140 - "fund_data_example.py"
+Cohesion: 0.70
+Nodes (4): get_fund_list(), get_fund_manager(), get_fund_nav(), main()
 
 ### Community 1152 - "AutoTradeBotEngine"
 Cohesion: 0.33
@@ -4320,29 +4457,25 @@ Nodes (4): AutoTradeBotEngine, Path, Background Auto Trade bot for MT5 demo acco
 Cohesion: 0.53
 Nodes (5): Assert-PortAvailable(), Get-TrackedProcess(), Start-TrackedProcess(), Test-LocalHttp(), Wait-ForHttp()
 
-### Community 1159 - "test_notifications_api.py"
-Cohesion: 0.47
-Nodes (5): TestClient, Contract tests for user-scoped diagnostic notifications., _seed(), test_notifications_are_newest_first_and_user_scoped(), test_notifications_support_unread_filter_limit_and_missing_user()
-
 ## Knowledge Gaps
-- **2589 isolated node(s):** `DhanSegment`, `ShoonyaExchange`, `name`, `private`, `version` (+2584 more)
+- **2642 isolated node(s):** `DhanSegment`, `ShoonyaExchange`, `name`, `private`, `version` (+2637 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **309 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **312 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `get_env_config()` connect `get_env_config` to `DataLoader`, `_legacy.py`, `goal/store.py`, `mcp_server.py`, `api_server.py`, `DataLoader`, `GoalStore`, `RSSHubEventProvider`, `PersistentMemory`, `_default_db_path`, `main.py`, `RememberTool`, `test_env_schema.py`, `goal.py`, `rsshub_events.py`, `qveris_loader.py`, `loaders/base.py`, `test_channels_runtime.py`, `ScheduledResearchExecutor`, `test_strategy_store.py`, `system_routes.py`, `LLMResponse`, `test_api_infrastructure.py`, `Position`, `test_system_routes.py`, `test_swarm_grounding.py`, `futu/sdk.py`, `DataLoader`, `halt_flag_set`, `HypothesisRegistry`, `LlmVisionOcrEngine`, `Hypothesis`, `EnvConfig`, `SwarmStore`, `path_utils.py`, `FredMacroTool`, `tushare_fallbacks.py`, `resolve_min_interval`, `main`, `openai_codex.py`, `run_bench`, `test_tiingo_loader.py`, `TushareFundamentalProvider`, `ChatLLM`, `SwarmRun`, `DataLoader`, `llm.py`, `IWenCaiSearchTool`, `scheduled_routes.py`, `FutuLoader`, `loop.py`, `WebSearchTool`, `swarm_tool.py`, `order_guard.py`, `qveris_routes.py`, `sec_edgar_client.py`, `alpha_bench_tool.py`, `ocr/engine.py`, `scheduled_research/executor.py`, `resolve_longbridge_credentials`, `_load_config`?**
-  _High betweenness centrality (0.157) - this node is a cross-community bridge._
-- **Why does `BaseTool` connect `BaseTool` to `symbol_search_tool.py`, `test_market_data.py`, `test_financial_rigor_tool.py`, `financial_statements_tool.py`, `alpha_zoo_tool.py`, `options_chain_tool.py`, `broker_dir`, `RememberTool`, `test_trading_connections.py`, `test_report_audit_tool.py`, `test_autopilot_phase3.py`, `_QVerisBaseTool`, `image_vision_tool.py`, `test_sdk_connectors.py`, `QVerisClient`, `SdmStatusTool`, `compute_ic_series`, `test_strategy_store.py`, `yahoo_client.py`, `test_trade_journal.py`, `LLMResponse`, `types.py`, `get_json`, `test_progress.py`, `BenchResult`, `HypothesisRegistry`, `eastmoney_client.py`, `Any`, `test_autopilot_tool.py`, `DragonTigerTool`, `path_utils.py`, `FredMacroTool`, `test_agent_loop_repeatable_tools.py`, `resolve_min_interval`, `PortfolioRiskXrayTool`, `.get`, `FundFlowTool`, `FinancialStatementsTool`, `Any`, `shadow_account_tool.py`, `risk_xray.py`, `StockNewsTool`, `IWenCaiSearchTool`, `doc_reader_tool.py`, `block_trades_tool.py`, `WebSearchTool`, `QVerisConfig`, `compare_alphas`, `test_options_pricing_degenerate.py`, `swarm_tool.py`, `northbound_tool.py`, `SaveSkillTool`, `qveris_routes.py`, `sec_edgar_client.py`, `alpha_bench_tool.py`, `BackgroundManager`, `tools/mcp.py`, `shareholder_count_tool.py`, `research_reports_tool.py`, `LiveOrderGuardTool`, `test_get_fundamentals_tool.py`, `test_pattern_tool.py`, `test_readonly_default.py`, `.patch`, `AgentLoop`?**
-  _High betweenness centrality (0.079) - this node is a cross-community bridge._
-- **Why does `safe_div()` connect `safe_div` to `ts_std`, `ts_min`, `ts_argmax`, `ts_cov`, `alpha101/alpha_030.py`, `alpha101/alpha_019.py`, `alpha101/alpha_052.py`, `ts_corr`, `delta`, `alpha101/alpha_027.py`, `alpha101/alpha_063.py`, `alpha101/alpha_091.py`, `alpha101/alpha_021.py`, `alpha101/alpha_024.py`, `alpha101/alpha_048.py`, `test_base.py`, `ts_rank`, `alpha101/alpha_051.py`, `scale`, `decay_linear`, `ts_mean`, `rank`, `alpha101/alpha_046.py`, `alpha101/alpha_049.py`, `alpha_bench_tool.py`, `test_get_fundamentals_tool.py`, `alpha101/alpha_008.py`, `alpha101/alpha_047.py`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+- **Why does `get_env_config()` connect `get_env_config` to `DataLoader`, `_legacy.py`, `Mandate`, `test_env_schema.py`, `mcp_server.py`, `api_server.py`, `DataLoader`, `GoalStore`, `RSSHubEventProvider`, `ts_argmax`, `goal/store.py`, `SemanticLinker`, `PersistentMemory`, `_default_db_path`, `main.py`, `MemoryLifecycle`, `ToolCallRequest`, `goal.py`, `ScheduledResearchExecutor`, `qveris_loader.py`, `loaders/base.py`, `RememberTool`, `test_strategy_store.py`, `yahoo_client.py`, `worker.py`, `test_api_infrastructure.py`, `system_routes.py`, `test_swarm_grounding.py`, `futu/sdk.py`, `DataLoader`, `halt_flag_set`, `LlmVisionOcrEngine`, `Hypothesis`, `EnvConfig`, `SwarmStore`, `tushare_fallbacks.py`, `FredMacroTool`, `AgentTuningConfig`, `openai_codex.py`, `run_bench`, `test_tiingo_loader.py`, `TushareFundamentalProvider`, `_backend.py`, `stock_data_example.py`, `register`, `IWenCaiSearchTool`, `scheduled_routes.py`, `FutuLoader`, `AgentLoop`, `WebSearchTool`, `swarm_tool.py`, `test_advisory.py`, `qveris_routes.py`, `sec_edgar_client.py`, `default_hypotheses_path`, `alpha_bench_tool.py`, `ocr/engine.py`, `rsshub_events.py`, `fund_data_example.py`, `scheduled_research/executor.py`, `resolve_longbridge_credentials`, `path_utils.py`?**
+  _High betweenness centrality (0.163) - this node is a cross-community bridge._
+- **Why does `BaseTool` connect `BaseTool` to `symbol_search_tool.py`, `test_financial_rigor_tool.py`, `trading/service.py`, `sec_filings_tool.py`, `read_url`, `financial_statements_tool.py`, `alpha_zoo_tool.py`, `broker_dir`, `MemoryLifecycle`, `test_shadow_account.py`, `test_report_audit_tool.py`, `test_autopilot_phase3.py`, `SectorInfoTool`, `test_sdk_connectors.py`, `RememberTool`, `SdmStatusTool`, `test_strategy_store.py`, `yahoo_client.py`, `SecFilingsTool`, `_QVerisBaseTool`, `test_trade_journal.py`, `worker.py`, `risk_xray.py`, `get_json`, `doc_reader_tool.py`, `goal_tool.py`, `HypothesisRegistry`, `lockup_expiry_tool.py`, `BenchResult`, `QVerisConfig`, `Any`, `autopilot_tool.py`, `redact_internal_paths`, `DragonTigerTool`, `FredMacroTool`, `test_trading_connections.py`, `FundFlowTool`, `LLMResponse`, `FinancialStatementsTool`, `StockNewsTool`, `IWenCaiSearchTool`, `margin_trading_tool.py`, `WebSearchTool`, `PortfolioRiskXrayTool`, `compare_alphas`, `block_trades_tool.py`, `test_options_pricing_degenerate.py`, `swarm_tool.py`, `northbound_tool.py`, `SaveSkillTool`, `qveris_routes.py`, `_FakeIB`, `alpha_bench_tool.py`, `BackgroundManager`, `MCPServerConfig`, `ShadowProfile`, `resolve_secid`, `research_reports_tool.py`, `test_pattern_tool.py`, `ToolClass`, `.patch`, `QVerisClient`?**
+  _High betweenness centrality (0.070) - this node is a cross-community bridge._
+- **Why does `safe_div()` connect `safe_div` to `ts_std`, `ts_min`, `ts_argmax`, `signed_power`, `alpha101/alpha_019.py`, `alpha101/alpha_030.py`, `alpha101/alpha_051.py`, `alpha101/alpha_052.py`, `ts_corr`, `delta`, `alpha101/alpha_021.py`, `alpha101/alpha_063.py`, `alpha101/alpha_048.py`, `test_base.py`, `ts_rank`, `scale`, `decay_linear`, `ts_mean`, `rank`, `alpha101/alpha_046.py`, `alpha101/alpha_049.py`, `alpha_bench_tool.py`, `test_get_fundamentals_tool.py`, `alpha101/alpha_024.py`, `alpha101/alpha_047.py`?**
+  _High betweenness centrality (0.063) - this node is a cross-community bridge._
 - **What connects `DhanSegment`, `ShoonyaExchange`, `name` to the rest of the system?**
-  _2589 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2642 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `safe_div` be split into smaller, more focused modules?**
-  _Cohesion score 0.007159662730353142 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.00724036155690832 - nodes in this community are weakly interconnected._
 - **Should `_legacy.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.013489409141583055 - nodes in this community are weakly interconnected._
-- **Should `DiagnosticRecommendationService` be split into smaller, more focused modules?**
-  _Cohesion score 0.04929971988795518 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.014675875058860461 - nodes in this community are weakly interconnected._
+- **Should `Position` be split into smaller, more focused modules?**
+  _Cohesion score 0.04019789734075448 - nodes in this community are weakly interconnected._

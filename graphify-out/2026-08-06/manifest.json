@@ -1235,8 +1235,8 @@
     "semantic_hash": "20841a6cac8566e17a869cac93fb539f"
   },
   "agent/src/diagnostics/store.py": {
-    "mtime": 1785771067.6068766,
-    "ast_hash": "7e857815c3ed1c87c9d0465df27820b9",
+    "mtime": 1786030486.3013642,
+    "ast_hash": "7ba86a90c89e2d64054589356aff0c10",
     "semantic_hash": ""
   },
   "agent/src/factors/__init__.py": {
@@ -8250,8 +8250,8 @@
     "semantic_hash": "494ca9b98b5b95872a2b6a1789ff3aca"
   },
   "frontend/src/pages/AutoTrade.tsx": {
-    "mtime": 1785902816.1794958,
-    "ast_hash": "c1ef388980968d5b9487d1ccaea4c0ea",
+    "mtime": 1786030486.3173807,
+    "ast_hash": "a7df38c489c2d4a6decae039cfa5ef68",
     "semantic_hash": ""
   },
   "frontend/src/pages/Compare.tsx": {
@@ -8690,13 +8690,13 @@
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1786025284.1620712,
-    "ast_hash": "711826c89f7425036b1d5b4e0969a133",
+    "mtime": 1786031073.4153757,
+    "ast_hash": "7314626b9f07d66a5c4490663ae25ab4",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1786025266.5201926,
-    "ast_hash": "faf99ea197737c4a73085d29d465798a",
+    "mtime": 1786031073.403366,
+    "ast_hash": "0b20c9417a68857134f6c6e188dd971b",
     "semantic_hash": ""
   },
   "VPS_CONTEXT.md": {
@@ -11035,13 +11035,13 @@
     "semantic_hash": ""
   },
   "agent/src/mt5_integration/routes.py": {
-    "mtime": 1785820054.8947885,
-    "ast_hash": "7a2b758b89dc0a864732c4a9f86fea3f",
+    "mtime": 1786030486.3123746,
+    "ast_hash": "a8f21fb9b9b08c0fb62721644378c1dd",
     "semantic_hash": ""
   },
   "agent/src/mt5_integration/service.py": {
-    "mtime": 1785817074.5732133,
-    "ast_hash": "bd9fa2b09e02d7b524cf6eb096684777",
+    "mtime": 1786030486.310372,
+    "ast_hash": "7eed4da8a505a2c0a80b500d71f24c8b",
     "semantic_hash": ""
   },
   "agent/src/trading/auto_selection/__init__.py": {
@@ -11105,8 +11105,8 @@
     "semantic_hash": ""
   },
   "agent/src/trading/precision_execution/__init__.py": {
-    "mtime": 1785937081.1729734,
-    "ast_hash": "81f2c43db2e0785cd3692b9c4a1b6f95",
+    "mtime": 1786033979.4245942,
+    "ast_hash": "8be70b008c6c51b0bef4b0860d44e8a8",
     "semantic_hash": ""
   },
   "agent/src/trading/precision_execution/acr_zones.py": {
@@ -11565,13 +11565,13 @@
     "semantic_hash": ""
   },
   "agent/tests/test_mt5_integration_routes.py": {
-    "mtime": 1785818361.8944306,
-    "ast_hash": "55859e9e2167a7335defdcc2c1592a29",
+    "mtime": 1786030502.2827039,
+    "ast_hash": "27eff161a0c03adc0bb4959f73e9e0b6",
     "semantic_hash": ""
   },
   "agent/tests/test_mt5_integration_service.py": {
-    "mtime": 1785774335.292344,
-    "ast_hash": "e7001c4294378b8965790fdcc49f1690",
+    "mtime": 1786030502.2837045,
+    "ast_hash": "34046051c2557a6b46405de291165c1c",
     "semantic_hash": ""
   },
   "session_log_append.txt": {
@@ -11675,8 +11675,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/trading-terminal-api.ts": {
-    "mtime": 1785938379.1967056,
-    "ast_hash": "763caac6cf1d2044e400ea7b906842b4",
+    "mtime": 1786030486.3143768,
+    "ast_hash": "8c118183cf5c3482f9c3b6e17e32bd60",
     "semantic_hash": ""
   },
   "_fix_trading_rules.py": {
@@ -11695,8 +11695,8 @@
     "semantic_hash": ""
   },
   "agent/src/trading/auto_trade/strategy_runner.py": {
-    "mtime": 1785959065.7252388,
-    "ast_hash": "a41e67b185e732675dc739bdd9670c18",
+    "mtime": 1786034020.1010797,
+    "ast_hash": "abbf8a52b19eb49ebd782af3849b5e30",
     "semantic_hash": ""
   },
   "agent/tests/test_simple_autotrade.py": {
@@ -11722,6 +11722,16 @@
   "agent/tests/test_precision_setup_confirmation.py": {
     "mtime": 1785937145.6769896,
     "ast_hash": "c205198c2f9f2922d1d65b40a53b3d4c",
+    "semantic_hash": ""
+  },
+  "agent/src/trading/precision_execution/order_blocks.py": {
+    "mtime": 1786034020.09908,
+    "ast_hash": "19d7ef6261213f91de449c9614f29259",
+    "semantic_hash": ""
+  },
+  "agent/tests/test_precision_order_blocks.py": {
+    "mtime": 1786034050.039887,
+    "ast_hash": "0800359dceffddf2a210eba924676b1a",
     "semantic_hash": ""
   }
 }

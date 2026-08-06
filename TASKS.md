@@ -1,5 +1,267 @@
 # Tasks
 
+## Handoff Sesi 7 Agustus 2026 — Chart-Only Entry Area Foundation (PALING TERBARU)
+
+> **Konteks proyek:** Bot trading XAUUSD adaptive (backend FastAPI `agent/`, frontend Vite `frontend/`, eksekusi demo/paper via MT5). Sesi-sesi terakhir fokus pada dynamic entry-area selection: Order Block, ACR, FVG, Supply/Demand, dan Support/Resistance dipilih sebagai kandidat setara via scoring chart-only; SL/TP/lot/risk user (Fixed Controls) dipisahkan dari selector dan hanya dipakai di boundary eksekusi `simple_autotrade.py`. Sesi ini menyelesaikan fase fondasi selector: generic candle reaction, age/mitigation penalty, hard filter chart-only, clustering Support/Resistance, dan expose ranking kandidat. Belum ada commit; seluruh perubahan masih uncommitted (lihat `git status`).
+
+### Selesai
+- Menambahkan generic candle reaction confirmation untuk seluruh kandidat area melalui `confirm_area_reaction()`.
+- Reaction status kandidat: `WAITING_RETEST`, `TOUCHED`, `REACTION_CONFIRMED`, `INVALIDATED`.
+- Memperluas dynamic score dengan reaction status, age candle, dan mitigation penalty.
+- Menambahkan hard filter chart-only: arah mismatch, zona invalid, zona terlalu jauh, range invalid, dan mitigation berlebihan tidak menjadi kandidat.
+- Menambahkan clustering Support/Resistance agar level yang berdekatan menjadi satu kandidat zona.
+- `StrategyDecision` sekarang menyimpan kandidat terpilih dan `entry_area_candidates` terurut.
+- Status backend dan tipe frontend mengekspos ranking kandidat lengkap tanpa memasukkan SL/TP/lot/risk ke selector.
+
+### Belum Selesai
+- Belum ada candle-sweep/liquidity-sweep detector eksplisit sebagai komponen scoring.
+- Dynamic score belum dikalibrasi dengan data historis/paper XAUUSD.
+- Belum ada UI ranking kandidat; data sudah tersedia di status API.
+- Belum dilakukan smoke test MT5 realtime setelah perubahan ini.
+- Full `agent/tests` collection masih memiliki dependency existing yang hilang: `src.trading.forex_signals.contracts` dan `src.trading.forex_features.builder`.
+
+### File Dibuat
+- `agent/src/trading/precision_execution/entry_area_confirmation.py`
+
+### File Diubah
+- `agent/src/trading/precision_execution/entry_area.py`
+- `agent/src/trading/precision_execution/support_resistance.py`
+- `agent/src/trading/precision_execution/__init__.py`
+- `agent/src/trading/auto_trade/strategy_runner.py`
+- `agent/src/api/simple_autotrade.py`
+- `frontend/src/lib/trading-terminal-api.ts`
+- `agent/tests/test_precision_order_blocks.py`
+- `TASKS.md`
+- `SESSION_LOG.md`
+- Artefak `graphify-out/` diperbarui.
+
+### File Dihapus
+- Tidak ada.
+
+### Command dan Validasi
+```powershell
+graphify update .
+python -m pytest agent/tests/test_precision_order_blocks.py agent/tests/test_precision_market_structure.py agent/tests/test_precision_supply_demand.py agent/tests/test_simple_autotrade.py agent/tests/test_precision_setup_confirmation.py agent/tests/test_precision_trade_levels.py agent/tests/test_auto_selection_strategy_selector.py -q
+python -m py_compile agent/src/trading/precision_execution/entry_area_confirmation.py agent/src/trading/precision_execution/entry_area.py agent/src/trading/precision_execution/support_resistance.py agent/src/trading/precision_execution/order_blocks.py agent/src/trading/auto_trade/strategy_runner.py agent/src/api/simple_autotrade.py
+git diff --check
+npm run build --prefix frontend
+```
+- Focused backend suite: **32 passed**.
+- Python compile: berhasil.
+- Frontend TypeScript/Vite build: berhasil.
+- `git diff --check`: bersih; warning hanya line ending Windows existing.
+- Vite chunk >500 kB tetap warning existing.
+
+### Keputusan Teknis
+1. Selector hanya memakai informasi chart; SL/TP/lot/risk user tidak digunakan sebagai gate atau score.
+2. Hard filter hanya membuang kandidat yang invalid secara struktur/zona/chart.
+3. Candle reaction meningkatkan score tetapi tidak mengubah Fixed Controls.
+4. Entry area terpilih dan ranking kandidat dikembalikan untuk audit.
+5. Support/Resistance yang berdekatan digabung menjadi cluster dengan touch count gabungan.
+
+### Status Graphify
+- `graphify update .`: **sudah dijalankan dan berhasil** setelah seluruh perubahan sesi.
+- `graphify-out/graph.html`: **berhasil diperbarui**.
+- `graphify-out/graph.json`: **berhasil diperbarui**.
+- `graphify-out/GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik terakhir: **29.124 nodes / 63.360 edges / 1.138 communities**.
+
+### Next Step
+1. Tambahkan liquidity sweep/rejection sebagai chart-only evidence pada `confirm_area_reaction()`.
+2. Tambahkan endpoint/panel UI untuk ranking kandidat (data sudah tersedia di status API `entry_area_candidates`).
+3. Jalankan paper/demo smoke test XAUUSD M5/M15 (`start-auto-trade.cmd` + `python scripts\validate_mt5_demo.py --symbol XAUUSD`) dan review area terpilih.
+4. Kalibrasi bobot scoring dari hasil paper/backtest, tanpa mengubah sumber Fixed Controls.
+5. Perbaiki dependency missing (`src.trading.forex_signals.contracts`, `src.trading.forex_features.builder`) lalu jalankan full `agent/tests`.
+6. Review `git status` dan commit perubahan sesi bila user menyetujui.
+
+## Handoff Sesi 7 Agustus 2026 — Dynamic Entry Area Selection
+
+### Ringkasan Pekerjaan Selesai
+- Mengubah arsitektur area entry agar tidak memiliki prioritas tetap berdasarkan tipe zona.
+- Menambahkan `SupportResistanceDetectionService` untuk mendeteksi kandidat Support/Resistance dari confirmed market swings.
+- Menambahkan `DynamicEntryAreaSelector` yang memperlakukan area berikut sebagai kandidat setara:
+  - Order Block.
+  - ACR.
+  - FVG.
+  - Supply/Demand.
+  - Support/Resistance.
+- Kandidat disaring berdasarkan arah dan status valid, lalu diberi dynamic score dari freshness, jarak terhadap harga realtime, dan jumlah overlap area.
+- Runner tidak lagi mewajibkan ACR atau FVG+ACR confluence sebagai satu-satunya jalur entry.
+- `StrategyDecision` sekarang menyimpan `selected_entry_area`.
+- Status runner/API dan tipe frontend mengekspos tipe, ID, range, score, dan alasan area entry yang dipilih.
+- Fixed Controls untuk lot, SL, dan TP tetap dipertahankan.
+- ACR setup confirmation tetap digunakan jika kandidat terpilih adalah ACR.
+
+### Pekerjaan Belum Selesai
+- Dynamic score belum memasukkan candle reaction, risk/reward, umur zona, mitigation penalty, dan liquidity target secara penuh.
+- Support/Resistance masih versi mekanis berbasis swing; clustering level dan level-to-zone normalization perlu dikalibrasi untuk XAUUSD.
+- Belum dilakukan smoke test paper/demo dengan data MT5 realtime untuk memvalidasi area terpilih dan payload order.
+- UI belum memiliki panel khusus untuk menampilkan seluruh kandidat dan ranking area secara visual; metadata sudah tersedia melalui status runner.
+- Suite penuh `agent/tests` masih memiliki error collection existing karena modul tidak tersedia: `src.trading.forex_signals.contracts` dan `src.trading.forex_features.builder`.
+- Threshold Order Block displacement/mitigation dan parameter Support/Resistance masih perlu backtest/paper calibration.
+
+### File Dibuat
+- `agent/src/trading/precision_execution/entry_area.py`
+- `agent/src/trading/precision_execution/support_resistance.py`
+
+### File Diubah
+- `agent/src/trading/precision_execution/__init__.py`
+- `agent/src/trading/auto_trade/strategy_runner.py`
+- `agent/src/api/simple_autotrade.py`
+- `frontend/src/lib/trading-terminal-api.ts`
+- `agent/tests/test_precision_order_blocks.py`
+- `TASKS.md`
+- `SESSION_LOG.md`
+- Artefak Graphify di `graphify-out/` diperbarui.
+
+### File Dihapus
+- Tidak ada.
+
+### Command Penting
+```powershell
+graphify update .
+python -m pytest agent/tests/test_precision_order_blocks.py agent/tests/test_precision_market_structure.py agent/tests/test_precision_supply_demand.py agent/tests/test_simple_autotrade.py agent/tests/test_precision_setup_confirmation.py agent/tests/test_precision_trade_levels.py agent/tests/test_auto_selection_strategy_selector.py -q
+python -m py_compile agent/src/trading/precision_execution/entry_area.py agent/src/trading/precision_execution/support_resistance.py agent/src/trading/precision_execution/order_blocks.py agent/src/trading/auto_trade/strategy_runner.py agent/src/api/simple_autotrade.py
+git diff --check
+npm run build --prefix frontend
+```
+
+### Hasil Validasi
+- Focused backend suite: **30 passed**.
+- Python compile: berhasil.
+- Frontend TypeScript/Vite build: berhasil.
+- `git diff --check`: bersih; hanya warning line ending LF/CRLF Windows existing.
+- Frontend masih menampilkan warning chunk lebih besar dari 500 kB; tidak memblokir build.
+
+### Error atau Kendala Tersisa
+- Full test collection belum bersih karena dependency/source existing yang hilang, bukan karena dynamic entry-area change.
+- Graphify melaporkan 11 file non-code zero-node dan label komunitas stale/berubah; graph tetap berhasil dibuat.
+- Dynamic selector saat ini memakai score awal yang sederhana dan belum menjadi model scoring trading yang sudah dikalibrasi secara statistik.
+
+### Keputusan Teknis
+1. Tidak ada prioritas tetap antara Order Block, ACR, FVG, Supply/Demand, dan Support/Resistance.
+2. Semua area valid menjadi `EntryAreaCandidate` dan dibandingkan dengan scoring dinamis.
+3. Arah struktur, validitas zona, Fibonacci eligibility, setup confirmation, dan order/risk validation tetap menjadi hard safety checks.
+4. Order Block bukan gate wajib dan bukan selalu area pertama.
+5. Entry menggunakan midpoint kandidat area terpilih.
+6. Fixed Controls tetap menjadi sumber lot, SL, dan TP aktual pada boundary eksekusi.
+
+### Status Graphify
+- `graphify update .`: **sudah dijalankan dan berhasil**.
+- `graphify-out/graph.html`: **berhasil diperbarui**.
+- `graphify-out/graph.json`: **berhasil diperbarui**.
+- `graphify-out/GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik terakhir: **29.072 nodes / 63.287 edges / 1.155 communities**.
+
+### Next Step
+1. Tambahkan score candle reaction: rejection wick, engulfing, dan RACR pada setiap kandidat area.
+2. Tambahkan score risk/reward dan liquidity target sebelum kandidat dipilih.
+3. Tambahkan umur zona, mitigation penalty, dan invalidation yang konsisten untuk semua tipe area.
+4. Buat endpoint/status yang mengembalikan daftar kandidat terurut, bukan hanya kandidat terpilih.
+5. Tambahkan panel UI Area Candidates agar ranking dan alasan dapat diverifikasi manual.
+6. Jalankan backtest/paper test XAUUSD pada M5/M15 dan kalibrasi threshold.
+7. Perbaiki dependency yang hilang lalu jalankan full `agent/tests` collection.
+
+## Implementasi Order Block — 6 Agustus 2026
+
+### Selesai
+- Menambahkan `OrderBlockDetectionService` single-timeframe berbasis candle tertutup.
+- Bullish/bearish Order Block wajib memiliki displacement dan BOS/CHOCH terkonfirmasi.
+- Lifecycle zona mencakup `FRESH`, `PARTIALLY_MITIGATED`, `MITIGATED`, dan `INVALID`.
+- Wick retest tidak langsung membatalkan zona; invalidasi memakai close menembus batas zona.
+- Mengintegrasikan Order Block ke `AdaptiveStrategyRunner` sebagai prioritas area entry untuk strategi trend/retest, bukan gate wajib.
+- Jika OB valid overlap dengan confluence ACR/FVG, midpoint overlap diprioritaskan; jika tidak ada OB, entry memakai fallback confluence yang ada.
+- `range-mean-reversion`, Fixed Controls, ACR, FVG, dan supply/demand tetap dipertahankan.
+- Menambahkan regression test detector dan invalidasi.
+
+### Validasi
+- Order Block + market structure + supply/demand: **7 passed**.
+- Auto-trade/precision focused suite: **21 passed**.
+- Python compile dan `git diff --check`: berhasil; hanya warning line ending Windows existing.
+- Graphify diperbarui: **29.044 nodes / 63.208 edges / 1.152 communities**.
+
+### Catatan Risiko
+- Suite penuh belum dapat dikoleksi karena source/dependency existing hilang: `src.trading.forex_signals.contracts` dan `src.trading.forex_features.builder`.
+- Implementasi tahap pertama memakai timeframe yang dipilih user; multi-timeframe HTF/LTF belum ditambahkan.
+- Threshold displacement dan batas mitigasi masih perlu dikalibrasi melalui paper/backtest XAUUSD.
+
+## Dynamic Entry Area Selection — 6 Agustus 2026
+
+### Selesai
+- Menambahkan `SupportResistanceDetectionService` untuk membuat kandidat support/resistance dari confirmed swings.
+- Menambahkan `DynamicEntryAreaSelector` yang menormalkan Order Block, ACR, FVG, Supply/Demand, dan Support/Resistance sebagai kandidat area entry yang setara.
+- Selector memakai score dinamis berdasarkan freshness, jarak harga, dan jumlah overlap area; tidak ada prioritas tetap berdasarkan tipe zona.
+- Runner tidak lagi mewajibkan ACR atau FVG+ACR confluence sebagai satu-satunya jalur entry.
+- Entry memakai midpoint kandidat terpilih; setup confirmation ACR tetap digunakan ketika kandidat yang dipilih adalah ACR.
+- Status API/frontend sekarang mengekspos tipe, ID, range, score, dan alasan area entry terpilih.
+
+### Validasi
+- Focused backend suite: **30 passed**.
+- Python compile dan `git diff --check`: berhasil; hanya warning line ending Windows existing.
+- Frontend `npm run build --prefix frontend`: berhasil; warning chunk >500 kB existing.
+
+## Handoff Sesi 6 Agustus 2026 — Finalisasi Persistensi MCP Token
+
+### Ringkasan
+- Bug Settings `/auto-trade` sudah diperbaiki: MCP Token aktif dipulihkan setelah refresh tanpa generate ulang.
+- Root cause adalah token hanya berada di React state, walaupun metadata token sudah tersimpan di SQLite `mcp_tokens`.
+- Backend menyediakan `GET /mt5/token/active`; frontend `AutoTrade.tsx` memanggilnya saat mount dan mengisi state token aktif.
+- Revoke tetap memakai `DELETE /mt5/token/{token_id}` dengan soft invalidation `is_valid=0`.
+
+### Selesai
+- Menambah `DiagnosticsStore.get_active_mcp_token()` dengan filter user, provider `EA_MT5`, validitas, dan expiry.
+- Menambah `MCPTokenService.active_token()` tanpa mengembalikan secret token.
+- Menambah API client `terminalApi.activeMcpToken()` dan hydrate frontend.
+- Menambah regression test generate → active setelah reload → revoke.
+- Mempertahankan keamanan: metadata/token ID tidak disimpan di `localStorage`, `sessionStorage`, atau `AutoTradeConfig`.
+
+### Belum Selesai / Risiko
+- Belum dilakukan klik-through manual setelah restart server di `http://localhost:5899/auto-trade`.
+- Endpoint masih memakai default `user-123`; propagasi user ID autentikasi belum dilakukan.
+- Generate token baru tidak otomatis mencabut token lama; endpoint memilih token valid terbaru.
+- Jika EA memerlukan secret yang dapat dipulihkan, perlu desain secret storage terpisah; endpoint saat ini hanya metadata.
+- Warning existing: FastAPI `on_event` deprecation, Vite chunk >500 kB, dan 11 file non-code Graphify zero-node.
+
+### File
+- Diubah: `agent/src/diagnostics/store.py`, `agent/src/mt5_integration/service.py`, `agent/src/mt5_integration/routes.py`.
+- Diubah: `frontend/src/lib/trading-terminal-api.ts`, `frontend/src/pages/AutoTrade.tsx`.
+- Diubah: `agent/tests/test_mt5_integration_routes.py`, `agent/tests/test_mt5_integration_service.py`.
+- Diubah untuk handoff: `TASKS.md`, `SESSION_LOG.md`.
+- Dibuat/dihapus: tidak ada file source.
+- Diperbarui Graphify: `graphify-out/graph.html`, `graphify-out/graph.json`, `graphify-out/GRAPH_REPORT.md`, cache, manifest, dan snapshot.
+
+### Command dan Validasi
+```powershell
+python -m pytest agent/tests/test_mt5_integration_routes.py agent/tests/test_mt5_integration_service.py -q
+python -m py_compile agent/src/diagnostics/store.py agent/src/mt5_integration/service.py agent/src/mt5_integration/routes.py
+npm run build --prefix frontend
+git diff --check
+graphify update .
+```
+- Backend routes/service: **46 passed**.
+- Python compile: berhasil.
+- Frontend `tsc -b` + Vite build: berhasil.
+- `git diff --check`: bersih; hanya warning LF→CRLF Windows.
+
+### Keputusan Teknis
+1. Persistensi metadata token dilakukan di database, bukan browser storage atau rules config.
+2. Token aktif berarti `EA_MT5`, `is_valid=1`, dan `expires_at` belum lewat.
+3. Revoke memakai soft invalidation untuk mempertahankan audit trail.
+4. Kegagalan hydrate frontend bersifat fail-soft dan tidak memblokir halaman.
+
+### Status Graphify
+- `graphify update .`: **berhasil dijalankan**.
+- `graph.html`, `graph.json`, dan `GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik terakhir: **28.988 nodes / 63.116 edges / 1.160 communities**.
+- Warning zero-node dan label komunitas stale tidak menghalangi graph.
+
+### Next Step
+1. Restart backend/frontend.
+2. Verifikasi manual generate → Simpan rules → refresh → buka Settings.
+3. Verifikasi revoke → refresh dan pastikan token tidak aktif.
+4. Hubungkan user ID dari auth/session jika multi-user diperlukan.
+5. Putuskan apakah generate token baru harus revoke token sebelumnya.
+
 ## Handoff Sesi 6 Agustus 2026 — Persistensi MCP Token di Auto Trade
 
 ### Ringkasan Sesi

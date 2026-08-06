@@ -6,7 +6,7 @@ import asyncio
 import math
 import uuid
 import threading
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any
 
@@ -65,6 +65,13 @@ class RunnerStatus(BaseModel):
     entryPrice: float | None = None
     stopLoss: float | None = None
     takeProfit: float | None = None
+    selectedEntryAreaType: str | None = None
+    selectedEntryAreaId: str | None = None
+    selectedEntryAreaLow: float | None = None
+    selectedEntryAreaHigh: float | None = None
+    selectedEntryAreaScore: float | None = None
+    selectedEntryAreaReason: str | None = None
+    entryAreaCandidates: list[dict[str, object]] = Field(default_factory=list)
 
 
 @dataclass
@@ -85,6 +92,13 @@ class _State:
     entry_price: float | None = None
     stop_loss: float | None = None
     take_profit: float | None = None
+    selected_entry_area_type: str | None = None
+    selected_entry_area_id: str | None = None
+    selected_entry_area_low: float | None = None
+    selected_entry_area_high: float | None = None
+    selected_entry_area_score: float | None = None
+    selected_entry_area_reason: str | None = None
+    entry_area_candidates: list[dict[str, object]] = field(default_factory=list)
 
 
 class DemoAutoTradeRunner:
@@ -107,6 +121,13 @@ class DemoAutoTradeRunner:
                 entryPrice=state.entry_price,
                 stopLoss=state.stop_loss,
                 takeProfit=state.take_profit,
+                selectedEntryAreaType=state.selected_entry_area_type,
+                selectedEntryAreaId=state.selected_entry_area_id,
+                selectedEntryAreaLow=state.selected_entry_area_low,
+                selectedEntryAreaHigh=state.selected_entry_area_high,
+                selectedEntryAreaScore=state.selected_entry_area_score,
+                selectedEntryAreaReason=state.selected_entry_area_reason,
+                entryAreaCandidates=state.entry_area_candidates,
             )
 
     async def start(self, request: StartRequest) -> RunnerStatus:
@@ -233,6 +254,31 @@ class DemoAutoTradeRunner:
                 self._state.entry_price = decision.entry_price
                 self._state.stop_loss = decision.stop_loss
                 self._state.take_profit = decision.take_profit
+                area = decision.selected_entry_area
+                self._state.selected_entry_area_type = area.type if area else None
+                self._state.selected_entry_area_id = area.id if area else None
+                self._state.selected_entry_area_low = area.low if area else None
+                self._state.selected_entry_area_high = area.high if area else None
+                self._state.selected_entry_area_score = area.score if area else None
+                self._state.selected_entry_area_reason = area.reason if area else None
+                self._state.entry_area_candidates = [
+                    {
+                        "id": candidate.id,
+                        "type": candidate.type,
+                        "direction": candidate.direction,
+                        "low": candidate.low,
+                        "high": candidate.high,
+                        "score": candidate.score,
+                        "distance": candidate.distance,
+                        "freshness": candidate.freshness,
+                        "confluenceCount": candidate.confluence_count,
+                        "reactionStatus": candidate.reaction_status,
+                        "ageCandles": candidate.age_candles,
+                        "mitigationCount": candidate.mitigation_count,
+                        "reason": candidate.reason,
+                    }
+                    for candidate in decision.entry_area_candidates
+                ]
                 self._state.last_decision = decision.order_type or "HOLD"
                 self._state.state = "RUNNING"
                 self._state.last_error = None
