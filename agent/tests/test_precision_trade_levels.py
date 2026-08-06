@@ -3,6 +3,23 @@ import pytest
 from src.trading.precision_execution import TradeLevelCalculationService
 
 
+def test_liquidity_target_is_used_when_it_is_at_least_one_risk():
+    levels = TradeLevelCalculationService().calculate(
+        direction="BUY", entry_price=100, zone_low=98, zone_high=99,
+        pip_size=0.1, liquidity_target=103,
+    )
+    assert levels.targets[0].label == "TP1 liquidity"
+    assert levels.targets[0].price == 103
+
+
+def test_invalid_liquidity_target_falls_back_to_r_multiples():
+    levels = TradeLevelCalculationService().calculate(
+        direction="BUY", entry_price=100, zone_low=98, zone_high=99,
+        pip_size=0.1, liquidity_target=100.5,
+    )
+    assert levels.targets[0].label == "TP1"
+
+
 def test_calculates_zone_buffered_buy_sl_and_multi_tp():
     result = TradeLevelCalculationService().calculate(
         direction="BUY", entry_price=100, zone_low=95, zone_high=98,

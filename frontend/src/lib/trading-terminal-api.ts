@@ -43,7 +43,8 @@ export interface Mt5LiveSnapshot {
 }
 
 export interface McpToken { tokenId: string; userId: string; provider: string; expiresAt: string; createdAt: string; isValid: boolean }
-export interface AutoTradeRunnerStatus { running: boolean; state: string; message: string; symbol: string | null; timeframe: string | null; lastCandleAt: string | null; lastDecision: "BUY" | "SELL" | "HOLD" | null; lastOrderId: string | null; lastError: string | null }
+export interface AutoTradeRunnerStatus { running: boolean; state: string; message: string; symbol: string | null; timeframe: string | null; lastCandleAt: string | null; lastDecision: "BUY" | "SELL" | "HOLD" | null; lastOrderId: string | null; lastError: string | null; selectedStrategyId: string | null; decisionReason: string | null; orderType: string | null; entryPrice: number | null; stopLoss: number | null; takeProfit: number | null }
+export interface AutoSelectionStatus { modeEnabled: boolean; status: "READY" | "WARMING_UP" | "BLOCKED"; symbol: string; analysisTimeframe: string; generatedAt: string; selectedStrategyId: string | null; reason: string; marketContext: { regime: string; trend: string; volatility: string; session: string; spreadPips: number; close: number; emaFast: number | null; emaSlow: number | null; rsi: number | null; atr: number | null; volumeRatio: number | null; barCount: number }; candidates: Array<{ id: string; name: string; score: number; confidence: number; recommendation: "SELECTED" | "ELIGIBLE" | "BLOCKED"; blockedBy: string | null }> }
 export interface Mt5Configuration {
   loginMasked: string; login: number; passwordConfigured: boolean; server: string;
   terminalPath: string; profile: "paper" | "live-readonly" | "live"; symbolSuffix: string;
@@ -100,10 +101,12 @@ export const terminalApi = {
   connection: () => request<Mt5ConnectionStatus>("/mt5/connection/status"),
   liveSnapshot: (symbol: string, timeframe: string) => request<Mt5LiveSnapshot>(`/mt5/live/snapshot?symbol=${encodeURIComponent(symbol)}&timeframe=${encodeURIComponent(timeframe)}&limit=80`),
   generateMcpToken: (expiresHours: number) => request<McpToken>(`/mt5/token/generate?expires_hours=${expiresHours}`, { method: "POST" }),
+  activeMcpToken: () => request<McpToken | null>(`/mt5/token/active?user_id=${encodeURIComponent(TERMINAL_USER_ID)}`),
   revokeMcpToken: (tokenId: string) => request<void>(`/mt5/token/${encodeURIComponent(tokenId)}`, { method: "DELETE" }),
   mt5Configuration: () => request<Mt5Configuration>("/mt5/configuration"),
   saveMt5Configuration: (configuration: Mt5ConfigurationInput) => request<Mt5Configuration>("/mt5/configuration", { method: "PUT", body: JSON.stringify(configuration) }),
   runnerStatus: () => request<AutoTradeRunnerStatus>("/mt5/auto-trade/status"),
+  selectionStatus: (symbol = "XAUUSD") => request<AutoSelectionStatus>(`/auto-selection/status?user_id=default&symbol=${encodeURIComponent(symbol)}`),
   startRunner: (body: { symbol: string; timeframe: string; lotSize: number; stopLossPips: number; takeProfitPips: number; paperMode: boolean }) => request<AutoTradeRunnerStatus>("/mt5/auto-trade/start", { method: "POST", body: JSON.stringify(body) }),
   stopRunner: () => request<AutoTradeRunnerStatus>("/mt5/auto-trade/stop", { method: "POST" }),
   configurations: () => request<AutoTradeConfig[]>(`/auto-trade/configurations?userId=${TERMINAL_USER_ID}`),

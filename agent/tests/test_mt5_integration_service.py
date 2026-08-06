@@ -372,6 +372,24 @@ class TestMCPTokenService:
         is_valid = service.validate_token(token_id)
         assert is_valid is True
 
+    def test_active_token_returns_latest_valid_token(self, test_store):
+        service = MCPTokenService(test_store)
+
+        first, _ = service.generate_token("test-user-123", expires_hours=24)
+        latest, _ = service.generate_token("test-user-123", expires_hours=48)
+        service.revoke_token(first)
+
+        active = service.active_token("test-user-123")
+        assert active is not None
+        assert active["tokenId"] == latest
+        assert active["isValid"] is True
+
+    def test_active_token_is_user_and_provider_scoped(self, test_store):
+        service = MCPTokenService(test_store)
+        service.generate_token("test-user-123", expires_hours=24)
+
+        assert service.active_token("another-user") is None
+
     def test_validate_token_expired(self, test_store):
         """Test validation fails for expired tokens."""
         service = MCPTokenService(test_store)

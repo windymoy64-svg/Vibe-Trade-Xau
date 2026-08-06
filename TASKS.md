@@ -1,5 +1,322 @@
 # Tasks
 
+## Handoff Sesi 6 Agustus 2026 — Persistensi MCP Token di Auto Trade
+
+### Ringkasan Sesi
+- Memperbaiki bug halaman `/auto-trade`: setelah MCP Token berhasil dibuat dan rules disimpan, refresh tidak lagi meminta generate token ulang selama token masih valid.
+- Akar masalah: `mcpToken` hanya berada di React state, sementara metadata token sudah tersimpan di tabel `mcp_tokens` tetapi tidak memiliki endpoint untuk dipulihkan.
+- Backend sekarang menyediakan query token aktif terbaru berdasarkan `user_id`, provider `EA_MT5`, `is_valid=1`, dan `expires_at` yang belum lewat.
+- Frontend `AutoTrade.tsx` melakukan hydrate token aktif saat halaman dimuat/refresh; secret token tidak disimpan di browser atau di `AutoTradeConfig`.
+- Endpoint revoke token dipastikan tetap tersedia dan menghapus token dari status aktif.
+
+### Pekerjaan Selesai
+1. Menambahkan `DiagnosticsStore.get_active_mcp_token()` untuk mengambil metadata token aktif terbaru secara user/provider-scoped.
+2. Menambahkan `MCPTokenService.active_token()` tanpa mengekspos secret token.
+3. Menambahkan endpoint `GET /mt5/token/active` dan alias internal `GET /token/active`.
+4. Memastikan endpoint `DELETE /mt5/token/{token_id}` untuk revoke tersedia dan konsisten dengan API frontend.
+5. Menambahkan `terminalApi.activeMcpToken()` dan memanggilnya saat `AutoTrade` mount.
+6. Menambahkan regression test generate → active token setelah reload → revoke → tidak aktif.
+
+### Pekerjaan Belum Selesai / Risiko
+- Belum dilakukan verifikasi manual browser terhadap halaman `http://localhost:5899/auto-trade` setelah restart proses dev server.
+- Token yang dipulihkan adalah metadata/token ID, bukan secret token; desain ini disengaja untuk menghindari penyimpanan secret di browser. Jika EA membutuhkan secret terpisah, perlu desain credential storage khusus.
+- Endpoint masih memakai `user_id="user-123"` default karena autentikasi dashboard belum dipropagasikan ke flow token.
+- Token baru tidak otomatis mencabut token lama; endpoint active memilih token valid terbaru. Jika hanya satu token per user diinginkan, kebijakan revoke-previous perlu ditambahkan.
+- Warning FastAPI `@app.on_event` deprecation dan warning Vite chunk >500 kB masih ada dari project sebelumnya.
+
+### File Dibuat / Diubah / Dihapus
+- **Diubah:** `agent/src/diagnostics/store.py` — query metadata MCP token aktif.
+- **Diubah:** `agent/src/mt5_integration/service.py` — service wrapper token aktif.
+- **Diubah:** `agent/src/mt5_integration/routes.py` — endpoint GET token aktif dan revoke route.
+- **Diubah:** `frontend/src/lib/trading-terminal-api.ts` — API client `activeMcpToken()`.
+- **Diubah:** `frontend/src/pages/AutoTrade.tsx` — hydrate token aktif saat mount.
+- **Diubah:** `agent/tests/test_mt5_integration_routes.py` — lifecycle API token.
+- **Diubah:** `agent/tests/test_mt5_integration_service.py` — active token service tests.
+- **Dibuat:** tidak ada file source baru.
+- **Dihapus:** tidak ada file.
+- **Diperbarui oleh Graphify:** `graphify-out/graph.json`, `graphify-out/graph.html`, `graphify-out/GRAPH_REPORT.md`, cache, manifest, dan snapshot.
+
+### Command Penting
+```powershell
+python -m pytest agent/tests/test_mt5_integration_routes.py agent/tests/test_mt5_integration_service.py -q
+python -m py_compile agent/src/diagnostics/store.py agent/src/mt5_integration/service.py agent/src/mt5_integration/routes.py
+npm run build --prefix frontend
+git diff --check
+```
+
+### Hasil Validasi
+- MT5 routes/service suite: **46 passed** dengan 5 warning deprecation yang sudah ada.
+- Python `py_compile`: berhasil.
+- Frontend `tsc -b` dan Vite production build: berhasil, build sekitar 17 detik.
+- `git diff --check`: bersih; hanya warning line ending LF→CRLF Windows.
+
+### Error / Kendala
+- `npx tsc --noEmit --prefix frontend` sebelumnya mengambil shim TypeScript global yang bukan compiler; typecheck tetap berhasil melalui `tsc -b` dalam `npm run build --prefix frontend`.
+- Graphify memberi warning 11 file non-code menghasilkan zero nodes; proses graph tetap berhasil.
+- Label komunitas Graphify belum direfresh dengan `graphify label`; tidak menghalangi pemahaman dependency.
+
+### Keputusan Teknis
+1. Persistensi token dilakukan di database, bukan `localStorage` dan bukan field `AutoTradeConfig`.
+2. Endpoint active hanya mengembalikan metadata token valid terbaru, tidak mengembalikan secret.
+3. Token dianggap aktif hanya jika provider `EA_MT5`, `is_valid=1`, dan belum expired.
+4. Revoke dilakukan melalui soft invalidation `is_valid=0` agar audit trail tetap dipertahankan.
+5. Kegagalan hydrate token di frontend fail-soft menjadi `null`, sehingga halaman tetap dapat digunakan.
+
+### Status Graphify
+- `graphify update .`: **sudah dijalankan dan berhasil**.
+- `graphify-out/graph.html`: **berhasil diperbarui**.
+- `graphify-out/graph.json`: **berhasil diperbarui**.
+- `graphify-out/GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik terakhir: **28.988 nodes / 63.116 edges / 1.160 communities**.
+
+### Next Step
+1. Restart backend dan frontend dev server agar route `/mt5/token/active` termuat.
+2. Uji manual: generate token → simpan rules → refresh → buka Settings; token harus tetap tampil tanpa generate ulang.
+3. Uji revoke lalu refresh; token harus tidak lagi tampil sebagai aktif.
+4. Jika multi-user diperlukan, ganti default `user-123` dengan user ID dari auth/session.
+5. Putuskan apakah generate token baru harus otomatis revoke token lama.
+
+## Handoff Sesi 6 Agustus 2026 — Fixed Controls dan Konversi Pip XAUUSD
+
+### Ringkasan Sesi
+- Mengimplementasikan mode **Fixed Controls** pada boundary eksekusi auto-trade.
+- Strategi tetap menentukan arah dan entry berdasarkan evidence adaptive strategy, ACR, confluence, dan precision stack.
+- Payload order sekarang wajib memakai `request.lotSize`, `request.stopLossPips`, dan `request.takeProfitPips`; nilai risk-based lot, SL zona, dan TP liquidity tidak lagi menggantikan setting user pada order aktual.
+- Menambahkan konversi pip khusus XAUUSD/GOLD: `control_pip_size = broker point * 10`. Dengan `point=0.01`, 1 pip user = `0.10` harga.
+- Menambahkan audit log untuk order yang berhasil maupun yang ditolak oleh `order_check` atau `order_send`.
+- Memperbaiki return `OFF_HOURS` pada `_market_session()` yang sebelumnya tidak reachable karena indentasi.
+
+### Contoh Fixed Controls
+- BUY entry `100.00`, lot `0.05`, SL `40`, TP `100`, `point=0.01` menghasilkan payload `volume=0.05`, `sl=96.00`, `tp=110.00`.
+- SELL entry `100.00` dengan setting sama menghasilkan `sl=104.00`, `tp=90.00`.
+- Validasi pra-order tetap memastikan BUY: `SL < entry < TP`, dan SELL: `TP < entry < SL`.
+
+### Pekerjaan Selesai
+1. Fixed Controls diterapkan di `DemoAutoTradeRunner._submit()`.
+2. Helper `_fixed_control_pip_size()` ditambahkan agar broker `point` tidak tercampur dengan pip user-facing.
+3. Audit event disimpan melalui `DiagnosticsStore.append_auto_trade_execution_log()` dengan strategy, direction, lot, entry, SL, TP, broker order ID, dan error code.
+4. Regression test menutup konversi BUY/SELL dan memastikan payload tidak memakai lot risk-based seperti `1.97` ketika setting user `0.05`.
+
+### Pekerjaan Belum Selesai / Risiko
+- Belum dilakukan pengiriman order live/paper ke MT5 pada sesi ini; validasi payload menggunakan fake MT5/unit test.
+- Konvensi pip dapat berbeda antar broker/simbol. Implementasi menganggap simbol yang mengandung `XAU` atau `GOLD` memakai `point*10`; nilai aktual `point`, `trade_tick_size`, `digits`, dan `trade_stops_level` tetap perlu diverifikasi pada akun broker.
+- Audit log saat ini memakai `_USER_ID = "user-123"` karena runner demo belum menerima user ID dari lifecycle start.
+- `_log_execution()` sengaja fail-open agar kegagalan audit tidak menggagalkan order; ini berarti masalah database perlu dipantau terpisah.
+- Graphify memberi warning 11 file non-code yang menghasilkan zero nodes dan label komunitas belum direfresh dengan `graphify label`; graph tetap berhasil dibuat.
+- Warning Vite tentang chunk lebih besar dari 500 kB masih ada dan tidak terkait perubahan sesi.
+- Warning deprecation FastAPI `@app.on_event` dari sesi sebelumnya masih ada.
+
+### File Dibuat / Diubah / Dihapus
+- **Diubah:** `agent/src/api/simple_autotrade.py` — Fixed Controls, pip conversion, audit logging, dan perbaikan `_market_session()`.
+- **Diubah:** `agent/tests/test_simple_autotrade.py` — regression test Fixed Controls dan audit event.
+- **Diubah:** `TASKS.md` dan `SESSION_LOG.md` — handoff sesi ini.
+- **Diperbarui oleh Graphify:** `graphify-out/graph.json`, `graphify-out/graph.html`, `graphify-out/GRAPH_REPORT.md`, cache, manifest, dan snapshot Graphify.
+- **Dibuat:** tidak ada file source baru.
+- **Dihapus:** tidak ada file.
+
+### Command Penting
+```powershell
+python -m py_compile agent/src/api/simple_autotrade.py
+python -m pytest agent/tests/test_simple_autotrade.py -v
+python -m pytest agent/tests/test_simple_autotrade.py agent/tests/test_precision_setup_confirmation.py agent/tests/test_precision_trade_levels.py agent/tests/test_auto_selection_strategy_selector.py -q
+npm run build --prefix frontend
+```
+
+### Hasil Validasi
+- `py_compile`: berhasil.
+- Fixed Controls regression: **7 passed**.
+- Focused backend suite: **21 passed**.
+- Frontend `tsc -b` dan Vite build: berhasil; build selesai sekitar 17.5 detik.
+- `git diff --check`: bersih; hanya warning line ending CRLF existing.
+- Perintah `npx tsc --noEmit --prefix frontend` tidak dapat dipakai karena `npx` memilih shim TypeScript global; typecheck tetap berhasil melalui `tsc -b` dalam `npm run build --prefix frontend`.
+
+### Status Graphify
+- `graphify update .`: **sudah dijalankan dan berhasil**.
+- `graphify-out/graph.html`: **berhasil diperbarui**.
+- `graphify-out/graph.json`: **berhasil diperbarui**.
+- `graphify-out/GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik terakhir: **28.960 nodes / 63.084 edges / 1.123 communities**.
+
+### Next Step
+1. Jalankan `python scripts\\validate_mt5_demo.py --symbol XAUUSD` dan verifikasi spesifikasi simbol aktual sebelum mengaktifkan runner.
+2. Lakukan satu smoke test paper/demo yang aman dan cocokkan payload MT5 dengan log `/auto-trade/execution-logs`.
+3. Pastikan UI menampilkan definisi pip XAUUSD secara eksplisit agar `100 pips` tidak disalahartikan sebagai `100 points`.
+4. Teruskan user ID konfigurasi ke runner bila multi-user execution diperlukan.
+5. Pertimbangkan fail-closed untuk kegagalan audit log sebelum deployment production.
+
+## Handoff Sesi 6 Agustus 2026 — Spread Fix, Setup Confirmation, Liquidity TP, Home Command Center, Investigasi Anomali Eksekusi
+
+### Ringkasan Sesi
+- Menghapus spread sebagai blocker strategi (default `maximum_spread_pips=None`) dan memperlebar guard eksekusi ke 1.000 poin; spread tetap dicatat sebagai data + sanity check.
+- Menambah lifecycle konfirmasi setup (rejection wick / engulfing) dengan `max_retest_candles=24` dan `max_zone_touches=2`.
+- Menambah TP berbasis `liquidity_target` dengan fallback ke R-multiple (1R/2R/3R).
+- Menulis ulang Home sebagai Trading Command Center monitoring-only yang sinkron dengan `runner.timeframe`.
+- Memperbaiki range strategy: hanya diblokir oleh BOS/CHOCH fresh dalam 8 candle tertutup (Opsi B).
+- Investigasi anomali eksekusi: order aktual `volume 1.97` (bukan `0.05`) dan TP jauh dari setting 100 pips → akar masalah ditemukan, fix belum diimplementasikan (sesi mode read-only).
+
+### Pekerjaan Selesai
+1. **Spread fix** — `strategy_selector.py`: `maximum_spread_pips` default `3.0` → `None`; `simple_autotrade.py`: `_MAX_EXECUTION_SPREAD_POINTS` 100 → 1_000. Test selector diperbarui agar spread tidak lagi memblok.
+2. **Setup confirmation** — file baru `precision_execution/setup_confirmation.py`: deteksi rejection wick (min wick ratio 0.4) dan engulfing, state `RETEST_WAITING / REBOUND_CONFIRMED / INVALIDATED / EXPIRED / TOO_MANY_TOUCHES`, `max_retest_candles=24`, `max_zone_touches=2`. Diekspor via `precision_execution/__init__.py`.
+3. **Liquidity-aware TP** — `trade_levels.py`: `TradeLevelCalculationService.calculate(..., liquidity_target=...)`; TP1 = liquidity target bila valid dan `liquidity_risk >= risk`, fallback ke 1R/2R/3R. `strategy_runner.py` meneruskan liquidity target.
+4. **Pembatalan pending order** — `simple_autotrade.py`: `_cancel_pending_orders()` hanya membatalkan order berkomentar `vibe-trading-auto`; `_should_cancel_pending()` membatasi pembatalan pada reason invalidasi/expiry.
+5. **RunnerStatus diperluas** — field `selectedStrategyId`, `decisionReason`, `orderType`, `entryPrice`, `stopLoss`, `takeProfit` di `simple_autotrade.py` + tipe frontend `trading-terminal-api.ts`.
+6. **Home Command Center** — `Home.tsx` ditulis ulang: monitoring-only (tanpa tombol Start/Stop), polling 2 detik ke `/mt5/connection/status`, `/mt5/live/snapshot`, `/mt5/auto-trade/status`, `/auto-selection/status`; status `LIVE/OFFLINE`; tanpa mock fallback; baca runner status dulu lalu pakai `runner.timeframe` untuk snapshot (fallback M15).
+7. **Range fix Opsi B** — `strategy_runner.py`: `_has_fresh_structure_break(...)` memblok range hanya jika BOS/CHOCH terjadi dalam 8 candle tertutup terakhir.
+
+### Pekerjaan Belum Selesai
+- **Fix lot/SL/TP tidak sinkron** — akar masalah sudah ditemukan (lihat Error), namun perubahan kode belum dilakukan karena sesi berakhir dalam mode read-only.
+- **Audit execution-logs kosong** — endpoint `/auto-trade/execution-logs?userId=user-123&symbol=XAUUSD&limit=100` mengembalikan `[]`; setiap order belum dicatat (configured vs actual lot/SL/TP, entry, broker order id, reason).
+
+### File Dibuat / Diubah / Dihapus
+- **Dibuat:** `agent/src/trading/precision_execution/setup_confirmation.py`; `agent/tests/test_precision_setup_confirmation.py`.
+- **Diubah:** `agent/src/api/simple_autotrade.py`; `agent/src/trading/auto_selection/strategy_selector.py`; `agent/src/trading/auto_trade/strategy_runner.py`; `agent/src/trading/precision_execution/__init__.py`; `agent/src/trading/precision_execution/trade_levels.py`; `agent/tests/test_auto_selection_strategy_selector.py`; `agent/tests/test_precision_trade_levels.py`; `agent/tests/test_simple_autotrade.py`; `frontend/src/lib/trading-terminal-api.ts`; `frontend/src/pages/Home.tsx`; file `graphify-out/` (lihat Status Graphify).
+- **Dihapus:** tidak ada.
+
+### Command Penting
+```powershell
+# Test fokus sesi ini
+python -m pytest agent/tests/test_simple_autotrade.py agent/tests/test_precision_setup_confirmation.py agent/tests/test_precision_trade_levels.py agent/tests/test_auto_selection_strategy_selector.py -v
+
+# Typecheck & build frontend
+npx tsc --noEmit --prefix frontend
+npm run build --prefix frontend
+
+# Graphify update (berhasil dijalankan sesi ini)
+graphify update .
+
+# Endpoint yang dipakai saat investigasi
+# GET http://127.0.0.1:8899/mt5/auto-trade/status
+# GET http://127.0.0.1:8899/auto-trade/configurations?userId=user-123
+# GET http://127.0.0.1:8899/auto-trade/execution-logs?userId=user-123&symbol=XAUUSD&limit=100
+# GET http://127.0.0.1:8899/mt5/live/snapshot?symbol=XAUUSD&timeframe=M5&limit=20
+```
+
+### Hasil Validasi
+- Pytest fokus (runner + setup confirmation + trade levels + selector): **passed**.
+- `tsc --noEmit` dan `vite build` frontend: **sukses**.
+- `git diff --check`: bersih.
+- Graphify update: **sukses** (lihat Status Graphify).
+
+### Error / Kendala yang Tersisa
+1. **Lot 1.97 vs setting 0.05** — `decision.lot_size` dihitung risk-based oleh `LotSizeCalculationService` (balance ~9999, risk 0.5%, jarak stop sempit → ~1.97) dan TIDAK memakai `request.lotSize`. Bukti MT5: order `57851188725` volume 1.97 @ 4275.07, ditutup deal `57855942209` @ 4280.14, profit **-998.79** (balance 9999.41 → 9000.62). Dengan lot 0.05 kerugian seharusnya jauh lebih kecil.
+2. **TP tidak memakai `takeProfitPips` (100)** — `TradeLevelCalculationService` memakai `target_ratios=(1.0,2.0,3.0)` + liquidity; runner mengambil `levels.targets[-1].price` (3R). Sell entry 4275.07 → TP 4259.84 (jarak 15.23 = 1523 point internal, di luar 100 pips yang diset).
+3. **SL tidak memakai `stopLossPips` (40)** — SL dari zona + `stop_buffer_pips=3.0`.
+4. **`execution-logs` kosong** — audit trail internal tidak konsisten dengan broker.
+5. `DeprecationWarning` FastAPI `@app.on_event` masih ada; tidak menghalangi.
+
+### Keputusan Teknis
+- Spread bukan blocker strategi lagi; hanya data + sanity guard eksekusi (1000 poin).
+- Range strategy (Opsi B): diblokir hanya oleh `_has_fresh_structure_break` dalam 8 candle terakhir.
+- `max_retest_candles=24`, `max_zone_touches=2`.
+- Home = monitoring-only; timeframe snapshot mengikuti runner.
+- Rekomendasi fix anomali (belum dieksekusi): **mode eksplisit** — *Fixed Controls* (wajib pakai `lotSize`/`stopLossPips`/`takeProfitPips` user) vs *Risk-Based* (lot dari risk, SL zona, TP liquidity/3R, dan UI jujur menampilkan mode ini), plus validasi pra-order: BUY → `TP > entry > SL`; SELL → `TP < entry < SL`, dan safety: bila calculated lot ≠ configured, pakai configured.
+
+### Status Graphify
+- `graphify update .` — **SUDAH dijalankan** pada sesi ini (2026-08-06).
+- `graph.html`, `graph.json`, `GRAPH_REPORT.md` — **berhasil diperbarui**.
+- Statistik terakhir: `28932 nodes / 63041 edges / 1139 communities`; snapshot disimpan di `graphify-out/2026-08-06/`.
+
+### Next Step untuk Chat Berikutnya
+1. **Konfirmasi mode eksekusi** dengan user: Fixed Controls (rekomendasi pertama karena user sudah mengisi Settings) atau Risk-Based.
+2. **Implementasi fix**: teruskan `request.lotSize` / `stopLossPips` / `takeProfitPips` ke runner & `_submit()`; jika Fixed Controls, pasang validasi pra-order (BUY/SELL TP/SL) dan hard safety lot.
+3. **Perbaiki audit log**: catat tiap order (configured vs actual lot/SL/TP, entry, broker order id, reason) agar `/auto-trade/execution-logs` tidak kosong.
+4. Jalankan ulang `pytest`, `tsc`, `vite build`, lalu `graphify update .`.
+
+---
+
+## Handoff Sesi 5 Agustus 2026 - Adaptive MT5 Bot dan Launcher One-Click
+
+### Ringkasan Sesi
+- Mengganti runner `/mt5/auto-trade` yang sebelumnya hanya memakai crossover EMA 9/21 dengan orkestrasi strategi adaptif pada setiap candle tertutup.
+- Menambahkan launcher Windows satu klik yang memulai backend, frontend, membuka dashboard Auto Trade, dan menyediakan penghentian proses yang aman.
+- Memperbaiki crash startup `register_runs_routes: api_server module not in sys.modules` untuk semua entry point server.
+
+### Pekerjaan Selesai
+1. **Adaptive strategy orchestration**
+   - Menambah `AdaptiveStrategyRunner` di `agent/src/trading/auto_trade/strategy_runner.py`.
+   - Setiap evaluasi menggunakan indikator EMA 9/21, RSI 14, ATR 14, rasio volume, trend, volatilitas, dan market regime.
+   - Selector memilih satu strategi yang paling sesuai: `evidence-trend-guard`, `acr-retest`, atau `range-mean-reversion`.
+   - Entry harus lolos HTF market structure (BOS/CHOCH), supply/demand, ACR, R-ACR, FVG, FVG-ACR confluence, Fibonacci premium/discount, jenis order, diagnostic loss-pattern guardrail, risk-based lot size, dan parameter validation.
+   - Runner mendukung MARKET dan pending LIMIT untuk retest. Tidak membuat entry baru bila ada posisi atau pending order aktif pada symbol tersebut.
+   - Posisi terbuka dimonitor dengan ACR trailing stop; runner tetap demo/paper-only dan fail-closed.
+2. **Runner dan status API**
+   - `agent/src/api/simple_autotrade.py` sekarang mengambil 128 closed candles, menerbitkan evaluasi ke `/auto-selection/status`, dan mengirim order berdasarkan keputusan adaptive.
+   - Endpoint status yang tersedia: `/mt5/auto-trade/status` dan `/auto-selection/status?user_id=default&symbol=XAUUSD`.
+3. **One-click startup dan shutdown**
+   - `start-auto-trade.cmd` menjalankan `scripts/start-auto-trade.ps1`.
+   - Launcher memeriksa virtual environment root (`.venv`) atau `agent/.venv`, Node.js, Vite, dan ketersediaan port; memasang dependency frontend jika Vite belum tersedia.
+   - Launcher menyalakan backend `127.0.0.1:8899`, frontend `127.0.0.1:5899`, menunggu HTTP siap, menyetel `VITE_API_URL` agar proxy Vite mengarah ke backend yang benar, lalu membuka `/auto-trade`.
+   - `stop-auto-trade.cmd` menghentikan hanya PID backend/frontend yang dicatat launcher di `.vibe-dev/`, tanpa menghentikan proses Python/Node lain.
+4. **Startup backend**
+   - `agent/api_server.py` mendaftarkan alias `sys.modules["api_server"]` saat dijalankan sebagai script atau `python -m`, sehingga route registrar dapat menemukan host yang diperlukan.
+
+### File Dibuat / Diubah / Dihapus
+- **Dibuat:** `agent/src/trading/auto_trade/strategy_runner.py`.
+- **Dibuat:** `scripts/start-auto-trade.ps1`.
+- **Dibuat:** `scripts/stop-auto-trade.ps1`.
+- **Dibuat:** `stop-auto-trade.cmd`.
+- **Diubah:** `agent/src/api/simple_autotrade.py`.
+- **Diubah:** `agent/tests/test_simple_autotrade.py`.
+- **Diubah:** `agent/api_server.py`.
+- **Diubah:** `start-auto-trade.cmd`.
+- **Diubah oleh user/sebelum sesi ini dan dibiarkan:** `SESSION_LOG.md`, `TASKS.md`.
+- **Dihapus:** tidak ada file source/proyek yang perlu dicatat.
+
+### Command Penting
+```powershell
+# Jalankan aplikasi sehari-hari: klik dua kali file ini dari root project
+start-auto-trade.cmd
+
+# Hentikan backend dan frontend hasil launcher
+stop-auto-trade.cmd
+
+# Validasi koneksi MT5 demo tanpa mengirim order
+python scripts\validate_mt5_demo.py --symbol XAUUSD
+
+# Test adaptive runner dan precision stack
+pytest tests/test_simple_autotrade.py tests/test_auto_selection_market_indicators.py tests/test_auto_selection_strategy_selector.py tests/test_precision_acr_zones.py tests/test_precision_confluence.py tests/test_precision_fibonacci.py tests/test_precision_fvg.py tests/test_precision_lot_size.py tests/test_precision_market_structure.py tests/test_precision_order_type.py tests/test_precision_racr.py tests/test_precision_supply_demand.py tests/test_precision_trade_levels.py tests/test_precision_trailing_stop.py
+```
+
+### Hasil Validasi
+- `python -m compileall` untuk `api_server.py`, adaptive runner, dan runner MT5: sukses.
+- Focused strategy/precision/runner suite: **37 passed**.
+- Runner + auto-selection API smoke/unit suite: **8 passed**.
+- Launcher smoke test memakai port uji: backend `/mt5/auto-trade/status` = **200**, frontend `/auto-trade` = **200**, dan setelah `stop-auto-trade.ps1` jumlah listener tersisa = **0**.
+- API module import berhasil: `import api_server` sukses.
+- `git diff --check`: tidak ada error whitespace, hanya warning CRLF worktree yang sudah ada.
+- `pytest tests/test_simple_autotrade.py tests/test_api_infrastructure.py`: **44 passed, 1 failed**. Failure adalah assertion lama bahwa `api_server.py` harus kurang dari 400 baris; file sudah 469 baris sebelum perubahan sesi ini dan perubahan ini hanya menambah 4 baris alias modul. Ini bukan kegagalan fungsi launcher/MT5.
+
+### Error / Kendala Tersisa
+1. Warning FastAPI `on_event is deprecated` masih muncul ketika server diimpor/dijalankan. Tidak memblokir startup; migrasi ke lifespan API belum dikerjakan.
+2. Test `test_api_server_is_thin_assembler` stale terhadap ukuran aktual `agent/api_server.py`; perlu disesuaikan atau modularisasi file dilanjutkan secara terpisah.
+3. Race condition frontend START yang tercatat pada handoff sebelumnya belum ditangani dalam sesi ini. Backend runner terbukti berjalan, tetapi `AutoTrade.tsx` masih perlu guard terhadap polling stale yang menimpa state `RUNNING`.
+4. Frontend UI masih menampilkan teks lama `EMA 9/21 crossover` pada panel AI Signal walau runner kini adaptive; perbarui copy/UI agar sesuai strategi terpilih dan endpoint auto-selection.
+5. Tidak ada validasi order live di MT5 demo pada sesi ini; smoke test launcher hanya memverifikasi layanan HTTP, bukan koneksi broker atau pengiriman order.
+
+### Keputusan Teknis
+1. **Fail-closed:** strategi boleh dipilih, tetapi order hanya dapat dibuat bila semua evidence execution dan risk gate lulus.
+2. **Demo-only:** `DemoAutoTradeRunner` tetap menolak `paperMode:false`, profile non-paper, serta account MT5 non-demo.
+3. **Closed candles:** evaluasi dan idempotensi tetap berbasis candle tertutup untuk menghindari signal berubah selama candle berjalan.
+4. **Limit retest tidak diduplikasi:** pending order diperlakukan sama seperti posisi aktif untuk memblokir entry tambahan.
+5. **Launcher PowerShell + CMD wrapper:** PowerShell digunakan untuk PID tracking, readiness probe, port guard, dan path Windows dengan spasi; CMD disediakan agar cukup double-click.
+6. **Backend alias lokal:** `sys.modules.setdefault("api_server", sys.modules[__name__])` adalah perbaikan minimal untuk kompatibilitas registrar route yang bergantung pada canonical host module.
+
+### Status Graphify
+- `graphify query` dijalankan untuk diagnosis MT5/API, tetapi **`graphify update .` belum dijalankan**.
+- `graphify-out/graph.json` digunakan untuk query, tetapi **belum diperbarui** untuk perubahan adaptive runner/launcher sesi ini.
+- `graphify-out/graph.html` dan `graphify-out/GRAPH_REPORT.md` **belum diperbarui** dalam sesi ini.
+- Jalankan `graphify update .` pada awal sesi berikutnya, lalu pastikan `graph.json`, `graph.html`, dan `GRAPH_REPORT.md` berhasil dibuat/diperbarui.
+
+### Next Step
+1. Jalankan `start-auto-trade.cmd`, lalu isi koneksi MT5 **Demo** sekali di Auto Trade > Settings dan simpan rules.
+2. Jalankan `python scripts\validate_mt5_demo.py --symbol XAUUSD`; jangan mulai bot sebelum hasil `overall` adalah `PASS`.
+3. Terapkan guard race START di `frontend/src/pages/AutoTrade.tsx`, lalu tambah regression test untuk polling stale vs start sukses.
+4. Perbarui panel UI Auto Trade agar menampilkan adaptive strategy, alasan selection, market regime, dan keputusan order aktual, bukan teks EMA-only.
+5. Jalankan `graphify update .`, review output, lalu update handoff lagi bila ada perubahan graph.
+6. Setelah verifikasi broker demo/manual selesai, jalankan test suite terkait dan commit hanya file yang dimaksud.
+
+---
+
 ## Handoff Sesi 5 Agustus 2026 — Debug Halaman `/auto-trade` (Settings, Blank Refresh, NEXT CYCLE, Start)
 
 ### 📊 Ringkasan Sesi
@@ -797,4 +1114,3 @@ graphify update .
 ---
 
 *End of Session Log — Ready for continuation*
-

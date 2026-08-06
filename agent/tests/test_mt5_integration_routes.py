@@ -123,6 +123,23 @@ def test_post_token_generate_creates_mcp_token(tmp_path):
     assert "createdAt" in payload or "created_at" in payload
 
 
+def test_active_mcp_token_survives_client_refresh(tmp_path):
+    """GET /token/active restores the latest valid token metadata."""
+    client = get_test_client(tmp_path)
+
+    generated = client.post("/mt5/token/generate", params={"expires_hours": 48})
+    assert generated.status_code == 200
+    token_id = generated.json()["tokenId"]
+
+    active = client.get("/mt5/token/active")
+    assert active.status_code == 200
+    assert active.json()["tokenId"] == token_id
+    assert active.json()["isValid"] is True
+
+    assert client.delete(f"/mt5/token/{token_id}").status_code == 204
+    assert client.get("/mt5/token/active").json() is None
+
+
 def test_post_token_generate_validates_expiry_range(tmp_path):
     """Token generation rejects out-of-range expiry hours."""
     client = get_test_client(tmp_path)
@@ -268,4 +285,3 @@ def test_token_validation_in_response_field(tmp_path):
     payload = response.json()
     # Check both camelCase (from TokenGenerateResponse) and snake_case (from service metadata)
     assert "isValid" in payload or "is_valid" in payload
-

@@ -68,13 +68,21 @@ def test_ranging_market_selects_mean_reversion():
     assert result.candidates[0].recommendation == "SELECTED"
 
 
-def test_spread_guard_blocks_every_strategy():
-    result = StrategySelectionService().select(_snapshot(), spread_pips=3.1)
+def test_normal_xauusd_spread_does_not_block_strategy_selection():
+    result = StrategySelectionService().select(_snapshot(), spread_pips=25.0)
+
+    assert result.selected_strategy_id == "evidence-trend-guard"
+    assert "Spread 25.00 pips" in result.candidates[0].matched_conditions
+    assert all(not any("exceeds" in blocker for blocker in candidate.blocked_by) for candidate in result.candidates)
+
+
+def test_explicit_spread_ceiling_remains_available_for_strict_profiles():
+    result = StrategySelectionService(maximum_spread_pips=3.0).select(
+        _snapshot(), spread_pips=3.1,
+    )
 
     assert result.selected_strategy_id is None
     assert "exceeds" in result.reason
-    assert all(candidate.recommendation == "BLOCKED" for candidate in result.candidates)
-    assert all(any("Spread 3.10" in blocker for blocker in candidate.blocked_by) for candidate in result.candidates)
 
 
 def test_incomplete_indicators_fail_closed():

@@ -104,7 +104,7 @@ class StrategySelectionService:
         self,
         strategies: tuple[StrategyDefinition, ...] = DEFAULT_STRATEGIES,
         *,
-        maximum_spread_pips: float = 3.0,
+        maximum_spread_pips: float | None = None,
         minimum_confidence: int = 75,
     ) -> None:
         if not strategies:
@@ -112,7 +112,7 @@ class StrategySelectionService:
         ids = [strategy.id for strategy in strategies]
         if len(ids) != len(set(ids)):
             raise ValueError("strategy ids must be unique")
-        if maximum_spread_pips <= 0:
+        if maximum_spread_pips is not None and maximum_spread_pips <= 0:
             raise ValueError("maximum spread must be positive")
         if not 0 <= minimum_confidence <= 100:
             raise ValueError("minimum confidence must be within 0..100")
@@ -134,7 +134,10 @@ class StrategySelectionService:
         global_blocker = None
         if not snapshot.ready:
             global_blocker = "Indicator warmup is incomplete."
-        elif spread_pips > self.maximum_spread_pips:
+        elif (
+            self.maximum_spread_pips is not None
+            and spread_pips > self.maximum_spread_pips
+        ):
             global_blocker = (
                 f"Spread {spread_pips:.2f} pips exceeds the "
                 f"{self.maximum_spread_pips:.2f}-pip ceiling."
@@ -187,7 +190,7 @@ class StrategySelectionService:
     ) -> StrategyCandidateDecision:
         matched = [
             f"Session {session}",
-            f"Spread {spread_pips:.2f}/{self.maximum_spread_pips:.2f} pips",
+            f"Spread {spread_pips:.2f} pips",
         ]
         blockers = [global_blocker] if global_blocker else []
         score = strategy.base_score

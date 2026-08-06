@@ -196,6 +196,17 @@ def register_mt5_routes(app: Any, store: DiagnosticsStore) -> None:
             isValid=metadata["isValid"],
         )
 
+    @app.get("/mt5/token/active", response_model=TokenGenerateResponse | None)
+    @app.get("/token/active", response_model=TokenGenerateResponse | None, include_in_schema=False)
+    async def get_active_mcp_token(
+        user_id: str = "user-123",
+    ) -> TokenGenerateResponse | None:
+        """Return active MCP token metadata so clients can restore token state."""
+        if user_id == "user-123":
+            ensure_local_user()
+        metadata = token_service.active_token(user_id)
+        return TokenGenerateResponse(**metadata) if metadata else None
+
     @app.get("/mt5/connection/status")
     @app.get("/connection/status", include_in_schema=False)
     async def get_connection_status(
@@ -253,5 +264,4 @@ def register_mt5_routes(app: Any, store: DiagnosticsStore) -> None:
         """Revoke one EA/MCP bridge token."""
         if not token_service.revoke_token(token_id):
             raise HTTPException(status_code=404, detail="MCP token not found")
-
 

@@ -22,6 +22,7 @@ from .order_type import EntryOrderRecommendation, EntryOrderTypeService
 from .trade_levels import TakeProfitLevel, TradeLevelCalculationService, TradeLevels
 from .trailing_stop import ACRTrailingStopPlan, ACRTrailingStopService, TrailingStopUpdate
 from .lot_size import LotSizeCalculation, LotSizeCalculationService
+from .setup_confirmation import SetupConfirmation, evaluate_setup, is_engulfing_candle, is_rejection_candle
 
 __all__ = [
     "HTFMarketStructureService", "MarketStructureMap", "OHLCVFileParser",
@@ -37,4 +38,5 @@ __all__ = [
     "TakeProfitLevel", "TradeLevelCalculationService", "TradeLevels",
     "ACRTrailingStopPlan", "ACRTrailingStopService", "TrailingStopUpdate",
     "LotSizeCalculation", "LotSizeCalculationService",
+    "SetupConfirmation", "evaluate_setup", "is_engulfing_candle", "is_rejection_candle",
 ]

@@ -73,6 +73,11 @@ export function AutoTrade() {
   const settingsOpenRef = useRef(false);
   const configHydratedRef = useRef(false);
   useEffect(() => { settingsOpenRef.current = settingsOpen; }, [settingsOpen]);
+  useEffect(() => {
+    void terminalApi.activeMcpToken()
+      .then(setMcpToken)
+      .catch(() => setMcpToken(null));
+  }, []);
 
   const applyConfig = useCallback((value: AutoTradeConfig) => {
     setConfig(value); setSymbol(value.symbol); setTimeframe(value.timeframe);

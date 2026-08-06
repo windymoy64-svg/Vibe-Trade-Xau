@@ -34,6 +34,7 @@ from src.trading.precision_execution import (
     LotSizeCalculationService,
     RACRReversalDetectionService,
     TradeLevelCalculationService,
+    evaluate_setup,
 )
 
 Direction = Literal["BUY", "SELL"]
@@ -79,6 +80,8 @@ class AdaptiveStrategyRunner:
         timeframe: str,
         *,
         signal_validator: DiagnosticSignalValidationService | None = None,
+        max_retest_candles: int = 24,
+        max_zone_touches: int = 2,
     ) -> None:
         self._symbol = symbol.strip().upper()
         self._timeframe = timeframe.strip().upper()
@@ -95,6 +98,10 @@ class AdaptiveStrategyRunner:
         self._order_type = EntryOrderTypeService()
         self._levels = TradeLevelCalculationService()
         self._lot_size = LotSizeCalculationService()
+        if max_retest_candles <= 0 or max_zone_touches <= 0:
+            raise ValueError("setup lifecycle limits must be positive")
+        self._max_retest_candles = max_retest_candles
+        self._max_zone_touches = max_zone_touches
 
     def evaluate(
         self,
@@ -127,13 +134,23 @@ class AdaptiveStrategyRunner:
 
         if selection.selected_strategy_id != "range-mean-reversion" and structure.bias != expected_bias:
             return self._blocked(snapshot, selection, acr_zones, "HTF market structure does not confirm the selected direction.")
-        if selection.selected_strategy_id == "range-mean-reversion" and structure.bias != "NEUTRAL":
+        if (
+            selection.selected_strategy_id == "range-mean-reversion"
+            and _has_fresh_structure_break(structure, len(ordered))
+        ):
             return self._blocked(snapshot, selection, acr_zones, "Range strategy requires neutral HTF market structure.")
 
         matching_zones = [zone for zone in acr_zones if zone.status == "FRESH" and zone.direction == expected_bias]
         if not matching_zones:
             return self._blocked(snapshot, selection, acr_zones, "No fresh ACR zone supports the selected strategy.")
         zone = min(matching_zones, key=lambda item: abs(snapshot.close - ((item.low + item.high) / 2)))
+        setup = evaluate_setup(
+            zone, ordered,
+            max_retest_candles=self._max_retest_candles,
+            max_zone_touches=self._max_zone_touches,
+        )
+        if setup.state in {"INVALIDATED", "EXPIRED", "TOO_MANY_TOUCHES"}:
+            return self._blocked(snapshot, selection, acr_zones, setup.reason)
 
         expected_supply_demand = "DEMAND" if direction == "BUY" else "SUPPLY"
         if not any(zone_item.type == expected_supply_demand and zone_item.status != "INVALID" for zone_item in supply_demand):
@@ -156,6 +173,9 @@ class AdaptiveStrategyRunner:
             reversal.direction == expected_bias and reversal.timestamp == ordered[-1].timestamp.isoformat()
             for reversal in reversals
         )
+        rebound_confirmed = setup.state == "REBOUND_CONFIRMED" and (
+            reversal_confirmed or setup.rejection_confirmed
+        )
         order = EntryOrderTypeService(market_tolerance_points=market.pip_size * 0.5).recommend(
             direction=direction,
             current_price=snapshot.close,
@@ -163,7 +183,7 @@ class AdaptiveStrategyRunner:
             zone_fresh=True,
             valuation_eligible=valuation.eligible,
             has_confluence=True,
-            reversal_confirmed=reversal_confirmed,
+            reversal_confirmed=rebound_confirmed,
         )
         if order.recommendation.startswith("WAIT"):
             return self._blocked(snapshot, selection, acr_zones, " ".join(order.reasons))
@@ -180,12 +200,19 @@ class AdaptiveStrategyRunner:
             if not validation.accepted:
                 return self._blocked(snapshot, selection, acr_zones, " ".join(validation.reasons))
 
+        liquidity_candidates = [
+            swing.price for swing in structure.swings
+            if (direction == "BUY" and swing.kind == "HIGH" and swing.price > entry_price)
+            or (direction == "SELL" and swing.kind == "LOW" and swing.price < entry_price)
+        ]
+        liquidity_target = (min(liquidity_candidates) if direction == "BUY" else max(liquidity_candidates)) if liquidity_candidates else None
         levels = self._levels.calculate(
             direction=direction,
             entry_price=entry_price,
             zone_low=zone.low,
             zone_high=zone.high,
             pip_size=market.pip_size,
+            liquidity_target=liquidity_target,
         )
         sizing = self._lot_size.calculate(
             balance=market.balance,
@@ -219,6 +246,7 @@ class AdaptiveStrategyRunner:
             return "BUY" if (rsi or 50.0) <= 50.0 else "SELL"
         return "BUY" if trend == "BULLISH" else "SELL"
 
+
     @staticmethod
     def _blocked(
         snapshot: MarketIndicatorSnapshot,
@@ -240,3 +268,11 @@ class AdaptiveStrategyRunner:
             acr_zones=acr_zones,
             reason=reason,
         )
+
+
+def _has_fresh_structure_break(structure: object, bar_count: int, *, lookback: int = 8) -> bool:
+    """Treat only a recent BOS/CHOCH as a range-strategy direction blocker."""
+    breaks = getattr(structure, "breaks", ())
+    if bar_count <= 0 or lookback <= 0 or not breaks:
+        return False
+    return (bar_count - 1) - int(breaks[-1].index) <= lookback

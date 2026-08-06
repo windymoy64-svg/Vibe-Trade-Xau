@@ -1868,6 +1868,29 @@ class DiagnosticsStore:
             "isValid": bool(row["is_valid"]),
         }
 
+    def get_active_mcp_token(self, user_id: str, provider: str = "EA_MT5") -> dict[str, object] | None:
+        """Return the newest non-expired token metadata for one user."""
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        with self._lock:
+            row = self._conn.execute(
+                """SELECT * FROM mcp_tokens
+                   WHERE user_id = ? AND provider = ? AND is_valid = 1
+                     AND expires_at > ?
+                   ORDER BY created_at DESC
+                   LIMIT 1""",
+                (user_id, provider, now),
+            ).fetchone()
+        if row is None:
+            return None
+        return {
+            "tokenId": str(row["token_id"]),
+            "userId": str(row["user_id"]),
+            "provider": str(row["provider"]),
+            "expiresAt": str(row["expires_at"]),
+            "createdAt": str(row["created_at"]),
+            "isValid": bool(row["is_valid"]),
+        }
+
     def invalidate_mcp_token(self, token_id: str) -> bool:
         """Set token invalid flag."""
         with self._lock, self._conn:

@@ -204,6 +204,10 @@ class MCPTokenService:
         except Exception:
             return False
 
+    def active_token(self, user_id: str) -> dict[str, Any] | None:
+        """Return the latest active token metadata without exposing a secret."""
+        return self.store.get_active_mcp_token(user_id, provider="EA_MT5")
+
     def revoke_token(self, token_id: str) -> bool:
         """Invalidate a token. Returns True if token was found and revoked."""
         try:
