@@ -1,8 +1,259 @@
 # Tasks
 
+## Handoff Sesi 7 Agustus 2026 — Fix Launcher Auto Trade + Fix Proxy /diagnostics Blank Page (PALING TERBARU)
+
+> **Konteks:** Lanjutan sesi live-data Diagnostics (lihat entri di bawah). Sesi ini menyelesaikan dua bug operasional yang dilaporkan user: (1) `start-auto-trade.cmd`/`stop-auto-trade.cmd` gagal jalan, dan (2) `http://localhost:5899/diagnostics` beserta submenunya blank putih saat di-refresh (F5).
+
+### Selesai
+1. **Fix launcher auto-trade**:
+   - Root cause: port `8899` diduduki proses backend lama yang dijalankan manual (`uvicorn api_server:app`), bukan lewat launcher — `start-auto-trade.cmd` menolak start karena proteksi anti-dobel proses (by design).
+   - Menambahkan fungsi **auto-adopt** di `scripts/start-auto-trade.ps1`: jika port sudah didengarkan oleh proses yang command line-nya cocok dengan `api_server`/`vite` (yakni proses backend/frontend project ini sendiri, hanya belum tercatat launcher), launcher menulis PID tersebut ke file `.pid` dan melanjutkan tanpa error, alih-alih selalu `throw`.
+   - Membersihkan proses python/node yatim (`api_server.py`, `vite.js`) yang menumpuk dari beberapa percobaan run manual sebelumnya, serta menyinkronkan ulang `.vibe-dev/*.pid` agar sesuai PID yang benar-benar listening.
+   - Diverifikasi end-to-end: `stop-auto-trade.cmd` mematikan backend+frontend dengan benar, lalu `start-auto-trade.cmd` (via `scripts/start-auto-trade.ps1`) berhasil start ulang bersih tanpa konflik port.
+2. **Fix blank white page di `/diagnostics` (dan seluruh submenu)**:
+   - Root cause: `frontend/vite.config.ts` — `/diagnostics` terdaftar di `PROXY_PATHS` (array generik) yang dipetakan ke `apiProxy` **tanpa** HTML fallback. `/diagnostics` bersifat dual-purpose: prefix API backend (`/diagnostics/dashboard`, `/diagnostics/trades`, `/diagnostics/patterns`, dll di `agent/src/api/diagnostics_routes.py`) **dan** namespace rute SPA (`/diagnostics`, `/diagnostics/trades`, `/diagnostics/patterns`, dll di `router.tsx`). Saat user menekan F5, browser mengirim request navigasi HTML (`Accept: text/html`) yang ikut diproksi mentah ke backend FastAPI — backend tidak punya route HTML untuk path tersebut sehingga balik 404/JSON, React tidak pernah mount, hasilnya blank putih. Bug ini pola yang identik dengan bug `/mt5` dan `/auto-trade` yang sudah pernah diperbaiki sebelumnya (ada komentar penjelasan di file yang sama).
+   - Fix: keluarkan `"/diagnostics"` dari `PROXY_PATHS`, tambahkan rule khusus `"^/diagnostics(?:/|$)": apiProxyWithHtmlFallback` (mengikuti pola `/mt5`/`/auto-trade`) dengan komentar penjelasan root cause.
+   - Menambahkan regression test di `frontend/src/__tests__/viteProxy.test.ts` yang memverifikasi `/diagnostics` memakai `apiProxyWithHtmlFallback` dan bukan lagi ada di string proxy plain, supaya regresi ini tidak lolos lagi ke depan.
+   - Diverifikasi via `curl`/`Invoke-WebRequest` setelah restart dev server: request `Accept: text/html` ke `/diagnostics` dan `/diagnostics/trades` mengembalikan `200 text/html` (SPA shell), sementara request `Accept: application/json` ke `/diagnostics/dashboard` tetap `200 application/json` dari backend — API dan navigasi SPA tidak lagi bertabrakan.
+
+### Belum Selesai / Risiko
+- Sub-route diagnostics lain (`/diagnostics/recommendations`, `/diagnostics/improvements`, `/diagnostics/settings/*`) memakai prefix `^/diagnostics(?:/|$)` yang sama sehingga otomatis ikut terlindungi, tetapi belum diuji satu per satu secara manual di browser (hanya `/diagnostics` dan `/diagnostics/trades` yang diuji via curl).
+- 15 test vitest pre-existing gagal di `StrategyAutoSelection.test.tsx` (dan overlap 3 file lain) — dikonfirmasi **bukan regresi** dari sesi ini (gagal juga tanpa perubahan proxy, lihat verifikasi `git stash`); test mengharapkan UI stub lama (tombol "Start simulation"/"Re-evaluate preview") yang sudah diganti live-data pada sesi sebelumnya. Perlu diperbarui di sesi mendatang.
+- 13 test pre-existing gagal di `agent/tests/test_diagnostics_store.py` karena assertion stale `schema_version == 14` padahal store sekarang versi 15 (lihat handoff sesi live-data Diagnostics di bawah) — belum diperbaiki, di luar scope sesi ini.
+- Backend log menampilkan `Critical check failed - agent cannot start without a working LLM provider` — server tetap jalan untuk endpoint status/diagnostics, tapi fungsi yang bergantung LLM provider mungkin tidak aktif; belum diinvestigasi lebih jauh di sesi ini.
+
+### File Diubah
+- `scripts/start-auto-trade.ps1` (fungsi auto-adopt proses port yang sudah berjalan)
+- `frontend/vite.config.ts` (pindahkan `/diagnostics` ke `apiProxyWithHtmlFallback`)
+- `frontend/src/__tests__/viteProxy.test.ts` (regression test proxy `/diagnostics`)
+- `TASKS.md`, `SESSION_LOG.md`
+- Artefak `graphify-out/` diperbarui.
+
+### File Dibuat / Dihapus
+- Dibuat: tidak ada file source baru.
+- Dihapus: tidak ada.
+
+### Command Penting
+```powershell
+# Diagnosis & fix launcher
+Get-NetTCPConnection -LocalAddress 127.0.0.1 -LocalPort 8899,5899 -State Listen
+Get-CimInstance Win32_Process -Filter "ProcessId = <pid>" | Select-Object CommandLine
+cmd /c stop-auto-trade.cmd
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File scripts\start-auto-trade.ps1 -NoBrowser
+
+# Verifikasi fix proxy /diagnostics
+npx vitest run src/__tests__/viteProxy.test.ts   # (dari folder frontend)
+npm run build --prefix frontend
+Invoke-WebRequest -Uri "http://127.0.0.1:5899/diagnostics" -Headers @{ "Accept" = "text/html" } -UseBasicParsing
+Invoke-WebRequest -Uri "http://127.0.0.1:5899/diagnostics/trades" -Headers @{ "Accept" = "text/html" } -UseBasicParsing
+Invoke-WebRequest -Uri "http://127.0.0.1:5899/diagnostics/dashboard?user_id=user-123" -Headers @{ "Accept" = "application/json" } -UseBasicParsing
+
+# Regresi check terhadap 15 test yang gagal (dikonfirmasi pre-existing)
+git stash push -- frontend/vite.config.ts frontend/src/__tests__/viteProxy.test.ts
+npx vitest run src/pages/__tests__/StrategyAutoSelection.test.tsx  # tetap 3 failed tanpa perubahan sesi ini
+git stash pop
+
+graphify update .
+```
+
+### Hasil Validasi
+- `npx vitest run src/__tests__/viteProxy.test.ts`: **5 passed**.
+- `npm run build --prefix frontend` (`tsc -b` + Vite): **berhasil**, 0 error TypeScript.
+- `npx vitest run` (full suite frontend): **329 passed, 15 failed** — 15 failure dikonfirmasi pre-existing/tidak terkait (lihat "Belum Selesai").
+- Verifikasi HTTP manual: `/diagnostics` dan `/diagnostics/trades` dengan `Accept: text/html` → `200 text/html` (SPA); `/diagnostics/dashboard` dengan `Accept: application/json` → `200 application/json` (backend).
+- Launcher: `stop-auto-trade.cmd` → kedua proses mati bersih; `start-auto-trade.cmd`/`scripts\start-auto-trade.ps1` → backend `8899` + frontend `5899` listening, PID file sinkron dengan proses aktual, health check `/mt5/auto-trade/status` → `200`.
+
+### Keputusan Teknis
+1. Auto-adopt proses port hanya dilakukan jika command line proses yang memegang port cocok dengan signature `api_server`/`vite` milik project ini sendiri — bukan adopsi proses arbitrer, untuk mencegah launcher salah mengklaim proses pihak ketiga yang tidak terkait.
+2. Fix proxy `/diagnostics` mengikuti pola yang sudah ada (`apiProxyWithHtmlFallback` + guard regex `(?:/|$)`) demi konsistensi dengan solusi `/mt5`/`/auto-trade` sebelumnya, bukan pendekatan baru.
+3. Tidak menyentuh/memperbaiki 15 test pre-existing yang gagal karena di luar scope laporan bug user pada sesi ini; dicatat sebagai risiko terbuka agar tidak terlewat di sesi berikutnya.
+
+### Status Graphify
+- `graphify update .`: **berhasil dijalankan setelah seluruh perubahan sesi**.
+- `graphify-out/graph.html`, `graphify-out/graph.json`, `graphify-out/GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik final: **29.181 nodes / 63.384 edges / 1.178 communities**.
+- Warning existing: 11 file non-code zero-node; community set berubah (1186 → 1178) sehingga label lama stale — `graphify label` belum dijalankan untuk refresh nama komunitas.
+
+### Next Step
+1. Uji manual di browser (bukan hanya curl) untuk seluruh submenu `/diagnostics/*` (trades, patterns, recommendations, improvements, settings/profile, settings/data-sources, settings/notifications) — refresh langsung di tiap halaman.
+2. Perbarui `frontend/src/pages/__tests__/StrategyAutoSelection.test.tsx` (dan file terkait) agar sesuai UI live-data terbaru, bukan stub lama.
+3. Perbaiki 13 test `test_diagnostics_store.py` yang stale terhadap `schema_version` (update assertion dari 14 → 15, atau versi lain bila schema berubah lagi).
+4. Investigasi warning `Critical check failed - agent cannot start without a working LLM provider` di backend — pastikan tidak menghambat fitur diagnostics/auto-trade yang bergantung LLM.
+5. Pertimbangkan `graphify label` untuk menyegarkan nama komunitas yang stale.
+6. Review `git status`/`git diff` lalu commit perubahan sesi bila user menyetujui.
+
+## Handoff Sesi 7 Agustus 2026 — Sinkronisasi Menu Trading dan Live Observability
+
+### Selesai
+- Navigasi utama dipersempit menjadi Home, Diagnostics, Auto Trade, Precision Execution, MT5 Direct, Reports, dan Settings.
+- Mengeluarkan menu mock/tidak relevan dari navigasi utama: EA Bridge, Precise SL, Data Feed, Fail-Safe, Agent, Runtime, Alpha Zoo, dan Correlation. Route source tetap dipertahankan untuk compatibility; belum dihapus.
+- Mengganti `StrategyAutoSelection.tsx` dari preview statis menjadi polling endpoint live `/auto-selection/status` dan fallback runner status `/mt5/auto-trade/status` tanpa mock data.
+- Mengganti `Mt5ProductionDiagnostics.tsx` dari `mt5DirectPreview` menjadi polling data nyata melalui `/mt5/connection/status` dan `/mt5/live/snapshot`.
+- Mengganti `PrecisionExecution.tsx` dari preview ACR/FVG/SL/TP menjadi observability `selectedEntryArea` dan `entryAreaCandidates` dari runner status.
+- Menampilkan error/warm-up state secara eksplisit ketika auto-selection store belum memiliki snapshot untuk `user_id=default`.
+
+### Belum Selesai / Risiko
+- Diagnostics overview/patterns masih fallback ke preview jika API gagal; Diagnostic Trades, Recommendations, dan Improvements masih memakai stub statis.
+- Backtest Reports tetap memakai pipeline run generik dan belum otomatis terhubung ke outcome runner XAUUSD.
+- Route source untuk menu yang dikeluarkan masih ada; hanya tidak tampil di sidebar. Penghapusan fisik ditunda agar tidak merusak route/dependensi.
+- `/auto-selection/status?user_id=default` dapat mengembalikan 404 bila runner belum mem-publish snapshot untuk user tersebut; halaman sekarang menampilkan runner fallback secara jujur.
+- Vite chunk >500 kB dan Graphify 11 zero-node files tetap warning existing.
+
+### File Diubah
+- `frontend/src/components/layout/Layout.tsx`
+- `frontend/src/pages/StrategyAutoSelection.tsx`
+- `frontend/src/pages/Mt5ProductionDiagnostics.tsx`
+- `frontend/src/pages/PrecisionExecution.tsx`
+- `TASKS.md`
+- `SESSION_LOG.md`
+- Artefak `graphify-out/` diperbarui.
+
+### File Dibuat / Dihapus
+- Dibuat: tidak ada.
+- Dihapus: tidak ada source file; menu hanya dihapus dari navigasi.
+
+### Command dan Validasi
+```powershell
+graphify update .
+npm run build --prefix frontend
+python -m pytest agent/tests/test_simple_autotrade.py agent/tests/test_auto_selection_strategy_selector.py agent/tests/test_precision_order_blocks.py agent/tests/test_precision_market_structure.py agent/tests/test_precision_supply_demand.py agent/tests/test_precision_setup_confirmation.py agent/tests/test_precision_trade_levels.py -q
+git diff --check
+```
+- Frontend `tsc -b` + Vite build: berhasil.
+- Focused backend suite: **33 passed**.
+- `git diff --check`: tidak ada error; warning hanya line ending LF/CRLF Windows.
+- Vite warning chunk >500 kB tetap tidak memblokir build.
+- Smoke endpoint setelah restart Vite: `/mt5/connection/status` dan `/mt5/live/snapshot` `200 application/json`; route halaman utama `200 text/html`.
+
+### Keputusan Teknis
+1. Sidebar hanya menampilkan menu yang relevan dengan operasi XAUUSD, diagnostics, report, dan settings.
+2. Halaman live tidak boleh lagi memakai mock data sebagai sumber utama.
+3. Precision Execution adalah observability layer, bukan order-routing page; entry/SL/TP tidak membuat order.
+4. Menu berisiko misleading (`Data Feed` random simulation dan `Fail-Safe` local-only) disembunyikan, bukan langsung dihapus dari source.
+5. Auto-selection 404 diperlakukan sebagai warm-up/unavailable state, bukan diganti dengan preview.
+
+### Status Graphify
+- `graphify update .`: **berhasil dijalankan sebelum dan sesudah perubahan**.
+- `graphify-out/graph.html`, `graphify-out/graph.json`, `graphify-out/GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik final: **29.160 nodes / 63.367 edges / 1.165 communities**.
+
+### Next Step
+1. Ganti Diagnostics Trades/Recommendations/Improvements dari stub ke endpoint backend aktual atau sembunyikan dari submenu sampai API siap.
+2. Sinkronkan Reports dengan hasil backtest/adaptive XAUUSD secara eksplisit.
+3. Samakan user ID antara runner dan auto-selection store agar snapshot tidak 404.
+4. Setelah API diagnostics lengkap, hapus source halaman mock yang sudah tidak memiliki dependensi.
+
+## Handoff Sesi 7 Agustus 2026 — Perbaikan Home Dashboard Data Binding
+
+### Selesai
+- Memperbaiki proxy Vite dengan menambahkan `^/auto-selection(?:/|$)` ke `frontend/vite.config.ts`.
+- Memperbaiki Home yang kosong karena `/auto-selection/status` sebelumnya menerima `index.html` dari Vite, bukan JSON backend.
+- Memperbaiki parsing `lastTickTime` yang dikembalikan sebagai epoch seconds pada `frontend/src/pages/Home.tsx`.
+- Restart Vite pada port `5899`; backend port `8899` tidak diubah.
+
+### Validasi
+- `npm run build --prefix frontend`: berhasil (`tsc -b` + Vite); warning chunk >500 kB tetap existing.
+- `git diff --check`: tidak ada error, hanya warning line ending Windows.
+- `http://localhost:5899/auto-selection/status?user_id=default&symbol=XAUUSD`: **200 application/json**, `READY`, strategy `evidence-trend-guard`, trend `BULLISH`.
+- `http://localhost:5899/mt5/connection/status`: **200 application/json**, `terminalConnected: true`.
+- `http://localhost:5899/mt5/auto-trade/status`: **200 application/json**, runner `RUNNING`.
+
+### Akar Masalah
+- Route `/auto-selection/status` tidak terdaftar pada `server.proxy` Vite. Karena itu request frontend jatuh ke SPA fallback dan mengembalikan `index.html` dengan status 200. `request<T>()` menolak response HTML sehingga `selection` menjadi `null` dan panel Adaptive Decision menampilkan placeholder.
+
+### Belum Selesai
+- Panel Backtest masih `NO RESULT` karena belum terhubung ke endpoint hasil backtest; ini bukan masalah proxy.
+- Entry/SL/TP tetap `--` saat runner tidak menghasilkan order baru (`lastDecision: HOLD`); ini perilaku data, bukan kegagalan binding.
+
+### Graphify
+- `graphify update .`: berhasil sebelum dan sesudah perbaikan.
+- `graph.html`, `graph.json`, dan `GRAPH_REPORT.md`: berhasil diperbarui.
+- Statistik terakhir: **29.149 nodes / 63.394 edges / 1.161 communities**.
+
+## Handoff Sesi 7 Agustus 2026 — Liquidity Sweep dan Candidate Ranking UI (PALING TERBARU)
+
+> **Konteks:** Melanjutkan fondasi dynamic entry-area selector. Area tetap dipilih dari chart-only evidence; Fixed Controls lot/SL/TP tetap berada di boundary eksekusi dan tidak menjadi input selector.
+
+### Selesai
+- Menambahkan `detect_liquidity_sweep()` untuk candle tertutup yang menembus batas zona lalu close kembali ke dalam zona.
+- Liquidity sweep menjadi evidence scoring dengan bonus `+12.0`; status reaction tetap terpisah dari sweep.
+- Candidate reason dan status API sekarang menampilkan `sweep=YES/NO` dan `liquiditySweep`.
+- Menambahkan panel `ENTRY AREA RANKING` di halaman `AutoTrade` yang menampilkan ranking score, tipe area, arah, reaction status, dan label sweep.
+- Mengubah copy panel AI Signal agar menunjukkan strategi adaptive/chart-only, bukan teks EMA crossover lama.
+- Menambahkan regression test untuk bullish liquidity sweep dan metadata candidate.
+- Menjalankan validasi MT5 XAUUSD secara read-only tanpa mengirim order.
+
+### Belum Selesai / Risiko
+- Bobot `+12.0` belum dikalibrasi dengan sampel historis/paper; jangan menganggapnya sebagai edge statistik.
+- Belum ada sweep detector multi-candle atau liquidity pool eksternal; implementasi saat ini hanya sweep langsung terhadap batas zona kandidat.
+- Belum dilakukan paper/demo smoke test runner yang mengirim order; validator hanya memeriksa terminal, tick, permission, posisi, order, dan history.
+- Validator mendeteksi clock skew host vs MT5 sekitar 3 jam, diklasifikasikan informasional oleh validator; perlu dipantau sebelum scheduler/expiry bergantung pada waktu host.
+- Full `agent/tests` collection tetap terblokir dependency existing: `src.trading.forex_signals.contracts` dan `src.trading.forex_features.builder`.
+- Warning Vite chunk >500 kB dan Graphify 11 file zero-node tetap ada.
+- Community labels Graphify stale setelah community berubah; `graphify label` belum dijalankan.
+
+### File Dibuat
+- Tidak ada file source baru pada sesi ini.
+
+### File Diubah
+- `agent/src/trading/precision_execution/entry_area_confirmation.py`
+- `agent/src/trading/precision_execution/entry_area.py`
+- `agent/src/trading/precision_execution/__init__.py`
+- `agent/src/api/simple_autotrade.py`
+- `agent/tests/test_precision_order_blocks.py`
+- `frontend/src/lib/trading-terminal-api.ts`
+- `frontend/src/pages/AutoTrade.tsx`
+- `TASKS.md`
+- `SESSION_LOG.md`
+- Artefak `graphify-out/` diperbarui.
+
+### File Dihapus
+- Tidak ada.
+
+### Command Penting
+```powershell
+graphify update .
+python -m pytest agent/tests/test_precision_order_blocks.py agent/tests/test_precision_market_structure.py agent/tests/test_precision_supply_demand.py agent/tests/test_simple_autotrade.py agent/tests/test_precision_setup_confirmation.py agent/tests/test_precision_trade_levels.py agent/tests/test_auto_selection_strategy_selector.py -q
+python -m py_compile agent/src/trading/precision_execution/entry_area_confirmation.py agent/src/trading/precision_execution/entry_area.py agent/src/trading/precision_execution/support_resistance.py agent/src/trading/precision_execution/order_blocks.py agent/src/trading/auto_trade/strategy_runner.py agent/src/api/simple_autotrade.py
+git diff --check
+npm run build --prefix frontend
+python scripts\validate_mt5_demo.py --symbol XAUUSD
+```
+
+### Hasil Validasi
+- Focused backend suite: **33 passed**.
+- Python `py_compile`: berhasil.
+- Frontend `tsc -b` + Vite build: berhasil.
+- `git diff --check`: tidak ada error; hanya warning line ending LF/CRLF Windows.
+- Vite masih memberi warning chunk >500 kB; build tetap sukses.
+- MT5 validator: **overall PASS**, read-only; terminal demo PASS, account demo PASS, XAUUSD PASS, live tick PASS, positions/orders/history API PASS.
+
+### Keputusan Teknis
+1. Sweep hanya dihitung dari candle closed terakhir, bukan candle berjalan.
+2. Bullish sweep: low candle menembus `low` zona dan close kembali `>= low`; bearish kebalikannya terhadap `high`.
+3. Sweep menambah score tetapi tidak membypass hard filter invalidation/direction/distance.
+4. Ranking UI bersifat observability/audit; tidak mengubah Fixed Controls atau mengirim order.
+5. Paper/demo order tidak dikirim dalam sesi ini; validator MT5 sengaja read-only.
+
+### Status Graphify
+- `graphify update .`: **berhasil dijalankan sebelum dan sesudah perubahan**.
+- `graphify-out/graph.html`: **berhasil diperbarui**.
+- `graphify-out/graph.json`: **berhasil diperbarui**.
+- `graphify-out/GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik final: **29.128 nodes / 63.372 edges / 1.170 communities**.
+- Warning: 11 source file zero-node; community labels perlu `graphify label` bila ingin disegarkan.
+
+### Next Step
+1. Jalankan paper/demo smoke test runner secara terkontrol pada XAUUSD M5 dan M15 setelah memastikan clock/time handling tidak memengaruhi expiry.
+2. Simpan hasil kandidat, sweep, keputusan, dan outcome trade untuk dataset kalibrasi.
+3. Kalibrasi bobot sweep/reaction/age/mitigation dari data, bukan asumsi.
+4. Perbaiki missing modules lalu jalankan full `agent/tests` collection.
+5. Pertimbangkan `graphify label` setelah struktur komunitas stabil.
+6. Review `git diff`, lalu commit perubahan sesi bila user menyetujui.
+
 ## Handoff Sesi 7 Agustus 2026 — Chart-Only Entry Area Foundation (PALING TERBARU)
 
-> **Konteks proyek:** Bot trading XAUUSD adaptive (backend FastAPI `agent/`, frontend Vite `frontend/`, eksekusi demo/paper via MT5). Sesi-sesi terakhir fokus pada dynamic entry-area selection: Order Block, ACR, FVG, Supply/Demand, dan Support/Resistance dipilih sebagai kandidat setara via scoring chart-only; SL/TP/lot/risk user (Fixed Controls) dipisahkan dari selector dan hanya dipakai di boundary eksekusi `simple_autotrade.py`. Sesi ini menyelesaikan fase fondasi selector: generic candle reaction, age/mitigation penalty, hard filter chart-only, clustering Support/Resistance, dan expose ranking kandidat. Belum ada commit; seluruh perubahan masih uncommitted (lihat `git status`).
+> **Konteks proyek:** Bot trading XAUUSD adaptive (backend FastAPI `agent/`, frontend Vite `frontend/`, eksekusi demo/paper via MT5). Sesi-sesi terakhir fokus pada dynamic entry-area selection: Order Block, ACR, FVG, Supply/Demand, dan Support/Resistance dipilih sebagai kandidat setara via scoring chart-only; SL/TP/lot/risk user (Fixed Controls) dipisahkan dari selector dan hanya dipakai di boundary eksekusi `simple_autotrade.py`. Sesi ini menyelesaikan fase fondasi selector: generic candle reaction, age/mitigation penalty, hard filter chart-only, clustering Support/Resistance, dan expose ranking kandidat. Seluruh perubahan sesi ini sudah di-commit oleh user: commit `4390d38 "Deskripsi perubahan"` (working tree bersih).
 
 ### Selesai
 - Menambahkan generic candle reaction confirmation untuk seluruh kandidat area melalui `confirm_area_reaction()`.
@@ -72,7 +323,7 @@ npm run build --prefix frontend
 3. Jalankan paper/demo smoke test XAUUSD M5/M15 (`start-auto-trade.cmd` + `python scripts\validate_mt5_demo.py --symbol XAUUSD`) dan review area terpilih.
 4. Kalibrasi bobot scoring dari hasil paper/backtest, tanpa mengubah sumber Fixed Controls.
 5. Perbaiki dependency missing (`src.trading.forex_signals.contracts`, `src.trading.forex_features.builder`) lalu jalankan full `agent/tests`.
-6. Review `git status` dan commit perubahan sesi bila user menyetujui.
+6. ~~Review `git status` dan commit perubahan sesi bila user menyetujui.~~ **SELESAI** — user sudah commit sebagai `4390d38 "Deskripsi perubahan"`.
 
 ## Handoff Sesi 7 Agustus 2026 — Dynamic Entry Area Selection
 

@@ -178,8 +178,15 @@ class UpdateDiagnosticRecommendationStatusRequest(BaseModel):
 class DiagnosticTradeListResponse(BaseModel):
     items: list[dict[str, object]]
     total: int
-    limit: int
-    offset: int
+
+
+class DiagnosticsDashboardResponse(BaseModel):
+    summary: DiagnosticsSummaryResponse
+    causes: list[DiagnosticCauseResponse]
+    recentTrades: list[RecentDiagnosticTradeResponse]
+    insight: DiagnosticsInsightResponse | None
+    contextFilterPercentage: float = 0.0
+    generatedAt: str
 
 
 class DiagnosticExportRequest(BaseModel):
@@ -331,6 +338,30 @@ def _parse_diagnostic_csv(content: bytes) -> list[dict[str, object]]:
 
 def register_diagnostics_routes(app: Any) -> None:
     """Register diagnostics read endpoints on the host FastAPI app."""
+
+    @app.get(
+        "/diagnostics/dashboard",
+        response_model=DiagnosticsDashboardResponse,
+        dependencies=[Depends(require_local_or_auth)],
+    )
+    async def diagnostics_dashboard(
+        user_id: str = Query("user-123", min_length=1, max_length=128),
+    ) -> DiagnosticsDashboardResponse:
+        """Aggregate summary, causes, recent trades, and insight for the dashboard."""
+        with DiagnosticsStore() as store:
+            summary = DiagnosticsSummaryResponse(**store.performance_summary(user_id))
+            causes = [DiagnosticCauseResponse(**item) for item in store.cause_statistics(user_id)]
+            recent = [RecentDiagnosticTradeResponse(**item) for item in store.recent_trades(user_id, 5)]
+            insight_dict = store.quick_insight(user_id)
+        insight = DiagnosticsInsightResponse(**insight_dict) if insight_dict else None
+        return DiagnosticsDashboardResponse(
+            summary=summary,
+            causes=causes,
+            recentTrades=recent,
+            insight=insight,
+            contextFilterPercentage=0.0,
+            generatedAt=datetime.utcnow().isoformat() + "Z",
+        )
 
     @app.get(
         "/diagnostics/summary",

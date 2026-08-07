@@ -10,7 +10,7 @@ from .fvg import FairValueGap
 from .order_blocks import OrderBlock
 from .support_resistance import SupportResistanceZone
 from .supply_demand import SupplyDemandZone
-from .entry_area_confirmation import ReactionStatus, confirm_area_reaction
+from .entry_area_confirmation import ReactionStatus, confirm_area_reaction, detect_liquidity_sweep
 from src.trading.auto_selection import OHLCVBar
 from datetime import datetime
 
@@ -34,6 +34,7 @@ class EntryAreaCandidate:
     reaction_status: ReactionStatus
     age_candles: int
     mitigation_count: int
+    liquidity_sweep: bool
 
 
 class DynamicEntryAreaSelector:
@@ -88,15 +89,19 @@ class DynamicEntryAreaSelector:
             reaction_status = confirm_area_reaction(bars, direction=direction, low=low, high=high)
             if reaction_status == "INVALIDATED":
                 continue
+            liquidity_sweep = detect_liquidity_sweep(
+                bars, direction=direction, low=low, high=high,
+            )
             overlap_count = sum(
                 other_id != item_id and low <= other_high and high >= other_low
                 for other_id, _, other_direction, other_low, other_high, _, _, _ in raw
                 if other_direction == direction
             )
             reaction_score = {"REACTION_CONFIRMED": 20.0, "TOUCHED": 8.0, "WAITING_RETEST": 0.0}[reaction_status]
+            sweep_score = 12.0 if liquidity_sweep else 0.0
             age_penalty = min(age_candles / 100, 1.0) * 10
             mitigation_penalty = min(mitigation_count / max(max_mitigations, 1), 1.0) * 10
-            score = round(freshness * 30 + distance_score * 25 + min(overlap_count, 4) * 7.5 + reaction_score - age_penalty - mitigation_penalty, 4)
+            score = round(freshness * 30 + distance_score * 25 + min(overlap_count, 4) * 7.5 + reaction_score + sweep_score - age_penalty - mitigation_penalty, 4)
             candidates.append(EntryAreaCandidate(
                 id=item_id,
                 type=item_type,
@@ -107,9 +112,10 @@ class DynamicEntryAreaSelector:
                 distance=round(distance, 8),
                 freshness=round(freshness, 4),
                 confluence_count=overlap_count,
-                reason=f"{item_type} scored from chart distance, freshness, reaction={reaction_status}, age, mitigation, and {overlap_count} overlap(s).",
+                reason=f"{item_type} scored from chart distance, freshness, reaction={reaction_status}, sweep={'YES' if liquidity_sweep else 'NO'}, age, mitigation, and {overlap_count} overlap(s).",
                 reaction_status=reaction_status,
                 age_candles=age_candles,
                 mitigation_count=mitigation_count,
+                liquidity_sweep=liquidity_sweep,
             ))
         return tuple(sorted(candidates, key=lambda item: (-item.score, item.distance, item.id)))

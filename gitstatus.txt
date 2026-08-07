@@ -1,0 +1,48 @@
+﻿ M SESSION_LOG.md
+ M TASKS.md
+ M agent/src/api/diagnostics_routes.py
+ M agent/src/api/simple_autotrade.py
+ M agent/src/trading/precision_execution/__init__.py
+ M agent/src/trading/precision_execution/entry_area.py
+ M agent/src/trading/precision_execution/entry_area_confirmation.py
+ M agent/tests/test_precision_order_blocks.py
+ M frontend/src/__tests__/viteProxy.test.ts
+ M frontend/src/components/layout/Layout.tsx
+ M frontend/src/lib/api.ts
+ M frontend/src/lib/trading-terminal-api.ts
+ M frontend/src/pages/AutoTrade.tsx
+ M frontend/src/pages/DiagnosticTrades.tsx
+ M frontend/src/pages/DiagnosticsDashboard.tsx
+ M frontend/src/pages/Home.tsx
+ M frontend/src/pages/LossPatternAnalysis.tsx
+ M frontend/src/pages/Mt5ProductionDiagnostics.tsx
+ M frontend/src/pages/PrecisionExecution.tsx
+ M frontend/src/pages/StrategyAutoSelection.tsx
+ M frontend/vite.config.ts
+ M graphify-out/.graphify_labels.json
+ M graphify-out/.graphify_labels.json.sig
+ M graphify-out/2026-08-07/.graphify_labels.json
+ M graphify-out/2026-08-07/GRAPH_REPORT.md
+ M graphify-out/2026-08-07/graph.json
+ M graphify-out/2026-08-07/manifest.json
+ M graphify-out/GRAPH_REPORT.md
+ M graphify-out/cache/stat-index.json
+ M graphify-out/graph.html
+ M graphify-out/graph.json
+ M graphify-out/manifest.json
+ M scripts/start-auto-trade.ps1
+?? gitstatus.txt
+?? graphify-out/cache/ast/v0.9.32/153e81bc90ab887827c268505e97bc1015f837bdd3939152a01c68afc34af2eb.json
+?? graphify-out/cache/ast/v0.9.32/166adeff60b2c34f381f809f603c8494a2dc257be3c2d50d0be67600d9c8384e.json
+?? graphify-out/cache/ast/v0.9.32/230a97e4575addac6d0899aae3740b480b10ea0f5a83075bd10da74c974c0c0d.json
+?? graphify-out/cache/ast/v0.9.32/23886c1e472629ba3b7714670be23c395519e80a088828440b6c6eaf8c066364.json
+?? graphify-out/cache/ast/v0.9.32/2c0639b908075aeef2aa97228457e674960ccf12fd8e2ee1a50024828da54d63.json
+?? graphify-out/cache/ast/v0.9.32/39b50aff7545e8d267b3682c44a4da32b486c78522f3cb16d26aacf483cb739d.json
+?? graphify-out/cache/ast/v0.9.32/44bcf6ccb2f09d1730e9fff5b5527680e682ebad16b3d709a81c59a4740e7a9c.json
+?? graphify-out/cache/ast/v0.9.32/50c6a223506e70ba85283124b7820b4d2a10d5fa12225e7d236576852b87d3d5.json
+?? graphify-out/cache/ast/v0.9.32/646805464fbb0ce3e1f2fb0e4aca7659256ec3404180b9dd2fab263f92f48b28.json
+?? graphify-out/cache/ast/v0.9.32/9afe2eff25b899a59bd5669a4af80e7279c9092687c678b64602d7277451ca11.json
+?? graphify-out/cache/ast/v0.9.32/b8db28a84a0caa231f45a1c7a58d4da7ec104c2cca9625de0ca7c32a66ca01e0.json
+?? graphify-out/cache/ast/v0.9.32/ca8aa020956885837cdcaa40de5d7a07c79d8b228d9df99a95b088ffd41397ad.json
+?? graphify-out/cache/ast/v0.9.32/d193680fbaabdd0fb0efc48254d96b3846b017b2cd08659365e4352e06215eba.json
+?? graphify-out/cache/ast/v0.9.32/d52b22d2e61e9cd6515a408cb99b44942f6379ac356b3edbe5d0e626dcadd921.json

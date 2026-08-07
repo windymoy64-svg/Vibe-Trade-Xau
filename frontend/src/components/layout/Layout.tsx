@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useSearchParams } from "react-router";
-import { Activity, BarChart3, Bell, Bot, Check, ChevronDown, Crosshair, Database, FileText, Languages, LogOut, Moon, Sun, Plus, Trash2, Pencil, MessageSquare, ChevronsLeft, ChevronsRight, Settings, Layers, Loader2, Stethoscope, UserRound, Zap, Radio, Terminal, Target, Wifi, ShieldAlert } from "lucide-react";
+import { BarChart3, Bell, Check, ChevronDown, Crosshair, Database, FileText, Languages, LogOut, Moon, Sun, Plus, Trash2, Pencil, MessageSquare, ChevronsLeft, ChevronsRight, Settings, Loader2, Stethoscope, UserRound, Zap, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { api, type SessionItem } from "@/lib/api";
@@ -22,17 +22,9 @@ export function Layout() {
     { to: "/diagnostics", icon: Stethoscope, label: "Diagnostics" },
     { to: "/auto-trade", icon: Zap, label: "Auto Trade" },
     { to: "/precision-execution", icon: Crosshair, label: "Precision Execution" },
-    { to: "/ea-bridge", icon: Radio, label: "EA Bridge" },
     { to: "/mt5-integration", icon: Terminal, label: "MT5 Direct" },
-    { to: "/precise-stop-loss", icon: Target, label: "Precise SL" },
-    { to: "/data-feed", icon: Wifi, label: "Data Feed" },
-    { to: "/fail-safe", icon: ShieldAlert, label: "Fail-Safe" },
-    { to: "/agent", icon: Bot, label: t('layout.agent') },
-    { to: "/runtime", icon: Activity, label: t('layout.runtime') },
     { to: "/reports", icon: FileText, label: t('layout.reports') },
-    { to: "/alpha-zoo", icon: Layers, label: t('layout.alphaZoo') },
     { to: "/settings", icon: Settings, label: t('layout.settings') },
-    { to: "/correlation", icon: BarChart3, label: t('layout.correlation') },
   ];
   const DIAGNOSTIC_NAV = [
     { to: "/diagnostics", label: "Overview" },
@@ -110,28 +102,29 @@ export function Layout() {
           {NAV.map(({ to, icon: Icon, label }) => {
             const text = label;
             return (
-              <Link
-                key={to}
-                to={to}
-                className={cn(
-                  "flex items-center rounded-md text-sm transition-colors",
-                  collapsed ? "justify-center p-2" : "gap-3 px-3 py-2",
-                  (to === "/" ? pathname === "/" : pathname.startsWith(to))
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              <Fragment key={to}>
+                <Link
+                  to={to}
+                  className={cn(
+                    "flex items-center rounded-md text-sm transition-colors",
+                    collapsed ? "justify-center p-2" : "gap-3 px-3 py-2",
+                    (to === "/" ? pathname === "/" : pathname.startsWith(to))
+                      ? "bg-primary/10 text-primary font-medium"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                  title={collapsed ? text : undefined}
+                >
+                  <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  {!collapsed && text}
+                </Link>
+                {to === "/diagnostics" && !collapsed && pathname.startsWith("/diagnostics") && (
+                  <div className="ms-4 mt-1 space-y-0.5 border-s ps-3">
+                    {DIAGNOSTIC_NAV.map(({ to: subTo, label: subLabel }) => <Link key={subTo} to={subTo} className={cn("block rounded-md px-2 py-1.5 text-xs transition-colors", pathname === subTo || (subTo !== "/diagnostics" && pathname.startsWith(subTo)) ? "bg-primary/10 font-medium text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground")}>{subLabel}</Link>)}
+                  </div>
                 )}
-                title={collapsed ? text : undefined}
-              >
-                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {!collapsed && text}
-              </Link>
+              </Fragment>
             );
           })}
-          {!collapsed && pathname.startsWith("/diagnostics") && (
-            <div className="ms-4 mt-1 space-y-0.5 border-s ps-3">
-              {DIAGNOSTIC_NAV.map(({ to, label }) => <Link key={to} to={to} className={cn("block rounded-md px-2 py-1.5 text-xs transition-colors", pathname === to || (to !== "/diagnostics" && pathname.startsWith(to)) ? "bg-primary/10 font-medium text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground")}>{label}</Link>)}
-            </div>
-          )}
         </nav>
 
         {/* Sessions — hidden when collapsed */}

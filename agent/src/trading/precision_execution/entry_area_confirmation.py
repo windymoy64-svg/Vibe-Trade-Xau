@@ -40,6 +40,22 @@ def confirm_area_reaction(
     return "REACTION_CONFIRMED" if rejection or engulfing else "TOUCHED"
 
 
+def detect_liquidity_sweep(
+    bars: tuple[OHLCVBar, ...] | list[OHLCVBar],
+    *,
+    direction: Literal["BULLISH", "BEARISH"],
+    low: float,
+    high: float,
+) -> bool:
+    """Detect a closed candle taking liquidity beyond a zone and closing back."""
+    if low >= high or not bars:
+        return False
+    latest = bars[-1]
+    if direction == "BULLISH":
+        return latest.low < low and latest.close >= low
+    return latest.high > high and latest.close <= high
+
+
 def _engulfing(
     bars: tuple[OHLCVBar, ...] | list[OHLCVBar],
     direction: Literal["BULLISH", "BEARISH"],

@@ -26,7 +26,7 @@ from .setup_confirmation import SetupConfirmation, evaluate_setup, is_engulfing_
 from .order_blocks import OrderBlock, OrderBlockDetectionService
 from .support_resistance import SupportResistanceDetectionService, SupportResistanceZone
 from .entry_area import DynamicEntryAreaSelector, EntryAreaCandidate
-from .entry_area_confirmation import ReactionStatus, confirm_area_reaction
+from .entry_area_confirmation import ReactionStatus, confirm_area_reaction, detect_liquidity_sweep
 
 __all__ = [
     "HTFMarketStructureService", "MarketStructureMap", "OHLCVFileParser",

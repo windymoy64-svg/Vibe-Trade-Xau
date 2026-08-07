@@ -1,6 +1,19 @@
 import { authHeaders, withAuthTicket } from "@/lib/apiAuth";
-import type { DiagnosticsDashboardData } from "@/data/diagnostics-dashboard";
 import type { LossPatternAnalysisData } from "@/data/loss-patterns";
+
+export interface DiagnosticTradeListResponse {
+  items: Array<Record<string, unknown>>;
+  total: number;
+}
+
+export interface DiagnosticsDashboardLive {
+  summary: { totalTrades: number; winningTrades: number; losingTrades: number; lossRate: number };
+  causes: Array<{ label: string; count: number; percentage: number }>;
+  recentTrades: Array<{ id: string; ticketId: string; pair: string; direction: string; result: string; suspectedReason: string | null; profitLoss: number | null; entryTime: string }>;
+  insight: { cause: string; percentage: number; recommendation: string } | null;
+  contextFilterPercentage: number;
+  generatedAt: string;
+}
 
 const BASE = "";
 
@@ -113,8 +126,9 @@ function appendQueryParam(url: string, key: string, value: string): string {
 
 export const api = {
   uploadFile,
-  getDiagnosticsDashboard: () => request<DiagnosticsDashboardData>("/diagnostics/dashboard"),
-  getLossPatterns: () => request<LossPatternAnalysisData>("/diagnostics/patterns"),
+  getDiagnosticsDashboard: () => request<DiagnosticsDashboardLive>("/diagnostics/dashboard?user_id=user-123"),
+  getLossPatterns: () => request<LossPatternAnalysisData>("/diagnostics/patterns?user_id=user-123"),
+  getDiagnosticTrades: (limit = 50) => request<DiagnosticTradeListResponse>(`/diagnostics/trades?user_id=user-123&limit=${encodeURIComponent(String(limit))}`),
   getCorrelation: (codes: string, days: number, method: "pearson" | "spearman") =>
     request<CorrelationResponse>(
       `/correlation?codes=${encodeURIComponent(codes)}&days=${encodeURIComponent(String(days))}&method=${encodeURIComponent(method)}`,

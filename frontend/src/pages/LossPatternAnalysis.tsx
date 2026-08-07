@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, ArrowLeft, ArrowRightLeft, ArrowUp, ArrowDown, ArrowUpRight, BrainCircuit, Download, Loader2, ShieldAlert, Target } from "lucide-react";
 import { Link } from "react-router";
-import { lossPatternAnalysisStub, type LossPattern, type LossPatternAnalysisData } from "@/data/loss-patterns";
+import { type LossPattern, type LossPatternAnalysisData } from "@/data/loss-patterns";
 import { DominantPatternChart } from "@/components/diagnostics/DominantPatternChart";
 import { api } from "@/lib/api";
 
@@ -52,29 +52,28 @@ function PatternCard({ pattern, rank }: { pattern: LossPattern; rank: number }) 
 }
 
 export function LossPatternAnalysis() {
-  const [analysis, setAnalysis] = useState<LossPatternAnalysisData>(lossPatternAnalysisStub);
-  const [usingPreviewData, setUsingPreviewData] = useState(true);
+  const [analysis, setAnalysis] = useState<LossPatternAnalysisData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [comparePeriod, setComparePeriod] = useState("previous_month");
 
   useEffect(() => {
     let active = true;
-    api.getLossPatterns()
-      .then((data) => {
-        if (!active) return;
-        setAnalysis(data);
-        setUsingPreviewData(false);
-      })
-      .catch(() => {
-        if (!active) return;
-        setAnalysis(lossPatternAnalysisStub);
-        setUsingPreviewData(true);
-      })
-      .finally(() => { if (active) setLoading(false); });
-    return () => { active = false; };
+    const load = () => {
+      api.getLossPatterns()
+        .then((data) => { if (!active) return; setAnalysis(data); setError(null); })
+        .catch((value) => { if (!active) return; setError(value instanceof Error ? value.message : "Gagal memuat loss patterns"); setAnalysis(null); })
+        .finally(() => { if (active) setLoading(false); });
+    };
+    load();
+    const timer = window.setInterval(load, 15_000);
+    return () => { active = false; window.clearInterval(timer); };
   }, []);
 
-  const { summary, patterns, insight, generatedAt } = analysis;
+  const summary = analysis?.summary;
+  const patterns = analysis?.patterns ?? [];
+  const insight = analysis?.insight;
+  const generatedAt = analysis?.generatedAt;
   const detectedPatterns = patterns.length;
   const highSeverityPatterns = patterns.filter((pattern) => pattern.severity === "HIGH").length;
 
@@ -83,14 +82,14 @@ export function LossPatternAnalysis() {
       <Link to="/diagnostics" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Dashboard</Link>
       <div className="mt-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
         <div>
-          <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-primary"><BrainCircuit className="h-4 w-4" /> Evidence pattern engine {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : usingPreviewData ? <span className="rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] text-amber-600 dark:text-amber-400">Preview data</span> : null}</div>
+          <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-primary"><BrainCircuit className="h-4 w-4" /> Evidence pattern engine {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : analysis ? <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-500">LIVE DATA</span> : <span className="rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] text-rose-500">NO DATA</span>}</div>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Loss pattern analysis</h1>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">Rank recurring failure conditions before changing strategy parameters. Compare against historical baseline.</p>
         </div>
         <div className="flex flex-col items-start gap-2 sm:items-end">
           <div className="flex flex-wrap gap-2">
             <Link to="/diagnostics/patterns/compare" className="inline-flex items-center gap-2 rounded-lg border bg-card px-3 py-2 text-xs font-medium hover:bg-muted"><ArrowRightLeft className="h-4 w-4" /> Compare periods</Link>
-            <button type="button" onClick={() => printPatternReport(analysis)} className="inline-flex items-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90"><Download className="h-4 w-4" /> Export PDF</button>
+            <button type="button" disabled={!analysis} onClick={() => analysis && printPatternReport(analysis)} className="inline-flex items-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-40"><Download className="h-4 w-4" /> Export PDF</button>
           </div>
           <div className="flex flex-col items-end gap-2">
           <select value={comparePeriod} onChange={(e) => setComparePeriod(e.target.value)} className="w-fit rounded-lg border bg-card px-3 py-1.5 text-xs font-medium text-foreground outline-none hover:bg-muted">
@@ -98,14 +97,15 @@ export function LossPatternAnalysis() {
             <option value="previous_quarter">vs Previous Quarter</option>
             <option value="baseline">vs Baseline strategy</option>
           </select>
-          <p className="text-xs text-muted-foreground">Generated {new Date(generatedAt).toLocaleString()}</p>
+          <p className="text-xs text-muted-foreground">Generated {generatedAt ? new Date(generatedAt).toLocaleString() : "—"}</p>
         </div>
         </div>
       </div>
     </header>
+    {error && <div className="rounded-lg border border-rose-500/30 bg-rose-500/5 p-3 text-xs text-rose-500">{error}</div>}
     <section className="grid gap-3 sm:grid-cols-3">
-      <div className="rounded-xl border bg-card p-5"><div className="flex justify-between text-xs text-muted-foreground"><span>Detected patterns</span><Target className="h-4 w-4" /></div><p className="mt-3 text-3xl font-semibold">{detectedPatterns}</p><p className="mt-1 text-xs text-muted-foreground">{summary.classifiedLosses.toLocaleString()} of {summary.totalLosses.toLocaleString()} losses clustered</p></div>
-      <div className="rounded-xl border bg-card p-5"><div className="flex justify-between text-xs text-muted-foreground"><span>Losses classified</span><ShieldAlert className="h-4 w-4" /></div><p className="mt-3 text-3xl font-semibold">{summary.lossesClassifiedPct}%</p><p className="mt-1 text-xs text-muted-foreground">{summary.classifiedLosses.toLocaleString()} classified losses</p></div>
+      <div className="rounded-xl border bg-card p-5"><div className="flex justify-between text-xs text-muted-foreground"><span>Detected patterns</span><Target className="h-4 w-4" /></div><p className="mt-3 text-3xl font-semibold">{detectedPatterns}</p><p className="mt-1 text-xs text-muted-foreground">{summary ? `${summary.classifiedLosses.toLocaleString()} of ${summary.totalLosses.toLocaleString()} losses clustered` : "—"}</p></div>
+      <div className="rounded-xl border bg-card p-5"><div className="flex justify-between text-xs text-muted-foreground"><span>Losses classified</span><ShieldAlert className="h-4 w-4" /></div><p className="mt-3 text-3xl font-semibold">{summary ? `${summary.lossesClassifiedPct}%` : "—"}</p><p className="mt-1 text-xs text-muted-foreground">{summary ? `${summary.classifiedLosses.toLocaleString()} classified losses` : "—"}</p></div>
       <div className="rounded-xl border bg-card p-5"><div className="flex justify-between text-xs text-muted-foreground"><span>High severity</span><AlertTriangle className="h-4 w-4" /></div><p className="mt-3 text-3xl font-semibold text-rose-500">{highSeverityPatterns}</p><p className="mt-1 text-xs text-muted-foreground">Patterns needing immediate controls</p></div>
     </section>
     <section className="grid gap-5 lg:grid-cols-[1fr_320px]">
@@ -118,7 +118,7 @@ export function LossPatternAnalysis() {
           <p className="mt-1 text-xs text-muted-foreground">Loss count and confidence by pattern</p>
           <div className="mt-5"><DominantPatternChart patterns={patterns} /></div>
         </div>
-        <div className="rounded-lg bg-primary/5 p-4 text-xs leading-relaxed text-muted-foreground"><strong className="text-foreground">{insight.title}:</strong> {insight.detail}</div>
+        {insight ? <div className="rounded-lg bg-primary/5 p-4 text-xs leading-relaxed text-muted-foreground"><strong className="text-foreground">{insight.title}:</strong> {insight.detail}</div> : null}
       </aside>
     </section>
   </div>;

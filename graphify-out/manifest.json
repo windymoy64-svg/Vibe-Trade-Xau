@@ -920,9 +920,9 @@
     "semantic_hash": "70adfcfc8292230e6836b862ef05864b"
   },
   "agent/src/api/diagnostics_routes.py": {
-    "mtime": 1785466439.3465118,
-    "ast_hash": "28ee461636251287a61699da4f658386",
-    "semantic_hash": "28ee461636251287a61699da4f658386"
+    "mtime": 1786087479.5271118,
+    "ast_hash": "5fe975bd2ff85d26cf99066e11e1bee9",
+    "semantic_hash": ""
   },
   "agent/src/api/helpers.py": {
     "mtime": 1785264526.8812494,
@@ -7720,9 +7720,9 @@
     "semantic_hash": "33fad9c02cb0ec6d6030369ef6347d57"
   },
   "frontend/src/__tests__/viteProxy.test.ts": {
-    "mtime": 1785264528.3929636,
-    "ast_hash": "ca94de7b999a56d02983b3a229a68ed0",
-    "semantic_hash": "ca94de7b999a56d02983b3a229a68ed0"
+    "mtime": 1786096732.6599412,
+    "ast_hash": "d623179cde506b77a2b1d1bb7a84f85d",
+    "semantic_hash": ""
   },
   "frontend/src/components/auto-trade/AutoTradeExecutionLog.tsx": {
     "mtime": 1785562098.4038262,
@@ -8000,8 +8000,8 @@
     "semantic_hash": "859083c13355aff12027e759622ff161"
   },
   "frontend/src/components/layout/Layout.tsx": {
-    "mtime": 1785790580.717573,
-    "ast_hash": "81481375a8da666e9405dbd28bd2c4f7",
+    "mtime": 1786085538.0539463,
+    "ast_hash": "3d2a6529e1357389c85cd578c0794c04",
     "semantic_hash": ""
   },
   "frontend/src/components/layout/ProtectedLayout.tsx": {
@@ -8175,9 +8175,9 @@
     "semantic_hash": "4ae6a66c6c82798f89055b6614be412c"
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785430801.8418067,
-    "ast_hash": "7655ad179becf15f3bafd3bc00e7fd18",
-    "semantic_hash": "7655ad179becf15f3bafd3bc00e7fd18"
+    "mtime": 1786086335.1191533,
+    "ast_hash": "b1b1379164edf1e060c961eebd5ce3f3",
+    "semantic_hash": ""
   },
   "frontend/src/lib/apiAuth.ts": {
     "mtime": 1785264528.4448943,
@@ -8250,8 +8250,8 @@
     "semantic_hash": "494ca9b98b5b95872a2b6a1789ff3aca"
   },
   "frontend/src/pages/AutoTrade.tsx": {
-    "mtime": 1786030486.3173807,
-    "ast_hash": "a7df38c489c2d4a6decae039cfa5ef68",
+    "mtime": 1786071891.596974,
+    "ast_hash": "dd7f59dae31fc9f6316a1dfccdedc4c7",
     "semantic_hash": ""
   },
   "frontend/src/pages/Compare.tsx": {
@@ -8310,23 +8310,23 @@
     "semantic_hash": "5503aecbad1df06ab4e33ad59e3f6a8e"
   },
   "frontend/src/pages/DiagnosticTrades.tsx": {
-    "mtime": 1785425050.9118993,
-    "ast_hash": "750fc75014acd82dac53b755c3582c5d",
-    "semantic_hash": "750fc75014acd82dac53b755c3582c5d"
+    "mtime": 1786086226.9464562,
+    "ast_hash": "c599c0a25b1ff87e731b5ca31caa86e1",
+    "semantic_hash": ""
   },
   "frontend/src/pages/DiagnosticsDashboard.tsx": {
-    "mtime": 1785423841.5382035,
-    "ast_hash": "e880f706cd3be3252abb4eae9c278ac1",
-    "semantic_hash": "e880f706cd3be3252abb4eae9c278ac1"
+    "mtime": 1786086150.5160897,
+    "ast_hash": "f047c6f13c99cc37375d2c34e63ccc03",
+    "semantic_hash": ""
   },
   "frontend/src/pages/Home.tsx": {
-    "mtime": 1785959084.0314832,
-    "ast_hash": "8e6a11cc3afbeaeb890248cd94ec30ce",
+    "mtime": 1786081357.1248984,
+    "ast_hash": "f28850c45c672d4b9159a22c6ecfbb4e",
     "semantic_hash": ""
   },
   "frontend/src/pages/LossPatternAnalysis.tsx": {
-    "mtime": 1785866550.1202312,
-    "ast_hash": "9e0262fc15081f864ca7e1877092bc35",
+    "mtime": 1786086337.2868721,
+    "ast_hash": "9529f124d1b2877bdc14bb3daeab0fff",
     "semantic_hash": ""
   },
   "frontend/src/pages/LossPatternsCompare.tsx": {
@@ -8355,9 +8355,9 @@
     "semantic_hash": "907e133611692e00ad6f94142d0c05e4"
   },
   "frontend/src/pages/StrategyAutoSelection.tsx": {
-    "mtime": 1785559698.1515975,
-    "ast_hash": "e3d6a59219bbf8898232bf35f81c56c2",
-    "semantic_hash": "e3d6a59219bbf8898232bf35f81c56c2"
+    "mtime": 1786083782.630466,
+    "ast_hash": "0a0815275d69df77f8426220ba187ca8",
+    "semantic_hash": ""
   },
   "frontend/src/pages/__tests__/AutoTrade.test.tsx": {
     "mtime": 1785684729.6273463,
@@ -8455,8 +8455,8 @@
     "semantic_hash": "00e02d2284c4c558c25662cd45b02938"
   },
   "frontend/vite.config.ts": {
-    "mtime": 1785902724.0855143,
-    "ast_hash": "22c21bdef10ec10c3738846a6855b202",
+    "mtime": 1786096732.6609435,
+    "ast_hash": "fd4c294e0151089f68c5156837a6be13",
     "semantic_hash": ""
   },
   "frontend/vitest.config.ts": {
@@ -8690,13 +8690,13 @@
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1786039242.0801468,
-    "ast_hash": "4acafa4597d4a46ed974e5e6484748ce",
+    "mtime": 1786084146.3859823,
+    "ast_hash": "810db637771202e49bc3857fe51ad44e",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1786039242.0801468,
-    "ast_hash": "689b24a7a6b924454bc1a20e48683156",
+    "mtime": 1786084146.3759735,
+    "ast_hash": "598bc5fae30a8a231812f1d61faa56f6",
     "semantic_hash": ""
   },
   "VPS_CONTEXT.md": {
@@ -11105,8 +11105,8 @@
     "semantic_hash": ""
   },
   "agent/src/trading/precision_execution/__init__.py": {
-    "mtime": 1786038908.924999,
-    "ast_hash": "eafb22178ea4bb040cf51089b61eb7a4",
+    "mtime": 1786071798.709452,
+    "ast_hash": "d7f2265912b4fc7cbbdd1f4929ec5157",
     "semantic_hash": ""
   },
   "agent/src/trading/precision_execution/acr_zones.py": {
@@ -11500,8 +11500,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/Mt5ProductionDiagnostics.tsx": {
-    "mtime": 1785755389.4692917,
-    "ast_hash": "8b38825f7a6dddec4ba86ed6355b463b",
+    "mtime": 1786083468.8605657,
+    "ast_hash": "1b9ad049ef29ab15eef2f58165120844",
     "semantic_hash": ""
   },
   "frontend/src/pages/PreciseStopLoss.tsx": {
@@ -11510,8 +11510,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/PrecisionExecution.tsx": {
-    "mtime": 1785755977.6369777,
-    "ast_hash": "bcb5bb1884aeb4cc10175b9ef87e013a",
+    "mtime": 1786083525.5530553,
+    "ast_hash": "fe8530d8214d4217fe6c77a2e17f3b57",
     "semantic_hash": ""
   },
   "frontend/src/pages/__tests__/DataFeedPusher.test.tsx": {
@@ -11675,8 +11675,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/trading-terminal-api.ts": {
-    "mtime": 1786038987.8178058,
-    "ast_hash": "917bfa7fd6a2cb5a9147d7f275ac065a",
+    "mtime": 1786071798.7456386,
+    "ast_hash": "cf88ecbd97ec43a149ca2d6a33d84869",
     "semantic_hash": ""
   },
   "_fix_trading_rules.py": {
@@ -11685,8 +11685,8 @@
     "semantic_hash": ""
   },
   "agent/src/api/simple_autotrade.py": {
-    "mtime": 1786039100.7946613,
-    "ast_hash": "e0d87bbb60f2fa33bb8ec91cc1d70060",
+    "mtime": 1786071798.730469,
+    "ast_hash": "a22011ae1bc9669490610942b2b19af9",
     "semantic_hash": ""
   },
   "agent/src/trading/auto_trade/engine.py": {
@@ -11705,8 +11705,8 @@
     "semantic_hash": ""
   },
   "scripts/start-auto-trade.ps1": {
-    "mtime": 1785927838.6968184,
-    "ast_hash": "b805110aa5d0d9defd83d688c636dc30",
+    "mtime": 1786088578.6150622,
+    "ast_hash": "0e8f7023e5fdfaca86bd95d533b29d03",
     "semantic_hash": ""
   },
   "scripts/stop-auto-trade.ps1": {
@@ -11730,13 +11730,13 @@
     "semantic_hash": ""
   },
   "agent/tests/test_precision_order_blocks.py": {
-    "mtime": 1786039072.2227817,
-    "ast_hash": "c189b810ce4749816a3eef3576a5d53d",
+    "mtime": 1786071798.754774,
+    "ast_hash": "48ec7bb04d463f813a69b24ff1d37bc3",
     "semantic_hash": ""
   },
   "agent/src/trading/precision_execution/entry_area.py": {
-    "mtime": 1786038948.6429465,
-    "ast_hash": "4072a3231d10f5f51911f8f4b4e20dbf",
+    "mtime": 1786071798.6914334,
+    "ast_hash": "ecec01e5954d836858585cc61923eec0",
     "semantic_hash": ""
   },
   "agent/src/trading/precision_execution/support_resistance.py": {
@@ -11745,8 +11745,13 @@
     "semantic_hash": ""
   },
   "agent/src/trading/precision_execution/entry_area_confirmation.py": {
-    "mtime": 1786038908.9209957,
-    "ast_hash": "33c5e44ae83969629c37be3cd5c3644d",
+    "mtime": 1786071798.6894298,
+    "ast_hash": "2792bed26f01016d2b96a0dd264c6d00",
+    "semantic_hash": ""
+  },
+  "gitstatus.txt": {
+    "mtime": 1786097107.4884572,
+    "ast_hash": "ff47576b862ad621ac93e18e03669e5a",
     "semantic_hash": ""
   }
 }

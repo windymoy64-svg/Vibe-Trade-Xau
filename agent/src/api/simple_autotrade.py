@@ -274,8 +274,9 @@ class DemoAutoTradeRunner:
                         "confluenceCount": candidate.confluence_count,
                         "reactionStatus": candidate.reaction_status,
                         "ageCandles": candidate.age_candles,
-                        "mitigationCount": candidate.mitigation_count,
-                        "reason": candidate.reason,
+                "mitigationCount": candidate.mitigation_count,
+                "liquiditySweep": candidate.liquidity_sweep,
+                "reason": candidate.reason,
                     }
                     for candidate in decision.entry_area_candidates
                 ]

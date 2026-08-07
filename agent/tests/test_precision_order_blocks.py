@@ -7,6 +7,7 @@ from src.trading.precision_execution import (
     OrderBlockDetectionService,
     SupportResistanceDetectionService,
     confirm_area_reaction,
+    detect_liquidity_sweep,
     DynamicEntryAreaSelector,
 )
 from src.trading.precision_execution import DynamicEntryAreaSelector
@@ -129,6 +130,13 @@ def test_generic_area_confirmation_detects_bullish_rejection():
     assert confirm_area_reaction(bars, direction="BULLISH", low=99.5, high=100.5) == "REACTION_CONFIRMED"
 
 
+def test_generic_area_confirmation_detects_closed_candle_liquidity_sweep():
+    bars = [_bar(0, 100, 101, 99, 100), _bar(1, 100, 102, 98.5, 101.8)]
+
+    assert detect_liquidity_sweep(bars, direction="BULLISH", low=99.5, high=100.5)
+    assert not detect_liquidity_sweep(bars, direction="BEARISH", low=99.5, high=100.5)
+
+
 def test_dynamic_selector_filters_far_areas_and_exposes_reaction_metadata():
     bars = [_bar(0, 100, 101, 99, 100), _bar(1, 100, 102, 98.5, 101.8)]
     block = OrderBlock(
@@ -156,3 +164,4 @@ def test_dynamic_selector_filters_far_areas_and_exposes_reaction_metadata():
 
     assert candidates[0].reaction_status == "REACTION_CONFIRMED"
     assert candidates[0].age_candles == 1
+    assert candidates[0].liquidity_sweep is True

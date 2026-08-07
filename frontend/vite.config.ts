@@ -46,7 +46,8 @@ export default defineConfig(({ mode }) => {
         "^/runs/[^/]+/?$": apiProxyWithHtmlFallback,
         "/runs": apiProxy,
         "/correlation": apiProxyWithHtmlFallback,
-        "^/alpha(?:/|$)": apiProxy,
+          "^/alpha(?:/|$)": apiProxy,
+          "^/auto-selection(?:/|$)": apiProxy,
         // ``/mt5`` and ``/auto-trade`` are BOTH API prefixes and SPA routes
         // (``/auto-trade``, ``/auto-trade/strategy-selection``,
         // ``/mt5-integration``). Proxying them unconditionally made a browser
@@ -56,6 +57,14 @@ export default defineConfig(({ mode }) => {
         // guard stops ``/mt5`` from swallowing ``/mt5-integration``.
         "^/mt5(?:/|$)": apiProxyWithHtmlFallback,
         "^/auto-trade(?:/|$)": apiProxyWithHtmlFallback,
+        // Same dual-purpose treatment: ``/diagnostics`` is BOTH an API
+        // prefix (``/diagnostics/dashboard``, ``/diagnostics/trades``,
+        // ``/diagnostics/patterns``, ...) and an SPA route namespace
+        // (``/diagnostics``, ``/diagnostics/trades``, ``/diagnostics/patterns``
+        // ...). Without the html fallback a browser refresh served the
+        // backend's JSON 404 -> white page. The ``(?:/|$)`` guard keeps the
+        // prefix from swallowing unrelated paths.
+        "^/diagnostics(?:/|$)": apiProxyWithHtmlFallback,
       },
     },
     build: {

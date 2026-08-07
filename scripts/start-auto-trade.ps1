@@ -25,12 +25,38 @@ function Test-LocalHttp([string]$Url) {
     }
 }
 
+function Get-OwnedProcess([string]$PidPath) {
+    $tracked = Get-TrackedProcess $PidPath
+    if ($null -ne $tracked) { return $tracked }
+    return $null
+}
+
+function Get-ProcessCommandLine([int]$ProcessId) {
+    try {
+        $instance = Get-CimInstance Win32_Process -Filter "ProcessId = $ProcessId" -ErrorAction Stop
+        return $instance.CommandLine
+    } catch {
+        return ""
+    }
+}
+
+function Test-IsLauncherProcess([int]$ProcessId) {
+    $commandLine = Get-ProcessCommandLine $ProcessId
+    return $commandLine -match "api_server" -or $commandLine -match "vite"
+}
+
 function Assert-PortAvailable([int]$Port, [string]$Name) {
     $listener = Get-NetTCPConnection -LocalAddress "127.0.0.1" -LocalPort $Port -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
     if ($null -eq $listener) { return }
-    $tracked = if ($Name -eq "Backend") { Get-TrackedProcess $BackendPidPath } else { Get-TrackedProcess $FrontendPidPath }
+    $pidPath = if ($Name -eq "Backend") { $BackendPidPath } else { $FrontendPidPath }
+    $tracked = Get-OwnProcess $pidPath
     if ($null -ne $tracked -and $tracked.Id -eq $listener.OwningProcess) { return }
     $owner = Get-Process -Id $listener.OwningProcess -ErrorAction SilentlyContinue
+    if ($null -ne $owner -and (Test-IsLauncherProcess $owner.Id)) {
+        Set-Content -LiteralPath $pidPath -Value $owner.Id -NoNewline
+        Write-Host "$Name sudah berjalan (PID $($owner.Id)) dan diadopsi oleh launcher." -ForegroundColor Yellow
+        return
+    }
     $ownerName = if ($null -ne $owner) { "$($owner.ProcessName) (PID $($owner.Id))" } else { "PID $($listener.OwningProcess)" }
     throw "$Name tidak dapat dimulai: port $Port sedang dipakai oleh $ownerName. Hentikan proses tersebut atau pilih port lain."
 }

@@ -50,7 +50,9 @@ export function Home() {
   const selection = data.selection;
   const quote = snapshot?.quote;
   const latestBar = snapshot?.bars[snapshot.bars.length - 1];
-  const latestTick = data.connection?.lastTickTime || (quote?.time ? new Date(quote.time * 1000).toISOString() : null);
+  const latestTick = data.connection?.lastTickTime
+    ? formatEpochOrIso(data.connection.lastTickTime)
+    : (quote?.time ? new Date(quote.time * 1000).toISOString() : null);
   const sourceLabel = state === "LIVE" ? "LIVE MT5" : state === "OFFLINE" ? "OFFLINE" : "CONNECTING";
 
   return (
@@ -112,3 +114,8 @@ function Row({ label, value }: { label: string; value: string }) { return <div c
 function StatusCard({ icon: Icon, title, value, detail }: { icon: typeof Activity; title: string; value: string; detail: string }) { return <article className="rounded-xl border border-slate-800 bg-slate-900 p-4"><div className="flex items-center gap-2 text-xs font-semibold text-slate-300"><Icon className="h-4 w-4 text-cyan-300" />{title}</div><p className="mt-4 font-mono text-lg font-semibold text-slate-100">{value}</p><p className="mt-1 text-xs leading-relaxed text-slate-500">{detail}</p></article>; }
 function QuickLink({ to, icon: Icon, title, detail }: { to: string; icon: typeof Activity; title: string; detail: string }) { return <Link to={to} className="group rounded-xl border border-slate-800 bg-slate-900 p-4 transition hover:border-cyan-400/50 hover:bg-slate-800"><div className="flex items-center justify-between"><Icon className="h-5 w-5 text-cyan-300" /><ArrowRight className="h-4 w-4 text-slate-600 transition group-hover:translate-x-1 group-hover:text-cyan-300" /></div><p className="mt-4 font-semibold">{title}</p><p className="mt-1 text-xs text-slate-500">{detail}</p></Link>; }
 function formatNumber(value: number | null | undefined): string { return value == null || !Number.isFinite(value) ? "--" : value.toFixed(2); }
+function formatEpochOrIso(value: string): string {
+  const epoch = Number(value);
+  const date = Number.isFinite(epoch) ? new Date(epoch * 1000) : new Date(value);
+  return Number.isNaN(date.getTime()) ? value : date.toISOString();
+}
