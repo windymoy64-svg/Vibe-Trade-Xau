@@ -1,6 +1,59 @@
 # Tasks
 
-## Handoff Sesi 7 Agustus 2026 — Fix Launcher Auto Trade + Fix Proxy /diagnostics Blank Page (PALING TERBARU)
+## Handoff Sesi 7 Agustus 2026 — Verifikasi Final & Handoff Penutup Sesi (PALING TERBARU)
+
+> **Follow-up dari handoff di bawah.** Menyelesaikan loop verifikasi terakhir dari sesi fix launcher + fix proxy `/diagnostics`: restart dev server dengan konfigurasi proxy baru, verifikasi HTTP end-to-end untuk seluruh path diagnostics, dan menjalankan graphify ulang sebagai penutup. Tidak ada perubahan source code baru di sesi ini — hanya verifikasi, sinkronisasi, dan dokumentasi handoff.
+
+### Selesai
+1. Dev server di-restart dengan `vite.config.ts` yang sudah memuat fix proxy `/diagnostics` (stop + start bersih via launcher): Backend PID `26892` di port `8899`, Frontend PID `27020` di port `5899`.
+2. Verifikasi HTTP end-to-end setelah restart (bukan hanya unit test `viteProxy.test.ts`):
+   - `/diagnostics` + `Accept: text/html` → `200 text/html` (SPA shell) ✔
+   - `/diagnostics/trades` + `Accept: text/html` → `200 text/html` (SPA) ✔
+   - `/diagnostics/patterns` + `Accept: text/html` → `200 text/html` (SPA) ✔ (sub-path tambahan baru teruji)
+   - `/diagnostics/dashboard?user_id=user-123` + `Accept: application/json` → `200 application/json` (backend) ✔
+   - `/mt5/auto-trade/status` + `Accept: application/json` → `200 application/json` (runner) ✔
+   - Kesimpulan: API dan navigasi SPA tidak lagi bertabrakan; blank page hanya F5 sudah teratasi.
+3. `graphify update .` dijalankan sebagai penutupan — output final: **29.202 nodes / 63.405 edges / 1.160 communities**, `graph.html`/`graph.json`/`GRAPH_REPORT.md` diperbarui (warning existing: 11 zero-node, community labels stale → `graphify label` belum dijalankan).
+
+### Belum Selesai / Risiko
+- (Sama persis dengan handoff di bawah — tidak ada item baru.) 15 test vitest pre-existing gagal di `StrategyAutoSelection.test.tsx`; 13 test stale `schema_version == 14`; submenu diagnostics lain belum diuji klik manual di browser; warning LLM provider backend belum diinvestigasi.
+
+### File Diubah
+- Hanya `graphify-out/` artefak + `TASKS.md`/`SESSION_LOG.md` (handoff ini). Tidak ada file source frontend/backend yang berubah di sesi penutup ini.
+
+### Command Penting
+```powershell
+cmd /c stop-auto-trade.cmd
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File scripts\start-auto-trade.ps1 -NoBrowser
+Invoke-WebRequest -Uri "http://127.0.0.1:5899/diagnostics" -Headers @{ "Accept" = "text/html" } -UseBasicParsing
+Invoke-WebRequest -Uri "http://127.0.0.1:5899/diagnostics/patterns" -Headers @{ "Accept" = "text/html" } -UseBasicParsing
+graphify update .  # akhirnya
+```
+
+### Hasil Validasi
+- Semua request HTTP di atas: `200` dengan `Content-Type` yang benar (lihat Selesai).
+- `git stash push/pop` terhadap `frontend/vite.config.ts` + `frontend/src/__tests__/viteProxy.test.ts` → `StrategyAutoSelection.test.tsx` tetap 3 failed tanpa perubahan sesi ini, mengonfirmasi 15 failure adalah pre-existing (halaman handoff di bawah).
+
+### Keputusan Teknis
+- Verifikasi runtime HTTP diprioritaskan atas identifikasi kode, karena itulah yang merefleksikan perbaikan blank page yang dialami user.
+- Tidak menyentuh 15+13 test pre-existing di sesi penutup ini; di-list sebagai Next Step.
+
+### Status Graphify untuk Sesi Ini
+- `graphify update .`: **berhasil dijalankan di akhir sesi**.
+- `graphify-out/graph.html`, `graphify-out/graph.json`, `graphify-out/GRAPH_REPORT.md`: **berhasil diperbarui**.
+- Statistik yang dituangkan di handoff: **29.202 nodes / 63.405 edges / 1.160 communities** (nilai persis dari output run terakhir; lihat kolom di bawah referensi).
+
+### Next Step
+1. Uji klik manual di browser seluruh submenu `/diagnostics/*` (patterns, recommendations, improvements, settings/*) — refresh langsung di tiap halaman; tersisa.
+2. Perbarui `StrategyAutoSelection.test.tsx` agar sesuai UI live-data (hapus 15 failure).
+3. Perbaiki 13 test stale schema di `test_diagnostics_store.py`.
+4. Investigasi `Critical check failed - agent cannot start without a working LLM provider`.
+5. Jalankan `graphify label` bila komunitas sudah stabil.
+6. Review `git diff` lalu commit perubahan sesi bila user menyetujui.
+
+---
+
+## Handoff Sesi 7 Agustus 2026 — Fix Launcher Auto Trade + Fix Proxy /diagnostics Blank Page
 
 > **Konteks:** Lanjutan sesi live-data Diagnostics (lihat entri di bawah). Sesi ini menyelesaikan dua bug operasional yang dilaporkan user: (1) `start-auto-trade.cmd`/`stop-auto-trade.cmd` gagal jalan, dan (2) `http://localhost:5899/diagnostics` beserta submenunya blank putih saat di-refresh (F5).
 

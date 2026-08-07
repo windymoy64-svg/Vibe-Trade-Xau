@@ -17,7 +17,7 @@ from src.diagnostics.store import (
 def test_creates_versioned_trade_schema_and_indexes(tmp_path):
     db_path = tmp_path / "diagnostics.db"
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         columns = {
             row["name"] for row in store._conn.execute("PRAGMA table_info(diagnostic_trades)")
         }
@@ -140,7 +140,7 @@ def test_migration_is_idempotent(tmp_path):
     db_path = tmp_path / "diagnostics.db"
     DiagnosticsStore(db_path).close()
     with DiagnosticsStore(db_path) as reopened:
-        assert reopened.schema_version == 14
+        assert reopened.schema_version == 15
 
 
 def test_v5_database_upgrades_recommendations_without_losing_status(tmp_path):
@@ -164,7 +164,7 @@ def test_v5_database_upgrades_recommendations_without_losing_status(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store.recommendation_statuses("alice") == {
             "rec_existing": "APPLIED",
         }
@@ -199,7 +199,7 @@ def test_v1_database_upgrades_without_losing_trade(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         row = store._conn.execute(
             "SELECT ticket_id, updated_at FROM diagnostic_trades WHERE id='trade_1'"
         ).fetchone()
@@ -234,7 +234,7 @@ def test_v3_database_upgrades_with_loss_pattern_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT id FROM diagnostic_trades WHERE id='trade_existing'"
         ).fetchone()["id"] == "trade_existing"
@@ -318,7 +318,7 @@ def test_v6_database_upgrades_with_improvement_log_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT id FROM diagnostic_recommendations WHERE id='rec_existing'"
         ).fetchone()["id"] == "rec_existing"
@@ -426,7 +426,7 @@ def test_v7_database_upgrades_with_users_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT id FROM diagnostic_trades WHERE id='trade_existing'"
         ).fetchone()["id"] == "trade_existing"
@@ -436,7 +436,7 @@ def test_v7_database_upgrades_with_users_schema(tmp_path):
 
         # Re-opening must not recreate or damage the user table/index.
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_users_updated_at'"
         ).fetchone()["name"] == "idx_users_updated_at"
@@ -536,7 +536,7 @@ def test_v8_database_upgrades_with_data_sources_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT email FROM users WHERE id='user_1'"
         ).fetchone()["email"] == "trader@example.com"
@@ -550,7 +550,7 @@ def test_v8_database_upgrades_with_data_sources_schema(tmp_path):
         store._conn.commit()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT name FROM data_sources WHERE id='csv' AND user_id='user_1'"
         ).fetchone()["name"] == "CSV"
@@ -683,7 +683,7 @@ def test_v9_database_upgrades_with_notifications_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT name FROM data_sources WHERE user_id='alice' AND id='csv'"
         ).fetchone()["name"] == "CSV"
@@ -692,7 +692,7 @@ def test_v9_database_upgrades_with_notifications_schema(tmp_path):
         ).fetchone()["name"] == "notifications"
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_notifications_user_unread'"
         ).fetchone()["name"] == "idx_notifications_user_unread"
@@ -773,7 +773,7 @@ def test_v10_database_upgrades_with_notification_preferences_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT title FROM notifications WHERE user_id='alice'"
         ).fetchone()["title"] == "Pattern"
@@ -782,7 +782,7 @@ def test_v10_database_upgrades_with_notification_preferences_schema(tmp_path):
         ).fetchone()["name"] == "notification_preferences"
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
 
 
 def test_encrypted_api_credentials_schema_constraints_and_cascade(tmp_path):
@@ -838,7 +838,7 @@ def test_v11_database_upgrades_with_encrypted_credentials_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
 
 
 def test_auto_trade_execution_log_schema_constraints_and_cascade(tmp_path):
@@ -899,7 +899,7 @@ def test_v12_database_upgrades_with_execution_log_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT provider FROM encrypted_api_credentials WHERE user_id='alice'"
         ).fetchone()["provider"] == "MT5"
@@ -934,7 +934,7 @@ def test_v13_database_upgrades_with_auto_trade_configuration_schema(tmp_path):
     connection.close()
 
     with DiagnosticsStore(db_path) as store:
-        assert store.schema_version == 14
+        assert store.schema_version == 15
         assert store._conn.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name='auto_trade_configurations'"
         ).fetchone()["name"] == "auto_trade_configurations"
